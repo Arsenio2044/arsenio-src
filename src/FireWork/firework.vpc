@@ -1,0 +1,75 @@
+//-----------------------------------------------------------------------------
+//	SCREENEFFECTS.VPC
+//
+//	Project Script
+//-----------------------------------------------------------------------------
+
+$Macro SRCDIR		".."
+$Macro GAMENAME		"ARSENIO"
+$Macro OUTBINDIR	"$SRCDIR\..\game\$GAMENAME\bin"
+
+$Include "$SRCDIR\vpc_scripts\source_dll_base.vpc"
+
+$Configuration	"Debug"
+{
+	$General
+	{
+		$OutputDirectory			".\Debug_$GAMENAME"			[$WIN32]
+		$IntermediateDirectory		".\Debug_$GAMENAME"			[$WIN32]
+	}
+}
+
+$Configuration	"Release"
+{
+	$General
+	{
+		$OutputDirectory			".\Release_$GAMENAME"		[$WIN32]
+		$IntermediateDirectory		".\Release_$GAMENAME"		[$WIN32]
+	}
+}
+
+$Configuration
+{
+	$General
+	{
+			$OutputDirectory			".\$GAMENAME"		[$OSXALL]
+	}
+	
+	$Compiler
+	{
+		$AdditionalIncludeDirectories	"$BASE"
+		$PreprocessorDefinitions		"$BASE;FIREWORK_DLL_EXPORTS"
+	}
+
+	$Linker
+	{
+		$SystemLibraries				"iconv" [$OSXALL]
+		$SystemFrameworks				"Carbon" [$OSXALL]
+		$SystemLibraries				"rt" [$LINUXALL]
+		$IgnoreImportLibrary			"TRUE"
+		$AdditionalDependencies			"$BASE winmm.lib"	[$WIN32]
+		$AdditionalDependencies			"$BASE wsock32.lib Ws2_32.lib" [$BUILD_REPLAY]
+	}
+}
+
+$Project "FireWork"
+{
+	$Folder	"Source Files"
+	{
+		$File "firework.cpp"
+		$File "firework.h"
+	}
+
+	$Folder	"Header Files"
+	{
+
+	}
+
+	$Folder	"Link Libraries"
+	{
+		$Lib	mathlib
+		$Lib	matsys_controls
+		$Lib	tier2
+		$Lib	tier3
+	}
+}

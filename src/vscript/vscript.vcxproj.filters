@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{BA03E055-4FA2-FCE3-8A1C-D348547D379C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\squirrel">
+      <UniqueIdentifier>{616C6776-8F63-B794-09F7-E60A42754A6A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="VPC Scripts">
+      <UniqueIdentifier>{A40EE377-781A-C6B9-0C7C-B3BE118D248E}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="vscript_bindings_base.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vscript_bindings_math.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="vscript.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vscript_bindings_base.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vscript_bindings_math.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vscript_squirrel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel\squirrel\sqapi.cpp">
+      <Filter>Source Files\squirrel</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel\squirrel\sqbaselib.cpp">
+      <Filter>Source Files\squirrel</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel\squirrel\sqclass.cpp">
+      <Filter>Source Files\squirrel</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel\squirrel\sqcompiler.cpp">
+      <Filter>Source Files\squirrel</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel\squirrel\sqdebug.cpp">
+      <Filter>Source Files\squirrel</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel\squirrel\sqfuncstate.cpp">
+      <Filter>Source Files\squirrel</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel\squirrel\sqlexer.cpp">
+      <Filter>Source Files\squirrel</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel\squirrel\sqmem.cpp">
+      <Filter>Source Files\squirrel</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel\squirrel\sqobject.cpp">
+      <Filter>Source Files\squirrel</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel\squirrel\sqstate.cpp">
+      <Filter>Source Files\squirrel</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel\sqstdlib\sqstdaux.cpp">
+      <Filter>Source Files\squirrel</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel\sqstdlib\sqstdblob.cpp">
+      <Filter>Source Files\squirrel</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel\sqstdlib\sqstdio.cpp">
+      <Filter>Source Files\squirrel</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel\sqstdlib\sqstdmath.cpp">
+      <Filter>Source Files\squirrel</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel\sqstdlib\sqstdrex.cpp">
+      <Filter>Source Files\squirrel</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel\sqstdlib\sqstdstream.cpp">
+      <Filter>Source Files\squirrel</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel\sqstdlib\sqstdstring.cpp">
+      <Filter>Source Files\squirrel</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel\sqstdlib\sqstdsystem.cpp">
+      <Filter>Source Files\squirrel</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel\squirrel\sqtable.cpp">
+      <Filter>Source Files\squirrel</Filter>
+    </ClCompile>
+    <ClCompile Include="squirrel\squirrel\sqvm.cpp">
+      <Filter>Source Files\squirrel</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="vscript.vpc">
+      <Filter>VPC Scripts</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="vscript_squirrel.nut">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="..\vpc_scripts\platform_dirs.vpc">
+      <Filter>VPC Scripts</Filter>
+    </None>
+    <None Include="..\vpc_scripts\source_base.vpc">
+      <Filter>VPC Scripts</Filter>
+    </None>
+    <None Include="..\vpc_scripts\source_lib_base.vpc">
+      <Filter>VPC Scripts</Filter>
+    </None>
+    <None Include="..\vpc_scripts\source_lib_win32_base.vpc">
+      <Filter>VPC Scripts</Filter>
+    </None>
+    <None Include="..\vpc_scripts\source_lib_win32_debug.vpc">
+      <Filter>VPC Scripts</Filter>
+    </None>
+    <None Include="..\vpc_scripts\source_lib_win32_release.vpc">
+      <Filter>VPC Scripts</Filter>
+    </None>
+    <None Include="..\vpc_scripts\source_video_base.vpc">
+      <Filter>VPC Scripts</Filter>
+    </None>
+    <None Include="..\vpc_scripts\source_win32_base.vpc">
+      <Filter>VPC Scripts</Filter>
+    </None>
+    <None Include="..\vpc_scripts\version.vpc">
+      <Filter>VPC Scripts</Filter>
+    </None>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,52 @@
+// Made with XBLAH's Modding tool.
+// Download it at https://github.com/jean-knapp/windows-source-modding-tool/releases
+
+gameinfo
+{
+	game	"Arsenio"
+	title	""
+	type	"singleplayer_only"
+	icon	"resource/icon"
+	filesystem
+	{
+		steamappid	"243730"
+		searchpaths
+		{
+			game+mod	"|gameinfo_path|."
+			platform	"|gameinfo_path|."
+			gamebin	"|gameinfo_path|bin"
+			game_lv	"hl2/hl2_lv.vpk"
+			game	"|all_source_engine_paths|../Half-Life 2/ep2/ep2_english.vpk"
+			game	"|all_source_engine_paths|../Half-Life 2/ep2/ep2_pak.vpk"
+			game	"|all_source_engine_paths|../Half-Life 2/episodic/ep1_english.vpk"
+			game	"|all_source_engine_paths|../Half-Life 2/episodic/ep1_pak.vpk"
+			game	"|all_source_engine_paths|hl2/hl2_sound_vo_english.vpk"
+			game	"|all_source_engine_paths|hl2/hl2_pak.vpk"
+			game	"|all_source_engine_paths|hl2/hl2_textures.vpk"
+			game	"|all_source_engine_paths|hl2/hl2_sound_misc.vpk"
+			game	"|all_source_engine_paths|hl2/hl2_misc.vpk"
+			platform	"|all_source_engine_paths|platform/platform_misc.vpk"
+			mod+mod_write+default_write_path	"|gameinfo_path|."
+			game+game_write	"|gameinfo_path|."
+			game	"|all_source_engine_paths|ep2"
+			game	"|all_source_engine_paths|episodic"
+			game	"|all_source_engine_paths|hl2"
+			game	"|all_source_engine_paths|../Half-Life 2/ep2"
+			game	"|all_source_engine_paths|../Half-Life 2/episodic"
+			game	"|all_source_engine_paths|../Half-Life 2/hl2"
+			platform	"|all_source_engine_paths|platform"
+		}
+	}
+	title2	""
+	hasportals	"0"
+	nocrosshair	"1"
+	advcrosshair	"0"
+	nomodels	"1"
+	manual	""
+	nodegraph	"0"
+	gamedata	""
+	instancepath	""
+	supportsvr	"0"
+	developer	""
+	developer_url	""
+}

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CodeLite_Project Name="gameui2" InternalType="">
+  <Description/>
+  <Dependencies/>
+  <Settings Type="Dynamic Library">
+    <GlobalSettings>
+      <Compiler Options="" C_Options="">
+        <IncludePath Value=""/>
+      </Compiler>
+      <Linker Options="">
+        <LibraryPath Value=""/>
+      </Linker>
+      <ResourceCompiler Options=""/>
+    </GlobalSettings>
+    <Configuration Name="Debug" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <CustomBuild Enabled="yes">
+        <RebuildCommand>make CFG=debug -f gameui2_linux32.mak clean all</RebuildCommand>
+        <CleanCommand>make CFG=debug -f gameui2_linux32.mak clean</CleanCommand>
+        <BuildCommand>make CFG=debug -f gameui2_linux32.mak -j `getconf _NPROCESSORS_ONLN`</BuildCommand>
+        <WorkingDirectory>$(ProjectPath)</WorkingDirectory>
+      </CustomBuild>
+    </Configuration>
+    <Configuration Name="Release" CompilerType="gnu g++" DebuggerType="GNU gdb debugger" Type="Dynamic Library" BuildCmpWithGlobalSettings="append" BuildLnkWithGlobalSettings="append" BuildResWithGlobalSettings="append">
+      <CustomBuild Enabled="yes">
+        <RebuildCommand>make -f gameui2_linux32.mak clean all</RebuildCommand>
+        <CleanCommand>make -f gameui2_linux32.mak clean</CleanCommand>
+        <BuildCommand>make -f gameui2_linux32.mak -j `getconf _NPROCESSORS_ONLN`</BuildCommand>
+        <WorkingDirectory>$(ProjectPath)</WorkingDirectory>
+      </CustomBuild>
+    </Configuration>
+  </Settings>
+    <VirtualDirectory Name="Source Files">
+      <File Name="../../common/language.cpp"/>
+      <File Name="../../game/gameui2/basepanel.cpp"/>
+      <File Name="../../game/gameui2/button_mainmenu.cpp"/>
+      <File Name="../../game/gameui2/button_panel.cpp"/>
+      <File Name="../../game/gameui2/gameui2_interface.cpp"/>
+      <File Name="../../game/gameui2/mainmenu.cpp"/>
+      <File Name="../../game/gameui2/panel_options.cpp"/>
+      <File Name="../../game/gameui2/vgui2d/button2d.cpp"/>
+      <File Name="../../game/gameui2/vgui2d/frame2d.cpp"/>
+      <File Name="../../game/gameui2/vgui2d/panel2d.cpp"/>
+      <File Name="../../public/tier0/memoverride.cpp"/>
+      <File Name="../../public/vgui_controls/vgui_controls.cpp"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Header Files">
+      <File Name="../../game/gameui2/basepanel.h"/>
+      <File Name="../../game/gameui2/button_mainmenu.h"/>
+      <File Name="../../game/gameui2/button_panel.h"/>
+      <File Name="../../game/gameui2/gameui2_interface.h"/>
+      <File Name="../../game/gameui2/igameui2.h"/>
+      <File Name="../../game/gameui2/mainmenu.h"/>
+      <File Name="../../game/gameui2/panel_options.h"/>
+      <File Name="../../game/gameui2/vgui2d/button2d.h"/>
+      <File Name="../../game/gameui2/vgui2d/frame2d.h"/>
+      <File Name="../../game/gameui2/vgui2d/panel2d.h"/>
+    </VirtualDirectory>
+    <VirtualDirectory Name="Resources">
+    </VirtualDirectory>
+    <VirtualDirectory Name="VPC Files">
+      <File Name="../../vpc_scripts/platform_dirs.vpc"/>
+      <File Name="../../vpc_scripts/source_base.vpc"/>
+      <File Name="../../vpc_scripts/source_dll_base.vpc"/>
+      <File Name="../../vpc_scripts/source_dll_posix_base.vpc"/>
+      <File Name="../../vpc_scripts/source_posix_base.vpc"/>
+      <File Name="../../vpc_scripts/source_video_base.vpc"/>
+      <File Name="../../vpc_scripts/version.vpc"/>
+      <File Name="../../vpc_scripts/version.vpc"/>
+      <File Name="gameui2_base.vpc"/>
+      <File Name="gameui2_base.vpc"/>
+    </VirtualDirectory>
+</CodeLite_Project>
