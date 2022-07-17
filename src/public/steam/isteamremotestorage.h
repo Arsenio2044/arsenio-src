@@ -636,7 +636,7 @@ struct RemoteStoragePublishedFileUpdated_t
 {
 	enum { k_iCallback = k_iClientRemoteStorageCallbacks + 30 };
 	PublishedFileId_t m_nPublishedFileId;	// The published file id
-	AppId_t m_nAppID;						// ID of the app that will consume this file.
+	AppId_t m_nAppID;						// ID of the app that will consume this file.gine2-Beta\source-sdk-2013-master\sp\src
 	UGCHandle_t m_hFile;					// The new content
 };
 

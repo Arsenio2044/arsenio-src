@@ -1823,7 +1823,7 @@
     <ClInclude Include="arsenio\weapon_tau.h">
       <Filter>Source Files\Arsenio</Filter>
     </ClInclude>
-    <ClInclude Include="arsenio\func_buyzone.h">
+    <ClInclude Include="arsenio\func_shop.h">
       <Filter>Source Files\Arsenio</Filter>
     </ClInclude>
   </ItemGroup>
@@ -3592,7 +3592,7 @@
     <ClCompile Include="arsenio\weapon_spas.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
-    <ClCompile Include="arsenio\func_buyzone.cpp">
+    <ClCompile Include="arsenio\func_shop.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
   </ItemGroup>

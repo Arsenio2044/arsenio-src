@@ -69,6 +69,7 @@
 #include "dt_utlvector_send.h"
 #include "vote_controller.h"
 #include "ai_speech.h"
+#include "arsenio/func_shop.h"
 
 #include "weapon_frag.h"
 #include "basebludgeonweapon.h"
@@ -2033,6 +2034,25 @@ void CBasePlayer::WaterMove()
 bool CBasePlayer::IsOnLadder( void )
 { 
 	return (GetMoveType() == MOVETYPE_LADDER);
+}
+
+// In-Game "weapon shop". - Tux
+bool CBasePlayer::IsinShop(void)
+{
+	CBaseEntity* pEntity = NULL;
+
+	if ((pEntity = gEntList.FindEntityByClassname(pEntity, "func_shop")) != NULL)
+	{
+		CShop* pShop = NULL;
+		float flDist = GetAbsOrigin().DistTo(pShop->GetAbsOrigin());
+
+		if (flDist < 60)
+			return pShop->isinshop;
+
+		return false;
+	}
+	else
+		return false;
 }
 
 

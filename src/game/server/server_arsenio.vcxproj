@@ -269,7 +269,7 @@ exit 1
     <ClInclude Include="..\..\game\shared\base_playeranimstate.h" />
     <ClInclude Include="arsenio\bot_ally.h" />
     <ClInclude Include="arsenio\bot_enemy.h" />
-    <ClInclude Include="arsenio\func_buyzone.h" />
+    <ClInclude Include="arsenio\func_shop.h" />
     <ClInclude Include="arsenio\weapon_tau.h" />
     <ClInclude Include="base_transmit_proxy.h" />
     <ClInclude Include="..\..\public\basehandle.h" />
@@ -851,7 +851,7 @@ exit 1
   <ItemGroup>
     <ClCompile Include="arsenio\bot_ally.cpp" />
     <ClCompile Include="arsenio\bot_enemy.cpp" />
-    <ClCompile Include="arsenio\func_buyzone.cpp" />
+    <ClCompile Include="arsenio\func_shop.cpp" />
     <ClCompile Include="arsenio\weapon_spas.cpp" />
     <ClCompile Include="arsenio\weapon_tau.cpp" />
     <ClCompile Include="gamedll_replay.cpp" />

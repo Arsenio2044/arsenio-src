@@ -228,6 +228,9 @@ CBasePlayer	*UTIL_PlayerByIndex( int playerIndex );
 // not useable in multiplayer - see UTIL_GetListenServerHost()
 CBasePlayer* UTIL_GetLocalPlayer( void );
 
+CBasePlayer* UTIL_GetNearestPlayer(const Vector& origin);
+
+
 // get the local player on a listen server
 CBasePlayer *UTIL_GetListenServerHost( void );
 

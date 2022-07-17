@@ -636,6 +636,32 @@ CBasePlayer *UTIL_GetLocalPlayer( void )
 	return UTIL_PlayerByIndex( 1 );
 }
 
+// IVEngine 2
+CBasePlayer* UTIL_GetNearestPlayer(const Vector& origin)
+{
+	float distToNearest = 99999999999999999999999999999999999999.0f;
+	CBasePlayer* pNearest = NULL;
+
+	for (int i = 1; i <= gpGlobals->maxClients; i++)
+	{
+		CBasePlayer* pPlayer = UTIL_PlayerByIndex(i);
+		if (!pPlayer)
+			continue;
+
+		float flDist = (pPlayer->GetAbsOrigin() - origin).LengthSqr();
+		if (flDist < distToNearest)
+
+		{
+			pNearest = pPlayer;
+			distToNearest = flDist;
+
+		}
+	}
+
+
+	return pNearest;
+}
+
 //
 // Get the local player on a listen server - this is for multiplayer use only
 // 
