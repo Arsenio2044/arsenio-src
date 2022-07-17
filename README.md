@@ -10,13 +10,22 @@ IVEngine 2 is an heavily improved engine based on Source SDK 2013.
 - New UI system
 - Many new entities
 - Fixes to the engines code and gameplay
-- New rendering system
 
 More will be documented on the wiki.
 
 # Requirements
 
  - Visual Studio 2019
+ 
+ # Credits
+ 
+ - NicholasDe - GameUI2/TuxUI
+ 
+ - Mobility Mod - A large ammount of Parkour code.
+ 
+ - Valve - the engine
+ 
+ - Halo: Source - Minimap
 
 
 # Original Source license Info
