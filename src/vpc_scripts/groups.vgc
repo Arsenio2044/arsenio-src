@@ -19,10 +19,6 @@ $Group "game"
 	"tier1"
 	"vgui_controls"
 	"tuxui"
-	"firework"
-//	"tuxcode"
-	"tuxui2"
-//	"missionchooser"
 }
 
 $Group "shaders"

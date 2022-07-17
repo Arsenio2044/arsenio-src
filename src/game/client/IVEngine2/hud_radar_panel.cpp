@@ -18,6 +18,9 @@
 #include "mapoverview.h"
 #include "hud_radar_panel.h"
 
+// Credit to Halo: Source for the code.
+
+
 #define RADAR_DOT_NORMAL		0
 #define RADAR_DOT_ENEMY			(1<<0)
 #define RADAR_IGNORE_Z			(1<<6)	//always draw this item as if it was at the same Z as the player

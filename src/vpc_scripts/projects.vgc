@@ -137,22 +137,9 @@ $Project "tuxui"
 
 }
 
-$Project "firework"
-{
-	"firework\firework.vpc"		[($WIN32||$X360||$POSIX) && $ARSENIO]
-}
 
 
-$Project "tuxcode"
-{
-	"game\tuxcode\tuxcode.vpc"		[($WIN32||$X360||$POSIX) && $ARSENIO]
-}
 
-$Project "tuxui2"
-{
-	"TuxUICore\TuxUI2_base.vpc"		[($WIN32||$X360||$POSIX) && $ARSENIO]
-
-}
 
 // IGNORE
 $Project "missionchooser"

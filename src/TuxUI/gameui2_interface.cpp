@@ -1,6 +1,6 @@
-//========= Copyright Glitch Software, All rights reserved. ===================//
+//========= TuxUI ===================//
 //
-// Purpose: Replace GameUI with TuxUI.
+// Purpose: Replace GameUI with TuxUI. Based off of GameUI2 by NicholasDe.
 //
 //
 //=============================================================================//
@@ -29,21 +29,11 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR(GameUI2, IGameUI2, GAMEUI2_DLL_INTERFACE_VERSI
 //The TuxUI module requires another binary called TuxUI2. Both MissionChooser and TuxUI require this binary to operate. 
 //It is heavily advised not to edit the TuxUI2 binary because it could fuck up the entire module. 
 //
-//TuxUI2 is made up of multiple different libraries such as IMGui.
+//TuxUI2 is made up of multiple different libraries such as IMGui. UPDATE: TuxUI2 is no longer needed.
 //
 //=========================================================================================================================
 
-#if TuxLib
 
-mode = .tux
-
-{{
-
-		load.(lib)("TuxUI2")
-
-}}
-
-#endif
 
 void GameUI2::Initialize(CreateInterfaceFn AppFactory)
 {

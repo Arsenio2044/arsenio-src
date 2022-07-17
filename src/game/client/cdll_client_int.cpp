@@ -87,8 +87,6 @@
 #include "ihudlcd.h"
 #include "toolframework_client.h"
 #include "hltvcamera.h"
-#include "../FireWork/firework.h"
-#include "../FireWork/ifirework.h"
 #if defined( REPLAY_ENABLED )
 #include "replay/replaycamera.h"
 #include "replay/replay_ragdoll.h"
@@ -225,7 +223,6 @@ IReplaySystem *g_pReplay = NULL;
 
 
 IGameUI2* GameUI2 = nullptr;
-IFireWorkRenderer* FireWork = NULL;
 
 
 IHaptics* haptics = NULL;// NVNT haptics system interface singleton
@@ -1297,44 +1294,7 @@ void CHLClient::PostInit()
 
 
 
-	if (CommandLine()->FindParm("-nofirework") == 0) // breaking the game most likely.
-	{
-		char FireWorkPath[2048];
-		Q_snprintf(FireWorkPath, sizeof(FireWorkPath), "%s\\bin\\FireWork_RenderSystem.dll", engine->GetGameDirectory());
 
-		CSysModule* FireWorkModule = Sys_LoadModule(FireWorkPath);
-		if (FireWorkModule != NULL)
-		{
-			ConColorMsg(Color(0, 148, 255, 255), "Loaded TuxUI.dll\n");
-
-			CreateInterfaceFn FireWorkFactory = Sys_GetFactory(FireWorkModule);
-			if (FireWorkFactory)
-			{
-				FireWork = (IFireWorkRenderer*)FireWorkFactory(FIREWORK_INTERFACE_VERSION, NULL);
-				if (FireWork != NULL)
-				{
-					ConColorMsg(Color(0, 148, 255, 255), "Initializing FireWork interface...\n");
-
-					factorylist_t Factories;
-					FactoryList_Retrieve(Factories);
-					FireWork->Connect(Factories.appSystemFactory);
-					FireWork->StartFrame();
-				}
-				else
-				{
-					ConColorMsg(Color(0, 148, 255, 255), "Unable to load Firework.\n");
-				}
-			}
-			else
-			{
-				ConColorMsg(Color(0, 148, 255, 255), "Die\n");
-			}
-		}
-		else
-		{
-			ConColorMsg(Color(0, 148, 255, 255), "Unable to load FireWork.dll from:\n%s\n", FireWorkPath);
-		}
-	}
 
 }
 
@@ -1386,11 +1346,7 @@ void CHLClient::Shutdown(void)
 		GameUI2->Shutdown();
 	}
 
-	if (FireWork != NULL)
-	{
-		FireWork->EndFrame();
-		FireWork->Shutdown();
-	}
+
 
 
 	gHUD.Shutdown();
@@ -1862,8 +1818,7 @@ void CHLClient::LevelInitPreEntity(char const* pMapName)
 	if (GameUI2 != nullptr)
 		GameUI2->OnLevelInitializePreEntity();
 
-	if (FireWork != NULL)
-		FireWork->StartFrame();
+
 
 }
 

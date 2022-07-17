@@ -23,6 +23,8 @@
 #include "voice_status.h"
 #include "IVEngine2\hud_radar_panel.h"
 
+// Credit to Halo: Source for the code.
+
 DECLARE_HUDELEMENT( CHSMapOverview )
 
 extern ConVar overview_health;

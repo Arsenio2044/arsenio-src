@@ -1,4 +1,4 @@
-//========= Copyright Glitch Software, All rights reserved. ===================//
+//========= TuxUI ===================//
 //
 // Purpose: Replace GameUI with TuxUI.
 //
