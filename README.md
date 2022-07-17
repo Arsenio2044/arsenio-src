@@ -17,7 +17,7 @@ More will be documented on the wiki.
 # Requirements
 
  - Visual Studio 2019
-- License
+
 
 # Original Source license Info
 
