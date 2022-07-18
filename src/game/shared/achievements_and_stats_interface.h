@@ -27,7 +27,7 @@ public:
     virtual void DisplayPanel() {}
     virtual void ReleasePanel() {}
 	virtual int GetAchievementsPanelMinWidth( void ) const { return 0; }
-
+// testcomment
 protected:
     //-----------------------------------------------------------------------------
     // Purpose: Positions a dialog on screen.
