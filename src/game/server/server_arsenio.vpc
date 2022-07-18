@@ -64,6 +64,12 @@ $Project "GameData"
 			$File	"arsenio\npc_bloodseeker.cpp"
 			$File	"arsenio\weapon_mp5k.cpp"
 			$File	"arsenio\weapon_pro836.cpp"
+			$File	"arsenio\func_shop.cpp"
+			$File	"arsenio\func_shop.h"
+			$File	"arsenio\weapon_tau.cpp"
+			$File	"arsenio\weapon_tau.h"
+
+
 		}
 
 		$Folder	"IVEngine 2"

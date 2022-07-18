@@ -316,7 +316,7 @@ static ConVar	cl_bobcycle("cl_bobcycle", "0.8");
 static ConVar	cl_bob("cl_bob", "0.002");
 static ConVar	cl_bobup("cl_bobup", "0.5");
 
-// Register these cvars if needed for easy tweaking
+// Register these cvars if needed for easy tweaking TUX: HAHAHAHAHAHAHAHAHA
 static ConVar	v_iyaw_cycle("v_iyaw_cycle", "2"/*, FCVAR_UNREGISTERED*/);
 static ConVar	v_iroll_cycle("v_iroll_cycle", "0.5"/*, FCVAR_UNREGISTERED*/);
 static ConVar	v_ipitch_cycle("v_ipitch_cycle", "1"/*, FCVAR_UNREGISTERED*/);
