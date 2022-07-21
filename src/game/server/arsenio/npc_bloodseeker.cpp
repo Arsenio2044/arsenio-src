@@ -95,7 +95,7 @@ void CNPC_BloodSeeker::Precache()
 
 	PrecacheModel("models/BloodSeeker.mdl");
 
-	UTIL_PrecacheOther("npc_handgrenade");
+	UTIL_PrecacheOther("npc_headcrab");
 
 	PrecacheScriptSound("BloodSeeker.Shot");
 	PrecacheScriptSound("BloodSeeker.Beamsound");
@@ -112,7 +112,7 @@ int CNPC_BloodSeeker::GetSoundInterests(void)
 
 Class_T	CNPC_BloodSeeker::Classify(void)
 {
-	return CLASS_SHADOW;
+	return CLASS_COMBINE; // Should be CLASS_SHADOW, but I haven't set up the relationship table yet.
 }
 
 //=========================================================

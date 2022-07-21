@@ -43,10 +43,11 @@ STUB_WEAPON_CLASS( weapon_hopwire, WeaponHopwire, C_BaseHLCombatWeapon );
 STUB_WEAPON_CLASS( weapon_oldmanharpoon, WeaponOldManHarpoon, C_WeaponCitizenPackage );
 #endif
 
-STUB_WEAPON_CLASS( weapon_card, WeaponCard, CBaseCombatWeapon );
 STUB_WEAPON_CLASS( weapon_bulk, WeaponBULK, C_BaseHLCombatWeapon );
 STUB_WEAPON_CLASS( weapon_mp5k, WeaponMP5K, C_HLSelectFireMachineGun );
 STUB_WEAPON_CLASS( weapon_pro836, WeaponPRO836, C_HLSelectFireMachineGun );
+STUB_WEAPON_CLASS( weapon_smg3, WeaponSMG3, C_HLSelectFireMachineGun );
+
 
 
 

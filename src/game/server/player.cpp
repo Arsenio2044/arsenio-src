@@ -6412,6 +6412,8 @@ void CBasePlayer::CheatImpulseCommands( int iImpulse )
 		GiveNamedItem( "weapon_bulk" );
 		GiveNamedItem( "weapon_mp5k" );		// TUX: I haven't added the model yet.
 		GiveNamedItem( "weapon_pro836" );
+		GiveNamedItem( "weapon_gauss" );
+		GiveNamedItem( "weapon_smg3" );
 
 #ifdef HL2_EPISODIC
 		// GiveNamedItem( "weapon_magnade" );

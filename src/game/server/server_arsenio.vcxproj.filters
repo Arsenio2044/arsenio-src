@@ -1520,6 +1520,9 @@
     <ClInclude Include="world.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="arsenio\func_shop.h">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClInclude>
     <ClInclude Include="arsenio\npc_bloodseeker.h">
       <Filter>Source Files\Arsenio</Filter>
     </ClInclude>
@@ -1536,6 +1539,9 @@
       <Filter>Source Files\Arsenio</Filter>
     </ClInclude>
     <ClInclude Include="weapon_frag.h">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClInclude>
+    <ClInclude Include="arsenio\weapon_tau.h">
       <Filter>Source Files\Arsenio</Filter>
     </ClInclude>
     <ClInclude Include="hl2\ai_behavior_actbusy.h">
@@ -1787,9 +1793,6 @@
     <ClInclude Include="hl2\weapon_flaregun.h">
       <Filter>Source Files\HL2 DLL\unused</Filter>
     </ClInclude>
-    <ClInclude Include="IVEngine2\weapon_card.h">
-      <Filter>Source Files\IVEngine 2</Filter>
-    </ClInclude>
     <ClInclude Include="plasma.h">
       <Filter>Source Files\temporary entities</Filter>
     </ClInclude>
@@ -1818,12 +1821,6 @@
       <Filter>Source Files\Arsenio</Filter>
     </ClInclude>
     <ClInclude Include="arsenio\bot_enemy.h">
-      <Filter>Source Files\Arsenio</Filter>
-    </ClInclude>
-    <ClInclude Include="arsenio\weapon_tau.h">
-      <Filter>Source Files\Arsenio</Filter>
-    </ClInclude>
-    <ClInclude Include="arsenio\func_shop.h">
       <Filter>Source Files\Arsenio</Filter>
     </ClInclude>
   </ItemGroup>
@@ -2926,6 +2923,9 @@
     <ClCompile Include="world.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="arsenio\func_shop.cpp">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\game\shared\gamemovement_duck.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
@@ -2948,6 +2948,15 @@
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\weapon_pro836.cpp">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClCompile>
+    <ClCompile Include="arsenio\weapon_smg3.cpp">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClCompile>
+    <ClCompile Include="arsenio\weapon_spas.cpp">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClCompile>
+    <ClCompile Include="arsenio\weapon_tau.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
     <ClCompile Include="..\..\game\shared\episodic\achievements_ep1.cpp">
@@ -3403,13 +3412,7 @@
     <ClCompile Include="hl2\weapon_flaregun.cpp">
       <Filter>Source Files\HL2 DLL\unused</Filter>
     </ClCompile>
-    <ClCompile Include="IVEngine2\logic_cardreader.cpp">
-      <Filter>Source Files\IVEngine 2</Filter>
-    </ClCompile>
     <ClCompile Include="IVEngine2\point_cutscene.cpp">
-      <Filter>Source Files\IVEngine 2</Filter>
-    </ClCompile>
-    <ClCompile Include="IVEngine2\weapon_card.cpp">
       <Filter>Source Files\IVEngine 2</Filter>
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
@@ -3584,15 +3587,6 @@
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\bot_enemy.cpp">
-      <Filter>Source Files\Arsenio</Filter>
-    </ClCompile>
-    <ClCompile Include="arsenio\weapon_tau.cpp">
-      <Filter>Source Files\Arsenio</Filter>
-    </ClCompile>
-    <ClCompile Include="arsenio\weapon_spas.cpp">
-      <Filter>Source Files\Arsenio</Filter>
-    </ClCompile>
-    <ClCompile Include="arsenio\func_shop.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
   </ItemGroup>

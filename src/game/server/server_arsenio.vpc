@@ -68,15 +68,14 @@ $Project "GameData"
 			$File	"arsenio\func_shop.h"
 			$File	"arsenio\weapon_tau.cpp"
 			$File	"arsenio\weapon_tau.h"
+			$File	"arsenio\weapon_smg3.cpp"
+			$File	"arsenio\weapon_spas.cpp"
 
 
 		}
 
 		$Folder	"IVEngine 2"
 		{
-			$File	"IVEngine2\weapon_card.cpp"
-			$File	"IVEngine2\weapon_card.h"
-			$File	"IVEngine2\logic_cardreader.cpp"
 			$File	"IVEngine2\point_cutscene.cpp"
 		}
 

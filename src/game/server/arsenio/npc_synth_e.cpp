@@ -145,11 +145,11 @@ void CNPC_SynthE::Spawn( void )
 
 }
 
-Class_T	CNPC_SynthE::Classify()
-{
-
-	return CLASS_SHADOW;
-}
+//Class_T	CNPC_SynthE::Classify()
+//{
+//
+//	return CLASS_SHADOW;
+//}
 
 //-----------------------------------------------------------------------------
 // Purpose:
