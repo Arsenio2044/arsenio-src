@@ -13,9 +13,7 @@ IVEngine 2 is an heavily improved engine based on Source SDK 2013.
 
 More will be documented on the wiki.
 
-# Requirements
 
- - Visual Studio 2019
  
  # Credits
  
