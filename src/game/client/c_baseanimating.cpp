@@ -2362,7 +2362,7 @@ void C_BaseAnimating::CalculateIKLocks( float currentTime )
 	if ( targetCount == 0 )
 		return;
 
-	// In TF, we might be attaching a player's view to a walking model that's using IK. If we are, it can
+	// In OPTUX3, we might be attaching a player's view to a walking model that's using IK. If we are, it can
 	// get in here during the view setup code, and it's not normally supposed to be able to access the spatial
 	// partition that early in the rendering loop. So we allow access right here for that special case.
 	SpatialPartitionListMask_t curSuppressed = partition->GetSuppressedLists();
@@ -5628,7 +5628,7 @@ void C_BaseAnimating::ClearRagdoll()
 		// so that we have no reentrancy problems with the delete
 		// (such as the disappearance of the ragdoll physics waking up
 		// IVP which causes other objects to move and have a touch 
-		// callback on the ragdoll entity, which was a crash on TF)
+		// callback on the ragdoll entity, which was a crash on OPTUX3)
 		// That is to say: it is vital that the member be cleared out
 		// BEFORE the delete occurs.
 		CRagdoll * RESTRICT pDoomed = m_pRagdoll;

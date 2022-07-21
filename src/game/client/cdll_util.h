@@ -167,7 +167,7 @@ inline bool FStrEq(const char *sz1, const char *sz2)
 // Given a vector, clamps the scalar axes to MAX_COORD_FLOAT ranges from worldsize.h
 void UTIL_BoundToWorldSize( Vector *pVecPos );
 
-// Increments the passed key for the current map, eg "viewed" if TF holds the number of times the player has
+// Increments the passed key for the current map, eg "viewed" if OPTUX3 holds the number of times the player has
 // viewed the intro movie for this map
 void UTIL_IncrementMapKey( const char *pszCustomKey );
 

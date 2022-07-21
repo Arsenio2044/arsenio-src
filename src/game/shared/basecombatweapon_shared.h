@@ -305,11 +305,11 @@ public:
 	virtual float			GetMaxAutoAimDeflection() { return 0.99f; }
 	virtual float			WeaponAutoAimScale() { return 1.0f; } // allows a weapon to influence the perceived size of the target's autoaim radius.
 
-	// TF Sprinting functions
+	// OPTUX3 Sprinting functions
 	virtual bool			StartSprinting( void ) { return false; };
 	virtual bool			StopSprinting( void ) { return false; };
 
-	// TF Injury functions
+	// OPTUX3 Injury functions
 	virtual float			GetDamage( float flDistance, int iLocation ) { return 0.0; };
 
 	virtual void			SetActivity( Activity act, float duration );
@@ -547,7 +547,7 @@ protected:
 	float					m_flCritTokenBucket;
 	int						m_nCritChecks;
 	int						m_nCritSeedRequests;
-#endif // TF
+#endif // OPTUX3
 
 public:
 

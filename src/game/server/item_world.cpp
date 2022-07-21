@@ -327,10 +327,10 @@ void CItem::FallThink ( void )
 	{
 		SetThink( &CItem::ComeToRest );
 	}
-#endif // TF
+#endif // OPTUX3
 }
 
-#endif // HL2MP, TF
+#endif // HL2MP, OPTUX3
 
 //-----------------------------------------------------------------------------
 // Purpose: Used to tell whether an item may be picked up by the player.  This

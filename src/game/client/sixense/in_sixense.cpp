@@ -2637,7 +2637,7 @@ void SixenseInput::SixenseUpdateKeys( float flFrametime, CUserCmd *pCmd )
 		}
 
 #ifdef TF_CLIENT_DLL
-		// certain tf menus want '0' to cancel, not escape.
+		// certain optux3 menus want '0' to cancel, not escape.
 		if( gViewPortInterface )
 		{
 			IViewPortPanel *panel = gViewPortInterface->GetActivePanel();

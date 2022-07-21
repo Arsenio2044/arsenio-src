@@ -75,7 +75,7 @@ void CWeaponSMG3::Precache( void )
 //-----------------------------------------------------------------------------
 const Vector &CWeaponSMG3::GetBulletSpread( void )
 {
-	static const Vector cone = VECTOR_CONE_20DEGREES;
+	static const Vector cone = VECTOR_CONE_15DEGREES; // Might change this sometime soon.
 	return cone;
 }
 

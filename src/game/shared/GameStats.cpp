@@ -1427,7 +1427,7 @@ void CBaseGameStats::SetHL2UnlockedChapterStatistic( void )
 static void CC_ResetGameStats( const CCommand &args )
 {
 #if defined ( TF_DLL ) || defined ( TF_CLIENT_DLL )
-	// Disabled this until we fix the TF gamestat crashes that result
+	// Disabled this until we fix the OPTUX3 gamestat crashes that result
 	return;
 #endif
 

@@ -627,7 +627,7 @@ public:
 	                             // the timer when chucking)
 	CNetworkVar( int ,  m_nMeleeState );
 
-	// Run a user command. The default implementation calls ::PlayerRunCommand. In TF, this controls a vehicle if
+	// Run a user command. The default implementation calls ::PlayerRunCommand. In OPTUX3, this controls a vehicle if
 	// the player is in one.
 	virtual void			PlayerRunCommand(CUserCmd *ucmd, IMoveHelper *moveHelper);
 	void					RunNullCommand();

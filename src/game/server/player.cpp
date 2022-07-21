@@ -3431,7 +3431,7 @@ void CBasePlayer::PhysicsSimulate( void )
 // 	// Kick the player if they haven't sent a user command in awhile in order to prevent clients
 // 	// from using packet-level manipulation to mess with gamestate.  Not sending usercommands seems
 // 	// to have all kinds of bad effects, such as stalling a bunch of Think()'s and gamestate handling.
-// 	// An example from TF: A medic stops sending commands after deploying an uber on another player.
+// 	// An example from OPTUX3: A medic stops sending commands after deploying an uber on another player.
 // 	// As a result, invuln is permanently on the heal target because the maintenance code is stalled.
 // 	if ( GetTimeSinceLastUserCommand() > player_usercommand_timeout.GetFloat() )
 // 	{

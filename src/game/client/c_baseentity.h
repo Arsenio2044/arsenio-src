@@ -1675,7 +1675,7 @@ protected:
 	CThreadFastMutex m_CalcAbsoluteVelocityMutex;
 
 #ifdef TF_CLIENT_DLL
-	// TF prevents drawing of any entity attached to players that aren't items in the inventory of the player.
+	// OPTUX3 prevents drawing of any entity attached to players that aren't items in the inventory of the player.
 	// This is to prevent servers creating fake cosmetic items and attaching them to players.
 public:
 	virtual bool ValidateEntityAttachedToPlayer( bool &bShouldRetry );

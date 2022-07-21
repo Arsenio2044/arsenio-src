@@ -629,7 +629,7 @@ const char* g_spriteWhiteList[] =
 };
 
 //-----------------------------------------------------------------------------
-// Purpose: TF prevents drawing of any entity attached to players that aren't items in the inventory of the player.
+// Purpose: OPTUX3 prevents drawing of any entity attached to players that aren't items in the inventory of the player.
 //			This is to prevent servers creating fake cosmetic items and attaching them to players.
 //-----------------------------------------------------------------------------
 bool CSpriteTrail::ValidateEntityAttachedToPlayer( bool &bShouldRetry )
