@@ -2313,7 +2313,7 @@ void DoEnginePostProcessing( int x, int y, int w, int h, bool bFlashlightIsOn, b
 
 			float flAAStrength;
 
-			// We do a second AA blur pass over the OPTUX3 intro menus. use mat_software_aa_strength_vgui there instead
+			// We do a second AA blur pass over the TF intro menus. use mat_software_aa_strength_vgui there instead
 			if ( IsX360() && bPostVGui )
 			{
 				flAAStrength = mat_software_aa_strength_vgui.GetFloat();

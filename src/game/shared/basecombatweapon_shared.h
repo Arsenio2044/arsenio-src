@@ -114,6 +114,7 @@ namespace vgui2
 #define VECTOR_CONE_8DEGREES		Vector( 0.06976, 0.06976, 0.06976 )
 #define VECTOR_CONE_9DEGREES		Vector( 0.07846, 0.07846, 0.07846 )
 #define VECTOR_CONE_10DEGREES		Vector( 0.08716, 0.08716, 0.08716 )
+#define VECTOR_CONE_12DEGREES		Vector( 0.10053, 0.10053, 0.10053 )
 #define VECTOR_CONE_15DEGREES		Vector( 0.13053, 0.13053, 0.13053 )
 #define VECTOR_CONE_20DEGREES		Vector( 0.17365, 0.17365, 0.17365 )
 
@@ -305,11 +306,11 @@ public:
 	virtual float			GetMaxAutoAimDeflection() { return 0.99f; }
 	virtual float			WeaponAutoAimScale() { return 1.0f; } // allows a weapon to influence the perceived size of the target's autoaim radius.
 
-	// OPTUX3 Sprinting functions
+	// TF Sprinting functions
 	virtual bool			StartSprinting( void ) { return false; };
 	virtual bool			StopSprinting( void ) { return false; };
 
-	// OPTUX3 Injury functions
+	// TF Injury functions
 	virtual float			GetDamage( float flDistance, int iLocation ) { return 0.0; };
 
 	virtual void			SetActivity( Activity act, float duration );
@@ -547,7 +548,7 @@ protected:
 	float					m_flCritTokenBucket;
 	int						m_nCritChecks;
 	int						m_nCritSeedRequests;
-#endif // OPTUX3
+#endif // TF
 
 public:
 

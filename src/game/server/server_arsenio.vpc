@@ -1,12 +1,12 @@
 //-----------------------------------------------------------------------------
-//	SERVER_EPISODIC.VPC
+//	SERVER_ARSENIO.VPC
 //
 //	Project Script
 //-----------------------------------------------------------------------------
 
 $Macro SRCDIR		"..\.."
 $Macro GAMENAME 	"arsenio" [!$SOURCESDK]
-$Macro GAMENAME 	"arsenio" [$SOURCESDK]
+$Macro GAMENAME 	"mod_arsenio" [$SOURCESDK]
 
 $Include "$SRCDIR\game\server\server_base.vpc"
 
@@ -15,11 +15,11 @@ $Configuration
 	$Compiler
 	{
 		$AdditionalIncludeDirectories	"$BASE;$SRCDIR\game\shared\hl2;$SRCDIR\game\shared\episodic;.\hl2;.\episodic"
-		$PreprocessorDefinitions		"$BASE;HL2_DLL;HL2_EPISODIC;USES_SAVERESTORE"
+		$PreprocessorDefinitions		"$BASE;HL2_DLL;HL2_EPISODIC;USES_SAVERESTORE;ARSENIO_DLL"
 	}
 }
 
-$Project "GameData"
+$Project "Server - Arsenio"
 {
 	$Folder	"Source Files"
 	{

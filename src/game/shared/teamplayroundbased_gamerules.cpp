@@ -39,11 +39,11 @@
 		#include "tf_lobby.h"
 		#ifdef GAME_DLL
 			#include "player_vs_environment/tf_population_manager.h"
-			#include "../server/optux3/tf_gc_server.h"
-			#include "../server/optux3/tf_objective_resource.h"
+			#include "../server/tf/tf_gc_server.h"
+			#include "../server/tf/tf_objective_resource.h"
 		#else
-			#include "../client/optux3/tf_gc_client.h"
-			#include "../client/optux3/c_tf_objective_resource.h"
+			#include "../client/tf/tf_gc_client.h"
+			#include "../client/tf/c_tf_objective_resource.h"
 		#endif // GAME_DLL
 	#endif // #if defined(TF_CLIENT_DLL) || defined(TF_DLL)
 #endif

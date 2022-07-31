@@ -15,8 +15,8 @@ $Project "captioncompiler"
 
 $Project "client"
 {
-	"game\client\client_hl2.vpc"		[($WIN32||$X360||$POSIX) && $HL2]
-	"game\client\client_arsenio.vpc"	[($WIN32||$X360||$POSIX) && $ARSENIO]
+	"game\client\client_optux3.vpc"		[($WIN32||$X360||$POSIX) && $OPTUX3]
+	"game\client\client_arsenio.vpc"		[($WIN32||$X360||$POSIX) && $ARSENIO]
 }
 
 $Project "fgdlib"
@@ -42,7 +42,7 @@ $Project "height2normal"
 
 $Project "server"
 {
-	"game\server\server_hl2.vpc"		[($WIN32||$X360||$POSIX) && $HL2]
+	"game\server\server_optux3.vpc"	[($WIN32||$X360||$POSIX) && $OPTUX3]
 	"game\server\server_arsenio.vpc"	[($WIN32||$X360||$POSIX) && $ARSENIO]
 }
 
@@ -131,9 +131,9 @@ $Project "vvis_launcher"
 	"utils\vvis_launcher\vvis_launcher.vpc" [$WIN32]
 }
 
-$Project "tuxui"
+$Project "fireui"
 {
-	"TuxUI\gameui2_base.vpc"		[($WIN32||$X360||$POSIX) && $ARSENIO]
+	"FireUI\gameui2_base.vpc"		[($WIN32||$X360||$POSIX)]
 
 }
 

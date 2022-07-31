@@ -95,7 +95,7 @@
 #include "gc_clientsystem.h"
 #include "econ_item_inventory.h"
 #include "steamworks_gamestats.h"
-#include "optux3/tf_gc_server.h"
+#include "tf/tf_gc_server.h"
 #include "tf_gamerules.h"
 #include "tf_lobby.h"
 #include "player_vs_environment/tf_population_manager.h"

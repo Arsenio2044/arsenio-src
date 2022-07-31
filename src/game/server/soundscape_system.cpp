@@ -297,7 +297,7 @@ void CSoundscapeSystem::FrameUpdatePostEntityThink()
 	{
 		int traceCount = 0;
 		int playerCount = 0;
-		// budget tuned for OPTUX3.  Do a max of 20 traces.  That's going to happen anyway because a bunch of the maps
+		// budget tuned for TF.  Do a max of 20 traces.  That's going to happen anyway because a bunch of the maps
 		// use radius -1 for all soundscapes.  So to trace one player you'll often need that many and this code must
 		// always trace one player's soundscapes.
 		// If the map has been optimized, then allow more players to update per frame.

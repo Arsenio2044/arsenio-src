@@ -1133,7 +1133,7 @@ void CNetGraphPanel::DrawLargePacketSizes( int x, int w, int graphtype, float wa
 
 //-----------------------------------------------------------------------------
 // Purpose: A basic version (doesn't taken into account the "holding after
-// screenshot" bit like OPTUX3 does, but is good enough for hud_freezecamhide.
+// screenshot" bit like TF does, but is good enough for hud_freezecamhide.
 //-----------------------------------------------------------------------------
 static bool IsTakingAFreezecamScreenshot()
 {

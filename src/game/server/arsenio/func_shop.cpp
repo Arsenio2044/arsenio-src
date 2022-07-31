@@ -20,6 +20,8 @@ CShop::CShop(void)
 	SetTouch(&CShop::ShopTouch);
 }
 
+#ifndef OPTUX3_DLL
+
 void CShop::ShopTouch(CBaseEntity* pOther)
 {
 	CBaseEntity* pPlayer = UTIL_GetNearestPlayer(GetAbsOrigin());
@@ -34,3 +36,5 @@ void CShop::ShopTouch(CBaseEntity* pOther)
 			isinshop = true;
 	}
 }
+
+#endif

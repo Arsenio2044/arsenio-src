@@ -1817,12 +1817,6 @@
     <ClInclude Include="toolframework_server.h">
       <Filter>Tools Framework</Filter>
     </ClInclude>
-    <ClInclude Include="arsenio\bot_ally.h">
-      <Filter>Source Files\Arsenio</Filter>
-    </ClInclude>
-    <ClInclude Include="arsenio\bot_enemy.h">
-      <Filter>Source Files\Arsenio</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="gamedll_replay.cpp">
@@ -3582,12 +3576,6 @@
     </ClCompile>
     <ClCompile Include="toolframework_server.cpp">
       <Filter>Tools Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="arsenio\bot_ally.cpp">
-      <Filter>Source Files\Arsenio</Filter>
-    </ClCompile>
-    <ClCompile Include="arsenio\bot_enemy.cpp">
-      <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

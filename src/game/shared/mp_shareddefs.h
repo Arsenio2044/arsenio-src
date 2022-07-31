@@ -12,7 +12,7 @@
 #include "shareddefs.h"
 
 //-----------------------------------------------------------------------------
-// OPTUX3 Concepts
+// TF Concepts
 //-----------------------------------------------------------------------------
 #define MP_CONCEPT_NONE		-1
 
@@ -154,7 +154,7 @@ enum
 	MP_CONCEPT_HALLOWEEN_LONGFALL,
 	MP_CONCEPT_TAUNT_GUITAR_RIFF,			// "TLK_TAUNT_GUITAR_RIFF"
 	
-	// OPTUX3 Halloween 2013 shenanigans.
+	// TF Halloween 2013 shenanigans.
 	MP_CONCEPT_PLAYER_CAST_FIREBALL,		// "TLK_PLAYER_CAST_FIREBALL"
 	MP_CONCEPT_PLAYER_CAST_MERASMUS_ZAP,	// "TLK_PLAYER_CAST_MERASMUS_ZAP"
 	MP_CONCEPT_PLAYER_CAST_SELF_HEAL,		// "TLK_PLAYER_CAST_SELF_HEAL"

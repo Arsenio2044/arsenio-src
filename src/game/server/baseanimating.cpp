@@ -2590,7 +2590,7 @@ CBoneCache *CBaseAnimating::GetBoneCache( void )
 	CBoneCache *pcache = Studio_GetBoneCache( m_boneCacheHandle );
 	int boneMask = BONE_USED_BY_HITBOX | BONE_USED_BY_ATTACHMENT;
 
-	// OPTUX3 queries these bones to position weapons when players are killed
+	// TF queries these bones to position weapons when players are killed
 #if defined( TF_DLL )
 	boneMask |= BONE_USED_BY_BONE_MERGE;
 #endif

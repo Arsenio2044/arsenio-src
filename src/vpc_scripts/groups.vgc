@@ -8,7 +8,12 @@
 // Group definitions //
 ///////////////////////
 
-
+$Group "gamedlls"
+{
+	"client"
+	"server"
+	"fireui"
+}
 
 $Group "game"
 {
@@ -18,35 +23,18 @@ $Group "game"
 	"server"
 	"tier1"
 	"vgui_controls"
-	"tuxui"
-}
-
-$Group "shaders"
-{
-	"game_shader_dx9"
-}
-
-$Group "everything"
-{
+	"fireui"
 	"captioncompiler"
-	"client"
 	"fgdlib"
-	"game_shader_dx9"
 	"glview"
 	"height2normal"
-	"mathlib"
 	"motionmapper"
 	"phonemeextractor"
 	"qc_eyes"
-	"raytrace"
-	"server"
 	"serverplugin_empty"
 	"tgadiff"
-	"tier1"
 	"vbsp"
-	"vgui_controls"
 	"vice"
-	"tuxui"
 	"vrad_dll"
 	"vrad_launcher"
 	"vtf2tga"
@@ -54,6 +42,13 @@ $Group "everything"
 	"vvis_dll"
 	"vvis_launcher"
 }
+
+$Group "shaders"
+{
+	"game_shader_dx9"
+}
+
+
 
 $Group "dedicated"
 {

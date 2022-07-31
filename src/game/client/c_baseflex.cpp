@@ -164,7 +164,7 @@ void C_BaseFlex::Spawn()
 	InitPhonemeMappings();
 }
 
-// OPTUX3 Player overrides all of these with class specific files
+// TF Player overrides all of these with class specific files
 void C_BaseFlex::InitPhonemeMappings()
 {
 	SetupMappings( "phonemes" );
@@ -352,7 +352,7 @@ bool CFlexSceneFileManager::Init()
 #endif
 
 #if defined( TF_CLIENT_DLL )
-	// HACK TO ALL OPTUX3 TO HAVE PER CLASS OVERRIDES
+	// HACK TO ALL TF TO HAVE PER CLASS OVERRIDES
 	char const *pTFClasses[] = 
 	{
 		"scout",

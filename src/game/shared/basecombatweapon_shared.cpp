@@ -67,7 +67,7 @@ ConVar tf_weapon_criticals_force_random( "tf_weapon_criticals_force_random", "0"
 ConVar tf_weapon_criticals_bucket_cap( "tf_weapon_criticals_bucket_cap", "1000.0", FCVAR_REPLICATED | FCVAR_CHEAT );
 ConVar tf_weapon_criticals_bucket_bottom( "tf_weapon_criticals_bucket_bottom", "-250.0", FCVAR_REPLICATED | FCVAR_CHEAT );
 ConVar tf_weapon_criticals_bucket_default( "tf_weapon_criticals_bucket_default", "300.0", FCVAR_REPLICATED | FCVAR_CHEAT );
-#endif // OPTUX3
+#endif // TF
 
 ConVar gunsounds( "gunsounds", "1", FCVAR_REPLICATED );
 
@@ -115,7 +115,7 @@ CBaseCombatWeapon::CBaseCombatWeapon()
 	m_flCritTokenBucket = tf_weapon_criticals_bucket_default.GetFloat();
 	m_nCritChecks = 1;
 	m_nCritSeedRequests = 0;
-#endif // OPTUX3
+#endif // TF
 }
 
 //-----------------------------------------------------------------------------

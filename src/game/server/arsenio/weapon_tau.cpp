@@ -295,9 +295,28 @@ void CWeaponGaussGun::ChargedFire( void )
 
 	QAngle	viewPunch;
 
+#ifdef ARSENIO_DLL
 	viewPunch.x = random->RandomFloat( -4.0f, -8.0f );
 	viewPunch.y = random->RandomFloat( -0.25f,  0.25f );
 	viewPunch.z = 0;
+
+#endif
+
+
+#ifdef OPTUX3_DLL
+	viewPunch.x = random->RandomFloat(-1.0f, -1.0f);
+	viewPunch.y = random->RandomFloat(-0.05f, 0.05f);
+	viewPunch.z = 0;
+
+#endif
+
+#if !defined( ARSENIO_DLL ) && !defined( OPTUX3_DLL )
+
+	viewPunch.x = random->RandomFloat(-0.0f, -0.0f);
+	viewPunch.y = random->RandomFloat(-0.00f, 0.00f);
+	viewPunch.z = 0;
+
+#endif
 
 	pOwner->ViewPunch( viewPunch );
 

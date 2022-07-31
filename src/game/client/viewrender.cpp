@@ -1928,7 +1928,7 @@ void CViewRender::RenderView( const CViewSetup &view, int nClearFlags, int whatT
 	{
 		// We know they were running at least 8.0 when the game started...we check the 
 		// value in ClientDLL_Init()...so they must be messing with their DirectX settings.
-		if ( ( Q_stricmp( COM_GetModDirectory(), "optux3" ) == 0 ) || ( Q_stricmp( COM_GetModDirectory(), "tf_beta" ) == 0 ) )
+		if ( ( Q_stricmp( COM_GetModDirectory(), "tf" ) == 0 ) || ( Q_stricmp( COM_GetModDirectory(), "tf_beta" ) == 0 ) )
 		{
 			static bool bFirstTime = true;
 			if ( bFirstTime )

@@ -18,7 +18,6 @@ STUB_WEAPON_CLASS( weapon_binoculars, WeaponBinoculars, C_BaseHLCombatWeapon );
 STUB_WEAPON_CLASS( weapon_bugbait, WeaponBugBait, C_BaseHLCombatWeapon );
 STUB_WEAPON_CLASS( weapon_flaregun, Flaregun, C_BaseHLCombatWeapon );
 STUB_WEAPON_CLASS( weapon_annabelle, WeaponAnnabelle, C_BaseHLCombatWeapon );
-STUB_WEAPON_CLASS( weapon_gauss, WeaponGaussGun, C_BaseHLCombatWeapon );
 STUB_WEAPON_CLASS( weapon_cubemap, WeaponCubemap, C_BaseCombatWeapon );
 STUB_WEAPON_CLASS( weapon_alyxgun, WeaponAlyxGun, C_HLSelectFireMachineGun );
 STUB_WEAPON_CLASS( weapon_citizenpackage, WeaponCitizenPackage, C_BaseHLCombatWeapon );
@@ -43,10 +42,25 @@ STUB_WEAPON_CLASS( weapon_hopwire, WeaponHopwire, C_BaseHLCombatWeapon );
 STUB_WEAPON_CLASS( weapon_oldmanharpoon, WeaponOldManHarpoon, C_WeaponCitizenPackage );
 #endif
 
+#ifdef ARSENIO
+
 STUB_WEAPON_CLASS( weapon_bulk, WeaponBULK, C_BaseHLCombatWeapon );
-STUB_WEAPON_CLASS( weapon_mp5k, WeaponMP5K, C_HLSelectFireMachineGun );
+//STUB_WEAPON_CLASS( weapon_mp5k, WeaponMP5K, C_HLSelectFireMachineGun ); gonna move to optux 3 at a later date
 STUB_WEAPON_CLASS( weapon_pro836, WeaponPRO836, C_HLSelectFireMachineGun );
 STUB_WEAPON_CLASS( weapon_smg3, WeaponSMG3, C_HLSelectFireMachineGun );
+STUB_WEAPON_CLASS( weapon_gauss, WeaponGaussGun, C_BaseHLCombatWeapon );
+#endif
+
+#ifdef OPTUX3
+
+STUB_WEAPON_CLASS( weapon_gauss, WeaponGaussGun, C_BaseHLCombatWeapon );
+STUB_WEAPON_CLASS( weapon_m4a1, WeaponM4A1, C_HLSelectFireMachineGun );
+STUB_WEAPON_CLASS( weapon_mp5, WeaponMP5, C_HLSelectFireMachineGun );
+#endif
+
+
+
+
 
 
 

@@ -95,7 +95,9 @@ void CNPC_BloodSeeker::Precache()
 
 	PrecacheModel("models/BloodSeeker.mdl");
 
+#ifdef OPTUX3_DLL
 	UTIL_PrecacheOther("npc_headcrab");
+#endif
 
 	PrecacheScriptSound("BloodSeeker.Shot");
 	PrecacheScriptSound("BloodSeeker.Beamsound");
