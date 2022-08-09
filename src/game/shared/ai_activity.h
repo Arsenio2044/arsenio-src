@@ -258,8 +258,8 @@ typedef enum
 	// IVEngine 2 combat system
 	ACT_SHOTGUN_CHAMBER,		// For BulkCannon
 	ACT_VM_SPRINT,				// For sprinting animations
-	ACT_VM_INSPECT,				// Has no purpose besides exiting sprint animations anymore. Leftover from IVEngine 1.
-	ACT_VM_WALK,
+	ACT_VM_WALK,				// Walking animation
+	ACT_VM_FIRSTDRAW,			// First draw animation
 
 	ACT_VM_ATTACH_SILENCER,
 	ACT_VM_DETACH_SILENCER,

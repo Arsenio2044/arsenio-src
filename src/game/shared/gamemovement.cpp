@@ -28,6 +28,11 @@
 #define BLOCK_FLOOR 1
 #define BLOCK_WALL  2
 
+#ifdef OPTUX3
+// Limit parkour
+#define DUCKJUMP_SCALING  0.2f
+#endif
+
 #define ORIGINAL_JUMP_HEIGHT 21.0
 
 #include "filesystem.h"
@@ -66,12 +71,14 @@ ConVar xc_uncrouch_on_jump( "xc_uncrouch_on_jump", "1", FCVAR_ARCHIVE, "Uncrouch
 ConVar player_limit_jump_speed( "player_limit_jump_speed", "1", FCVAR_REPLICATED );
 #endif
 
+#if !defined ( OPTUX3_CLIENT ) && !defined( OPTUX3_DLL )
 // Camera Bob for Arsenio.
 ConVar cl_viewbob_enabled("cl_viewbob_enabled", "1", 0, "Oscillation Toggle", true, 0, true, 1);
 ConVar cl_viewbob_timer("cl_viewbob_timer", "6", 0, "Speed of Oscillation");
 ConVar cl_viewbob_scale_x("cl_viewbob_scale_x", "0.0", 0, "Magnitude of Oscillation");
 ConVar cl_viewbob_scale_y("cl_viewbob_scale_y", "0.1", 0, "Magnitude of Oscillation");
 ConVar cl_viewbob_scale_z("cl_viewbob_scale_z", "0.1", 0, "Magnitude of Oscillation");
+#endif
 
 // option_duck_method is a carrier convar. Its sole purpose is to serve an easy-to-flip
 // convar which is ONLY set by the X360 controller menu to tell us which way to bind the
@@ -728,7 +735,78 @@ bool CGameMovement::CheckInterval( IntervalType_t type )
 	}
 }
 	
+#ifdef OPTUX3
+// Limits parkour.
+void CGameMovement::DoDuckJump(float flFraction)
+{
+	if (flFraction >= 1.0f)
+	{
+		// Since we accelerate the ducking time artificially say that we are ducking so we don't fly up in the air
+		player->AddFlag(FL_DUCKING);
+		player->m_Local.m_bDucked = true;
+		player->m_Local.m_bDucking = false;
 
+		// Force the view offset to be "fully ducked"
+		player->SetViewOffset(GetPlayerViewOffset(true));
+	}
+	else
+	{
+		// Move our view down
+		SetDuckedEyeOffset(flFraction);
+
+		// Move our body up a fraction of the difference between fully crouched and fully standing
+		Vector hullSizeNormal = VEC_HULL_MAX - VEC_HULL_MIN;
+		Vector hullSizeCrouch = VEC_DUCK_HULL_MAX - VEC_DUCK_HULL_MIN;
+		Vector viewDelta = (hullSizeNormal - hullSizeCrouch) * DUCKJUMP_SCALING * flFraction;
+		Vector out;
+		VectorAdd(mv->GetAbsOrigin(), viewDelta, out);
+		mv->SetAbsOrigin(out);
+
+		// See if we are stuck?
+		FixPlayerCrouchStuck(true);
+
+		// Recategorize position since ducking can change origin
+		CategorizePosition();
+	}
+}
+
+void CGameMovement::DoUnDuckJump(float flFraction)
+{
+	if (flFraction <= 0.0f)
+	{
+		// Since we accelerate the ducking time artificially say that we are not ducking so we don't go through the floor
+		player->m_Local.m_bDucked = false;
+		player->RemoveFlag(FL_DUCKING);
+		player->m_Local.m_bDucking = false;
+		player->m_Local.m_bInDuckJump = false;
+
+		// Set our view offset to fully standing
+		player->SetViewOffset(GetPlayerViewOffset(false));
+		player->m_Local.m_flDucktime = 0;
+	}
+	else
+	{
+		// Move our view up
+		SetDuckedEyeOffset(flFraction);
+
+		// Move our body down a fraction of the difference between fully crouched and fully standing
+		Vector hullSizeNormal = VEC_HULL_MAX - VEC_HULL_MIN;
+		Vector hullSizeCrouch = VEC_DUCK_HULL_MAX - VEC_DUCK_HULL_MIN;
+		Vector viewDelta = (hullSizeNormal - hullSizeCrouch) * DUCKJUMP_SCALING * flFraction;
+		viewDelta.Negate();
+		Vector out;
+		VectorAdd(mv->GetAbsOrigin(), viewDelta, out);
+
+		mv->SetAbsOrigin(out);
+
+		// See if we are stuck?
+		FixPlayerCrouchStuck(true);
+
+		// Recategorize position since ducking can change origin
+		CategorizePosition();
+	}
+}
+#endif
 //-----------------------------------------------------------------------------
 // Purpose: 
 // Input  : ducked - 
@@ -1991,7 +2069,7 @@ void CGameMovement::StayOnGround( void )
 //-----------------------------------------------------------------------------
 void CGameMovement::WalkMove( void )
 {
-
+#if !defined ( OPTUX3_CLIENT ) && !defined( OPTUX3_DLL )
 	//view bob code for Arsenio
 	if (cl_viewbob_enabled.GetInt() == 1 && !engine->IsPaused())
 	{
@@ -2002,6 +2080,7 @@ void CGameMovement::WalkMove( void )
 		player->ViewPunch(QAngle(xoffset, yoffset, zoffset));
 	}
 	//end view bob code
+#endif
 
 	int i;
 

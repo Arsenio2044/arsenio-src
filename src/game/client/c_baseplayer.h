@@ -109,6 +109,9 @@ public:
 	C_BaseViewModel		*GetViewModel( int viewmodelindex = 0, bool bObserverOK=true );
 	C_BaseCombatWeapon	*GetActiveWeapon( void ) const;
 	const char			*GetTracerType( void );
+#ifdef OPTUX3_CLIENT
+	void				AddViewBob(Vector& eyeOrigin, QAngle& eyeAngles, bool calculate = false);
+#endif
 
 	// View model prediction setup
 	virtual void		CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, float &zFar, float &fov );

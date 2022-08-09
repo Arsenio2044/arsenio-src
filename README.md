@@ -14,6 +14,16 @@ IVEngine 2 is an heavily improved engine based on Source SDK 2013.
 More will be documented on the wiki.
 
 
+# The games
+
+Arsenio
+
+it is recommended you use the code for "arsenio" as it is more stable compared to Optux3.
+
+Operation: Tuxxego 3
+
+WIP code and some of it may be unstable.
+
  
  # Credits
  

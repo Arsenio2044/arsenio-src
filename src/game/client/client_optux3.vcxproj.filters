@@ -1883,10 +1883,16 @@
     <ClInclude Include="..\..\game\shared\episodic\npc_advisor_shared.h">
       <Filter>Source Files\HL2 DLL</Filter>
     </ClInclude>
+    <ClInclude Include="IVEngine2\c_bobmodel.h">
+      <Filter>Source Files\IVEngine2</Filter>
+    </ClInclude>
     <ClInclude Include="IVEngine2\VGUI\hsmapoverview.h">
       <Filter>Source Files\IVEngine2</Filter>
     </ClInclude>
     <ClInclude Include="IVEngine2\hud_radar_panel.h">
+      <Filter>Source Files\IVEngine2</Filter>
+    </ClInclude>
+    <ClInclude Include="IVEngine2\loadingbg.h">
       <Filter>Source Files\IVEngine2</Filter>
     </ClInclude>
     <ClInclude Include="c_vehicle_airboat.h">
@@ -3226,10 +3232,16 @@
     <ClCompile Include="hl2\vgui_rootpanel_hl2.cpp">
       <Filter>Source Files\HL2 DLL</Filter>
     </ClCompile>
+    <ClCompile Include="IVEngine2\c_bobmodel.cpp">
+      <Filter>Source Files\IVEngine2</Filter>
+    </ClCompile>
     <ClCompile Include="IVEngine2\VGUI\hsmapoverview.cpp">
       <Filter>Source Files\IVEngine2</Filter>
     </ClCompile>
     <ClCompile Include="IVEngine2\hud_radar_panel.cpp">
+      <Filter>Source Files\IVEngine2</Filter>
+    </ClCompile>
+    <ClCompile Include="IVEngine2\loadingbg.cpp">
       <Filter>Source Files\IVEngine2</Filter>
     </ClCompile>
     <ClCompile Include="c_weapon_egar.cpp">

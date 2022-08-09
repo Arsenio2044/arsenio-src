@@ -347,7 +347,20 @@ FileWeaponInfo_t::FileWeaponInfo_t()
 	bShowUsageHint = false;
 	m_bAllowFlipping = true;
 	m_bBuiltRightHanded = true;
+
+// New stuff
+
+	flCameraMovementScale = 1.0f; // Reloading camera.
+	*szCameraAttachment = 0; // Also for reloading camera.
+	bHaveCamera = false; // Has a reloading camera.
+	bHasFirstDrawAnim = false; // Does the viewmodel have a first draw animation?
+	szMuzzleFlashTexture[0] = 0;  // Muzzle flash texture.
+	roundsPerMinute = 0.0f; // Rounds per minute.
 	iWeaponLength = 0;
+
+
+
+
 }
 
 #ifdef CLIENT_DLL
@@ -370,6 +383,8 @@ void FileWeaponInfo_t::Parse( KeyValues *pKeyValuesData, const char *szWeaponNam
 
 	iSlot = pKeyValuesData->GetInt( "bucket", 0 );
 	iPosition = pKeyValuesData->GetInt( "bucket_position", 0 );
+
+
 	
 	// Use the console (X360) buckets if hud_fastswitch is set to 2.
 #ifdef CLIENT_DLL
@@ -386,15 +401,34 @@ void FileWeaponInfo_t::Parse( KeyValues *pKeyValuesData, const char *szWeaponNam
 	iDefaultClip1 = pKeyValuesData->GetInt( "default_clip", iMaxClip1 );		// amount of primary ammo placed in the primary clip when it's picked up
 	iDefaultClip2 = pKeyValuesData->GetInt( "default_clip2", iMaxClip2 );		// amount of secondary ammo placed in the secondary clip when it's picked up
 	iWeight = pKeyValuesData->GetInt( "weight", 0 );
-	m_flViewModelFOV = pKeyValuesData->GetFloat("fov", 54.0f);
+	m_flViewModelFOV = pKeyValuesData->GetFloat("fov", 70.0f);
 
-	// im still not sure if "Collision" is the right name for it
+	// IVENGINE 2
+	
+	roundsPerMinute = 1 / (pKeyValuesData->GetFloat("rpm", 0.0f) / 60);
+
+	bHasFirstDrawAnim = pKeyValuesData->GetBool("HasFirstDrawAnim");
+	V_strncpy(szMuzzleFlashTexture, pKeyValuesData->GetString("MuzzleflashTexture", "effects/muzzleflash_light"), MAX_WEAPON_STRING);
+
+
+	if (KeyValues* kvCameraAttachment = pKeyValuesData->FindKey("CameraAttachment"))
+	{
+		const char* soundname = kvCameraAttachment->GetString("Attachment");
+		Q_strncpy(szCameraAttachment, soundname, MAX_WEAPON_STRING);
+		bHaveCamera = true;
+		flCameraMovementScale = kvCameraAttachment->GetFloat("Amount");
+	}
+
+
+	// Weapon Collision.
 	if (KeyValues* kvCollision = pKeyValuesData->FindKey("Collision"))
 	{
-		UTIL_StringToVector(vCollisionOffset.Base(), kvCollision->GetString("Offset", "0 0 0"));
-		UTIL_StringToVector(angCollisionRotation.Base(), kvCollision->GetString("Rotation", "0 0 0"));
-		iWeaponLength = kvCollision->GetInt("Length", 0);
+		UTIL_StringToVector(vCollisionOffset.Base(), kvCollision->GetString("Offset", "-15 0 -20"));
+		UTIL_StringToVector(angCollisionRotation.Base(), kvCollision->GetString("Rotation", "-90 0 0"));
+		iWeaponLength = kvCollision->GetInt("Length", 27);
 	}
+
+// END OF IVENGINE 2
 
 	iRumbleEffect = pKeyValuesData->GetInt( "rumble", -1 );
 	

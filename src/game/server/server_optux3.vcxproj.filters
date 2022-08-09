@@ -1775,6 +1775,9 @@
     <ClInclude Include="optux3\npc_cremator.h">
       <Filter>Source Files\OPTUX3 DLL</Filter>
     </ClInclude>
+    <ClInclude Include="optux3\nz_base.h">
+      <Filter>Source Files\OPTUX3 DLL</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\game\shared\player_mobility_defs.h">
       <Filter>Source Files\OPTUX3 DLL</Filter>
     </ClInclude>
@@ -3379,13 +3382,25 @@
     <ClCompile Include="optux3\npc_cremator.cpp">
       <Filter>Source Files\OPTUX3 DLL</Filter>
     </ClCompile>
+    <ClCompile Include="optux3\nz_base.cpp">
+      <Filter>Source Files\OPTUX3 DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="optux3\nz_common.cpp">
+      <Filter>Source Files\OPTUX3 DLL</Filter>
+    </ClCompile>
     <ClCompile Include="searchpath_manager.cpp">
+      <Filter>Source Files\OPTUX3 DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="hl2\weapon_egar.cpp">
       <Filter>Source Files\OPTUX3 DLL</Filter>
     </ClCompile>
     <ClCompile Include="optux3\weapon_m4a1.cpp">
       <Filter>Source Files\OPTUX3 DLL</Filter>
     </ClCompile>
     <ClCompile Include="optux3\weapon_mp5.cpp">
+      <Filter>Source Files\OPTUX3 DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="optux3\weapon_p90.cpp">
       <Filter>Source Files\OPTUX3 DLL</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\weapon_tau.cpp">

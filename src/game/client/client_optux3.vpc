@@ -15,7 +15,7 @@ $Configuration
 	$Compiler
 	{
 		$AdditionalIncludeDirectories	".\hl2;.\hl2\elements;$SRCDIR\game\shared\hl2;$SRCDIR\game\shared\episodic;..\..\public;$BASE"
-		$PreprocessorDefinitions		"$BASE;HL2_CLIENT_DLL;IVENGINE2;OPTUX3;OPTUX3_CLIENT"
+		$PreprocessorDefinitions		"$BASE;HL2_CLIENT_DLL;IVENGINE2;HL2_EPISODIC;OPTUX3;OPTUX3_CLIENT"
 	}
 }
 
@@ -47,6 +47,10 @@ $Project "Client - Optux3"
 			$File	"IVEngine2\hud_radar_panel.h"
 			$File	"IVEngine2\VGUI\hsmapoverview.cpp"			
 			$File	"IVEngine2\VGUI\hsmapoverview.h"
+			$File	"IVEngine2\loadingbg.cpp"			
+			$File	"IVEngine2\loadingbg.h"
+			$File	"IVEngine2\c_bobmodel.cpp"			
+			$File	"IVEngine2\c_bobmodel.h"
 		}
 
 

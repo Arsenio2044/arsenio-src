@@ -78,7 +78,7 @@ void BasePanel::OnThink()
 		}
 		else if (IsBackgroundMusicPlaying() == true)
 		{
-			if (GetGameUI2().IsInBackgroundLevel() == false || GetGameUI2().IsInLevel() == true)
+			if (GetGameUI2().IsInBackgroundLevel() == false || GetGameUI2().IsInLoading() == false || GetGameUI2().IsInLevel() == true)
 				ReleaseBackgroundMusic();
 		}
 	}

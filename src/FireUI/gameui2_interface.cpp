@@ -138,7 +138,7 @@ void GameUI2::OnLevelShutdown()
 
 bool GameUI2::IsInLevel()
 {
-	if (EngineClient->IsInGame() == true && EngineClient->IsLevelMainMenuBackground() == false)
+	if (EngineClient->IsInGame() == true && EngineClient->IsLevelMainMenuBackground() == false && EngineClient->IsDrawingLoadingImage() == false)
 		return true;
 
 	return false;

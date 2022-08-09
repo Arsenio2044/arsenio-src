@@ -20,12 +20,12 @@
 
 // ==============================================================
 
-class CWeaponMP5 : public CHLSelectFireMachineGun
+class CWeaponP90 : public CHLMachineGun
 {
 public:
-	DECLARE_CLASS( CWeaponMP5, CHLSelectFireMachineGun );
+	DECLARE_CLASS( CWeaponP90, CHLMachineGun );
 
-	CWeaponMP5();
+	CWeaponP90();
 
 	DECLARE_SERVERCLASS();
 
@@ -42,29 +42,29 @@ public:
 };
 
 
-IMPLEMENT_SERVERCLASS_ST(CWeaponMP5, DT_WeaponMP5)
+IMPLEMENT_SERVERCLASS_ST(CWeaponP90, DT_WeaponP90)
 END_SEND_TABLE()
 
-LINK_ENTITY_TO_CLASS( weapon_mp5, CWeaponMP5 );
-PRECACHE_WEAPON_REGISTER(weapon_mp5);
+LINK_ENTITY_TO_CLASS( weapon_p90, CWeaponP90 );
+PRECACHE_WEAPON_REGISTER(weapon_p90);
 
-acttable_t	CWeaponMP5::m_acttable[] = 
+acttable_t	CWeaponP90::m_acttable[] = 
 {
 	{ ACT_RANGE_ATTACK1, ACT_RANGE_ATTACK_SMG2, true },
 };
 
-IMPLEMENT_ACTTABLE(CWeaponMP5);
+IMPLEMENT_ACTTABLE(CWeaponP90);
 
 //=========================================================
-CWeaponMP5::CWeaponMP5( )
+CWeaponP90::CWeaponP90( )
 {
-	m_fMaxRange1		= 520;  
+	m_fMaxRange1		= 3000;  
 	m_fMinRange1		= 32;
 
-	m_iFireMode			= FIREMODE_3RNDBURST;
+
 }
 
-void CWeaponMP5::Precache( void )
+void CWeaponP90::Precache( void )
 {
 	BaseClass::Precache();  
 }
@@ -73,9 +73,9 @@ void CWeaponMP5::Precache( void )
 // Purpose: 
 // Output : const Vector
 //-----------------------------------------------------------------------------
-const Vector &CWeaponMP5::GetBulletSpread( void )
+const Vector &CWeaponP90::GetBulletSpread( void )
 {
-	static const Vector cone = VECTOR_CONE_12DEGREES; 
+	static const Vector cone = VECTOR_CONE_20DEGREES; 
 	return cone;
 }
 
@@ -84,7 +84,7 @@ const Vector &CWeaponMP5::GetBulletSpread( void )
 // Input  : *pEvent - 
 //			*pOperator - 
 //-----------------------------------------------------------------------------
-void CWeaponMP5::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator )
+void CWeaponP90::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator )
 {
 	switch( pEvent->event )
 	{
@@ -108,4 +108,24 @@ void CWeaponMP5::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatChara
 			break;
 	}
 }
+
+void CWeaponP90::AddViewKick(void)
+{
+#define	EASY_DAMPEN			2.5f	// Yes.
+#define	MAX_VERTICAL_KICK	11.0f	//Degrees - was 1.0
+#define	SLIDE_LIMIT			2.0f	//Seconds - was 2.0
+
+	// Credit Breadman for the viewkick, btw E:Z 2 looks really good!
+
+
+	//Get the view kick
+	CBasePlayer* pPlayer = ToBasePlayer(GetOwner());
+
+	if (pPlayer == NULL)
+		return;
+
+	DoMachineGunKick(pPlayer, EASY_DAMPEN, MAX_VERTICAL_KICK, m_fFireDuration, SLIDE_LIMIT);
+}
+
+
 

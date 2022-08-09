@@ -1849,6 +1849,7 @@ protected:
 	// HACK FOR BOTS
 	friend class CBotManager;
 	static edict_t* s_PlayerEdict; // must be set before calling constructor
+
 public:
 	DECLARE_DATADESC();
 	DECLARE_SERVERCLASS();
@@ -1938,6 +1939,10 @@ public:
 	void					PauseBonusProgress(bool bPause = true);
 	void					SetBonusProgress(int iBonusProgress);
 	void					SetBonusChallenge(int iBonusChallenge);
+
+#ifdef OPTUX3_DLL
+	void					AddViewBob(Vector& eyeOrigin, QAngle& eyeAngles, bool calculate = false);
+#endif
 
 	int						GetBonusProgress() const { return m_iBonusProgress; }
 	int						GetBonusChallenge() const { return m_iBonusChallenge; }

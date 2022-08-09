@@ -52,7 +52,7 @@ public:
 
 	virtual const Vector& GetBulletSpread( void )
 	{
-		static const Vector cone = VECTOR_CONE_5DEGREES;
+		static const Vector cone = VECTOR_CONE_15DEGREES;
 		return cone;
 	}
 
@@ -141,7 +141,7 @@ IMPLEMENT_ACTTABLE(CWeaponSMG1);
 CWeaponSMG1::CWeaponSMG1( )
 {
 	m_fMinRange1		= 0;// No minimum range. 
-	m_fMaxRange1		= 1400;
+	m_fMaxRange1		= 520;
 
 	m_bAltFiresUnderwater = false;
 }
@@ -163,11 +163,11 @@ void CWeaponSMG1::Equip( CBaseCombatCharacter *pOwner )
 {
 	if( pOwner->Classify() == CLASS_PLAYER_ALLY )
 	{
-		m_fMaxRange1 = 3000;
+		m_fMaxRange1 = 520;
 	}
 	else
 	{
-		m_fMaxRange1 = 1400;
+		m_fMaxRange1 = 520;
 	}
 
 	BaseClass::Equip( pOwner );
@@ -307,17 +307,20 @@ bool CWeaponSMG1::Reload( void )
 //-----------------------------------------------------------------------------
 void CWeaponSMG1::AddViewKick( void )
 {
-	#define	EASY_DAMPEN			0.5f
-	#define	MAX_VERTICAL_KICK	1.0f	//Degrees
-	#define	SLIDE_LIMIT			2.0f	//Seconds
-	
-	//Get the view kick
-	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
+#define	EASY_DAMPEN			2.5f	// Yes.
+#define	MAX_VERTICAL_KICK	11.0f	//Degrees - was 1.0
+#define	SLIDE_LIMIT			2.0f	//Seconds - was 2.0
 
-	if ( pPlayer == NULL )
+	// Credit Breadman for the viewkick, btw E:Z 2 looks really good!
+
+
+	//Get the view kick
+	CBasePlayer* pPlayer = ToBasePlayer(GetOwner());
+
+	if (pPlayer == NULL)
 		return;
 
-	DoMachineGunKick( pPlayer, EASY_DAMPEN, MAX_VERTICAL_KICK, m_fFireDuration, SLIDE_LIMIT );
+	DoMachineGunKick(pPlayer, EASY_DAMPEN, MAX_VERTICAL_KICK, m_fFireDuration, SLIDE_LIMIT);
 }
 
 //-----------------------------------------------------------------------------

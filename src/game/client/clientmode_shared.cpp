@@ -37,6 +37,14 @@
 #include "hud_vote.h"
 #include "ienginevgui.h"
 #include "sourcevr/isourcevirtualreality.h"
+
+// Only for Optux 3 for now.
+#ifdef OPTUX3
+#include "GameUI/IGameUI.h"
+#include "IVEngine2/loadingbg.h"
+#include "../FireUI/basepanel.h"
+#endif
+
 #if defined( _X360 )
 #include "xbox/xbox_console.h"
 #endif
@@ -76,6 +84,10 @@ class CHudVote;
 
 static vgui::HContext s_hVGuiContext = DEFAULT_VGUI_CONTEXT;
 
+#ifdef OPTUX3
+static CDllDemandLoader g_GameUI("GameUI");
+#endif
+
 ConVar cl_drawhud( "cl_drawhud", "1", FCVAR_CHEAT, "Enable the rendering of the hud" );
 ConVar hud_takesshots( "hud_takesshots", "0", FCVAR_CLIENTDLL | FCVAR_ARCHIVE, "Auto-save a scoreboard screenshot at the end of a map." );
 ConVar hud_freezecamhide( "hud_freezecamhide", "0", FCVAR_CLIENTDLL | FCVAR_ARCHIVE, "Hide the HUD during freeze-cam" );
@@ -85,6 +97,14 @@ extern ConVar v_viewmodel_fov;
 extern ConVar voice_modenable;
 
 extern bool IsInCommentaryMode( void );
+
+#ifdef OPTUX3
+CMapLoadBG* pPanelBg;
+IMaterial* pMatMapBg;
+BasePanel* pBasePanel;
+#endif
+
+
 
 #ifdef VOICE_VOX_ENABLE
 void VoxCallback( IConVar *var, const char *oldString, float oldFloat )
@@ -276,6 +296,10 @@ ClientModeShared::ClientModeShared()
 	m_pChatElement = NULL;
 	m_pWeaponSelection = NULL;
 	m_nRootSize[ 0 ] = m_nRootSize[ 1 ] = -1;
+#ifdef OPTUX3
+	pPanelBg = NULL;
+	pMatMapBg = NULL;
+#endif
 
 #if defined( REPLAY_ENABLED )
 	m_pReplayReminderPanel = NULL;
@@ -366,6 +390,22 @@ void ClientModeShared::Init()
 
 	HOOK_MESSAGE( VGUIMenu );
 	HOOK_MESSAGE( Rumble );
+#ifdef OPTUX3
+	CreateInterfaceFn gameUIFactory = g_GameUI.GetFactory();
+	if (gameUIFactory)
+	{
+		IGameUI* pGameUI = (IGameUI*)gameUIFactory(GAMEUI_INTERFACE_VERSION, NULL);
+		if (pGameUI)
+		{
+			// Insert custom loading panel for the loading dialog
+			pPanelBg = new CMapLoadBG("Background");
+			pPanelBg->InvalidateLayout(false, true);
+			pPanelBg->SetVisible(false);
+			pPanelBg->MakePopup(false);
+			pGameUI->SetLoadingBackgroundDialog(pPanelBg->GetVPanel());
+		}
+	}
+#endif
 }
 
 
@@ -830,6 +870,27 @@ void ClientModeShared::LevelInit( const char *newmap )
 	// Reset any player explosion/shock effects
 	CLocalPlayerFilter filter;
 	enginesound->SetPlayerDSP( filter, 0, true );
+#ifdef OPTUX3
+	#ifdef _WIN32
+		char szMapBgName[MAX_PATH];
+	#else	// !_WIN32
+		char szMapBgName[PATH_MAX];
+	#endif	// _WIN32
+
+		Q_snprintf(szMapBgName, sizeof(szMapBgName), "vgui/loading/maps/%s", newmap);
+
+		pMatMapBg = materials->FindMaterial(szMapBgName, TEXTURE_GROUP_OTHER);
+
+		if (!pMatMapBg->IsErrorMaterial())
+		{
+			Q_snprintf(szMapBgName, sizeof(szMapBgName), "loading/maps/%s", newmap);
+			pPanelBg->SetNewBackgroundImage(szMapBgName);
+		}
+		else
+		{
+		pPanelBg->SetNewBackgroundImage("loading/default");
+		}
+#endif
 }
 
 //-----------------------------------------------------------------------------

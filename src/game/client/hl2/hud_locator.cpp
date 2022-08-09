@@ -121,17 +121,17 @@ void CHudLocator::VidInit( void )
 //-----------------------------------------------------------------------------
 bool CHudLocator::ShouldDraw( void )
 {
-	C_BaseHLPlayer *pPlayer = (C_BaseHLPlayer *)C_BasePlayer::GetLocalPlayer();
-	if ( !pPlayer )
-		return false;
+	//C_BaseHLPlayer *pPlayer = (C_BaseHLPlayer *)C_BasePlayer::GetLocalPlayer();
+	//if ( !pPlayer )
+	//	return false;
 
-	if( pPlayer->GetVehicle() )
-		return false;
+	//if( pPlayer->GetVehicle() )
+	//	return false;
 
-	if( pPlayer->m_HL2Local.m_vecLocatorOrigin == vec3_invalid )
-		return false;
-	
-	return true;
+	//if( pPlayer->m_HL2Local.m_vecLocatorOrigin == vec3_invalid )
+	//	return false;
+	//
+	return false;
 }
 
 //-----------------------------------------------------------------------------

@@ -1549,11 +1549,15 @@ void CHomingMissile::Explode()
 		launcher->CancelTarget( m_nIndex );
 	}
 	else {
+
+
 		// Homing missile could be fired from weapon_egar
 		CWeaponEGAR* egar = dynamic_cast<CWeaponEGAR*>(m_hOwner.Get());
 		if (egar) {
 			egar->CancelTarget( m_nIndex );
+
 		}
+
 	}
 	BaseClass::Explode();
 }

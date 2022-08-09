@@ -56,6 +56,8 @@ STUB_WEAPON_CLASS( weapon_gauss, WeaponGaussGun, C_BaseHLCombatWeapon );
 STUB_WEAPON_CLASS( weapon_gauss, WeaponGaussGun, C_BaseHLCombatWeapon );
 STUB_WEAPON_CLASS( weapon_m4a1, WeaponM4A1, C_HLSelectFireMachineGun );
 STUB_WEAPON_CLASS( weapon_mp5, WeaponMP5, C_HLSelectFireMachineGun );
+STUB_WEAPON_CLASS( weapon_p90, WeaponP90, C_HLSelectFireMachineGun );
+STUB_WEAPON_CLASS( weapon_molotov, WeaponMolotov, C_BaseHLCombatWeapon );
 #endif
 
 

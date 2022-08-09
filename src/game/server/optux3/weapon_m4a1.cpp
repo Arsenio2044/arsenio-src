@@ -20,10 +20,10 @@
 
 // ==============================================================
 
-class CWeaponM4A1 : public CHLSelectFireMachineGun
+class CWeaponM4A1 : public CHLMachineGun
 {
 public:
-	DECLARE_CLASS( CWeaponM4A1, CHLSelectFireMachineGun );
+	DECLARE_CLASS( CWeaponM4A1, CHLMachineGun );
 
 	CWeaponM4A1();
 
@@ -61,7 +61,6 @@ CWeaponM4A1::CWeaponM4A1( )
 	m_fMaxRange1		= 820;  // TUX: Should be good enough.
 	m_fMinRange1		= 32;
 
-	m_iFireMode			= FIREMODE_3RNDBURST;
 }
 
 void CWeaponM4A1::Precache( void )

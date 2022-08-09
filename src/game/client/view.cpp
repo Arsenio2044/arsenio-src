@@ -1280,6 +1280,20 @@ void CViewRender::Render( vrect_t *rect )
 				g_ClientVirtualReality.OverlayHUDQuadWithUndistort( view, bDoUndistort, g_pClientMode->ShouldBlackoutAroundHUD(), bTranslucent );
 			}
 		}
+		// IVEngine 2 Camera attachment code
+		if (pPlayer && pPlayer->InFirstPersonView() && pPlayer->GetViewModel(0))
+		{
+			int iCamAttachment = pPlayer->GetViewModel(0)->LookupAttachment("camera");
+
+			if (iCamAttachment != -1)
+			{
+				Vector cameraOrigin = Vector(0, 0, 0);
+				QAngle cameraAngles = QAngle(0, 0, 0);
+				pPlayer->GetViewModel(0)->GetAttachmentLocal(iCamAttachment, cameraOrigin, cameraAngles);
+				view.angles += cameraAngles;
+				view.origin += cameraOrigin;
+			}
+		}
     }
 
 

@@ -27,7 +27,7 @@
 #define	PISTOL_ACCURACY_SHOT_PENALTY_TIME		0.2f	// Applied amount of time each shot adds to the time we must recover from
 #define	PISTOL_ACCURACY_MAXIMUM_PENALTY_TIME	1.5f	// Maximum penalty to deal out
 
-ConVar	pistol_use_new_accuracy( "pistol_use_new_accuracy", "1" );
+ConVar	pistol_use_new_accuracy( "pistol_use_new_accuracy", "0" );
 
 //-----------------------------------------------------------------------------
 // CWeaponPistol
@@ -63,7 +63,7 @@ public:
 	virtual const Vector& GetBulletSpread( void )
 	{		
 		// Handle NPCs first
-		static Vector npcCone = VECTOR_CONE_5DEGREES;
+		static Vector npcCone = VECTOR_CONE_15DEGREES;
 		if ( GetOwner() && GetOwner()->IsNPC() )
 			return npcCone;
 			
@@ -78,12 +78,12 @@ public:
 											1.0f ); 
 
 			// We lerp from very accurate to inaccurate over time
-			VectorLerp( VECTOR_CONE_1DEGREES, VECTOR_CONE_6DEGREES, ramp, cone );
+			VectorLerp( VECTOR_CONE_15DEGREES, VECTOR_CONE_20DEGREES, ramp, cone );
 		}
 		else
 		{
 			// Old value
-			cone = VECTOR_CONE_4DEGREES;
+			cone = VECTOR_CONE_15DEGREES;
 		}
 
 		return cone;
@@ -159,7 +159,7 @@ CWeaponPistol::CWeaponPistol( void )
 	m_flAccuracyPenalty = 0.0f;
 
 	m_fMinRange1		= 24;
-	m_fMaxRange1		= 1500;
+	m_fMaxRange1		= 500;
 	m_fMinRange2		= 24;
 	m_fMaxRange2		= 200;
 
@@ -370,5 +370,5 @@ void CWeaponPistol::AddViewKick( void )
 	viewPunch.z = 0.0f;
 
 	//Add it to the view punch
-	pPlayer->ViewPunch( viewPunch );
+	pPlayer->ViewPunch(QAngle(random->RandomFloat(-6.0f, -3.0f), random->RandomFloat(-2.0f, 2.0f), 0.0f));
 }

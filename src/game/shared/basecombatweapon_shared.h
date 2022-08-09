@@ -251,6 +251,9 @@ public:
 	virtual void			ItemPostFrame( void );					// called each frame by the player PostThink
 	virtual void			ItemBusyFrame( void );					// called each frame by the player PostThink, if the player's not ready to attack yet
 	virtual void			ItemHolsterFrame( void ) {};			// called each frame by the player PreThink, if the weapon is holstered
+
+	const char				*GetMuzzleFlashTexture() { return m_pszMuzzleFlashTexture; }
+
 	virtual void			WeaponIdle( void );						// called when no buttons pressed
 	virtual void			HandleFireOnEmpty();					// Called when they have the attack button down
 																	// but they are out of ammo. The default implementation
@@ -292,7 +295,11 @@ public:
 	virtual const Vector&	GetBulletSpread( void );
 	virtual Vector			GetBulletSpread( WeaponProficiency_t proficiency )		{ return GetBulletSpread(); }
 	virtual float			GetSpreadBias( WeaponProficiency_t proficiency )			{ return 1.0; }
-	virtual float			GetFireRate( void );
+	virtual float			GetFireRate(void);
+
+
+
+
 	virtual int				GetMinBurst() { return 1; }
 	virtual int				GetMaxBurst() { return 1; }
 	virtual float			GetMinRestTime() { return 0.3; }
@@ -449,7 +456,6 @@ public:
 	void					InputHideWeapon( inputdata_t &inputdata );
 	void					Use( CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value );
 
-	virtual CDmgAccumulator	*GetDmgAccumulator( void ) { return NULL; }
 
 // Client only methods
 #else
@@ -487,9 +493,23 @@ public:
 	virtual bool			IsActiveByLocalPlayer( void );
 
 	bool					IsBeingCarried() const;
+#endif
+
+
+
+
+	const char* m_pszMuzzleFlashTexture;
+
+	bool					m_bFirstDraw;
+
+#if !defined( CLIENT_DLL )
+	virtual CDmgAccumulator* GetDmgAccumulator(void) { return NULL; }
+#else
 
 	// Is the carrier alive?
 	bool					IsCarrierAlive() const;
+
+	float					m_flNextFidgetTime;
 
 	// Returns the aiment render origin + angles
 	virtual int				DrawModel( int flags );
@@ -549,6 +569,9 @@ protected:
 	int						m_nCritChecks;
 	int						m_nCritSeedRequests;
 #endif // TF
+
+
+
 
 public:
 
@@ -634,7 +657,7 @@ private:
 	bool					m_bReloadHudHintDisplayed;	// Have we displayed a reload HUD hint since this weapon was deployed?
 	float					m_flHudHintPollTime;	// When to poll the weapon again for whether it should display a hud hint.
 	float					m_flHudHintMinDisplayTime; // if the hint is squelched before this, reset my counter so we'll display it again.
-	
+
 	// Server only
 #if !defined( CLIENT_DLL )
 

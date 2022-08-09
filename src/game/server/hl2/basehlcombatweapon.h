@@ -30,7 +30,10 @@ public:
 	// Default calls through to m_hOwner, but plasma weapons can override and shoot projectiles here.
 	virtual void	ItemPostFrame( void );
 	virtual void	FireBullets( const FireBulletsInfo_t &info );
-	virtual float	GetFireRate( void ) = 0;
+	inline float	GetFireRate()
+	{
+		return GetWpnData().roundsPerMinute;
+	}
 	virtual int		WeaponRangeAttack1Condition( float flDot, float flDist );
 	virtual bool	Deploy( void );
 

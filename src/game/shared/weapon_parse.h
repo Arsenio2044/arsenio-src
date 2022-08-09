@@ -98,10 +98,25 @@ public:
 	int						iFlags;									// miscellaneous weapon flags
 	char					szAmmo1[MAX_WEAPON_AMMO_NAME];			// "primary" ammo type
 	char					szAmmo2[MAX_WEAPON_AMMO_NAME];			// "secondary" ammo type
+	
 	float					m_flViewModelFOV;						// Dynamic Viewmodel FOV
+	char					szCameraAttachment[MAX_WEAPON_STRING];
+	bool					bHaveCamera;
+	float					flCameraMovementScale;
+	bool					bHasFirstDrawAnim;						// Does this weapon have a first draw animation the first time it's picked up?
+	char					szMuzzleFlashTexture[MAX_WEAPON_STRING];
+
+	float					roundsPerMinute;
+
+	int						iWeaponLength;
 	Vector					vCollisionOffset;
 	QAngle					angCollisionRotation;
-	int						iWeaponLength;
+
+
+
+	QAngle					recoilMin;								// If we don't want randomness, just use the min
+	QAngle					recoilMax;
+
 
 
 

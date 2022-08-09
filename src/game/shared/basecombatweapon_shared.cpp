@@ -12,7 +12,7 @@
 #include "physics_saverestore.h"
 #include "datacache/imdlcache.h"
 #include "activitylist.h"
-#ifndef ARSENIO
+#ifdef GAME_DLL
 #include "globalstate.h"
 #include "string_t.h"
 #endif
@@ -42,8 +42,7 @@
 
 #endif
 
-#ifndef ARSENIO
-
+#if GAME_DLL
 #include "hl2_player.h"
 #endif
 
@@ -184,6 +183,10 @@ void CBaseCombatWeapon::Spawn( void )
 
 	SetSolid( SOLID_BBOX );
 	m_flNextEmptySoundTime = 0.0f;
+
+	m_pszMuzzleFlashTexture = GetWpnData().szMuzzleFlashTexture;
+	m_bFirstDraw = true;
+
 
 	// Weapons won't show up in trace calls if they are being carried...
 	RemoveEFlags( EFL_USE_PARTITION_WHEN_NOT_SOLID );
@@ -755,6 +758,8 @@ void CBaseCombatWeapon::OnPickedUp( CBaseCombatCharacter *pNewOwner )
 		if ( filter.GetRecipientCount() )
 		{
 			CBaseEntity::EmitSound( filter, pNewOwner->entindex(), "Player.PickupWeapon" );
+			// CBaseEntity::EmitSound( filter, pNewOwner->entindex(), "Player.NewWeapon" );
+
 		}
 
 		// Robin: We don't want to delete weapons the player has picked up, so 
@@ -1470,7 +1475,16 @@ bool CBaseCombatWeapon::Deploy( )
 
 Activity CBaseCombatWeapon::GetDrawActivity( void )
 {
-	return ACT_VM_DRAW;
+	if (m_bFirstDraw && GetWpnData().bHasFirstDrawAnim)
+	{
+		m_bFirstDraw = false;
+		return ACT_VM_FIRSTDRAW;
+	}
+	else
+	{
+		return ACT_VM_DRAW;
+	}
+
 }
 
 //-----------------------------------------------------------------------------
@@ -2705,6 +2719,9 @@ BEGIN_DATADESC( CBaseCombatWeapon )
 	DEFINE_FIELD( m_bInReload, FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_bFireOnEmpty, FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_hOwner, FIELD_EHANDLE ),
+	DEFINE_FIELD(m_bFirstDraw, FIELD_BOOLEAN),
+
+
 
 	DEFINE_FIELD( m_iState, FIELD_INTEGER ),
 	DEFINE_FIELD( m_iszName, FIELD_STRING ),

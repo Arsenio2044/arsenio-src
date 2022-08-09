@@ -32,7 +32,6 @@ public:
 	const Vector	&GetBulletSpread( void );
 
 	void			Precache( void );
-	void			AddViewKick( void );
 	void			Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator );
 
 	float			GetFireRate( void ) { return 0.1f; }

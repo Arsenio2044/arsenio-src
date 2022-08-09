@@ -6,7 +6,7 @@
 
 $Macro SRCDIR		"..\.."
 $Macro GAMENAME 	"optux3" [!$SOURCESDK]
-$Macro GAMENAME 	"optux3" [$SOURCESDK]
+$Macro GAMENAME 	"mod_optux3" [$SOURCESDK]
 
 $Include "$SRCDIR\game\server\server_base.vpc"
 
@@ -15,7 +15,7 @@ $Configuration
 	$Compiler
 	{
 		$AdditionalIncludeDirectories	"$BASE;$SRCDIR\game\shared\hl2;$SRCDIR\game\shared\episodic;.\hl2;.\episodic"
-		$PreprocessorDefinitions		"$BASE;HL2_DLL;IVENGINE2;USES_SAVERESTORE;OPTUX3_DLL"
+		$PreprocessorDefinitions		"$BASE;HL2_DLL;HL2_EPISODIC;IVENGINE2;USES_SAVERESTORE;OPTUX3_DLL;OPTUX3"
 	}
 }
 
@@ -55,15 +55,20 @@ $Project "Server - Optux 3"
 			$File	"searchpath_manager.cpp"
 			$File	"optux3\weapon_m4a1.cpp"
 			$File	"optux3\weapon_mp5.cpp"
+			$File	"hl2\weapon_egar.cpp"
 			$File	"$SRCDIR\game\shared\player_mobility_defs.h"
 			$File	"$SRCDIR\game\shared\gamemovement_duck.cpp"
 			$File	"$SRCDIR\game\shared\gamemovement_mobility.cpp"
 			$File	"arsenio\weapon_tau.cpp"
 			$File	"arsenio\weapon_tau.h"
+			$File	"optux3\weapon_p90.cpp"
 			$File	"optux3\npc_aliengrunt.cpp"
 			$File	"optux3\npc_aliengrunt.h"
 			$File	"optux3\npc_cremator.cpp"
 			$File	"optux3\npc_cremator.h"
+			$File	"optux3\nz_base.h"
+			$File	"optux3\nz_base.cpp"
+			$File	"optux3\nz_common.cpp"
 
 
 		}

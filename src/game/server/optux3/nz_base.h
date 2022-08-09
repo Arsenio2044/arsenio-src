@@ -5,8 +5,8 @@
 // $NoKeywords: $
 //=============================================================================//
 
-#ifndef NPC_BASEZOMBIE_H
-#define NPC_BASEZOMBIE_H
+#ifndef NZ_BASE_H
+#define NZ_BASE_H
 #ifdef _WIN32
 #pragma once
 #endif
@@ -20,28 +20,28 @@
 
 #define	ENVELOPE_CONTROLLER		(CSoundEnvelopeController::GetController())
 
-#define ZOMBIE_MELEE_REACH	55
+#define NZ_MELEE_REACH	55
 
-extern int AE_ZOMBIE_ATTACK_RIGHT;
-extern int AE_ZOMBIE_ATTACK_LEFT;
-extern int AE_ZOMBIE_ATTACK_BOTH;
-extern int AE_ZOMBIE_SWATITEM;
-extern int AE_ZOMBIE_STARTSWAT;
-extern int AE_ZOMBIE_STEP_LEFT;
-extern int AE_ZOMBIE_STEP_RIGHT;
-extern int AE_ZOMBIE_SCUFF_LEFT;
-extern int AE_ZOMBIE_SCUFF_RIGHT;
-extern int AE_ZOMBIE_ATTACK_SCREAM;
-extern int AE_ZOMBIE_GET_UP;
-extern int AE_ZOMBIE_POUND;
+extern int AE_NZ_ATTACK_RIGHT;
+extern int AE_NZ_ATTACK_LEFT;
+extern int AE_NZ_ATTACK_BOTH;
+extern int AE_NZ_SWATITEM;
+extern int AE_NZ_STARTSWAT;
+extern int AE_NZ_STEP_LEFT;
+extern int AE_NZ_STEP_RIGHT;
+extern int AE_NZ_SCUFF_LEFT;
+extern int AE_NZ_SCUFF_RIGHT;
+extern int AE_NZ_ATTACK_SCREAM;
+extern int AE_NZ_GET_UP;
+extern int AE_NZ_POUND;
 
-#define ZOMBIE_BODYGROUP_HEADCRAB	1	// The crab on our head
+#define NZ_BODYGROUP_HEADCRAB	1	// The crab on our head
 
 // Pass these to claw attack so we know where to draw the blood.
-#define ZOMBIE_BLOOD_LEFT_HAND		0
-#define ZOMBIE_BLOOD_RIGHT_HAND		1
-#define ZOMBIE_BLOOD_BOTH_HANDS		2
-#define ZOMBIE_BLOOD_BITE			3
+#define NZ_BLOOD_LEFT_HAND		0
+#define NZ_BLOOD_RIGHT_HAND		1
+#define NZ_BLOOD_BOTH_HANDS		2
+#define NZ_BLOOD_BITE			3
 	
 
 enum HeadcrabRelease_t
@@ -60,20 +60,20 @@ enum HeadcrabRelease_t
 //=========================================================
 enum
 {
-	SCHED_ZOMBIE_CHASE_ENEMY = LAST_SHARED_SCHEDULE,
-	SCHED_ZOMBIE_MOVE_SWATITEM,
-	SCHED_ZOMBIE_SWATITEM,
-	SCHED_ZOMBIE_ATTACKITEM,
-	SCHED_ZOMBIE_RELEASECRAB,
-	SCHED_ZOMBIE_MOVE_TO_AMBUSH,
-	SCHED_ZOMBIE_WAIT_AMBUSH,
-	SCHED_ZOMBIE_WANDER_MEDIUM,	// medium range wandering behavior.
-	SCHED_ZOMBIE_WANDER_FAIL,
-	SCHED_ZOMBIE_WANDER_STANDOFF,
-	SCHED_ZOMBIE_MELEE_ATTACK1,
-	SCHED_ZOMBIE_POST_MELEE_WAIT,
+	SCHED_NZ_CHASE_ENEMY = LAST_SHARED_SCHEDULE,
+	SCHED_NZ_MOVE_SWATITEM,
+	SCHED_NZ_SWATITEM,
+	SCHED_NZ_ATTACKITEM,
+	SCHED_NZ_RELEASECRAB,
+	SCHED_NZ_MOVE_TO_AMBUSH,
+	SCHED_NZ_WAIT_AMBUSH,
+	SCHED_NZ_WANDER_MEDIUM,	// medium range wandering behavior.
+	SCHED_NZ_WANDER_FAIL,
+	SCHED_NZ_WANDER_STANDOFF,
+	SCHED_NZ_MELEE_ATTACK1,
+	SCHED_NZ_POST_MELEE_WAIT,
 
-	LAST_BASE_ZOMBIE_SCHEDULE,
+	LAST_BASE_NZ_SCHEDULE,
 };
 
 //=========================================================
@@ -81,42 +81,42 @@ enum
 //=========================================================
 enum 
 {
-	TASK_ZOMBIE_DELAY_SWAT = LAST_SHARED_TASK,
-	TASK_ZOMBIE_GET_PATH_TO_PHYSOBJ,
-	TASK_ZOMBIE_SWAT_ITEM,
-	TASK_ZOMBIE_DIE,
-	TASK_ZOMBIE_RELEASE_HEADCRAB,
-	TASK_ZOMBIE_WAIT_POST_MELEE,
+	TASK_NZ_DELAY_SWAT = LAST_SHARED_TASK,
+	TASK_NZ_GET_PATH_TO_PHYSOBJ,
+	TASK_NZ_SWAT_ITEM,
+	TASK_NZ_DIE,
+	TASK_NZ_RELEASE_HEADCRAB,
+	TASK_NZ_WAIT_POST_MELEE,
 
-	LAST_BASE_ZOMBIE_TASK,
+	LAST_BASE_NZ_TASK,
 };
 
 
 //=========================================================
-// Zombie conditions
+// NZ conditions
 //=========================================================
-enum Zombie_Conds
+enum NZ_Conds
 {
-	COND_ZOMBIE_CAN_SWAT_ATTACK = LAST_SHARED_CONDITION,
-	COND_ZOMBIE_RELEASECRAB,
-	COND_ZOMBIE_LOCAL_MELEE_OBSTRUCTION,
+	COND_NZ_CAN_SWAT_ATTACK = LAST_SHARED_CONDITION,
+	COND_NZ_RELEASECRAB,
+	COND_NZ_LOCAL_MELEE_OBSTRUCTION,
 
-	LAST_BASE_ZOMBIE_CONDITION,
+	LAST_BASE_NZ_CONDITION,
 };
 
 
 
-typedef CAI_BlendingHost< CAI_BehaviorHost<CAI_BaseNPC> > CAI_BaseZombieBase;
+typedef CAI_BlendingHost< CAI_BehaviorHost<CAI_BaseNPC> > CAI_NZBaseBase;
 
 //=========================================================
 //=========================================================
-abstract_class CNPC_BaseZombie : public CAI_BaseZombieBase
+abstract_class CNPC_NZBase : public CAI_NZBaseBase
 {
-	DECLARE_CLASS( CNPC_BaseZombie, CAI_BaseZombieBase );
+	DECLARE_CLASS( CNPC_NZBase, CAI_NZBaseBase );
 
 public:
-	CNPC_BaseZombie( void );
-	~CNPC_BaseZombie( void );
+	CNPC_NZBase( void );
+	~CNPC_NZBase( void );
 
 	void Spawn( void );
 	void Precache( void );
@@ -137,7 +137,7 @@ public:
 	}
 
 	int MeleeAttack1Conditions ( float flDot, float flDist );
-	virtual float GetClawAttackRange() const { return ZOMBIE_MELEE_REACH; }
+	virtual float GetClawAttackRange() const { return NZ_MELEE_REACH; }
 
 	// No range attacks
 	int RangeAttack1Conditions ( float flDot, float flDist ) { return( 0 ); }
@@ -169,7 +169,7 @@ public:
 
 	// Custom damage/death 
 	bool ShouldIgnite( const CTakeDamageInfo &info );
-	bool ShouldIgniteZombieGib( void );
+	bool ShouldIgniteNZGib( void );
 	virtual bool IsChopped( const CTakeDamageInfo &info );
 	virtual bool IsSquashed( const CTakeDamageInfo &info ) { return false; }
 	virtual void DieChopped( const CTakeDamageInfo &info );
@@ -181,7 +181,7 @@ public:
 
 	// Headcrab releasing/breaking apart
 	void RemoveHead( void );
-	virtual void SetZombieModel( void ) { };
+	virtual void SetNZModel( void ) { };
 	virtual void BecomeTorso( const Vector &vecTorsoForce, const Vector &vecLegsForce );
 	virtual bool CanBecomeLiveTorso() { return false; }
 	virtual bool HeadcrabFits( CBaseAnimating *pCrab );
@@ -245,15 +245,15 @@ protected:
 
 	CSoundPatch	*m_pMoanSound;
 
-	bool	m_fIsTorso;			// is this is a half-zombie?
-	bool	m_fIsHeadless;		// is this zombie headless
+	bool	m_fIsTorso;			// is this is a half-nazizomb?
+	bool	m_fIsHeadless;		// is this nazizomb headless
 
 	float	m_flNextFlinch;
 
 	bool m_bHeadShot;			// Used to determine the survival of our crab beyond our death.
 
 	//
-	// Zombies catch on fire if they take too much burn damage in a given time period.
+	// NZs catch on fire if they take too much burn damage in a given time period.
 	//
 	float	m_flBurnDamage;				// Keeps track of how much burn damage we've incurred in the last few seconds.
 	float	m_flBurnDamageResetTime;	// Time at which we reset the burn damage.
@@ -268,9 +268,9 @@ protected:
 
 	EHANDLE	m_hObstructor;
 
-	static int g_numZombies;	// counts total number of existing zombies.
+	static int g_numNZs;	// counts total number of existing nazizombs.
 
-	int m_iMoanSound; // each zombie picks one of the 4 and keeps it.
+	int m_iMoanSound; // each nazizomb picks one of the 4 and keeps it.
 
 	static int ACT_ZOM_SWATLEFTMID;
 	static int ACT_ZOM_SWATRIGHTMID;
@@ -278,8 +278,6 @@ protected:
 	static int ACT_ZOM_SWATRIGHTLOW;
 	static int ACT_ZOM_RELEASECRAB;
 	static int ACT_ZOM_FALL;
-
-
 
 	DECLARE_DATADESC();
 
@@ -290,4 +288,4 @@ private:
 
 };
 
-#endif // NPC_BASEZOMBIE_H
+#endif // NZ_BASE_H

@@ -1460,47 +1460,23 @@ void CHudWeaponSelection::SelectWeaponSlot(int iSlot)
 	if (pPlayer->IsAllowedToSwitchWeapons() == false)
 		return;
 
-	switch (hud_fastswitch.GetInt())
-	{
-	case HUDTYPE_FASTSWITCH:
-	case HUDTYPE_CAROUSEL:
+	if (!pPlayer->IsSuitEquipped())
 	{
 		FastWeaponSwitch(iSlot);
 		return;
 	}
-
-	case HUDTYPE_PLUS:
+	else
 	{
-		if (!IsInSelectionMode())
+		switch (hud_fastswitch.GetInt())
 		{
-			// open the weapon selection
-			OpenSelection();
+		case HUDTYPE_FASTSWITCH:
+		case HUDTYPE_CAROUSEL:
+		{
+			FastWeaponSwitch(iSlot);
+			return;
 		}
 
-		PlusTypeFastWeaponSwitch(iSlot);
-		ActivateWeaponHighlight(GetSelectedWeapon());
-	}
-	break;
-
-	case HUDTYPE_BUCKETS:
-	{
-		int slotPos = 0;
-		C_BaseCombatWeapon *pActiveWeapon = GetSelectedWeapon();
-
-		// start later in the list
-		if (IsInSelectionMode() && pActiveWeapon && pActiveWeapon->GetSlot() == iSlot)
-		{
-			slotPos = pActiveWeapon->GetPosition() + 1;
-		}
-
-		// find the weapon in this slot
-		pActiveWeapon = GetNextActivePos(iSlot, slotPos);
-		if (!pActiveWeapon)
-		{
-			pActiveWeapon = GetNextActivePos(iSlot, 0);
-		}
-
-		if (pActiveWeapon != NULL)
+		case HUDTYPE_PLUS:
 		{
 			if (!IsInSelectionMode())
 			{
@@ -1508,18 +1484,51 @@ void CHudWeaponSelection::SelectWeaponSlot(int iSlot)
 				OpenSelection();
 			}
 
-			// Mark the change
-			SetSelectedWeapon(pActiveWeapon);
-			SetSelectedSlideDir(0);
+			PlusTypeFastWeaponSwitch(iSlot);
+			ActivateWeaponHighlight(GetSelectedWeapon());
 		}
-	}
+		break;
 
-	default:
-	{
-		// do nothing
-	}
-	break;
-	}
+		case HUDTYPE_BUCKETS:
+		{
+			int slotPos = 0;
+			C_BaseCombatWeapon* pActiveWeapon = GetSelectedWeapon();
 
-	pPlayer->EmitSound("Player.WeaponSelectionMoveSlot");
+			// start later in the list
+			if (IsInSelectionMode() && pActiveWeapon && pActiveWeapon->GetSlot() == iSlot)
+			{
+				slotPos = pActiveWeapon->GetPosition() + 1;
+			}
+
+			// find the weapon in this slot
+			pActiveWeapon = GetNextActivePos(iSlot, slotPos);
+			if (!pActiveWeapon)
+			{
+				pActiveWeapon = GetNextActivePos(iSlot, 0);
+			}
+
+			if (pActiveWeapon != NULL)
+			{
+				if (!IsInSelectionMode())
+				{
+					// open the weapon selection
+					OpenSelection();
+				}
+
+				// Mark the change
+				SetSelectedWeapon(pActiveWeapon);
+				SetSelectedSlideDir(0);
+			}
+		}
+
+		default:
+		{
+			// do nothing
+		}
+		break;
+		}
+
+		pPlayer->EmitSound("Player.WeaponSelectionMoveSlot");
+
+	}
 }

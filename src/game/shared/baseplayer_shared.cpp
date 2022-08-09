@@ -13,6 +13,7 @@
 #include "tf_gamerules.h"
 #endif
 
+
 #if defined( CLIENT_DLL )
 
 	#include "iclientvehicle.h"
@@ -51,6 +52,16 @@
 		"sv_phantom_fist_lift", "0.25f" );
 	
 #endif
+
+#ifdef OPTUX3
+	
+	ConVar cl_viewpunch_power("cl_viewpunch_power", "0.4", 0, "", true, 0.0f, true, 1.0f);
+
+	ConVar ivengine2_viewbob_speed("ivengine2_viewbob_speed", "10");
+	ConVar ivengine2_viewbob_height("ivengine2_viewbob_height", "5");
+//	ConVar ivengine2_viewbob_viewmodel_add("ivengine2_viewbob_viewmodel_add", "0.1");
+#endif
+
 
 #if defined( CSTRIKE_DLL )
 #include "weapon_c4.h"
@@ -1796,8 +1807,32 @@ void CBasePlayer::CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, 
 	}
 }
 
+//#ifdef OPTUX3
+//void CBasePlayer::CalcViewModelView(const Vector& eyeOrigin, const QAngle& eyeAngles)
+//{
+//
+//
+//
+//	for (int i = 0; i < MAX_VIEWMODELS; i++)
+//	{
+//		CBaseViewModel* vm = GetViewModel(i);
+//		if (!vm)
+//			continue;
+//
+//		QAngle punchedAngle;
+//		VectorAdd(eyeAngles, m_Local.m_vecPunchAngle * (1.0f - cl_viewpunch_power.GetFloat()), punchedAngle);
+//
+//		Vector bobOffset = vec3_origin;
+//		QAngle blah;
+//		AddViewBob(bobOffset, blah);
+//
+//		vm->CalcViewModelView(this, eyeOrigin + bobOffset * ivengine2_viewbob_viewmodel_add.GetFloat(), punchedAngle);
+//	}
+//}
+//#endif
+//#ifndef OPTUX3
 
-void CBasePlayer::CalcViewModelView( const Vector& eyeOrigin, const QAngle& eyeAngles)
+void CBasePlayer::CalcViewModelView(const Vector& eyeOrigin, const QAngle& eyeAngles)
 {
 	for ( int i = 0; i < MAX_VIEWMODELS; i++ )
 	{
@@ -1807,7 +1842,38 @@ void CBasePlayer::CalcViewModelView( const Vector& eyeOrigin, const QAngle& eyeA
 	
 		vm->CalcViewModelView( this, eyeOrigin, eyeAngles );
 	}
+
 }
+//#endif
+#ifdef OPTUX3
+void CBasePlayer::AddViewBob(Vector& eyeOrigin, QAngle& eyeAngles, bool calculate)
+{
+	static float bobtime, lastbobtime;
+	float cycle;
+
+	//Find the speed of the player
+	float speed = GetLocalVelocity().Length2D();
+
+	speed = clamp(speed, -320, 320);
+
+	float bob_offset = 1.0f - RemapVal(speed, 0, 320, 0.0f, 1.0f);
+	bob_offset *= bob_offset;
+	bob_offset = 1.0f - bob_offset;
+
+	// since bobtime and lastbobtime are static, it will add more to the values on every function call
+	// this should prevent it
+	if (calculate)
+	{
+		bobtime += (gpGlobals->curtime - lastbobtime) * bob_offset * ivengine2_viewbob_speed.GetFloat();
+		lastbobtime = gpGlobals->curtime;
+	}
+
+	cycle = bobtime;
+
+	eyeOrigin.z += abs(sin(cycle)) * ivengine2_viewbob_height.GetFloat() * bob_offset;
+}
+#endif
+
 
 void CBasePlayer::CalcPlayerView( Vector& eyeOrigin, QAngle& eyeAngles, float& fov )
 {
@@ -1863,6 +1929,12 @@ void CBasePlayer::CalcPlayerView( Vector& eyeOrigin, QAngle& eyeAngles, float& f
 	GetPredictionErrorSmoothingVector( vSmoothOffset );
 	eyeOrigin += vSmoothOffset;
 	m_flObserverChaseDistance = 0.0;
+#endif
+
+#ifdef OPTUX3
+
+	AddViewBob(eyeOrigin, eyeAngles, true);
+
 #endif
 
 	// calc current FOV

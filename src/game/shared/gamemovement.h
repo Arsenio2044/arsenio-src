@@ -56,6 +56,12 @@ public:
 	virtual Vector	GetPlayerMaxs( bool ducked ) const;
 	virtual Vector	GetPlayerViewOffset( bool ducked ) const;
 
+#ifdef OPTUX3
+	// To limit parkour
+	virtual void	DoDuckJump(float flFraction);
+	virtual void	DoUnDuckJump(float flFraction);
+#endif
+
 // For sanity checking getting stuck on CMoveData::SetAbsOrigin
 	virtual void	TracePlayerBBox( const Vector& start, const Vector& end, unsigned int fMask, int collisionGroup, trace_t& pm );
 	

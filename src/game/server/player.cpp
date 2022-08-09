@@ -193,7 +193,7 @@ ConVar	sk_player_leg("sk_player_leg", "1");
 // Health Regen
 #if OPTUX3_DLL
 ConVar sv_regeneration("sv_regeneration", "1", FCVAR_REPLICATED);
-ConVar sv_regeneration_wait_time("sv_regeneration_wait_time", "29.0", FCVAR_REPLICATED);
+ConVar sv_regeneration_wait_time("sv_regeneration_wait_time", "7.0", FCVAR_REPLICATED);
 ConVar sv_regeneration_rate("sv_regeneration_rate", "1.5", FCVAR_REPLICATED);
 #else
 ConVar sv_regeneration("sv_regeneration", "1", FCVAR_REPLICATED);
@@ -1590,6 +1590,7 @@ void CBasePlayer::RemoveAllItems(bool removeSuit)
 	UpdateClientData();
 }
 
+
 bool CBasePlayer::IsDead() const
 {
 	return m_lifeState == LIFE_DEAD;
@@ -1676,7 +1677,21 @@ int CBasePlayer::OnTakeDamage_Alive(const CTakeDamageInfo& info)
 	return 1;
 }
 
+#ifdef OPTUX3
 
+void CBasePlayer::Event_Killed(const CTakeDamageInfo& info)
+{
+
+	
+	engine->ServerCommand("ent_fire PlayerDeath trigger\n");
+	
+
+	BaseClass::Event_Killed(info);
+}
+
+#endif
+
+#ifdef ARSENIO_DLL
 void CBasePlayer::Event_Killed(const CTakeDamageInfo& info)
 {
 	CSound* pSound;
@@ -1757,6 +1772,8 @@ void CBasePlayer::Event_Killed(const CTakeDamageInfo& info)
 
 	BaseClass::Event_Killed(info);
 }
+
+#endif
 
 void CBasePlayer::Event_Dying(const CTakeDamageInfo& info)
 {
@@ -6390,6 +6407,40 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 
 		EquipSuit();
 
+#ifndef OPTUX3_DLL
+
+		// Give the player everything!
+		GiveAmmo(255, "Pistol");
+		GiveAmmo(255, "AR2");
+		GiveAmmo(5, "AR2AltFire");
+		GiveAmmo(255, "SMG1");
+		GiveAmmo(255, "Buckshot");
+		GiveAmmo(3, "smg1_grenade");
+		GiveAmmo(3, "rpg_round");
+		GiveAmmo(5, "grenade");
+		GiveAmmo(32, "357");
+		GiveAmmo(16, "XBowBolt");
+
+		GiveNamedItem("weapon_smg1");
+		GiveNamedItem("weapon_frag");
+		GiveNamedItem("weapon_crowbar");
+		GiveNamedItem("weapon_pistol");
+		GiveNamedItem("weapon_ar2");
+		GiveNamedItem("weapon_shotgun");
+		GiveNamedItem("weapon_physcannon");
+		GiveNamedItem("weapon_bugbait");
+		GiveNamedItem("weapon_rpg");
+		GiveNamedItem("weapon_357");
+		GiveNamedItem("weapon_crossbow");
+		GiveNamedItem("weapon_bulk");
+		GiveNamedItem("weapon_pro836");
+		GiveNamedItem("weapon_gauss");
+		GiveNamedItem("weapon_smg3");
+
+#endif
+
+#ifdef OPTUX3_DLL_OLD
+
 		// Give the player everything!
 		GiveAmmo(255, "Pistol");
 		GiveAmmo(255, "AR2");
@@ -6404,12 +6455,13 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 
 		GiveNamedItem("weapon_frag");
 		GiveNamedItem("weapon_crowbar");
-		GiveNamedItem("weapon_ar2");
-		GiveNamedItem("weapon_crossbow");
-		GiveNamedItem("weapon_mp5");
-//		GiveNamedItem("weapon_mp5k");		Will be added in the future.
 		GiveNamedItem("weapon_m4a1");
+		//GiveNamedItem("weapon_mp5");
+		//GiveNamedItem("weapon_killo");
+		////		GiveNamedItem("weapon_mp5k");		Will be added in the future.
+		//GiveNamedItem("weapon_ar77");
 		GiveNamedItem("weapon_gauss");
+#endif
 
 
 		if (GetHealth() < 100)
@@ -6723,6 +6775,8 @@ bool CBasePlayer::ClientCommand(const CCommand& args)
 
 			return true;
 		}
+
+
 
 		else if (stricmp(cmd, "spec_player") == 0) // chase next player
 		{
@@ -8866,21 +8920,8 @@ bool CBasePlayer::IsFakeClient() const
 
 void CBasePlayer::EquipSuit(bool bPlayEffects)
 {
-	MDLCACHE_CRITICAL_SECTION();
-	bool bHadSuit = IsSuitEquipped();
-
-
-
-
-	if (!bHadSuit && (GetActiveWeapon() && !IsInAVehicle()))
-	{
-		PhysCannonForceDrop(GetActiveWeapon(), NULL);
-		GetActiveWeapon()->Deploy();
-	}
-
-
+	m_Local.m_bWearingSuit = true;
 }
-
 
 
 void CBasePlayer::RemoveSuit(void)

@@ -88,6 +88,7 @@ public:
 	void					SetControlPanelsActive( bool bState );
 	void					ShowControlPanells( bool show );
 
+
 	virtual CBaseCombatWeapon *GetOwningWeapon( void );
 	
 	virtual CBaseEntity	*GetOwnerViaInterface( void ) { return GetOwner(); }

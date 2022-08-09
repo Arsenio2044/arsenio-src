@@ -31,6 +31,9 @@
 
 ConVar crosshair( "crosshair", "1", FCVAR_ARCHIVE );
 ConVar cl_observercrosshair( "cl_observercrosshair", "1", FCVAR_ARCHIVE );
+#ifdef IVENGINE2
+ConVar ivengine2_crosshair_forceaimdirection("ivengine2_crosshair_forceaimdirection", "1");
+#endif
 
 ConVar cl_hitmarks( "cl_hitmarks", "1", FCVAR_ARCHIVE );
 ConVar cl_hitmark_fadetime( "cl_hitmark_fadetime", "0.6", FCVAR_ARCHIVE );
@@ -175,10 +178,21 @@ void CHudCrosshair::GetDrawPosition ( float *pX, float *pY, bool *pbBehindCamera
 		Vector vecStart;
 		Vector vecEnd;
 
-		if ( UseVR() )
+		if ( UseVR() 
+			
+#ifdef IVENGINE2
+			|| ivengine2_crosshair_forceaimdirection.GetBool()
+#endif
+		)
 		{
-			// These are the correct values to use, but they lag the high-speed view data...
+
+
+#ifdef IVENGINE2
+			vecStart = MainViewOrigin();
+#else
 			vecStart = pPlayer->Weapon_ShootPosition();
+#endif
+
 			Vector vecAimDirection = pPlayer->GetAutoaimVector( 1.0f );
 			// ...so in some aim modes, they get zapped by something completely up-to-date.
 			g_ClientVirtualReality.OverrideWeaponHudAimVectors ( &vecStart, &vecAimDirection );

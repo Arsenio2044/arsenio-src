@@ -53,6 +53,9 @@ enum stepsoundtimes_t
 
 void CopySoundNameWithModifierToken( char *pchDest, const char *pchSource, int nMaxLenInChars, const char *pchToken );
 
+
+
+
 // Shared header file for players
 #if defined( CLIENT_DLL )
 #define CBasePlayer C_BasePlayer

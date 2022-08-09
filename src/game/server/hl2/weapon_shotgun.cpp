@@ -46,7 +46,7 @@ public:
 	virtual const Vector& GetBulletSpread( void )
 	{
 		static Vector vitalAllyCone = VECTOR_CONE_3DEGREES;
-		static Vector cone = VECTOR_CONE_10DEGREES;
+		static Vector cone = VECTOR_CONE_20DEGREES;
 
 		if( GetOwner() && (GetOwner()->Classify() == CLASS_PLAYER_ALLY_VITAL) )
 		{
@@ -292,7 +292,7 @@ bool CWeaponShotgun::StartReload( void )
 
 	if (m_iClip1 <= 0)
 	{
-		m_bNeedPump = true;
+		m_bNeedPump = false;
 	}
 
 	int j = MIN(1, pOwner->GetAmmoCount(m_iPrimaryAmmoType));
@@ -472,7 +472,8 @@ void CWeaponShotgun::PrimaryAttack( void )
 	// Fire the bullets, and force the first shot to be perfectly accuracy
 	pPlayer->FireBullets( sk_plr_num_shotgun_pellets.GetInt(), vecSrc, vecAiming, GetBulletSpread(), MAX_TRACE_LENGTH, m_iPrimaryAmmoType, 0, -1, -1, 0, NULL, true, true );
 	
-	pPlayer->ViewPunch( QAngle( random->RandomFloat( -2, -1 ), random->RandomFloat( -2, 2 ), 0 ) );
+	pPlayer->ViewPunch(QAngle(random->RandomFloat(-6.0f, -3.0f), random->RandomFloat(-2.0f, 2.0f), 0.0f));
+
 
 	CSoundEnt::InsertSound( SOUND_COMBAT, GetAbsOrigin(), SOUNDENT_VOLUME_SHOTGUN, 0.2, GetOwner() );
 
@@ -734,7 +735,7 @@ CWeaponShotgun::CWeaponShotgun( void )
 	m_bDelayedFire2 = false;
 
 	m_fMinRange1		= 0.0;
-	m_fMaxRange1		= 500;
+	m_fMaxRange1		= 200;
 	m_fMinRange2		= 0.0;
 	m_fMaxRange2		= 200;
 }

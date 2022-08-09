@@ -1043,6 +1043,11 @@ void CAI_NetworkManager::DelayedInit( void )
 		SetThink ( NULL );
 		return;
 	}
+#ifdef OPTUX3
+	UTIL_CenterPrintAll("W.I.P BUILD! Report any bugs to Tuxxego!\n");
+
+#endif
+
 
 	if ( !g_ai_norebuildgraph.GetInt() )
 	{
@@ -1110,7 +1115,7 @@ void CAI_NetworkManager::DelayedInit( void )
 #endif
 
 			DevMsg( "Node Graph out of Date. Rebuilding... (%d, %d, %d)\n", (int)m_bDontSaveGraph, (int)!CAI_NetworkManager::NetworksLoaded(), (int) engine->IsInEditMode() );
-			UTIL_CenterPrintAll( "Node Graph out of Date. Rebuilding...\n" );
+			UTIL_CenterPrintAll( "The current Node Graph is out of date! IVEngine 2 is rebuilding the graph...\n" );
 			m_bNeedGraphRebuild = true;
 			g_pAINetworkManager->SetNextThink( gpGlobals->curtime + 1 );
 			return;

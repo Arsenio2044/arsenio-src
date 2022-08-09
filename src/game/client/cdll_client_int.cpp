@@ -343,9 +343,14 @@ static ConVar s_CV_ShowParticleCounts("showparticlecounts", "0", 0, "Display num
 static ConVar s_cl_team("cl_team", "default", FCVAR_USERINFO | FCVAR_ARCHIVE, "Default team when joining a game");
 static ConVar s_cl_class("cl_class", "default", FCVAR_USERINFO | FCVAR_ARCHIVE, "Default class when joining a game");
 // Discord RPC
+#ifdef ARSENIO
 static ConVar cl_discord_appid("cl_discord_appid", "949352645989113906", FCVAR_DEVELOPMENTONLY | FCVAR_CHEAT);
 static int64_t startTimestamp = time(0);
-
+#endif
+#ifdef OPTUX3
+static ConVar cl_discord_appid("cl_discord_appid", "1005626020818329740", FCVAR_DEVELOPMENTONLY | FCVAR_CHEAT);
+static int64_t startTimestamp = time(0);
+#endif
 #ifdef HL1MP_CLIENT_DLL
 static ConVar s_cl_load_hl1_content("cl_load_hl1_content", "0", FCVAR_ARCHIVE, "Mount the content from Half-Life: Source if possible");
 #endif
@@ -617,6 +622,8 @@ void DisplayBoneSetupEnts()
 //-----------------------------------------------------------------------------
 // Discord RPC
 //-----------------------------------------------------------------------------
+
+
 static void HandleDiscordReady(const DiscordUser* connectedUser)
 {
 	DevMsg("Discord: Connected to user %s#%s - %s\n",
@@ -637,17 +644,27 @@ static void HandleDiscordError(int errcode, const char* message)
 
 static void HandleDiscordJoin(const char* secret)
 {
-	// Not implemented
+	// badly implemented (causes a crash)
+	DevMsg("Discord: Join (%s)n", secret);
+	char dJoincom[256];
+	Q_snprintf(dJoincom, sizeof(dJoincom), "connect \"%s\"", secret);
+	engine->ClientCmd(dJoincom);
 }
 
 static void HandleDiscordSpectate(const char* secret)
 {
-	// Not implemented
+	// Not implemented yet (Needs Discord approval)
+	DevMsg("Discord: Spectate (%s)n", secret);
 }
 
 static void HandleDiscordJoinRequest(const DiscordUser* request)
 {
-	// Not implemented
+	// Very good implemented nice good very cash money
+	DevMsg("Discord: Join request from %s#%s - %s\n",
+		request->username,
+		request->discriminator,
+		request->userId);
+	Discord_Respond(request->userId, 1);
 }
 
 //-----------------------------------------------------------------------------
@@ -1168,12 +1185,26 @@ int CHLClient::Init(CreateInterfaceFn appSystemFactory, CreateInterfaceFn physic
 	{
 		DiscordRichPresence discordPresence;
 		memset(&discordPresence, 0, sizeof(discordPresence));
+#ifdef OPTUX3
+		discordPresence.state = "In-Game";
+		discordPresence.details = "Survival";
+		discordPresence.startTimestamp = startTimestamp;
+		discordPresence.largeImageKey = "img";
+		Discord_UpdatePresence(&discordPresence);
+		discordPresence.partyId = "UNKNOWN";
+		discordPresence.partySize = 1;
+		discordPresence.partyMax = 5;
+		discordPresence.joinSecret = "TI4NzM0OjFpMmhuZToxMjMxMjM=";
+#else
 
 		discordPresence.state = "In-Game";
 		discordPresence.details = "Main Menu";
 		discordPresence.startTimestamp = startTimestamp;
 		discordPresence.largeImageKey = "deez";
 		Discord_UpdatePresence(&discordPresence);
+
+
+#endif
 	}
 
 	return true;
@@ -1267,7 +1298,7 @@ void CHLClient::PostInit()
 				GameUI2 = (IGameUI2*)GameUI2Factory(GAMEUI2_DLL_INTERFACE_VERSION, NULL);
 				if (GameUI2 != nullptr)
 				{
-					ConColorMsg(Color(0, 148, 255, 255), "FireUI2: Started with runtime: 995B12\n");
+					ConColorMsg(Color(0, 148, 255, 255), "FireUI: Started with runtime: 995B12\n");
 
 					factorylist_t Factories;
 					FactoryList_Retrieve(Factories);
@@ -1277,16 +1308,23 @@ void CHLClient::PostInit()
 				else
 				{
 					ConColorMsg(Color(0, 148, 255, 255), "Unable to pull IFireUI interface.\n");
+					Error("FireUI: Unable to pull IFireUI interface ");
+
 				}
 			}
 			else
 			{
 				ConColorMsg(Color(0, 148, 255, 255), "Unable to get FireUI factory.\n");
+				Error("FireUI: No factory! ");
+
 			}
 		}
 		else
+
+
 		{
 			ConColorMsg(Color(0, 148, 255, 255), "Unable to load FireUI.dll from:\n%s\n", GameUI2Path);
+			Error("Couldn't load Library FireUI.dll ");
 		}
 	}
 
@@ -1792,12 +1830,28 @@ void CHLClient::LevelInitPreEntity(char const* pMapName)
 		DiscordRichPresence discordPresence;
 		memset(&discordPresence, 0, sizeof(discordPresence));
 
-		char buffer[256];
+		
+
+#ifdef OPTUX3 
+
 		discordPresence.state = "In-Game";
-		sprintf(buffer, "Map: %s", pMapName);
-		discordPresence.details = buffer;
+		discordPresence.details = "Survival";
+		discordPresence.startTimestamp = startTimestamp;
+		discordPresence.largeImageKey = "img";
+		discordPresence.partyId = "UNKNOWN";
+		discordPresence.partySize = 1;
+		discordPresence.partyMax = 5;
+		discordPresence.joinSecret = "TI4NzM0OjFpMmhuZToxMjMxMjM=";
+		Discord_UpdatePresence(&discordPresence);
+
+#endif
+#ifdef ARSENIO
+		discordPresence.state = "In-Game";
+		//sprintf(buffer, "Map: %s", pMapName);
+		//discordPresence.details = buffer;
 		discordPresence.largeImageKey = "deez";
 		Discord_UpdatePresence(&discordPresence);
+#endif
 	}
 
 	// Check low violence settings for this map
@@ -1918,11 +1972,25 @@ void CHLClient::LevelShutdown(void)
 		DiscordRichPresence discordPresence;
 		memset(&discordPresence, 0, sizeof(discordPresence));
 
+#ifdef OPTUX3
+		discordPresence.state = "In-Game";
+		discordPresence.details = "Survival";
+		discordPresence.startTimestamp = startTimestamp;
+		discordPresence.largeImageKey = "img";
+		Discord_UpdatePresence(&discordPresence);
+		discordPresence.partyId = "UNKNOWN";
+		discordPresence.partySize = 1;
+		discordPresence.partyMax = 5;
+		discordPresence.joinSecret = "TI4NzM0OjFpMmhuZToxMjMxMjM=";
+#endif
+#ifdef ARSENIO
+
 		discordPresence.state = "In-Game";
 		discordPresence.details = "Main Menu";
 		discordPresence.startTimestamp = startTimestamp;
 		discordPresence.largeImageKey = "deez";
 		Discord_UpdatePresence(&discordPresence);
+#endif
 	}
 
 	internalCenterPrint->Clear();

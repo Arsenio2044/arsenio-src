@@ -169,6 +169,8 @@ public:
 	void StartAutoSprint( void );
 	void StartSprinting( void );
 	void StopSprinting( void );
+	void StartIncaping( void );
+	void StopIncaping( void );
 	void InitSprinting( void );
 	bool IsSprinting( void ) { return m_fIsSprinting; }
 	bool CanSprint( void );
@@ -186,6 +188,11 @@ public:
 	void StartWalking( void );
 	void StopWalking( void );
 	bool IsWalking( void ) { return m_fIsWalking; }
+
+	// Incapped
+	bool IsIncaping( void ) { return m_fIsIncaped; }
+
+
 
 	// Aiming heuristics accessors
 	virtual float		GetIdleTime( void ) const { return ( m_flIdleTime - m_flMoveTime ); }
@@ -319,6 +326,8 @@ private:
 
 	CNetworkVar( bool, m_fIsSprinting );
 	CNetworkVarForDerived( bool, m_fIsWalking );
+	CNetworkVarForDerived( bool, m_fIsIncaped );
+
 
 protected:	// Jeep: Portal_Player needs access to this variable to overload PlayerUse for picking up objects through portals
 	bool				m_bPlayUseDenySound;		// Signaled by PlayerUse, but can be unset by HL2 ladder code...

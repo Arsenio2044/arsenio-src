@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose:		Player for HL2.
+// Purpose:		Player for OPTUX3.
 //
 //=============================================================================//
 
@@ -77,7 +77,7 @@ extern ConVar autoaim_max_dist;
 #define PLAYER_HULL_REDUCTION	0.70
 
 // This switches between the single primary weapon, and multiple weapons with buckets approach (jdw)
-#define	HL2_SINGLE_PRIMARY_WEAPON_MODE	0
+#define	OPTUX3_SINGLE_PRIMARY_WEAPON_MODE	0
 
 #define TIME_IGNORE_FALL_DAMAGE 10.0
 
@@ -85,26 +85,22 @@ extern int gEvilImpulse101;
 
 ConVar sv_autojump( "sv_autojump", "0" );
 
-ConVar hl2_walkspeed( "hl2_walkspeed", "0" );
+ConVar hl2_walkspeed( "hl2_walkspeed", "150" );
 ConVar hl2_normspeed( "hl2_normspeed", "190" );
 ConVar hl2_sprintspeed( "hl2_sprintspeed", "250" );
-ConVar hl2_incapspeed( "hl2_incapspeed", "150" );
-
 
 ConVar hl2_darkness_flashlight_factor ( "hl2_darkness_flashlight_factor", "1" );
 
 
 
 #ifdef HL2MP
-	#define	HL2_WALK_SPEED 150
-	#define	HL2_NORM_SPEED 190
-	#define	HL2_SPRINT_SPEED 320
+	#define	OPTUX3_WALK_SPEED 150
+	#define	OPTUX3_NORM_SPEED 190
+	#define	OPTUX3_SPRINT_SPEED 320
 #else
-	#define	HL2_WALK_SPEED hl2_walkspeed.GetFloat()
-	#define	HL2_NORM_SPEED hl2_normspeed.GetFloat()
-	#define	HL2_SPRINT_SPEED hl2_sprintspeed.GetFloat()
-	#define	HL2_INCAP_SPEED hl2_incapspeed.GetFloat()
-
+	#define	OPTUX3_WALK_SPEED hl2_walkspeed.GetFloat()
+	#define	OPTUX3_NORM_SPEED hl2_normspeed.GetFloat()
+	#define	OPTUX3_SPRINT_SPEED hl2_sprintspeed.GetFloat()
 #endif
 
 ConVar player_showpredictedposition( "player_showpredictedposition", "0" );
@@ -243,11 +239,11 @@ void CC_ToggleZoom( void )
 
 	if( pPlayer )
 	{
-		CHL2_Player *pHL2Player = dynamic_cast<CHL2_Player*>(pPlayer);
+		COPTUX3_Player *pOPTUX3Player = dynamic_cast<COPTUX3_Player*>(pPlayer);
 
-		if( pHL2Player && pHL2Player->IsSuitEquipped() )
+		if( pOPTUX3Player && pOPTUX3Player->IsSuitEquipped() )
 		{
-			pHL2Player->ToggleZoom();
+			pOPTUX3Player->ToggleZoom();
 		}
 	}
 }
@@ -309,7 +305,7 @@ static ConCommand toggle_duck("toggle_duck", CC_ToggleDuck, "Toggles duck" );
 
 #ifndef HL2MP
 #ifndef PORTAL
-LINK_ENTITY_TO_CLASS( player, CHL2_Player );
+LINK_ENTITY_TO_CLASS( player, COPTUX3_Player );
 #endif
 #endif
 
@@ -328,17 +324,16 @@ BEGIN_SIMPLE_DATADESC( LadderMove_t )
 	DEFINE_FIELD( m_hReservedSpot, FIELD_EHANDLE ),
 END_DATADESC()
 
-// Global Savedata for HL2 player
-BEGIN_DATADESC( CHL2_Player )
+// Global Savedata for OPTUX3 player
+BEGIN_DATADESC( COPTUX3_Player )
 
 	DEFINE_FIELD( m_nControlClass, FIELD_INTEGER ),
-	DEFINE_EMBEDDED( m_HL2Local ),
+	DEFINE_EMBEDDED( m_OPTUX3Local ),
 
 	DEFINE_FIELD( m_bSprintEnabled, FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_flTimeAllSuitDevicesOff, FIELD_TIME ),
 	DEFINE_FIELD( m_fIsSprinting, FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_fIsWalking, FIELD_BOOLEAN ),
-	DEFINE_FIELD( m_fIsIncaped, FIELD_BOOLEAN ),
 
 	/*
 	// These are initialized every time the player calls Activate()
@@ -405,7 +400,7 @@ BEGIN_DATADESC( CHL2_Player )
 
 END_DATADESC()
 
-CHL2_Player::CHL2_Player()
+COPTUX3_Player::COPTUX3_Player()
 {
 	m_nNumMissPositions	= 0;
 	m_pPlayerAISquad = 0;
@@ -434,25 +429,25 @@ CHL2_Player::CHL2_Player()
 CSuitPowerDevice SuitDeviceBreather( bits_SUIT_DEVICE_BREATHER, 6.7f );		// 100 units in 15 seconds (plus three padded seconds)
 
 
-IMPLEMENT_SERVERCLASS_ST(CHL2_Player, DT_HL2_Player)
-	SendPropDataTable(SENDINFO_DT(m_HL2Local), &REFERENCE_SEND_TABLE(DT_HL2Local), SendProxy_SendLocalDataTable),
+IMPLEMENT_SERVERCLASS_ST(COPTUX3_Player, DT_OPTUX3_Player)
+	SendPropDataTable(SENDINFO_DT(m_OPTUX3Local), &REFERENCE_SEND_TABLE(DT_OPTUX3Local), SendProxy_SendLocalDataTable),
 	SendPropBool( SENDINFO(m_fIsSprinting) ),
 END_SEND_TABLE()
 
 
-void CHL2_Player::Precache( void )
+void COPTUX3_Player::Precache( void )
 {
 	BaseClass::Precache();
 	PrecacheMaterial( "effects/flashlight001" );
-	PrecacheScriptSound( "HL2Player.SprintNoPower" );
-	PrecacheScriptSound( "HL2Player.SprintStart" );
-	PrecacheScriptSound( "HL2Player.UseDeny" );
-	PrecacheScriptSound( "HL2Player.FlashLightOn" );
-	PrecacheScriptSound( "HL2Player.FlashLightOff" );
-	PrecacheScriptSound( "HL2Player.PickupWeapon" );
-	PrecacheScriptSound( "HL2Player.TrainUse" );
-	PrecacheScriptSound( "HL2Player.Use" );
-	PrecacheScriptSound( "HL2Player.BurnPain" );
+	PrecacheScriptSound( "OPTUX3Player.SprintNoPower" );
+	PrecacheScriptSound( "OPTUX3Player.SprintStart" );
+	PrecacheScriptSound( "OPTUX3Player.UseDeny" );
+	PrecacheScriptSound( "OPTUX3Player.FlashLightOn" );
+	PrecacheScriptSound( "OPTUX3Player.FlashLightOff" );
+	PrecacheScriptSound( "OPTUX3Player.PickupWeapon" );
+	PrecacheScriptSound( "OPTUX3Player.TrainUse" );
+	PrecacheScriptSound( "OPTUX3Player.Use" );
+	PrecacheScriptSound( "OPTUX3Player.BurnPain" );
 	PrecacheScriptSound( "Weapon_Extinguisher.Double" ); //ar2_altfire.wav - using as airjump sound
 	PrecacheScriptSound( "Player.PainHeavy" );
 	PrecacheScriptSound( "Player.SprintPain" );
@@ -460,8 +455,6 @@ void CHL2_Player::Precache( void )
 	PrecacheScriptSound( "Player.Jump" );
 	PrecacheScriptSound( "Player.JumpGear" );
 	PrecacheScriptSound( "Player.Land" );
-	PrecacheScriptSound( "Player.HeartBeat" );
-
 
 	PrecacheScriptSound( "Player.Die" );
 
@@ -473,7 +466,7 @@ void CHL2_Player::Precache( void )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CHL2_Player::CheckSuitZoom( void )
+void COPTUX3_Player::CheckSuitZoom( void )
 {
 //#ifndef _XBOX 
 	//Adrian - No zooming without a suit!
@@ -491,12 +484,12 @@ void CHL2_Player::CheckSuitZoom( void )
 //#endif//_XBOX
 }
 
-void CHL2_Player::EquipSuit( bool bPlayEffects )
+void COPTUX3_Player::EquipSuit( bool bPlayEffects )
 {
 	MDLCACHE_CRITICAL_SECTION();
 	BaseClass::EquipSuit();
 	
-	m_HL2Local.m_bDisplayReticle = true;
+	m_OPTUX3Local.m_bDisplayReticle = true;
 
 	if ( bPlayEffects == true )
 	{
@@ -504,14 +497,14 @@ void CHL2_Player::EquipSuit( bool bPlayEffects )
 	}
 }
 
-void CHL2_Player::RemoveSuit( void )
+void COPTUX3_Player::RemoveSuit( void )
 {
 	BaseClass::RemoveSuit();
 
-	m_HL2Local.m_bDisplayReticle = false;
+	m_OPTUX3Local.m_bDisplayReticle = false;
 }
 
-void CHL2_Player::HandleSpeedChanges(void)
+void COPTUX3_Player::HandleSpeedChanges(void)
 {
 	int buttonsChanged = m_afButtonPressed | m_afButtonReleased;
 
@@ -548,7 +541,7 @@ void CHL2_Player::HandleSpeedChanges(void)
 	bool bIsWalking = IsWalking();
 	// have suit, pressing button, not sprinting or ducking
 	bool bWantWalking;
-	//bool bIsIncaped = IsIncaping();
+
 	if (IsSuitEquipped())
 	{
 		bWantWalking = (m_nButtons & IN_WALK) && !IsSprinting() && !(m_nButtons & IN_DUCK);
@@ -557,7 +550,6 @@ void CHL2_Player::HandleSpeedChanges(void)
 	{
 		bWantWalking = true;
 	}
-
 
 	if (bIsWalking != bWantWalking)
 	{
@@ -570,13 +562,12 @@ void CHL2_Player::HandleSpeedChanges(void)
 			StopWalking();
 		}
 	}
-
 }
 
 //-----------------------------------------------------------------------------
 // This happens when we powerdown from the mega physcannon to the regular one
 //-----------------------------------------------------------------------------
-void CHL2_Player::HandleArmorReduction( void )
+void COPTUX3_Player::HandleArmorReduction( void )
 {
 	if ( m_flArmorReductionTime < gpGlobals->curtime )
 		return;
@@ -594,7 +585,7 @@ void CHL2_Player::HandleArmorReduction( void )
 //-----------------------------------------------------------------------------
 // Purpose: Allow pre-frame adjustments on the player
 //-----------------------------------------------------------------------------
-void CHL2_Player::PreThink(void)
+void COPTUX3_Player::PreThink(void)
 {
 	if ( player_showpredictedposition.GetBool() )
 	{
@@ -610,18 +601,18 @@ void CHL2_Player::PreThink(void)
 	if( m_hLocatorTargetEntity != NULL )
 	{
 		// Keep track of the entity here, the client will pick up the rest of the work
-		m_HL2Local.m_vecLocatorOrigin = m_hLocatorTargetEntity->WorldSpaceCenter();
+		m_OPTUX3Local.m_vecLocatorOrigin = m_hLocatorTargetEntity->WorldSpaceCenter();
 	}
 	else
 	{
-		m_HL2Local.m_vecLocatorOrigin = vec3_invalid; // This tells the client we have no locator target.
+		m_OPTUX3Local.m_vecLocatorOrigin = vec3_invalid; // This tells the client we have no locator target.
 	}
 #endif//HL2_EPISODIC
 
 	// Riding a vehicle?
 	if ( IsInAVehicle() )	
 	{
-		VPROF( "CHL2_Player::PreThink-Vehicle" );
+		VPROF( "COPTUX3_Player::PreThink-Vehicle" );
 		// make sure we update the client, check for timed damage and update suit even if we are in a vehicle
 		UpdateClientData();		
 		CheckTimeBasedDamage();
@@ -639,7 +630,7 @@ void CHL2_Player::PreThink(void)
 	// only affects you if sv_autojump is nonzero.
 	if( (GetFlags() & FL_ONGROUND) && sv_autojump.GetFloat() != 0 )
 	{
-		VPROF( "CHL2_Player::PreThink-Autojump" );
+		VPROF( "COPTUX3_Player::PreThink-Autojump" );
 		// check autojump
 		Vector vecCheckDir;
 
@@ -678,7 +669,7 @@ void CHL2_Player::PreThink(void)
 		}
 	}
 
-	VPROF_SCOPE_BEGIN( "CHL2_Player::PreThink-Speed" );
+	VPROF_SCOPE_BEGIN( "COPTUX3_Player::PreThink-Speed" );
 	HandleSpeedChanges();
 #ifdef HL2_EPISODIC
 	HandleArmorReduction();
@@ -719,11 +710,11 @@ void CHL2_Player::PreThink(void)
 	if ( g_fGameOver || IsPlayerLockedInPlace() )
 		return;         // finale
 
-	VPROF_SCOPE_BEGIN( "CHL2_Player::PreThink-ItemPreFrame" );
+	VPROF_SCOPE_BEGIN( "COPTUX3_Player::PreThink-ItemPreFrame" );
 	ItemPreFrame( );
 	VPROF_SCOPE_END();
 
-	VPROF_SCOPE_BEGIN( "CHL2_Player::PreThink-WaterMove" );
+	VPROF_SCOPE_BEGIN( "COPTUX3_Player::PreThink-WaterMove" );
 	WaterMove();
 	VPROF_SCOPE_END();
 
@@ -733,29 +724,29 @@ void CHL2_Player::PreThink(void)
 		m_Local.m_iHideHUD |= HIDEHUD_FLASHLIGHT;
 
 	
-	VPROF_SCOPE_BEGIN( "CHL2_Player::PreThink-CommanderUpdate" );
+	VPROF_SCOPE_BEGIN( "COPTUX3_Player::PreThink-CommanderUpdate" );
 	CommanderUpdate();
 	VPROF_SCOPE_END();
 
 	// Operate suit accessories and manage power consumption/charge
-	VPROF_SCOPE_BEGIN( "CHL2_Player::PreThink-SuitPower_Update" );
+	VPROF_SCOPE_BEGIN( "COPTUX3_Player::PreThink-SuitPower_Update" );
 	SuitPower_Update();
 	VPROF_SCOPE_END();
 
 	// checks if new client data (for HUD and view control) needs to be sent to the client
-	VPROF_SCOPE_BEGIN( "CHL2_Player::PreThink-UpdateClientData" );
+	VPROF_SCOPE_BEGIN( "COPTUX3_Player::PreThink-UpdateClientData" );
 	UpdateClientData();
 	VPROF_SCOPE_END();
 	
-	VPROF_SCOPE_BEGIN( "CHL2_Player::PreThink-CheckTimeBasedDamage" );
+	VPROF_SCOPE_BEGIN( "COPTUX3_Player::PreThink-CheckTimeBasedDamage" );
 	CheckTimeBasedDamage();
 	VPROF_SCOPE_END();
 
-	VPROF_SCOPE_BEGIN( "CHL2_Player::PreThink-CheckSuitUpdate" );
+	VPROF_SCOPE_BEGIN( "COPTUX3_Player::PreThink-CheckSuitUpdate" );
 	CheckSuitUpdate();
 	VPROF_SCOPE_END();
 
-	VPROF_SCOPE_BEGIN( "CHL2_Player::PreThink-CheckSuitZoom" );
+	VPROF_SCOPE_BEGIN( "COPTUX3_Player::PreThink-CheckSuitZoom" );
 	CheckSuitZoom();
 	VPROF_SCOPE_END();
 
@@ -929,7 +920,7 @@ void CHL2_Player::PreThink(void)
 	}
 }
 
-void CHL2_Player::PostThink( void )
+void COPTUX3_Player::PostThink( void )
 {
 	BaseClass::PostThink();
 
@@ -939,7 +930,7 @@ void CHL2_Player::PostThink( void )
 	}
 }
 
-void CHL2_Player::StartAdmireGlovesAnimation( void )
+void COPTUX3_Player::StartAdmireGlovesAnimation( void )
 {
 	MDLCACHE_CRITICAL_SECTION();
 	CBaseViewModel *vm = GetViewModel( 0 );
@@ -959,7 +950,7 @@ void CHL2_Player::StartAdmireGlovesAnimation( void )
 	}
 }
 
-void CHL2_Player::HandleAdmireGlovesAnimation( void )
+void COPTUX3_Player::HandleAdmireGlovesAnimation( void )
 {
 	CBaseViewModel *pVM = GetViewModel();
 
@@ -983,9 +974,9 @@ void CHL2_Player::HandleAdmireGlovesAnimation( void )
 		m_flAdmireGlovesAnimTime = 0.0f;
 }
 
-#define HL2PLAYER_RELOADGAME_ATTACK_DELAY 1.0f
+#define OPTUX3PLAYER_RELOADGAME_ATTACK_DELAY 1.0f
 
-void CHL2_Player::Activate( void )
+void COPTUX3_Player::Activate( void )
 {
 	BaseClass::Activate();
 	InitSprinting();
@@ -997,16 +988,16 @@ void CHL2_Player::Activate( void )
 	{
 		float flRemaining = GetActiveWeapon()->m_flNextPrimaryAttack - gpGlobals->curtime;
 
-		if ( flRemaining < HL2PLAYER_RELOADGAME_ATTACK_DELAY )
+		if ( flRemaining < OPTUX3PLAYER_RELOADGAME_ATTACK_DELAY )
 		{
-			GetActiveWeapon()->m_flNextPrimaryAttack = gpGlobals->curtime + HL2PLAYER_RELOADGAME_ATTACK_DELAY;
+			GetActiveWeapon()->m_flNextPrimaryAttack = gpGlobals->curtime + OPTUX3PLAYER_RELOADGAME_ATTACK_DELAY;
 		}
 
 		flRemaining = GetActiveWeapon()->m_flNextSecondaryAttack - gpGlobals->curtime;
 
-		if ( flRemaining < HL2PLAYER_RELOADGAME_ATTACK_DELAY )
+		if ( flRemaining < OPTUX3PLAYER_RELOADGAME_ATTACK_DELAY )
 		{
-			GetActiveWeapon()->m_flNextSecondaryAttack = gpGlobals->curtime + HL2PLAYER_RELOADGAME_ATTACK_DELAY;
+			GetActiveWeapon()->m_flNextSecondaryAttack = gpGlobals->curtime + OPTUX3PLAYER_RELOADGAME_ATTACK_DELAY;
 		}
 	}
 
@@ -1020,7 +1011,7 @@ void CHL2_Player::Activate( void )
 // Input   :
 // Output  :
 //------------------------------------------------------------------------------
-Class_T  CHL2_Player::Classify ( void )
+Class_T  COPTUX3_Player::Classify ( void )
 {
 	// If player controlling another entity?  If so, return this class
 	if (m_nControlClass != CLASS_NONE)
@@ -1049,7 +1040,7 @@ Class_T  CHL2_Player::Classify ( void )
 // Output :	 true  - if sub-class has a response for the interaction
 //			 false - if sub-class has no response
 //-----------------------------------------------------------------------------
-bool CHL2_Player::HandleInteraction(int interactionType, void *data, CBaseCombatCharacter* sourceEnt)
+bool COPTUX3_Player::HandleInteraction(int interactionType, void *data, CBaseCombatCharacter* sourceEnt)
 {
 	if ( interactionType == g_interactionBarnacleVictimDangle )
 		return false;
@@ -1082,7 +1073,7 @@ bool CHL2_Player::HandleInteraction(int interactionType, void *data, CBaseCombat
 }
 
 
-void CHL2_Player::PlayerRunCommand(CUserCmd *ucmd, IMoveHelper *moveHelper)
+void COPTUX3_Player::PlayerRunCommand(CUserCmd *ucmd, IMoveHelper *moveHelper)
 {
 	// Handle FL_FROZEN.
 	if ( m_afPhysicsFlags & PFLAG_ONBARNACLE )
@@ -1139,9 +1130,9 @@ void CHL2_Player::PlayerRunCommand(CUserCmd *ucmd, IMoveHelper *moveHelper)
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Sets HL2 specific defaults.
+// Purpose: Sets OPTUX3 specific defaults.
 //-----------------------------------------------------------------------------
-void CHL2_Player::Spawn(void)
+void COPTUX3_Player::Spawn(void)
 {
 
 #ifndef HL2MP
@@ -1158,17 +1149,6 @@ void CHL2_Player::Spawn(void)
 	//
 	//m_flMaxspeed = 320;
 
-	if (GetHealth() < 30)
-	{
-		StartWalking();
-		CPASAttenuationFilter filter(this);
-		filter.UsePredictionRules();
-		EmitSound(filter, entindex(), "Player.HeartBeat");
-		UTIL_CenterPrintAll("LOW HEALTH\n");
-		SetNextThink(gpGlobals->curtime + 1);
-
-	}
-
 	if ( !IsSuitEquipped() )
 		 StartWalking();
 
@@ -1182,7 +1162,7 @@ void CHL2_Player::Spawn(void)
 
 	// Setup our flashlight values
 #ifdef HL2_EPISODIC
-	m_HL2Local.m_flFlashBattery = 100.0f;
+	m_OPTUX3Local.m_flFlashBattery = 100.0f;
 #endif 
 
 	GetPlayerProxy();
@@ -1192,22 +1172,22 @@ void CHL2_Player::Spawn(void)
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CHL2_Player::UpdateLocatorPosition( const Vector &vecPosition )
+void COPTUX3_Player::UpdateLocatorPosition( const Vector &vecPosition )
 {
 #ifdef HL2_EPISODIC
-	m_HL2Local.m_vecLocatorOrigin = vecPosition;
+	m_OPTUX3Local.m_vecLocatorOrigin = vecPosition;
 #endif//HL2_EPISODIC 
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CHL2_Player::InitSprinting( void )
+void COPTUX3_Player::InitSprinting( void )
 {
 	StopSprinting();
 }
 
 
-void CHL2_Player::DeriveMaxSpeed( void )
+void COPTUX3_Player::DeriveMaxSpeed( void )
 {
 	float newMaxSpeed;
 	if ( m_nWallRunState >= WALLRUN_RUNNING )
@@ -1216,24 +1196,32 @@ void CHL2_Player::DeriveMaxSpeed( void )
 	}
 	else if ( m_fIsSprinting )
 	{
-		newMaxSpeed = HL2_SPRINT_SPEED;
+		newMaxSpeed = OPTUX3_SPRINT_SPEED;
+	}
+	else if ( ( !IsSuitEquipped() ) || m_fIsWalking )
+	{
+		newMaxSpeed = OPTUX3_WALK_SPEED;
+	}
+	else if (GetHealth() < 50)
+	{
+		newMaxSpeed = OPTUX3_INCAP_SPEED;
 	}
 	else
 	{
-		newMaxSpeed =  HL2_NORM_SPEED;
+		newMaxSpeed =  OPTUX3_NORM_SPEED;
 	}
 
 	SetMaxSpeed( newMaxSpeed );
+
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: Returns whether or not we are allowed to sprint now.
 //-----------------------------------------------------------------------------
-bool CHL2_Player::CanSprint()
+bool COPTUX3_Player::CanSprint()
 {
 	return ( m_bSprintEnabled &&										// Only if sprint is enabled 
 			!IsWalking() &&												// Not if we're walking
-			!(GetHealth() < 30) &&
 			!( m_Local.m_bDucked && !m_Local.m_bDucking ) &&			// Nor if we're ducking
 			(GetWaterLevel() != 3) &&									// Certainly not underwater
 			(GlobalEntity_GetState("suit_no_sprint") != GLOBAL_ON) );	// Out of the question without the sprint module
@@ -1241,7 +1229,7 @@ bool CHL2_Player::CanSprint()
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CHL2_Player::StartAutoSprint() 
+void COPTUX3_Player::StartAutoSprint() 
 {
 	if( IsSprinting() )
 	{
@@ -1257,9 +1245,9 @@ void CHL2_Player::StartAutoSprint()
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CHL2_Player::StartSprinting( void )
+void COPTUX3_Player::StartSprinting( void )
 {
-	if( m_HL2Local.m_flSuitPower < 10 )
+	if( m_OPTUX3Local.m_flSuitPower < 10 )
 	{
 		// Don't sprint unless there's a reasonable
 		// amount of suit power.
@@ -1272,7 +1260,7 @@ void CHL2_Player::StartSprinting( void )
 		{
 			CPASAttenuationFilter filter( this );
 			filter.UsePredictionRules();
-			EmitSound( filter, entindex(), "HL2Player.SprintNoPower" );
+			EmitSound( filter, entindex(), "OPTUX3Player.SprintNoPower" );
 		}
 		return;
 	}
@@ -1284,16 +1272,18 @@ void CHL2_Player::StartSprinting( void )
 
 	CPASAttenuationFilter filter( this );
 	filter.UsePredictionRules();
+
 	if (GetHealth() < 50)
 	{
 		EmitSound(filter, entindex(), "Player.SprintPain");
 	}
+
 	else
 	{
 		EmitSound(filter, entindex(), "Player.Sprint");
 	}
 
-	//EmitSound( filter, entindex(), "HL2Player.SprintStart" );
+	//EmitSound( filter, entindex(), "OPTUX3Player.SprintStart" );
 
 
 	m_fIsSprinting = true;
@@ -1303,9 +1293,9 @@ void CHL2_Player::StartSprinting( void )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CHL2_Player::StopSprinting( void )
+void COPTUX3_Player::StopSprinting( void )
 {
-	if ( m_HL2Local.m_bitsActiveDevices & SuitDeviceSprint.GetDeviceID() )
+	if ( m_OPTUX3Local.m_bitsActiveDevices & SuitDeviceSprint.GetDeviceID() )
 	{
 		SuitPower_RemoveDevice( SuitDeviceSprint );
 	}
@@ -1330,7 +1320,7 @@ void CHL2_Player::StopSprinting( void )
 // Purpose: Called to disable and enable sprint due to temporary circumstances:
 //			- Carrying a heavy object with the physcannon
 //-----------------------------------------------------------------------------
-void CHL2_Player::EnableSprint( bool bEnable )
+void COPTUX3_Player::EnableSprint( bool bEnable )
 {
 	if ( !bEnable && IsSprinting() )
 	{
@@ -1343,7 +1333,7 @@ void CHL2_Player::EnableSprint( bool bEnable )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CHL2_Player::StartWalking( void )
+void COPTUX3_Player::StartWalking( void )
 {
 	m_fIsWalking = true;
 	DeriveMaxSpeed();
@@ -1351,32 +1341,17 @@ void CHL2_Player::StartWalking( void )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CHL2_Player::StopWalking( void )
+void COPTUX3_Player::StopWalking( void )
 {
 	m_fIsWalking = false;
 	DeriveMaxSpeed();
 }
 
 //-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-void CHL2_Player::StartIncaping(void)
-{
-	m_fIsIncaped = true;
-	DeriveMaxSpeed();
-}
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-void CHL2_Player::StopIncaping(void)
-{
-	m_fIsIncaped = false;
-	DeriveMaxSpeed();
-}
-//-----------------------------------------------------------------------------
 // Purpose: 
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CHL2_Player::CanZoom( CBaseEntity *pRequester )
+bool COPTUX3_Player::CanZoom( CBaseEntity *pRequester )
 {
 	if ( IsZooming() )
 		return false;
@@ -1388,7 +1363,7 @@ bool CHL2_Player::CanZoom( CBaseEntity *pRequester )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CHL2_Player::ToggleZoom(void)
+void COPTUX3_Player::ToggleZoom(void)
 {
 	if( IsZooming() )
 	{
@@ -1403,25 +1378,25 @@ void CHL2_Player::ToggleZoom(void)
 //-----------------------------------------------------------------------------
 // Purpose: +zoom suit zoom
 //-----------------------------------------------------------------------------
-void CHL2_Player::StartZooming( void )
+void COPTUX3_Player::StartZooming( void )
 {
 	int iFOV = 25;
 	if ( SetFOV( this, iFOV, 0.4f ) )
 	{
-		m_HL2Local.m_bZooming = true;
+		m_OPTUX3Local.m_bZooming = true;
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CHL2_Player::StopZooming( void )
+void COPTUX3_Player::StopZooming( void )
 {
 	int iFOV = GetZoomOwnerDesiredFOV( m_hZoomOwner );
 
 	if ( SetFOV( this, iFOV, 0.2f ) )
 	{
-		m_HL2Local.m_bZooming = false;
+		m_OPTUX3Local.m_bZooming = false;
 	}
 }
 
@@ -1429,7 +1404,7 @@ void CHL2_Player::StopZooming( void )
 // Purpose: 
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CHL2_Player::IsZooming( void )
+bool COPTUX3_Player::IsZooming( void )
 {
 	if ( m_hZoomOwner != NULL )
 		return true;
@@ -1442,7 +1417,7 @@ class CPhysicsPlayerCallback : public IPhysicsPlayerControllerEvent
 public:
 	int ShouldMoveTo( IPhysicsObject *pObject, const Vector &position )
 	{
-		CHL2_Player *pPlayer = (CHL2_Player *)pObject->GetGameData();
+		COPTUX3_Player *pPlayer = (COPTUX3_Player *)pObject->GetGameData();
 		if ( pPlayer )
 		{
 			if ( pPlayer->TouchedPhysics() )
@@ -1459,11 +1434,11 @@ static CPhysicsPlayerCallback playerCallback;
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CHL2_Player::InitVCollision( const Vector &vecAbsOrigin, const Vector &vecAbsVelocity )
+void COPTUX3_Player::InitVCollision( const Vector &vecAbsOrigin, const Vector &vecAbsVelocity )
 {
 	BaseClass::InitVCollision( vecAbsOrigin, vecAbsVelocity );
 
-	// Setup the HL2 specific callback.
+	// Setup the OPTUX3 specific callback.
 	IPhysicsPlayerController *pPlayerController = GetPhysicsController();
 	if ( pPlayerController )
 	{
@@ -1472,14 +1447,14 @@ void CHL2_Player::InitVCollision( const Vector &vecAbsOrigin, const Vector &vecA
 }
 
 
-CHL2_Player::~CHL2_Player( void )
+COPTUX3_Player::~COPTUX3_Player( void )
 {
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 
-bool CHL2_Player::CommanderFindGoal( commandgoal_t *pGoal )
+bool COPTUX3_Player::CommanderFindGoal( commandgoal_t *pGoal )
 {
 	CAI_BaseNPC *pAllyNpc;
 	trace_t	tr;
@@ -1565,7 +1540,7 @@ bool CHL2_Player::CommanderFindGoal( commandgoal_t *pGoal )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-CAI_BaseNPC *CHL2_Player::GetSquadCommandRepresentative()
+CAI_BaseNPC *COPTUX3_Player::GetSquadCommandRepresentative()
 {
 	if ( m_pPlayerAISquad != NULL )
 	{
@@ -1582,7 +1557,7 @@ CAI_BaseNPC *CHL2_Player::GetSquadCommandRepresentative()
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-int CHL2_Player::GetNumSquadCommandables()
+int COPTUX3_Player::GetNumSquadCommandables()
 {
 	AISquadIter_t iter;
 	int c = 0;
@@ -1596,7 +1571,7 @@ int CHL2_Player::GetNumSquadCommandables()
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-int CHL2_Player::GetNumSquadCommandableMedics()
+int COPTUX3_Player::GetNumSquadCommandableMedics()
 {
 	AISquadIter_t iter;
 	int c = 0;
@@ -1610,7 +1585,7 @@ int CHL2_Player::GetNumSquadCommandableMedics()
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CHL2_Player::CommanderUpdate()
+void COPTUX3_Player::CommanderUpdate()
 {
 	CAI_BaseNPC *pCommandRepresentative = GetSquadCommandRepresentative();
 	bool bFollowMode = false;
@@ -1619,9 +1594,9 @@ void CHL2_Player::CommanderUpdate()
 		bFollowMode = ( pCommandRepresentative->GetCommandGoal() == vec3_invalid );
 
 		// set the variables for network transmission (to show on the hud)
-		m_HL2Local.m_iSquadMemberCount = GetNumSquadCommandables();
-		m_HL2Local.m_iSquadMedicCount = GetNumSquadCommandableMedics();
-		m_HL2Local.m_fSquadInFollowMode = bFollowMode;
+		m_OPTUX3Local.m_iSquadMemberCount = GetNumSquadCommandables();
+		m_OPTUX3Local.m_iSquadMedicCount = GetNumSquadCommandableMedics();
+		m_OPTUX3Local.m_fSquadInFollowMode = bFollowMode;
 
 		// debugging code for displaying extra squad indicators
 		/*
@@ -1646,9 +1621,9 @@ void CHL2_Player::CommanderUpdate()
 	}
 	else
 	{
-		m_HL2Local.m_iSquadMemberCount = 0;
-		m_HL2Local.m_iSquadMedicCount = 0;
-		m_HL2Local.m_fSquadInFollowMode = true;
+		m_OPTUX3Local.m_iSquadMemberCount = 0;
+		m_OPTUX3Local.m_iSquadMedicCount = 0;
+		m_OPTUX3Local.m_fSquadInFollowMode = true;
 	}
 
 	if ( m_QueuedCommand != CC_NONE && ( m_QueuedCommand == CC_FOLLOW || gpGlobals->realtime - m_RealTimeLastSquadCommand >= player_squad_double_tap_time.GetFloat() ) )
@@ -1673,7 +1648,7 @@ void CHL2_Player::CommanderUpdate()
 // a suitable candidate. (like picking up a single weapon. We don't wish for
 // all allies to respond and try to pick up one weapon).
 //----------------------------------------------------------------------------- 
-bool CHL2_Player::CommanderExecuteOne( CAI_BaseNPC *pNpc, const commandgoal_t &goal, CAI_BaseNPC **Allies, int numAllies )
+bool COPTUX3_Player::CommanderExecuteOne( CAI_BaseNPC *pNpc, const commandgoal_t &goal, CAI_BaseNPC **Allies, int numAllies )
 {
 	if ( goal.m_pGoalEntity )
 	{
@@ -1689,13 +1664,13 @@ bool CHL2_Player::CommanderExecuteOne( CAI_BaseNPC *pNpc, const commandgoal_t &g
 
 //---------------------------------------------------------
 //---------------------------------------------------------
-void CHL2_Player::CommanderExecute( CommanderCommand_t command )
+void COPTUX3_Player::CommanderExecute( CommanderCommand_t command )
 {
 	CAI_BaseNPC *pPlayerSquadLeader = GetSquadCommandRepresentative();
 
 	if ( !pPlayerSquadLeader )
 	{
-		EmitSound( "HL2Player.UseDeny" );
+		EmitSound( "OPTUX3Player.UseDeny" );
 		return;
 	}
 
@@ -1729,7 +1704,7 @@ void CHL2_Player::CommanderExecute( CommanderCommand_t command )
 		// Find a goal for ourselves.
 		if( !CommanderFindGoal( &goal ) )
 		{
-			EmitSound( "HL2Player.UseDeny" );
+			EmitSound( "OPTUX3Player.UseDeny" );
 			return; // just keep following
 		}
 	}
@@ -1775,7 +1750,7 @@ void CHL2_Player::CommanderExecute( CommanderCommand_t command )
 //-----------------------------------------------------------------------------
 // Enter/exit commander mode, manage ally selection.
 //-----------------------------------------------------------------------------
-void CHL2_Player::CommanderMode()
+void COPTUX3_Player::CommanderMode()
 {
 	float commandInterval = gpGlobals->realtime - m_RealTimeLastSquadCommand;
 	m_RealTimeLastSquadCommand = gpGlobals->realtime;
@@ -1793,7 +1768,7 @@ void CHL2_Player::CommanderMode()
 // Purpose: 
 // Input  : iImpulse - 
 //-----------------------------------------------------------------------------
-void CHL2_Player::CheatImpulseCommands( int iImpulse )
+void COPTUX3_Player::CheatImpulseCommands( int iImpulse )
 {
 	switch( iImpulse )
 	{
@@ -1847,7 +1822,7 @@ void CHL2_Player::CheatImpulseCommands( int iImpulse )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CHL2_Player::SetupVisibility( CBaseEntity *pViewEntity, unsigned char *pvs, int pvssize )
+void COPTUX3_Player::SetupVisibility( CBaseEntity *pViewEntity, unsigned char *pvs, int pvssize )
 {
 	BaseClass::SetupVisibility( pViewEntity, pvs, pvssize );
 
@@ -1875,13 +1850,13 @@ void CHL2_Player::SetupVisibility( CBaseEntity *pViewEntity, unsigned char *pvs,
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CHL2_Player::SuitPower_Update( void )
+void COPTUX3_Player::SuitPower_Update( void )
 {
 	if( SuitPower_ShouldRecharge() )
 	{
 		SuitPower_Charge( SUITPOWER_CHARGE_RATE * gpGlobals->frametime );
 	}
-	else if( m_HL2Local.m_bitsActiveDevices )
+	else if( m_OPTUX3Local.m_bitsActiveDevices )
 	{
 		float flPowerLoad = m_flSuitPowerLoad;
 
@@ -1930,7 +1905,7 @@ void CHL2_Player::SuitPower_Update( void )
 		if ( Flashlight_UseLegacyVersion() )
 		{
 			// turn off flashlight a little bit after it hits below one aux power notch (5%)
-			if( m_HL2Local.m_flSuitPower < 4.8f && FlashlightIsOn() )
+			if( m_OPTUX3Local.m_flSuitPower < 4.8f && FlashlightIsOn() )
 			{
 #ifndef HL2MP
 				FlashlightTurnOff();
@@ -1944,10 +1919,10 @@ void CHL2_Player::SuitPower_Update( void )
 //-----------------------------------------------------------------------------
 // Charge battery fully, turn off all devices.
 //-----------------------------------------------------------------------------
-void CHL2_Player::SuitPower_Initialize( void )
+void COPTUX3_Player::SuitPower_Initialize( void )
 {
-	m_HL2Local.m_bitsActiveDevices = 0x00000000;
-	m_HL2Local.m_flSuitPower = 100.0;
+	m_OPTUX3Local.m_bitsActiveDevices = 0x00000000;
+	m_OPTUX3Local.m_flSuitPower = 100.0;
 	m_flSuitPowerLoad = 0.0;
 }
 
@@ -1957,19 +1932,19 @@ void CHL2_Player::SuitPower_Initialize( void )
 // Input:	Amount of charge to remove (expressed as percentage of full charge)
 // Output:	Returns TRUE if successful, FALSE if not enough power available.
 //-----------------------------------------------------------------------------
-bool CHL2_Player::SuitPower_Drain( float flPower )
+bool COPTUX3_Player::SuitPower_Drain( float flPower )
 {
 	// Suitpower cheat on?
 	if ( sv_infinite_aux_power.GetBool() )
 		return true;
 
-	m_HL2Local.m_flSuitPower -= flPower;
+	m_OPTUX3Local.m_flSuitPower -= flPower;
 
-	if( m_HL2Local.m_flSuitPower < 0.0 )
+	if( m_OPTUX3Local.m_flSuitPower < 0.0 )
 	{
 		// Power is depleted!
 		// Clamp and fail
-		m_HL2Local.m_flSuitPower = 0.0;
+		m_OPTUX3Local.m_flSuitPower = 0.0;
 		return false;
 	}
 
@@ -1980,36 +1955,36 @@ bool CHL2_Player::SuitPower_Drain( float flPower )
 // Purpose: Interface to add power to the suit's power supply
 // Input:	Amount of charge to add
 //-----------------------------------------------------------------------------
-void CHL2_Player::SuitPower_Charge( float flPower )
+void COPTUX3_Player::SuitPower_Charge( float flPower )
 {
-	m_HL2Local.m_flSuitPower += flPower;
+	m_OPTUX3Local.m_flSuitPower += flPower;
 
-	if( m_HL2Local.m_flSuitPower > 100.0 )
+	if( m_OPTUX3Local.m_flSuitPower > 100.0 )
 	{
 		// Full charge, clamp.
-		m_HL2Local.m_flSuitPower = 100.0;
+		m_OPTUX3Local.m_flSuitPower = 100.0;
 	}
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-bool CHL2_Player::SuitPower_IsDeviceActive( const CSuitPowerDevice &device )
+bool COPTUX3_Player::SuitPower_IsDeviceActive( const CSuitPowerDevice &device )
 {
-	return (m_HL2Local.m_bitsActiveDevices & device.GetDeviceID()) != 0;
+	return (m_OPTUX3Local.m_bitsActiveDevices & device.GetDeviceID()) != 0;
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-bool CHL2_Player::SuitPower_AddDevice( const CSuitPowerDevice &device )
+bool COPTUX3_Player::SuitPower_AddDevice( const CSuitPowerDevice &device )
 {
 	// Make sure this device is NOT active!!
-	if( m_HL2Local.m_bitsActiveDevices & device.GetDeviceID() )
+	if( m_OPTUX3Local.m_bitsActiveDevices & device.GetDeviceID() )
 		return false;
 
 	if( !IsSuitEquipped() )
 		return false;
 
-	m_HL2Local.m_bitsActiveDevices |= device.GetDeviceID();
+	m_OPTUX3Local.m_bitsActiveDevices |= device.GetDeviceID();
 	m_flSuitPowerLoad += device.GetDeviceDrainRate();
 	return true;
 }
@@ -2017,10 +1992,10 @@ bool CHL2_Player::SuitPower_AddDevice( const CSuitPowerDevice &device )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-bool CHL2_Player::SuitPower_RemoveDevice( const CSuitPowerDevice &device )
+bool COPTUX3_Player::SuitPower_RemoveDevice( const CSuitPowerDevice &device )
 {
 	// Make sure this device is active!!
-	if( ! (m_HL2Local.m_bitsActiveDevices & device.GetDeviceID()) )
+	if( ! (m_OPTUX3Local.m_bitsActiveDevices & device.GetDeviceID()) )
 		return false;
 
 	if( !IsSuitEquipped() )
@@ -2032,10 +2007,10 @@ bool CHL2_Player::SuitPower_RemoveDevice( const CSuitPowerDevice &device )
 	// against exploits where the player could rapidly tap sprint and never run out of power.
 	SuitPower_Drain( device.GetDeviceDrainRate() * 0.1f );
 
-	m_HL2Local.m_bitsActiveDevices &= ~device.GetDeviceID();
+	m_OPTUX3Local.m_bitsActiveDevices &= ~device.GetDeviceID();
 	m_flSuitPowerLoad -= device.GetDeviceDrainRate();
 
-	if( m_HL2Local.m_bitsActiveDevices == 0x00000000 )
+	if( m_OPTUX3Local.m_bitsActiveDevices == 0x00000000 )
 	{
 		// With this device turned off, we can set this timer which tells us when the
 		// suit power system entered a no-load state.
@@ -2048,14 +2023,14 @@ bool CHL2_Player::SuitPower_RemoveDevice( const CSuitPowerDevice &device )
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 #define SUITPOWER_BEGIN_RECHARGE_DELAY	0.5f
-bool CHL2_Player::SuitPower_ShouldRecharge( void )
+bool COPTUX3_Player::SuitPower_ShouldRecharge( void )
 {
 	// Make sure all devices are off.
-	if( m_HL2Local.m_bitsActiveDevices != 0x00000000 )
+	if( m_OPTUX3Local.m_bitsActiveDevices != 0x00000000 )
 		return false;
 
 	// Is the system fully charged?
-	if( m_HL2Local.m_flSuitPower >= 100.0f )
+	if( m_OPTUX3Local.m_flSuitPower >= 100.0f )
 		return false; 
 
 	// Has the system been in a no-load state for long enough
@@ -2070,7 +2045,7 @@ bool CHL2_Player::SuitPower_ShouldRecharge( void )
 //-----------------------------------------------------------------------------
 ConVar	sk_battery( "sk_battery","0" );			
 
-bool CHL2_Player::ApplyBattery( float powerMultiplier )
+bool COPTUX3_Player::ApplyBattery( float powerMultiplier )
 {
 	const float MAX_NORMAL_BATTERY = 100;
 	if ((ArmorValue() < MAX_NORMAL_BATTERY) && IsSuitEquipped())
@@ -2109,7 +2084,7 @@ bool CHL2_Player::ApplyBattery( float powerMultiplier )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-int CHL2_Player::FlashlightIsOn( void )
+int COPTUX3_Player::FlashlightIsOn( void )
 {
 	return IsEffectActive( EF_DIMLIGHT );
 }
@@ -2117,7 +2092,7 @@ int CHL2_Player::FlashlightIsOn( void )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CHL2_Player::FlashlightTurnOn( void )
+void COPTUX3_Player::FlashlightTurnOn( void )
 {
 	if( m_bFlashlightDisabled )
 		return;
@@ -2127,23 +2102,23 @@ void CHL2_Player::FlashlightTurnOn( void )
 		if( !SuitPower_AddDevice( SuitDeviceFlashlight ) )
 			return;
 	}
-#ifdef HL2_DLL
+#ifdef OPTUX3_DLL
 	if( !IsSuitEquipped() )
 		return;
 #endif
 
 	AddEffects( EF_DIMLIGHT );
-	EmitSound( "HL2Player.FlashLightOn" );
+	EmitSound( "OPTUX3Player.FlashLightOn" );
 
 	variant_t flashlighton;
-	flashlighton.SetFloat( m_HL2Local.m_flSuitPower / 100.0f );
+	flashlighton.SetFloat( m_OPTUX3Local.m_flSuitPower / 100.0f );
 	FirePlayerProxyOutput( "OnFlashlightOn", flashlighton, this, this );
 }
 
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CHL2_Player::FlashlightTurnOff( void )
+void COPTUX3_Player::FlashlightTurnOff( void )
 {
 	if ( Flashlight_UseLegacyVersion() )
 	{
@@ -2152,17 +2127,17 @@ void CHL2_Player::FlashlightTurnOff( void )
 	}
 
 	RemoveEffects( EF_DIMLIGHT );
-	EmitSound( "HL2Player.FlashLightOff" );
+	EmitSound( "OPTUX3Player.FlashLightOff" );
 
 	variant_t flashlightoff;
-	flashlightoff.SetFloat( m_HL2Local.m_flSuitPower / 100.0f );
+	flashlightoff.SetFloat( m_OPTUX3Local.m_flSuitPower / 100.0f );
 	FirePlayerProxyOutput( "OnFlashlightOff", flashlightoff, this, this );
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 #define FLASHLIGHT_RANGE	Square(600)
-bool CHL2_Player::IsIlluminatedByFlashlight( CBaseEntity *pEntity, float *flReturnDot )
+bool COPTUX3_Player::IsIlluminatedByFlashlight( CBaseEntity *pEntity, float *flReturnDot )
 {
 	if( !FlashlightIsOn() )
 		return false;
@@ -2220,7 +2195,7 @@ bool CHL2_Player::IsIlluminatedByFlashlight( CBaseEntity *pEntity, float *flRetu
 //-----------------------------------------------------------------------------
 // Purpose: Let NPCs know when the flashlight is trained on them
 //-----------------------------------------------------------------------------
-void CHL2_Player::CheckFlashlight( void )
+void COPTUX3_Player::CheckFlashlight( void )
 {
 	if ( !FlashlightIsOn() )
 		return;
@@ -2245,7 +2220,7 @@ void CHL2_Player::CheckFlashlight( void )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CHL2_Player::SetPlayerUnderwater( bool state )
+void COPTUX3_Player::SetPlayerUnderwater( bool state )
 {
 	if ( state )
 	{
@@ -2260,7 +2235,7 @@ void CHL2_Player::SetPlayerUnderwater( bool state )
 }
 
 //-----------------------------------------------------------------------------
-bool CHL2_Player::PassesDamageFilter( const CTakeDamageInfo &info )
+bool COPTUX3_Player::PassesDamageFilter( const CTakeDamageInfo &info )
 {
 	CBaseEntity *pAttacker = info.GetAttacker();
 	if( pAttacker && pAttacker->MyNPCPointer() && pAttacker->MyNPCPointer()->IsPlayerAlly() )
@@ -2279,14 +2254,14 @@ bool CHL2_Player::PassesDamageFilter( const CTakeDamageInfo &info )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CHL2_Player::SetFlashlightEnabled( bool bState )
+void COPTUX3_Player::SetFlashlightEnabled( bool bState )
 {
 	m_bFlashlightDisabled = !bState;
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CHL2_Player::InputDisableFlashlight( inputdata_t &inputdata )
+void COPTUX3_Player::InputDisableFlashlight( inputdata_t &inputdata )
 {
 	if( FlashlightIsOn() )
 		FlashlightTurnOff();
@@ -2296,7 +2271,7 @@ void CHL2_Player::InputDisableFlashlight( inputdata_t &inputdata )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CHL2_Player::InputEnableFlashlight( inputdata_t &inputdata )
+void COPTUX3_Player::InputEnableFlashlight( inputdata_t &inputdata )
 {
 	SetFlashlightEnabled( true );
 }
@@ -2307,7 +2282,7 @@ void CHL2_Player::InputEnableFlashlight( inputdata_t &inputdata )
 // reset back to taking fall damage after the first impact (so players will be
 // hurt if they bounce off what they hit). This is the original behavior.
 //-----------------------------------------------------------------------------
-void CHL2_Player::InputIgnoreFallDamage( inputdata_t &inputdata )
+void COPTUX3_Player::InputIgnoreFallDamage( inputdata_t &inputdata )
 {
 	float timeToIgnore = inputdata.value.Float();
 
@@ -2322,7 +2297,7 @@ void CHL2_Player::InputIgnoreFallDamage( inputdata_t &inputdata )
 //-----------------------------------------------------------------------------
 // Purpose: Absolutely prevent the player from taking fall damage for [n] seconds. 
 //-----------------------------------------------------------------------------
-void CHL2_Player::InputIgnoreFallDamageWithoutReset( inputdata_t &inputdata )
+void COPTUX3_Player::InputIgnoreFallDamageWithoutReset( inputdata_t &inputdata )
 {
 	float timeToIgnore = inputdata.value.Float();
 
@@ -2336,7 +2311,7 @@ void CHL2_Player::InputIgnoreFallDamageWithoutReset( inputdata_t &inputdata )
 //-----------------------------------------------------------------------------
 // Purpose: Notification of a player's npc ally in the players squad being killed
 //-----------------------------------------------------------------------------
-void CHL2_Player::OnSquadMemberKilled( inputdata_t &data )
+void COPTUX3_Player::OnSquadMemberKilled( inputdata_t &data )
 {
 	// send a message to the client, to notify the hud of the loss
 	CSingleUserRecipientFilter user( this );
@@ -2348,7 +2323,7 @@ void CHL2_Player::OnSquadMemberKilled( inputdata_t &data )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CHL2_Player::NotifyFriendsOfDamage( CBaseEntity *pAttackerEntity )
+void COPTUX3_Player::NotifyFriendsOfDamage( CBaseEntity *pAttackerEntity )
 {
 	CAI_BaseNPC *pAttacker = pAttackerEntity->MyNPCPointer();
 	if ( pAttacker )
@@ -2379,7 +2354,7 @@ void CHL2_Player::NotifyFriendsOfDamage( CBaseEntity *pAttackerEntity )
 //-----------------------------------------------------------------------------
 ConVar test_massive_dmg("test_massive_dmg", "30" );
 ConVar test_massive_dmg_clip("test_massive_dmg_clip", "0.5" );
-int	CHL2_Player::OnTakeDamage( const CTakeDamageInfo &info )
+int	COPTUX3_Player::OnTakeDamage( const CTakeDamageInfo &info )
 {
 	if ( GlobalEntity_GetState( "gordon_invulnerable" ) == GLOBAL_ON )
 		return 0;
@@ -2462,7 +2437,7 @@ int	CHL2_Player::OnTakeDamage( const CTakeDamageInfo &info )
 // Purpose: 
 // Input  : &info - 
 //-----------------------------------------------------------------------------
-int CHL2_Player::OnTakeDamage_Alive( const CTakeDamageInfo &info )
+int COPTUX3_Player::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 {
 	// Drown
 	if( info.GetDamageType() & DMG_DROWN )
@@ -2480,7 +2455,7 @@ int CHL2_Player::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 	// Burnt
 	if ( info.GetDamageType() & DMG_BURN )
 	{
-		EmitSound( "HL2Player.BurnPain" );
+		EmitSound( "OPTUX3Player.BurnPain" );
 	}
 
 
@@ -2501,7 +2476,7 @@ int CHL2_Player::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CHL2_Player::OnDamagedByExplosion( const CTakeDamageInfo &info )
+void COPTUX3_Player::OnDamagedByExplosion( const CTakeDamageInfo &info )
 {
 	if ( info.GetInflictor() && info.GetInflictor()->ClassMatches( "mortarshell" ) )
 	{
@@ -2514,7 +2489,7 @@ void CHL2_Player::OnDamagedByExplosion( const CTakeDamageInfo &info )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-bool CHL2_Player::ShouldShootMissTarget( CBaseCombatCharacter *pAttacker )
+bool COPTUX3_Player::ShouldShootMissTarget( CBaseCombatCharacter *pAttacker )
 {
 	if( gpGlobals->curtime > m_flTargetFindTime )
 	{
@@ -2530,7 +2505,7 @@ bool CHL2_Player::ShouldShootMissTarget( CBaseCombatCharacter *pAttacker )
 // Purpose: Notifies Alyx that player has put a combine ball into a socket so she can comment on it.
 // Input  : pCombineBall - ball the was socketed
 //-----------------------------------------------------------------------------
-void CHL2_Player::CombineBallSocketed( CPropCombineBall *pCombineBall )
+void COPTUX3_Player::CombineBallSocketed( CPropCombineBall *pCombineBall )
 {
 #ifdef HL2_EPISODIC
 	CNPC_Alyx *pAlyx = CNPC_Alyx::GetAlyx();
@@ -2543,7 +2518,7 @@ void CHL2_Player::CombineBallSocketed( CPropCombineBall *pCombineBall )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CHL2_Player::Event_KilledOther( CBaseEntity *pVictim, const CTakeDamageInfo &info )
+void COPTUX3_Player::Event_KilledOther( CBaseEntity *pVictim, const CTakeDamageInfo &info )
 {
 	BaseClass::Event_KilledOther( pVictim, info );
 
@@ -2564,7 +2539,7 @@ void CHL2_Player::Event_KilledOther( CBaseEntity *pVictim, const CTakeDamageInfo
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CHL2_Player::Event_Killed( const CTakeDamageInfo &info )
+void COPTUX3_Player::Event_Killed( const CTakeDamageInfo &info )
 {
 	BaseClass::Event_Killed( info );
 
@@ -2574,7 +2549,7 @@ void CHL2_Player::Event_Killed( const CTakeDamageInfo &info )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CHL2_Player::NotifyScriptsOfDeath( void )
+void COPTUX3_Player::NotifyScriptsOfDeath( void )
 {
 	CBaseEntity *pEnt =	gEntList.FindEntityByClassname( NULL, "scripted_sequence" );
 
@@ -2599,7 +2574,7 @@ void CHL2_Player::NotifyScriptsOfDeath( void )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CHL2_Player::GetAutoaimVector( autoaim_params_t &params )
+void COPTUX3_Player::GetAutoaimVector( autoaim_params_t &params )
 {
 	BaseClass::GetAutoaimVector( params );
 
@@ -2639,7 +2614,7 @@ void CHL2_Player::GetAutoaimVector( autoaim_params_t &params )
 			if( params.m_hAutoAimEntity )
 			{
 				// Turn on sticky.
-				m_HL2Local.m_bStickyAutoAim = true;
+				m_OPTUX3Local.m_bStickyAutoAim = true;
 
 				if( IsInAVehicle() )
 				{
@@ -2649,7 +2624,7 @@ void CHL2_Player::GetAutoaimVector( autoaim_params_t &params )
 			else if( !params.m_hAutoAimEntity )
 			{
 				// Turn off sticky only if there's no target at all.
-				m_HL2Local.m_bStickyAutoAim = false;
+				m_OPTUX3Local.m_bStickyAutoAim = false;
 
 				m_hLockedAutoAimEntity = NULL;
 			}
@@ -2659,7 +2634,7 @@ void CHL2_Player::GetAutoaimVector( autoaim_params_t &params )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-bool CHL2_Player::ShouldKeepLockedAutoaimTarget( EHANDLE hLockedTarget )
+bool COPTUX3_Player::ShouldKeepLockedAutoaimTarget( EHANDLE hLockedTarget )
 {
 	Vector vecLooking;
 	Vector vecToTarget;
@@ -2689,7 +2664,7 @@ bool CHL2_Player::ShouldKeepLockedAutoaimTarget( EHANDLE hLockedTarget )
 //			bSuppressSound - 
 // Output : int
 //-----------------------------------------------------------------------------
-int CHL2_Player::GiveAmmo( int nCount, int nAmmoIndex, bool bSuppressSound)
+int COPTUX3_Player::GiveAmmo( int nCount, int nAmmoIndex, bool bSuppressSound)
 {
 	// Don't try to give the player invalid ammo indices.
 	if (nAmmoIndex < 0)
@@ -2732,7 +2707,7 @@ int CHL2_Player::GiveAmmo( int nCount, int nAmmoIndex, bool bSuppressSound)
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-bool CHL2_Player::Weapon_CanUse( CBaseCombatWeapon *pWeapon )
+bool COPTUX3_Player::Weapon_CanUse( CBaseCombatWeapon *pWeapon )
 {
 #ifndef HL2MP	
 	if ( pWeapon->ClassMatches( "weapon_stunstick" ) )
@@ -2750,9 +2725,9 @@ bool CHL2_Player::Weapon_CanUse( CBaseCombatWeapon *pWeapon )
 // Purpose: 
 // Input  : *pWeapon - 
 //-----------------------------------------------------------------------------
-void CHL2_Player::Weapon_Equip( CBaseCombatWeapon *pWeapon )
+void COPTUX3_Player::Weapon_Equip( CBaseCombatWeapon *pWeapon )
 {
-#if	HL2_SINGLE_PRIMARY_WEAPON_MODE
+#if	OPTUX3_SINGLE_PRIMARY_WEAPON_MODE
 
 	if ( pWeapon->GetSlot() == WEAPON_PRIMARY_SLOT )
 	{
@@ -2763,7 +2738,7 @@ void CHL2_Player::Weapon_Equip( CBaseCombatWeapon *pWeapon )
 
 	if( GetActiveWeapon() == NULL )
 	{
-		m_HL2Local.m_bWeaponLowered = false;
+		m_OPTUX3Local.m_bWeaponLowered = false;
 	}
 
 	BaseClass::Weapon_Equip( pWeapon );
@@ -2774,10 +2749,10 @@ void CHL2_Player::Weapon_Equip( CBaseCombatWeapon *pWeapon )
 // Input  : pWeapon - the weapon that the player bumped into.
 // Output : Returns true if player picked up the weapon
 //-----------------------------------------------------------------------------
-bool CHL2_Player::BumpWeapon( CBaseCombatWeapon *pWeapon )
+bool COPTUX3_Player::BumpWeapon( CBaseCombatWeapon *pWeapon )
 {
 
-#if	HL2_SINGLE_PRIMARY_WEAPON_MODE
+#if	OPTUX3_SINGLE_PRIMARY_WEAPON_MODE
 
 	CBaseCombatCharacter *pOwner = pWeapon->GetOwner();
 
@@ -2840,7 +2815,7 @@ bool CHL2_Player::BumpWeapon( CBaseCombatWeapon *pWeapon )
 
 		Weapon_Equip( pWeapon );
 
-		EmitSound( "HL2Player.PickupWeapon" );
+		EmitSound( "OPTUX3Player.PickupWeapon" );
 		
 		return true;
 	}
@@ -2857,9 +2832,9 @@ bool CHL2_Player::BumpWeapon( CBaseCombatWeapon *pWeapon )
 // Input  : *cmd - 
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CHL2_Player::ClientCommand( const CCommand &args )
+bool COPTUX3_Player::ClientCommand( const CCommand &args )
 {
-#if	HL2_SINGLE_PRIMARY_WEAPON_MODE
+#if	OPTUX3_SINGLE_PRIMARY_WEAPON_MODE
 
 	//Drop primary weapon
 	if ( !Q_stricmp( args[0], "DropPrimary" ) )
@@ -2891,7 +2866,7 @@ bool CHL2_Player::ClientCommand( const CCommand &args )
 // Purpose: 
 // Output : void CBasePlayer::PlayerUse
 //-----------------------------------------------------------------------------
-void CHL2_Player::PlayerUse ( void )
+void COPTUX3_Player::PlayerUse ( void )
 {
 	// Was use pressed or released?
 	if ( ! ((m_nButtons | m_afButtonPressed | m_afButtonReleased) & IN_USE) )
@@ -2920,7 +2895,7 @@ void CHL2_Player::PlayerUse ( void )
 					m_afPhysicsFlags |= PFLAG_DIROVERRIDE;
 					m_iTrain = TrainSpeed(pTrain->m_flSpeed, ((CFuncTrackTrain*)pTrain)->GetMaxSpeed());
 					m_iTrain |= TRAIN_NEW;
-					EmitSound( "HL2Player.TrainUse" );
+					EmitSound( "OPTUX3Player.TrainUse" );
 					return;
 				}
 			}
@@ -2956,7 +2931,7 @@ void CHL2_Player::PlayerUse ( void )
 			// Robin: Don't play sounds for NPCs, because NPCs will allow respond with speech.
 			if ( !pUseEntity->MyNPCPointer() )
 			{
-				EmitSound( "HL2Player.Use" );
+				EmitSound( "OPTUX3Player.Use" );
 			}
 		}
 
@@ -2978,7 +2953,7 @@ void CHL2_Player::PlayerUse ( void )
 			usedSomething = true;
 		}
 
-#if	HL2_SINGLE_PRIMARY_WEAPON_MODE
+#if	OPTUX3_SINGLE_PRIMARY_WEAPON_MODE
 
 		//Check for weapon pick-up
 		if ( m_afButtonPressed & IN_USE )
@@ -3024,14 +2999,14 @@ ConVar	sv_show_crosshair_target( "sv_show_crosshair_target", "0" );
 //-----------------------------------------------------------------------------
 // Purpose: Updates the posture of the weapon from lowered to ready
 //-----------------------------------------------------------------------------
-void CHL2_Player::UpdateWeaponPosture( void )
+void COPTUX3_Player::UpdateWeaponPosture( void )
 {
 	CBaseCombatWeapon *pWeapon = dynamic_cast<CBaseCombatWeapon *>(GetActiveWeapon());
 
 	if ( pWeapon && m_LowerWeaponTimer.Expired() && pWeapon->CanLower() )
 	{
 		m_LowerWeaponTimer.Set( .3 );
-		VPROF( "CHL2_Player::UpdateWeaponPosture-CheckLower" );
+		VPROF( "COPTUX3_Player::UpdateWeaponPosture-CheckLower" );
 		Vector vecAim = BaseClass::GetAutoaimVector( AUTOAIM_SCALE_DIRECT_ONLY );
 
 		const float CHECK_FRIENDLY_RANGE = 50 * 12;
@@ -3107,13 +3082,13 @@ void CHL2_Player::UpdateWeaponPosture( void )
 		if( !pWeapon )
 		{
 			// This tells the client to draw no crosshair
-			m_HL2Local.m_bWeaponLowered = true;
+			m_OPTUX3Local.m_bWeaponLowered = true;
 			return;
 		}
 		else
 		{
-			if( !pWeapon->CanLower() && m_HL2Local.m_bWeaponLowered )
-				m_HL2Local.m_bWeaponLowered = false;
+			if( !pWeapon->CanLower() && m_OPTUX3Local.m_bWeaponLowered )
+				m_OPTUX3Local.m_bWeaponLowered = false;
 		}
 
 		if( !m_AutoaimTimer.Expired() )
@@ -3130,15 +3105,15 @@ void CHL2_Player::UpdateWeaponPosture( void )
 		params.m_fScale = AUTOAIM_SCALE_DEFAULT;
 		params.m_fMaxDist = autoaim_max_dist.GetFloat();
 		GetAutoaimVector( params );
-		m_HL2Local.m_hAutoAimTarget.Set( params.m_hAutoAimEntity );
-		m_HL2Local.m_vecAutoAimPoint.Set( params.m_vecAutoAimPoint );
-		m_HL2Local.m_bAutoAimTarget = ( params.m_bAutoAimAssisting || params.m_bOnTargetNatural );
+		m_OPTUX3Local.m_hAutoAimTarget.Set( params.m_hAutoAimEntity );
+		m_OPTUX3Local.m_vecAutoAimPoint.Set( params.m_vecAutoAimPoint );
+		m_OPTUX3Local.m_bAutoAimTarget = ( params.m_bAutoAimAssisting || params.m_bOnTargetNatural );
 		return;
 	}
 	else
 	{
 		// Make sure there's no residual autoaim target if the user changes the xbox_aiming convar on the fly.
-		m_HL2Local.m_hAutoAimTarget.Set(NULL);
+		m_OPTUX3Local.m_hAutoAimTarget.Set(NULL);
 	}
 }
 
@@ -3146,14 +3121,14 @@ void CHL2_Player::UpdateWeaponPosture( void )
 // Purpose: Lowers the weapon posture (for hovering over friendlies)
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CHL2_Player::Weapon_Lower( void )
+bool COPTUX3_Player::Weapon_Lower( void )
 {
-	VPROF( "CHL2_Player::Weapon_Lower" );
+	VPROF( "COPTUX3_Player::Weapon_Lower" );
 	// Already lowered?
-	if ( m_HL2Local.m_bWeaponLowered )
+	if ( m_OPTUX3Local.m_bWeaponLowered )
 		return true;
 
-	m_HL2Local.m_bWeaponLowered = true;
+	m_OPTUX3Local.m_bWeaponLowered = true;
 
 	CBaseCombatWeapon *pWeapon = dynamic_cast<CBaseCombatWeapon *>(GetActiveWeapon());
 
@@ -3167,15 +3142,15 @@ bool CHL2_Player::Weapon_Lower( void )
 // Purpose: Returns the weapon posture to normal
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CHL2_Player::Weapon_Ready( void )
+bool COPTUX3_Player::Weapon_Ready( void )
 {
-	VPROF( "CHL2_Player::Weapon_Ready" );
+	VPROF( "COPTUX3_Player::Weapon_Ready" );
 
 	// Already ready?
-	if ( m_HL2Local.m_bWeaponLowered == false )
+	if ( m_OPTUX3Local.m_bWeaponLowered == false )
 		return true;
 
-	m_HL2Local.m_bWeaponLowered = false;
+	m_OPTUX3Local.m_bWeaponLowered = false;
 
 	CBaseCombatWeapon *pWeapon = dynamic_cast<CBaseCombatWeapon *>(GetActiveWeapon());
 
@@ -3189,7 +3164,7 @@ bool CHL2_Player::Weapon_Ready( void )
 // Purpose: Returns whether or not we can switch to the given weapon.
 // Input  : pWeapon - 
 //-----------------------------------------------------------------------------
-bool CHL2_Player::Weapon_CanSwitchTo( CBaseCombatWeapon *pWeapon )
+bool COPTUX3_Player::Weapon_CanSwitchTo( CBaseCombatWeapon *pWeapon )
 {
 	CBasePlayer *pPlayer = (CBasePlayer *)this;
 #if !defined( CLIENT_DLL )
@@ -3221,7 +3196,7 @@ bool CHL2_Player::Weapon_CanSwitchTo( CBaseCombatWeapon *pWeapon )
 	return true;
 }
 
-void CHL2_Player::PickupObject( CBaseEntity *pObject, bool bLimitMassAndSize )
+void COPTUX3_Player::PickupObject( CBaseEntity *pObject, bool bLimitMassAndSize )
 {
 	// can't pick up what you're standing on
 	if ( GetGroundEntity() == pObject )
@@ -3244,12 +3219,12 @@ void CHL2_Player::PickupObject( CBaseEntity *pObject, bool bLimitMassAndSize )
 // Purpose: 
 // Output : CBaseEntity
 //-----------------------------------------------------------------------------
-bool CHL2_Player::IsHoldingEntity( CBaseEntity *pEnt )
+bool COPTUX3_Player::IsHoldingEntity( CBaseEntity *pEnt )
 {
 	return PlayerPickupControllerIsHoldingEntity( m_hUseEntity, pEnt );
 }
 
-float CHL2_Player::GetHeldObjectMass( IPhysicsObject *pHeldObject )
+float COPTUX3_Player::GetHeldObjectMass( IPhysicsObject *pHeldObject )
 {
 	float mass = PlayerPickupGetHeldObjectMass( m_hUseEntity, pHeldObject );
 	if ( mass == 0.0f )
@@ -3262,7 +3237,7 @@ float CHL2_Player::GetHeldObjectMass( IPhysicsObject *pHeldObject )
 //-----------------------------------------------------------------------------
 // Purpose: Force the player to drop any physics objects he's carrying
 //-----------------------------------------------------------------------------
-void CHL2_Player::ForceDropOfCarriedPhysObjects( CBaseEntity *pOnlyIfHoldingThis )
+void COPTUX3_Player::ForceDropOfCarriedPhysObjects( CBaseEntity *pOnlyIfHoldingThis )
 {
 	if ( PhysIsInCallback() )
 	{
@@ -3289,12 +3264,12 @@ void CHL2_Player::ForceDropOfCarriedPhysObjects( CBaseEntity *pOnlyIfHoldingThis
 	PhysCannonForceDrop( GetActiveWeapon(), NULL );
 }
 
-void CHL2_Player::InputForceDropPhysObjects( inputdata_t &data )
+void COPTUX3_Player::InputForceDropPhysObjects( inputdata_t &data )
 {
 	ForceDropOfCarriedPhysObjects( data.pActivator );
 }
 
-void CHL2_Player::InputAddArmor( inputdata_t &data )
+void COPTUX3_Player::InputAddArmor( inputdata_t &data )
 {
 	const int MAX_ARMOR = 100;
 	int amt = 1;
@@ -3305,7 +3280,7 @@ void CHL2_Player::InputAddArmor( inputdata_t &data )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CHL2_Player::UpdateClientData( void )
+void COPTUX3_Player::UpdateClientData( void )
 {
 	if (m_DmgTake || m_DmgSave || m_bitsHUDDamage != m_bitsDamageType)
 	{
@@ -3361,25 +3336,25 @@ void CHL2_Player::UpdateClientData( void )
 	{
 		if ( FlashlightIsOn() && sv_infinite_aux_power.GetBool() == false )
 		{
-			m_HL2Local.m_flFlashBattery -= FLASH_DRAIN_TIME * gpGlobals->frametime;
-			if ( m_HL2Local.m_flFlashBattery < 0.0f )
+			m_OPTUX3Local.m_flFlashBattery -= FLASH_DRAIN_TIME * gpGlobals->frametime;
+			if ( m_OPTUX3Local.m_flFlashBattery < 0.0f )
 			{
 				FlashlightTurnOff();
-				m_HL2Local.m_flFlashBattery = 0.0f;
+				m_OPTUX3Local.m_flFlashBattery = 0.0f;
 			}
 		}
 		else
 		{
-			m_HL2Local.m_flFlashBattery += FLASH_CHARGE_TIME * gpGlobals->frametime;
-			if ( m_HL2Local.m_flFlashBattery > 100.0f )
+			m_OPTUX3Local.m_flFlashBattery += FLASH_CHARGE_TIME * gpGlobals->frametime;
+			if ( m_OPTUX3Local.m_flFlashBattery > 100.0f )
 			{
-				m_HL2Local.m_flFlashBattery = 100.0f;
+				m_OPTUX3Local.m_flFlashBattery = 100.0f;
 			}
 		}
 	}
 	else
 	{
-		m_HL2Local.m_flFlashBattery = -1.0f;
+		m_OPTUX3Local.m_flFlashBattery = -1.0f;
 	}
 #endif // HL2_EPISODIC
 
@@ -3388,7 +3363,7 @@ void CHL2_Player::UpdateClientData( void )
 
 //---------------------------------------------------------
 //---------------------------------------------------------
-void CHL2_Player::OnRestore()
+void COPTUX3_Player::OnRestore()
 {
 	BaseClass::OnRestore();
 	m_pPlayerAISquad = g_AI_SquadManager.FindCreateSquad(AllocPooledString(PLAYER_SQUADNAME));
@@ -3396,7 +3371,7 @@ void CHL2_Player::OnRestore()
 
 //---------------------------------------------------------
 //---------------------------------------------------------
-Vector CHL2_Player::EyeDirection2D( void )
+Vector COPTUX3_Player::EyeDirection2D( void )
 {
 	Vector vecReturn = EyeDirection3D();
 	vecReturn.z = 0;
@@ -3407,7 +3382,7 @@ Vector CHL2_Player::EyeDirection2D( void )
 
 //---------------------------------------------------------
 //---------------------------------------------------------
-Vector CHL2_Player::EyeDirection3D( void )
+Vector COPTUX3_Player::EyeDirection3D( void )
 {
 	Vector vecForward;
 
@@ -3426,7 +3401,7 @@ Vector CHL2_Player::EyeDirection3D( void )
 
 //---------------------------------------------------------
 //---------------------------------------------------------
-bool CHL2_Player::Weapon_Switch( CBaseCombatWeapon *pWeapon, int viewmodelindex )
+bool COPTUX3_Player::Weapon_Switch( CBaseCombatWeapon *pWeapon, int viewmodelindex )
 {
 	MDLCACHE_CRITICAL_SECTION();
 
@@ -3445,7 +3420,7 @@ bool CHL2_Player::Weapon_Switch( CBaseCombatWeapon *pWeapon, int viewmodelindex 
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-WeaponProficiency_t CHL2_Player::CalcWeaponProficiency( CBaseCombatWeapon *pWeapon )
+WeaponProficiency_t COPTUX3_Player::CalcWeaponProficiency( CBaseCombatWeapon *pWeapon )
 {
 	WeaponProficiency_t proficiency;
 
@@ -3597,7 +3572,7 @@ bool IntersectRayWithAACylinder( const Ray_t &ray,
 }
 
 
-bool CHL2_Player::TestHitboxes( const Ray_t &ray, unsigned int fContentsMask, trace_t& tr )
+bool COPTUX3_Player::TestHitboxes( const Ray_t &ray, unsigned int fContentsMask, trace_t& tr )
 {
 	if( g_pGameRules->IsMultiplayer() )
 	{
@@ -3638,7 +3613,7 @@ bool CHL2_Player::TestHitboxes( const Ray_t &ray, unsigned int fContentsMask, tr
 // Show the player's scaled down bbox that we use for
 // bullet impacts.
 //---------------------------------------------------------
-void CHL2_Player::DrawDebugGeometryOverlays(void) 
+void COPTUX3_Player::DrawDebugGeometryOverlays(void) 
 {
 	BaseClass::DrawDebugGeometryOverlays();
 
@@ -3662,7 +3637,7 @@ void CHL2_Player::DrawDebugGeometryOverlays(void)
 //-----------------------------------------------------------------------------
 // Purpose: Helper to remove from ladder
 //-----------------------------------------------------------------------------
-void CHL2_Player::ExitLadder()
+void COPTUX3_Player::ExitLadder()
 {
 	if ( MOVETYPE_LADDER != GetMoveType() )
 		return;
@@ -3670,15 +3645,15 @@ void CHL2_Player::ExitLadder()
 	SetMoveType( MOVETYPE_WALK );
 	SetMoveCollide( MOVECOLLIDE_DEFAULT );
 	// Remove from ladder
-	m_HL2Local.m_hLadder.Set( NULL );
+	m_OPTUX3Local.m_hLadder.Set( NULL );
 }
 
 
-surfacedata_t *CHL2_Player::GetLadderSurface( const Vector &origin )
+surfacedata_t *COPTUX3_Player::GetLadderSurface( const Vector &origin )
 {
 	extern const char *FuncLadder_GetSurfaceprops(CBaseEntity *pLadderEntity);
 
-	CBaseEntity *pLadder = m_HL2Local.m_hLadder.Get();
+	CBaseEntity *pLadder = m_OPTUX3Local.m_hLadder.Get();
 	if ( pLadder )
 	{
 		const char *pSurfaceprops = FuncLadder_GetSurfaceprops(pLadder);
@@ -3692,25 +3667,25 @@ surfacedata_t *CHL2_Player::GetLadderSurface( const Vector &origin )
 //-----------------------------------------------------------------------------
 // Purpose: Queues up a use deny sound, played in ItemPostFrame.
 //-----------------------------------------------------------------------------
-void CHL2_Player::PlayUseDenySound()
+void COPTUX3_Player::PlayUseDenySound()
 {
 	m_bPlayUseDenySound = true;
 }
 
 
-void CHL2_Player::ItemPostFrame()
+void COPTUX3_Player::ItemPostFrame()
 {
 	BaseClass::ItemPostFrame();
 
 	if ( m_bPlayUseDenySound )
 	{
 		m_bPlayUseDenySound = false;
-		EmitSound( "HL2Player.UseDeny" );
+		EmitSound( "OPTUX3Player.UseDeny" );
 	}
 }
 
 
-void CHL2_Player::StartWaterDeathSounds( void )
+void COPTUX3_Player::StartWaterDeathSounds( void )
 {
 	CPASAttenuationFilter filter( this );
 
@@ -3735,7 +3710,7 @@ void CHL2_Player::StartWaterDeathSounds( void )
 	}
 }
 
-void CHL2_Player::StopWaterDeathSounds( void )
+void COPTUX3_Player::StopWaterDeathSounds( void )
 {
 	if ( m_sndLeeches )
 	{
@@ -3753,7 +3728,7 @@ void CHL2_Player::StopWaterDeathSounds( void )
 //-----------------------------------------------------------------------------
 // 
 //-----------------------------------------------------------------------------
-void CHL2_Player::MissedAR2AltFire()
+void COPTUX3_Player::MissedAR2AltFire()
 {
 	if( GetPlayerProxy() != NULL )
 	{
@@ -3764,7 +3739,7 @@ void CHL2_Player::MissedAR2AltFire()
 //-----------------------------------------------------------------------------
 //
 //-----------------------------------------------------------------------------
-void CHL2_Player::DisplayLadderHudHint()
+void COPTUX3_Player::DisplayLadderHudHint()
 {
 #if !defined( CLIENT_DLL )
 	if( gpGlobals->curtime > m_flTimeNextLadderHint )
@@ -3781,7 +3756,7 @@ void CHL2_Player::DisplayLadderHudHint()
 //-----------------------------------------------------------------------------
 // Shuts down sounds
 //-----------------------------------------------------------------------------
-void CHL2_Player::StopLoopingSounds( void )
+void COPTUX3_Player::StopLoopingSounds( void )
 {
 	if ( m_sndLeeches != NULL )
 	{
@@ -3799,7 +3774,7 @@ void CHL2_Player::StopLoopingSounds( void )
 }
 
 //-----------------------------------------------------------------------------
-void CHL2_Player::ModifyOrAppendPlayerCriteria( AI_CriteriaSet& set )
+void COPTUX3_Player::ModifyOrAppendPlayerCriteria( AI_CriteriaSet& set )
 {
 	BaseClass::ModifyOrAppendPlayerCriteria( set );
 
@@ -3812,7 +3787,7 @@ void CHL2_Player::ModifyOrAppendPlayerCriteria( AI_CriteriaSet& set )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-const impactdamagetable_t &CHL2_Player::GetPhysicsImpactDamageTable()
+const impactdamagetable_t &COPTUX3_Player::GetPhysicsImpactDamageTable()
 {
 	if ( m_bUseCappedPhysicsDamageTable )
 		return gCappedPlayerImpactDamageTable;
@@ -3824,7 +3799,7 @@ const impactdamagetable_t &CHL2_Player::GetPhysicsImpactDamageTable()
 //-----------------------------------------------------------------------------
 // Purpose: Makes a splash when the player transitions between water states
 //-----------------------------------------------------------------------------
-void CHL2_Player::Splash( void )
+void COPTUX3_Player::Splash( void )
 {
 	CEffectData data;
 	data.m_fFlags = 0;
@@ -3850,7 +3825,7 @@ void CHL2_Player::Splash( void )
 	}
 }
 
-CLogicPlayerProxy *CHL2_Player::GetPlayerProxy( void )
+CLogicPlayerProxy *COPTUX3_Player::GetPlayerProxy( void )
 {
 	CLogicPlayerProxy *pProxy = dynamic_cast< CLogicPlayerProxy* > ( m_hPlayerProxy.Get() );
 
@@ -3868,7 +3843,7 @@ CLogicPlayerProxy *CHL2_Player::GetPlayerProxy( void )
 	return pProxy;
 }
 
-void CHL2_Player::FirePlayerProxyOutput( const char *pszOutputName, variant_t variant, CBaseEntity *pActivator, CBaseEntity *pCaller )
+void COPTUX3_Player::FirePlayerProxyOutput( const char *pszOutputName, variant_t variant, CBaseEntity *pActivator, CBaseEntity *pCaller )
 {
 	if ( GetPlayerProxy() == NULL )
 		return;
@@ -3944,7 +3919,7 @@ void CLogicPlayerProxy::InputSetFlashlightSlowDrain( inputdata_t &inputdata )
 	if( m_hPlayer == NULL )
 		return;
 
-	CHL2_Player *pPlayer = dynamic_cast<CHL2_Player*>(m_hPlayer.Get());
+	COPTUX3_Player *pPlayer = dynamic_cast<COPTUX3_Player*>(m_hPlayer.Get());
 
 	if( pPlayer )
 		pPlayer->SetFlashlightPowerDrainScale( hl2_darkness_flashlight_factor.GetFloat() );
@@ -3955,7 +3930,7 @@ void CLogicPlayerProxy::InputSetFlashlightNormalDrain( inputdata_t &inputdata )
 	if( m_hPlayer == NULL )
 		return;
 
-	CHL2_Player *pPlayer = dynamic_cast<CHL2_Player*>(m_hPlayer.Get());
+	COPTUX3_Player *pPlayer = dynamic_cast<COPTUX3_Player*>(m_hPlayer.Get());
 
 	if( pPlayer )
 		pPlayer->SetFlashlightPowerDrainScale( 1.0f );
@@ -3966,7 +3941,7 @@ void CLogicPlayerProxy::InputRequestAmmoState( inputdata_t &inputdata )
 	if( m_hPlayer == NULL )
 		return;
 
-	CHL2_Player *pPlayer = dynamic_cast<CHL2_Player*>(m_hPlayer.Get());
+	COPTUX3_Player *pPlayer = dynamic_cast<COPTUX3_Player*>(m_hPlayer.Get());
 
 	for ( int i = 0 ; i < pPlayer->WeaponCount(); ++i )
 	{
@@ -3990,7 +3965,7 @@ void CLogicPlayerProxy::InputLowerWeapon( inputdata_t &inputdata )
 	if( m_hPlayer == NULL )
 		return;
 
-	CHL2_Player *pPlayer = dynamic_cast<CHL2_Player*>(m_hPlayer.Get());
+	COPTUX3_Player *pPlayer = dynamic_cast<COPTUX3_Player*>(m_hPlayer.Get());
 
 	pPlayer->Weapon_Lower();
 }
@@ -4000,7 +3975,7 @@ void CLogicPlayerProxy::InputEnableCappedPhysicsDamage( inputdata_t &inputdata )
 	if( m_hPlayer == NULL )
 		return;
 
-	CHL2_Player *pPlayer = dynamic_cast<CHL2_Player*>(m_hPlayer.Get());
+	COPTUX3_Player *pPlayer = dynamic_cast<COPTUX3_Player*>(m_hPlayer.Get());
 	pPlayer->EnableCappedPhysicsDamage();
 }
 
@@ -4009,7 +3984,7 @@ void CLogicPlayerProxy::InputDisableCappedPhysicsDamage( inputdata_t &inputdata 
 	if( m_hPlayer == NULL )
 		return;
 
-	CHL2_Player *pPlayer = dynamic_cast<CHL2_Player*>(m_hPlayer.Get());
+	COPTUX3_Player *pPlayer = dynamic_cast<COPTUX3_Player*>(m_hPlayer.Get());
 	pPlayer->DisableCappedPhysicsDamage();
 }
 
@@ -4026,7 +4001,7 @@ void CLogicPlayerProxy::InputSetLocatorTargetEntity( inputdata_t &inputdata )
 		pTarget = gEntList.FindEntityByName( NULL, iszTarget );
 	}
 
-	CHL2_Player *pPlayer = dynamic_cast<CHL2_Player*>(m_hPlayer.Get());
+	COPTUX3_Player *pPlayer = dynamic_cast<COPTUX3_Player*>(m_hPlayer.Get());
 	pPlayer->SetLocatorTargetEntity(pTarget);
 }
 
