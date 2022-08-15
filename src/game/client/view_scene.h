@@ -73,6 +73,7 @@ inline void UpdateRefractTexture( bool bForceUpdate = false )
 	UpdateRefractTexture( x, y, w, h, bForceUpdate );
 }
 
+
 inline void UpdateScreenEffectTexture( int textureIndex, int x, int y, int w, int h, bool bDestFullScreen = false, Rect_t *pActualRect = NULL )
 {
 	Rect_t srcRect;

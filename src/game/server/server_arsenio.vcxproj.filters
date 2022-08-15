@@ -2944,6 +2944,9 @@
     <ClCompile Include="hl2\weapon_egar.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
+    <ClCompile Include="arsenio\weapon_kilo.cpp">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClCompile>
     <ClCompile Include="arsenio\weapon_mp5k.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>

@@ -153,3 +153,33 @@ void UpdateFullScreenDepthTexture( void )
 		pMaterial->DecrementReferenceCount();
 	}
 }
+
+#ifdef ARSENIO
+// Night vision
+static void ScreenOver_f(void)
+{
+	IMaterial* pMaterial = materials->FindMaterial("arsenio/common/Mask_NvMap", TEXTURE_GROUP_OTHER, true);
+	
+
+	{
+		static bool bDisplayed = false;
+
+		if (bDisplayed)
+		{
+			// turn it off
+			view->SetScreenOverlayMaterial(NULL);
+			CLocalPlayerFilter filter;
+		}
+		else
+		{
+			// turn it on
+			view->SetScreenOverlayMaterial(pMaterial);
+			CLocalPlayerFilter filter;
+		}
+
+		bDisplayed = !bDisplayed;
+	}
+}
+// Setup the custom Convar so we can toggle this from the flashlight call.
+static ConCommand Nvg_On("Nvg_On", ScreenOver_f, "NVG Mode");
+#endif

@@ -3130,9 +3130,6 @@
     <ClCompile Include="episodic\c_vort_charge_token.cpp">
       <Filter>Source Files\HL2 DLL</Filter>
     </ClCompile>
-    <ClCompile Include="hl2\c_weapon__stubs_hl2.cpp">
-      <Filter>Source Files\HL2 DLL</Filter>
-    </ClCompile>
     <ClCompile Include="hl2\c_weapon_crossbow.cpp">
       <Filter>Source Files\HL2 DLL</Filter>
     </ClCompile>

@@ -19,6 +19,8 @@ ConVar    sk_npc_dmg_stunstick	( "sk_npc_dmg_stunstick","0");
 
 extern ConVar metropolice_move_and_melee;
 
+
+
 //-----------------------------------------------------------------------------
 // CWeaponStunStick
 //-----------------------------------------------------------------------------

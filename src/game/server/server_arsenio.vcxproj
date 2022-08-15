@@ -1269,6 +1269,7 @@
     <ClCompile Include="arsenio\npc_wyluxian_ally.cpp" />
     <ClCompile Include="searchpath_manager.cpp" />
     <ClCompile Include="hl2\weapon_egar.cpp" />
+    <ClCompile Include="arsenio\weapon_kilo.cpp" />
     <ClCompile Include="arsenio\weapon_mp5k.cpp" />
     <ClCompile Include="arsenio\weapon_pro836.cpp" />
     <ClCompile Include="arsenio\weapon_smg3.cpp" />
