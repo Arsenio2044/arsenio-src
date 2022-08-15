@@ -1529,6 +1529,9 @@
     <ClInclude Include="arsenio\npc_synth_e.h">
       <Filter>Source Files\Arsenio</Filter>
     </ClInclude>
+    <ClInclude Include="arsenio\npc_wyluxian_ally.h">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\game\shared\player_mobility_defs.h">
       <Filter>Source Files\Arsenio</Filter>
     </ClInclude>
@@ -2930,6 +2933,9 @@
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_synth_e.cpp">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClCompile>
+    <ClCompile Include="arsenio\npc_wyluxian_ally.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
     <ClCompile Include="searchpath_manager.cpp">

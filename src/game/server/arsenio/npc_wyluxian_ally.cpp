@@ -1,13 +1,13 @@
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
-// Purpose: Friendly Bot
+// Purpose: Wyluxian soldier with advanced tech. This is the ally version used only when playing as a wyluxian soldier.
 //
 //=============================================================================//
 
 #include "cbase.h"
 #include "ai_hull.h"
 #include "ai_motor.h"
-#include "bot_ally.h"
+#include "npc_wyluxian_ally.h"
 #include "bitstring.h"
 #include "engine/IEngineSound.h"
 #include "soundent.h"
@@ -28,25 +28,25 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-ConVar	sk_bot_ally_health( "sk_bot_ally_health","100");
-ConVar	sk_bot_ally_kick( "sk_bot_ally_kick","35");
+ConVar	sk_wyluxiansoldier_ally_health( "sk_wyluxiansoldier_ally_health","100");
+ConVar	sk_wyluxiansoldier_ally_kick( "sk_wyluxiansoldier_ally_kick","35");
 
-ConVar sk_bot_ally_guard_health( "sk_bot_ally_guard_health", "0");
-ConVar sk_bot_ally_guard_kick( "sk_bot_ally_guard_kick", "0");
+ConVar sk_wyluxiansoldier_ally_guard_health( "sk_wyluxiansoldier_ally_guard_health", "0");
+ConVar sk_wyluxiansoldier_ally_guard_kick( "sk_wyluxiansoldier_ally_guard_kick", "0");
  
-// Whether or not the bot_ally guard should spawn health on death
-ConVar bot_ally_guard_spawn_health( "bot_ally_guard_spawn_health", "1" );
+// Whether or not the wyluxiansoldier_ally guard should spawn health on death
+ConVar wyluxiansoldier_ally_guard_spawn_health( "wyluxiansoldier_ally_guard_spawn_health", "1" );
 
 extern ConVar sk_plr_dmg_buckshot;	
 extern ConVar sk_plr_num_shotgun_pellets;
 
-//Whether or not the bot_ally should spawn health on death
-ConVar	bot_allypawn_health( "bot_allypawn_health", "1" );
+//Whether or not the wyluxiansoldier_ally should spawn health on death
+ConVar	wyluxiansoldier_allypawn_health( "wyluxiansoldier_allypawn_health", "1" );
 
-ConVar  add_deez_prob( "add_yourmom_prob", "0", 0,
-	"Every bot_ally soldier has this chance to spawn a hunter" );
+ConVar  add_fuck_prob( "add_yourmom_prob", "0", 0,
+	"Every wyluxiansoldier_ally soldier has this chance to spawn a hunter" );
 
-LINK_ENTITY_TO_CLASS( bot_ally, CBotAlly );
+LINK_ENTITY_TO_CLASS( wyluxiansoldier_ally, CWyluxianSAlly );
 
 
 #define AE_SOLDIER_BLOCK_PHYSICS		20 // trying to block an incoming physics object
@@ -57,7 +57,7 @@ extern Activity ACT_WALK_MARCH;
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CBotAlly::Spawn( void )
+void CWyluxianSAlly::Spawn( void )
 {
 	Precache();
 	SetModel( STRING( GetModelName() ) );
@@ -65,15 +65,15 @@ void CBotAlly::Spawn( void )
 	if( IsElite() )
 	{
 		// Stronger, tougher.
-		SetHealth( sk_bot_ally_guard_health.GetFloat() );
-		SetMaxHealth( sk_bot_ally_guard_health.GetFloat() );
-		SetKickDamage( sk_bot_ally_guard_kick.GetFloat() );
+		SetHealth( sk_wyluxiansoldier_ally_guard_health.GetFloat() );
+		SetMaxHealth( sk_wyluxiansoldier_ally_guard_health.GetFloat() );
+		SetKickDamage( sk_wyluxiansoldier_ally_guard_kick.GetFloat() );
 	}
 	else
 	{
-		SetHealth( sk_bot_ally_health.GetFloat() );
-		SetMaxHealth( sk_bot_ally_health.GetFloat() );
-		SetKickDamage( sk_bot_ally_kick.GetFloat() );
+		SetHealth( sk_wyluxiansoldier_ally_health.GetFloat() );
+		SetMaxHealth( sk_wyluxiansoldier_ally_health.GetFloat() );
+		SetKickDamage( sk_wyluxiansoldier_ally_kick.GetFloat() );
 	}
 
 	CapabilitiesAdd( bits_CAP_ANIMATEDFACE );
@@ -90,9 +90,9 @@ void CBotAlly::Spawn( void )
 
 
 	// Maybe spawn a hunter if the player wants hunters
-	if ( add_deez_prob.GetFloat() > 0 )
+	if ( add_fuck_prob.GetFloat() > 0 )
 	{
-		if (RandomFloat() <= add_deez_prob.GetFloat())
+		if (RandomFloat() <= add_fuck_prob.GetFloat())
 		{
 			// one more check - don't spawn a hunter if there's already two nearby
 			int nearby_hunters = 0;
@@ -118,7 +118,7 @@ void CBotAlly::Spawn( void )
 			if (!pHunter)
 				return;
 
-			pHunter->Precache(); // should already be precached from the bot_ally soldier's precache
+			pHunter->Precache(); // should already be precached from the wyluxiansoldier_ally soldier's precache
 
 			Vector vecHunterOrigin;
 			int attempts = 5;
@@ -145,7 +145,7 @@ void CBotAlly::Spawn( void )
 
 }
 
-Class_T	CBotAlly::Classify()
+Class_T	CWyluxianSAlly::Classify()
 {
 
 	return CLASS_PLAYER_ALLY;
@@ -156,11 +156,11 @@ Class_T	CBotAlly::Classify()
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-void CBotAlly::Precache()
+void CWyluxianSAlly::Precache()
 {
 	const char *pModelName = STRING( GetModelName() );
 
-	if( !Q_stricmp( pModelName, "models/Combsssssine_Soldier.mdl" ) )
+	if( !Q_stricmp( pModelName, "models/BitchAss.mdl" ) )
 	{
 		m_fIsElite = true;
 	}
@@ -171,7 +171,7 @@ void CBotAlly::Precache()
 
 	if( !GetModelName() )
 	{
-		SetModelName( MAKE_STRING( "models/Combine_Soldier.mdl" ) );
+		SetModelName( MAKE_STRING( "models/arsenio/npc/wyls.mdl" ) );
 	}
 
 	PrecacheModel( STRING( GetModelName() ) );
@@ -180,22 +180,27 @@ void CBotAlly::Precache()
 	UTIL_PrecacheOther( "weapon_frag" );
 	UTIL_PrecacheOther( "item_ammo_ar2_altfire" );
 
-	//if (add_yourmom_prob.GetFloat() > 0)
-	//{
-	//	UTIL_PrecacheOther( "npc_hunter" );
-	//}
+	PrecacheScriptSound( "WylS.Die" );
+
+	if (add_fuck_prob.GetFloat() > 0)
+	{
+		UTIL_PrecacheOther( "npc_hunter" );
+	}
 
 	BaseClass::Precache();
 }
 
 
-void CBotAlly::DeathSound( const CTakeDamageInfo &info )
+void CWyluxianSAlly::DeathSound( const CTakeDamageInfo &info )
 {
 	// NOTE: The response system deals with this at the moment
 	if ( GetFlags() & FL_DISSOLVING )
 		return;
 
-	GetSentences()->Speak( "COMBINE_DIE", SENTENCE_PRIORITY_INVALID, SENTENCE_CRITERIA_ALWAYS ); 
+	// TUX: Make sure we emit the sound.
+	CPASAttenuationFilter filter(this);
+	filter.UsePredictionRules();
+	EmitSound(filter, entindex(), "WylS.Die");
 }
 
 
@@ -206,7 +211,7 @@ void CBotAlly::DeathSound( const CTakeDamageInfo &info )
 //			that determines whether a grenade can be thrown, so prevent the 
 //			base class from clearing it out. (sjb)
 //-----------------------------------------------------------------------------
-void CBotAlly::ClearAttackConditions( )
+void CWyluxianSAlly::ClearAttackConditions( )
 {
 	bool fCanRangeAttack2 = HasCondition( COND_CAN_RANGE_ATTACK2 );
 
@@ -221,7 +226,7 @@ void CBotAlly::ClearAttackConditions( )
 	}
 }
 
-void CBotAlly::PrescheduleThink( void )
+void CWyluxianSAlly::PrescheduleThink( void )
 {
 	/*//FIXME: This doesn't need to be in here, it's all debug info
 	if( HasCondition( COND_HEAR_PHYSICS_DANGER ) )
@@ -249,7 +254,7 @@ void CBotAlly::PrescheduleThink( void )
 // Purpose: Allows for modification of the interrupt mask for the current schedule.
 //			In the most cases the base implementation should be called first.
 //-----------------------------------------------------------------------------
-void CBotAlly::BuildScheduleTestBits( void )
+void CWyluxianSAlly::BuildScheduleTestBits( void )
 {
 	//Interrupt any schedule with physics danger (as long as I'm not moving or already trying to block)
 	if ( m_flGroundSpeed == 0.0 && !IsCurSchedule( SCHED_FLINCH_PHYSICS ) )
@@ -265,14 +270,14 @@ void CBotAlly::BuildScheduleTestBits( void )
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-int CBotAlly::SelectSchedule ( void )
+int CWyluxianSAlly::SelectSchedule ( void )
 {
 	return BaseClass::SelectSchedule();
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-float CBotAlly::GetHitgroupDamageMultiplier( int iHitGroup, const CTakeDamageInfo &info )
+float CWyluxianSAlly::GetHitgroupDamageMultiplier( int iHitGroup, const CTakeDamageInfo &info )
 {
 	switch( iHitGroup )
 	{
@@ -289,7 +294,7 @@ float CBotAlly::GetHitgroupDamageMultiplier( int iHitGroup, const CTakeDamageInf
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CBotAlly::HandleAnimEvent( animevent_t *pEvent )
+void CWyluxianSAlly::HandleAnimEvent( animevent_t *pEvent )
 {
 	switch( pEvent->event )
 	{
@@ -304,7 +309,7 @@ void CBotAlly::HandleAnimEvent( animevent_t *pEvent )
 	}
 }
 
-void CBotAlly::OnChangeActivity( Activity eNewActivity )
+void CWyluxianSAlly::OnChangeActivity( Activity eNewActivity )
 {
 	// Any new sequence stops us blocking.
 	m_fIsBlocking = false;
@@ -321,7 +326,7 @@ void CBotAlly::OnChangeActivity( Activity eNewActivity )
 #endif
 }
 
-void CBotAlly::OnListened()
+void CWyluxianSAlly::OnListened()
 {
 	BaseClass::OnListened();
 
@@ -347,10 +352,10 @@ void CBotAlly::OnListened()
 // Input  : &info - 
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-void CBotAlly::Event_Killed( const CTakeDamageInfo &info )
+void CWyluxianSAlly::Event_Killed( const CTakeDamageInfo &info )
 {
 	// Don't bother if we've been told not to, or the player has a megaphyscannon
-	if ( bot_allypawn_health.GetBool() == false || PlayerHasMegaPhysCannon() )
+	if ( wyluxiansoldier_allypawn_health.GetBool() == false || PlayerHasMegaPhysCannon() )
 	{
 		BaseClass::Event_Killed( info );
 		return;
@@ -436,7 +441,7 @@ void CBotAlly::Event_Killed( const CTakeDamageInfo &info )
 // Input  : &info - 
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBotAlly::IsLightDamage( const CTakeDamageInfo &info )
+bool CWyluxianSAlly::IsLightDamage( const CTakeDamageInfo &info )
 {
 	return BaseClass::IsLightDamage( info );
 }
@@ -446,7 +451,7 @@ bool CBotAlly::IsLightDamage( const CTakeDamageInfo &info )
 // Input  : &info - 
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CBotAlly::IsHeavyDamage( const CTakeDamageInfo &info )
+bool CWyluxianSAlly::IsHeavyDamage( const CTakeDamageInfo &info )
 {
 	// Combine considers AR2 fire to be heavy damage
 	if ( info.GetAmmoType() == GetAmmoDef()->Index("AR2") )
@@ -477,7 +482,7 @@ bool CBotAlly::IsHeavyDamage( const CTakeDamageInfo &info )
 //-----------------------------------------------------------------------------
 // Purpose: Translate base class activities into combot activites
 //-----------------------------------------------------------------------------
-Activity CBotAlly::NPC_TranslateActivity( Activity eNewActivity )
+Activity CWyluxianSAlly::NPC_TranslateActivity( Activity eNewActivity )
 {
 	// If the special ep2_outland_05 "use march" flag is set, use the more casual marching anim.
 	if ( m_iUseMarch && eNewActivity == ACT_WALK )
@@ -492,7 +497,7 @@ Activity CBotAlly::NPC_TranslateActivity( Activity eNewActivity )
 //---------------------------------------------------------
 // Save/Restore
 //---------------------------------------------------------
-BEGIN_DATADESC( CBotAlly )
+BEGIN_DATADESC( CWyluxianSAlly )
 
 	DEFINE_KEYFIELD( m_iUseMarch, FIELD_INTEGER, "usemarch" ),
 

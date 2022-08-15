@@ -70,6 +70,8 @@ $Project "Server - Arsenio"
 			$File	"arsenio\weapon_tau.h"
 			$File	"arsenio\weapon_smg3.cpp"
 			$File	"arsenio\weapon_spas.cpp"
+			$File	"arsenio\npc_wyluxian_ally.h"
+			$File	"arsenio\npc_wyluxian_ally.cpp"
 
 
 		}

@@ -2953,6 +2953,9 @@
     <ClCompile Include="c_weapon_egar.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
+    <ClCompile Include="arsenio\c_weapon_stubs_arsenio.cpp">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\game\shared\gamemovement_duck.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>

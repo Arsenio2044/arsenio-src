@@ -39,6 +39,7 @@ $Project "Client - Arsenio"
 			$File	"$SRCDIR\game\shared\player_mobility_defs.h"
 			$File	"$SRCDIR\game\shared\gamemovement_duck.cpp"
 			$File	"$SRCDIR\game\shared\gamemovement_mobility.cpp"
+			$File	"arsenio\c_weapon_stubs_arsenio.cpp"
 		}
 
 		$Folder	"IVEngine2"

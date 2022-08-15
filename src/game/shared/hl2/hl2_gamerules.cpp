@@ -816,6 +816,38 @@ ConVar  alyx_darkness_force( "alyx_darkness_force", "0", FCVAR_CHEAT | FCVAR_REP
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_PLAYER_ALLY_VITAL,D_HT, 0);
 		CBaseCombatCharacter::SetDefaultRelationship(CLASS_COMBINE,			CLASS_HACKED_ROLLERMINE,D_HT, 0);
 
+
+// ------------------------------------------------------------
+//	> CLASS_WYLUXIA
+// ------------------------------------------------------------
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_NONE, D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_PLAYER, D_HT, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_ANTLION, D_HT, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_BARNACLE, D_FR, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_BULLSEYE, D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_CITIZEN_PASSIVE, D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_CITIZEN_REBEL, D_HT, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_WYLUXIA, D_LI, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_COMBINE, D_LI, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_COMBINE_GUNSHIP, D_LI, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_COMBINE_HUNTER, D_LI, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_CONSCRIPT, D_HT, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_FLARE, D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_HEADCRAB, D_HT, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_MANHACK, D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_METROPOLICE, D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_MILITARY, D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_MISSILE, D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_SCANNER, D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_STALKER, D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_VORTIGAUNT, D_HT, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_ZOMBIE, D_HT, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_PROTOSNIPER, D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_EARTH_FAUNA, D_NU, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_PLAYER_ALLY, D_HT, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_PLAYER_ALLY_VITAL, D_HT, 0);
+		CBaseCombatCharacter::SetDefaultRelationship(CLASS_WYLUXIA, CLASS_HACKED_ROLLERMINE, D_HT, 0);
+
 		// ------------------------------------------------------------
 		//	> CLASS_COMBINE_GUNSHIP
 		// ------------------------------------------------------------

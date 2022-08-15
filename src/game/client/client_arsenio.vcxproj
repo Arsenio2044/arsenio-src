@@ -1283,6 +1283,7 @@
     <ClCompile Include="weapons_resource.cpp" />
     <ClCompile Include="WorldDimsProxy.cpp" />
     <ClCompile Include="c_weapon_egar.cpp" />
+    <ClCompile Include="arsenio\c_weapon_stubs_arsenio.cpp" />
     <ClCompile Include="..\..\game\shared\gamemovement_duck.cpp" />
     <ClCompile Include="..\..\game\shared\gamemovement_mobility.cpp" />
     <ClCompile Include="hud_abrockets.cpp" />

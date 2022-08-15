@@ -712,6 +712,7 @@
     <ClInclude Include="arsenio\func_shop.h" />
     <ClInclude Include="arsenio\npc_bloodseeker.h" />
     <ClInclude Include="arsenio\npc_synth_e.h" />
+    <ClInclude Include="arsenio\npc_wyluxian_ally.h" />
     <ClInclude Include="..\..\game\shared\player_mobility_defs.h" />
     <ClInclude Include="searchpath_manager.h" />
     <ClInclude Include="hl2\weapon_egar.h" />
@@ -1265,6 +1266,7 @@
     <ClCompile Include="..\..\game\shared\gamemovement_mobility.cpp" />
     <ClCompile Include="arsenio\npc_bloodseeker.cpp" />
     <ClCompile Include="arsenio\npc_synth_e.cpp" />
+    <ClCompile Include="arsenio\npc_wyluxian_ally.cpp" />
     <ClCompile Include="searchpath_manager.cpp" />
     <ClCompile Include="hl2\weapon_egar.cpp" />
     <ClCompile Include="arsenio\weapon_mp5k.cpp" />

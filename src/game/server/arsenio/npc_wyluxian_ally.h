@@ -4,8 +4,8 @@
 //
 //=============================================================================//
 
-#ifndef NPC_SYNTHE_H
-#define NPC_SYNTHE_H
+#ifndef NPC_WYLUXIAN_ALLY
+#define NPC_WYLUXIAN_ALLY
 #ifdef _WIN32
 #pragma once
 #endif
@@ -13,11 +13,11 @@
 #include "npc_combine.h"
 
 //=========================================================
-//	>> CBotEnemy
+//	>> CCWyluxianSAlly
 //=========================================================
-class CBotEnemy : public CNPC_Combine
+class CWyluxianSAlly : public CNPC_Combine
 {
-	DECLARE_CLASS( CBotEnemy, CNPC_Combine );
+	DECLARE_CLASS( CWyluxianSAlly, CNPC_Combine );
 #if HL2_EPISODIC
 	DECLARE_DATADESC();
 #endif
@@ -34,6 +34,8 @@ public:
 	void		OnChangeActivity( Activity eNewActivity );
 	void		Event_Killed( const CTakeDamageInfo &info );
 	void		OnListened();
+	Class_T 	Classify();
+
 
 	void		ClearAttackConditions( void );
 
@@ -60,4 +62,4 @@ protected:
 
 };
 
-#endif // NPC_SYNTHE_H
+#endif // NPC_WYLUXIAN_ALLY
