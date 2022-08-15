@@ -37,3 +37,5 @@ STUB_WEAPON_CLASS(weapon_mp5k, WeaponMP5K, C_HLSelectFireMachineGun ); // Gonna 
 STUB_WEAPON_CLASS(weapon_pro836, WeaponPRO836, C_HLSelectFireMachineGun);
 STUB_WEAPON_CLASS(weapon_smg3, WeaponSMG3, C_HLSelectFireMachineGun);
 STUB_WEAPON_CLASS(weapon_gauss, WeaponGaussGun, C_BaseHLCombatWeapon);
+//STUB_WEAPON_CLASS(weapon_50cal, CWeapon50cal, C_BaseHLCombatWeapon);
+STUB_WEAPON_CLASS(weapon_kilo, CWeaponKILO, C_HLSelectFireMachineGun);
