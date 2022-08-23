@@ -31,7 +31,11 @@
 
 ConVar crosshair( "crosshair", "1", FCVAR_ARCHIVE );
 ConVar cl_observercrosshair( "cl_observercrosshair", "1", FCVAR_ARCHIVE );
-#ifdef IVENGINE2
+#if defined( ARSENIO )
+ConVar ivengine2_crosshair_forceaimdirection("ivengine2_crosshair_forceaimdirection", "1");
+#endif
+
+#if defined( OPTUX3 )
 ConVar ivengine2_crosshair_forceaimdirection("ivengine2_crosshair_forceaimdirection", "1");
 #endif
 
@@ -180,16 +184,25 @@ void CHudCrosshair::GetDrawPosition ( float *pX, float *pY, bool *pbBehindCamera
 
 		if ( UseVR() 
 			
-#ifdef IVENGINE2
+#ifdef OPTUX3
+			|| ivengine2_crosshair_forceaimdirection.GetBool()
+#endif
+
+#ifdef ARSENIO
 			|| ivengine2_crosshair_forceaimdirection.GetBool()
 #endif
 		)
 		{
 
 
-#ifdef IVENGINE2
+#ifdef OPTUX3
 			vecStart = MainViewOrigin();
-#else
+#endif
+
+#ifdef ARSENIO
+			vecStart = MainViewOrigin();
+#endif
+#if !defined( ARSENIO ) && !defined( OPTUX3 )
 			vecStart = pPlayer->Weapon_ShootPosition();
 #endif
 

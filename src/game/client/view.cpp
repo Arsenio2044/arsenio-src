@@ -1283,7 +1283,7 @@ void CViewRender::Render( vrect_t *rect )
 		// IVEngine 2 Camera attachment code
 		if (pPlayer && pPlayer->InFirstPersonView() && pPlayer->GetViewModel(0))
 		{
-			int iCamAttachment = pPlayer->GetViewModel(0)->LookupAttachment("camera");
+			int iCamAttachment = pPlayer->GetViewModel(0)->LookupAttachment("1");
 
 			if (iCamAttachment != -1)
 			{

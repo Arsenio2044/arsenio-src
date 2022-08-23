@@ -73,8 +73,11 @@ $Project "Server - Arsenio"
 			$File	"arsenio\npc_wyluxian_ally.h"
 			$File	"arsenio\npc_wyluxian_ally.cpp"
 			$File	"arsenio\weapon_kilo.cpp"
-//			$File	"arsenio\weapon_50calSniper.h"
-
+			$File	"arsenio\weapon_50calSniper.cpp"
+			$File	"arsenio\weapon_oicw.cpp"
+			$File	"arsenio\npc_bullsquid.cpp"
+			$File	"arsenio\npc_bullsquid.h"
+			$File	"arsenio\npc_trillionair.cpp"
 
 		}
 

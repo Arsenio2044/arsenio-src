@@ -711,6 +711,7 @@
     <ClInclude Include="world.h" />
     <ClInclude Include="arsenio\func_shop.h" />
     <ClInclude Include="arsenio\npc_bloodseeker.h" />
+    <ClInclude Include="arsenio\npc_bullsquid.h" />
     <ClInclude Include="arsenio\npc_synth_e.h" />
     <ClInclude Include="arsenio\npc_wyluxian_ally.h" />
     <ClInclude Include="..\..\game\shared\player_mobility_defs.h" />
@@ -1265,12 +1266,16 @@
     <ClCompile Include="..\..\game\shared\gamemovement_duck.cpp" />
     <ClCompile Include="..\..\game\shared\gamemovement_mobility.cpp" />
     <ClCompile Include="arsenio\npc_bloodseeker.cpp" />
+    <ClCompile Include="arsenio\npc_bullsquid.cpp" />
     <ClCompile Include="arsenio\npc_synth_e.cpp" />
+    <ClCompile Include="arsenio\npc_trillionair.cpp" />
     <ClCompile Include="arsenio\npc_wyluxian_ally.cpp" />
     <ClCompile Include="searchpath_manager.cpp" />
+    <ClCompile Include="arsenio\weapon_50calSniper.cpp" />
     <ClCompile Include="hl2\weapon_egar.cpp" />
     <ClCompile Include="arsenio\weapon_kilo.cpp" />
     <ClCompile Include="arsenio\weapon_mp5k.cpp" />
+    <ClCompile Include="arsenio\weapon_oicw.cpp" />
     <ClCompile Include="arsenio\weapon_pro836.cpp" />
     <ClCompile Include="arsenio\weapon_smg3.cpp" />
     <ClCompile Include="arsenio\weapon_spas.cpp" />

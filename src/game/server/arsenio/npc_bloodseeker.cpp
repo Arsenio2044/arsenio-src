@@ -55,7 +55,7 @@ void CNPC_BloodSeeker::Spawn()
 {
 	Precache();
 
-	SetModel("models/BloodSeeker.mdl");
+	SetModel("models/arsenio/npc/bloodseeker.mdl");
 
 	SetHullType(HULL_HUMAN);
 	SetHullSizeNormal();
@@ -93,7 +93,7 @@ void CNPC_BloodSeeker::Precache()
 {
 	m_iAmmoType = GetAmmoDef()->Index("Pistol");
 
-	PrecacheModel("models/BloodSeeker.mdl");
+	PrecacheModel("models/arsenio/npc/bloodseeker.mdl");
 
 #ifdef OPTUX3_DLL
 	UTIL_PrecacheOther("npc_headcrab");

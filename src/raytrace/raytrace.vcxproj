@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectName>Raytrace</ProjectName>
+    <ProjectName>IVEngine 2 RTX</ProjectName>
     <ProjectGuid>{95D67225-8415-236F-9128-DCB171B7DEC6}</ProjectGuid>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />

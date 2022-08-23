@@ -6436,6 +6436,12 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		GiveNamedItem("weapon_pro836");
 		GiveNamedItem("weapon_gauss");
 		GiveNamedItem("weapon_smg3");
+		GiveNamedItem("weapon_kilo");
+		GiveNamedItem("weapon_oicw");
+		GiveNamedItem("weapon_50cal");
+		GiveNamedItem("weapon_mp5k");
+
+
 
 #endif
 

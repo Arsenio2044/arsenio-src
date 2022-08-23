@@ -15,7 +15,7 @@ $Configuration
 	}
 }
 
-$Project "Fgdlib"
+$Project "IVEngine2FGDLib"
 {
 	$Folder	"Source Files"
 	{

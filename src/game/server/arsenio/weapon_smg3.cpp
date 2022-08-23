@@ -60,8 +60,6 @@ CWeaponSMG3::CWeaponSMG3( )
 {
 	m_fMaxRange1		= 320;  // TUX: Me lazy
 	m_fMinRange1		= 32;
-
-	m_iFireMode			= FIREMODE_3RNDBURST;
 }
 
 void CWeaponSMG3::Precache( void )

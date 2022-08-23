@@ -46,6 +46,11 @@ $Project "server"
 	"game\server\server_arsenio.vpc"	[($WIN32||$X360||$POSIX) && $ARSENIO]
 }
 
+$Project "responserules"
+{
+	"responserules\runtime\response_rules.vpc" [($WINDOWS||$X360||$POSIX)]
+}
+
 $Project "mathlib"
 {
 	"mathlib\mathlib.vpc" [$WINDOWS||$X360||$POSIX]

@@ -32,6 +32,10 @@ public:
 
 	const Vector	&GetBulletSpread( void );
 
+	void			SecondaryAttack();
+	Activity		GetPrimaryAttackActivity();
+
+
 	void			Precache( void );
 	void			AddViewKick( void );
 	void			Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator );
@@ -59,15 +63,27 @@ IMPLEMENT_ACTTABLE(CWeaponKILO);
 //=========================================================
 CWeaponKILO::CWeaponKILO( )
 {
-	m_fMaxRange1		= 1200;  // TUX: Me lazy
+	m_fMaxRange1		= 2200;  // TUX: Me lazy
 	m_fMinRange1		= 92;
-
-	m_iFireMode			= FIREMODE_3RNDBURST; // GLITCHY: this probably dont work you bastard
 }
 
 void CWeaponKILO::Precache( void )
 {
 	BaseClass::Precache();  
+}
+
+Activity CWeaponKILO::GetPrimaryAttackActivity()
+{
+	if (m_nShotsFired < 2)
+		return ACT_VM_PRIMARYATTACK;
+
+	if (m_nShotsFired < 3)
+		return ACT_VM_RECOIL1;
+
+	if (m_nShotsFired < 4)
+		return ACT_VM_RECOIL2;
+
+	return ACT_VM_RECOIL3;
 }
 
 //-----------------------------------------------------------------------------
@@ -76,7 +92,7 @@ void CWeaponKILO::Precache( void )
 //-----------------------------------------------------------------------------
 const Vector &CWeaponKILO::GetBulletSpread( void )
 {
-	static const Vector cone = VECTOR_CONE_10DEGREES; // Might change this sometime soon.
+	static const Vector cone = VECTOR_CONE_5DEGREES; // Might change this sometime soon.
 	return cone; // LEO EATS SWEDISH CHEESE AND HE FUCKING LOVES IT!!!!!!!
 }
 
@@ -108,6 +124,11 @@ void CWeaponKILO::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatChar
 			BaseClass::Operator_HandleAnimEvent( pEvent, pOperator );
 			break;
 	}
+}
+
+void CWeaponKILO::SecondaryAttack()
+{
+
 }
 
 //-----------------------------------------------------------------------------

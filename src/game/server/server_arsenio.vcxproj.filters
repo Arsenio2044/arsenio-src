@@ -1526,6 +1526,9 @@
     <ClInclude Include="arsenio\npc_bloodseeker.h">
       <Filter>Source Files\Arsenio</Filter>
     </ClInclude>
+    <ClInclude Include="arsenio\npc_bullsquid.h">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClInclude>
     <ClInclude Include="arsenio\npc_synth_e.h">
       <Filter>Source Files\Arsenio</Filter>
     </ClInclude>
@@ -2932,13 +2935,22 @@
     <ClCompile Include="arsenio\npc_bloodseeker.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
+    <ClCompile Include="arsenio\npc_bullsquid.cpp">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClCompile>
     <ClCompile Include="arsenio\npc_synth_e.cpp">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClCompile>
+    <ClCompile Include="arsenio\npc_trillionair.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_wyluxian_ally.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
     <ClCompile Include="searchpath_manager.cpp">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClCompile>
+    <ClCompile Include="arsenio\weapon_50calSniper.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
     <ClCompile Include="hl2\weapon_egar.cpp">
@@ -2948,6 +2960,9 @@
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\weapon_mp5k.cpp">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClCompile>
+    <ClCompile Include="arsenio\weapon_oicw.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\weapon_pro836.cpp">
