@@ -14,7 +14,7 @@
 #include "ai_basenpc.h"
 #include "soundent.h"
 
-ConVar sk_bloodseeker_health("sk_bloodseeker_health", "50");
+ConVar sk_bloodseeker_health("sk_bloodseeker_health", "500");
 
 //=========================================================
 // monster-specific schedule types

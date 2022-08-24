@@ -1,6 +1,7 @@
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
-// Purpose: An Assassin that's loyal to no-one but Shadow.
+// Purpose: BloodSeekers are humans who were experimented on by Greybox labs. They all went insane and now work for the SHADOW faction.
+//They are one of the most powerful enemies in-game and are extremly fast.
 //
 // $NoKeywords: $
 //
@@ -73,11 +74,20 @@ void CNPC_BloodSeeker::Spawn()
 
 	SetBodygroup(1, 1);
 
+	CPASAttenuationFilter filter(this);
+	EmitSound(filter, entindex(), "BloodSeeker.Spawn");
+
 	m_HackedGunPos = Vector(0, 24, 48);
 
 	m_iTargetRanderamt = 20;
 	SetRenderColor(255, 255, 255, 20);
 	m_nRenderMode = kRenderTransTexture;
+
+	if (m_iHealth > 30)
+	{
+		CPASAttenuationFilter filter(this);
+		EmitSound(filter, entindex(), "BloodSeeker.Hurt");
+	}
 
 	CapabilitiesClear();
 	CapabilitiesAdd(bits_CAP_MOVE_GROUND);
@@ -102,6 +112,8 @@ void CNPC_BloodSeeker::Precache()
 	PrecacheScriptSound("BloodSeeker.Shot");
 	PrecacheScriptSound("BloodSeeker.Beamsound");
 	PrecacheScriptSound("BloodSeeker.Footstep");
+	PrecacheScriptSound("BloodSeeker.Hurt");
+	PrecacheScriptSound("BloodSeeker.Spawn");
 }
 
 int CNPC_BloodSeeker::GetSoundInterests(void)
@@ -114,7 +126,7 @@ int CNPC_BloodSeeker::GetSoundInterests(void)
 
 Class_T	CNPC_BloodSeeker::Classify(void)
 {
-	return CLASS_COMBINE; // Should be CLASS_SHADOW, but I haven't set up the relationship table yet.
+	return CLASS_SHADOW; // Should be CLASS_SHADOW, but I haven't set up the relationship table yet.
 }
 
 //=========================================================
