@@ -2938,6 +2938,9 @@
     <ClCompile Include="arsenio\npc_bullsquid.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
+    <ClCompile Include="arsenio\npc_hulk.cpp">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClCompile>
     <ClCompile Include="arsenio\npc_synth_e.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>

@@ -78,6 +78,9 @@ $Project "Server - Arsenio"
 			$File	"arsenio\npc_bullsquid.cpp"
 			$File	"arsenio\npc_bullsquid.h"
 			$File	"arsenio\npc_trillionair.cpp"
+			$File	"arsenio\npc_hulk.cpp"
+			$File	"arsenio\arsenio_player.cpp"
+			$File	"arsenio\arsenio_player.h"
 
 		}
 

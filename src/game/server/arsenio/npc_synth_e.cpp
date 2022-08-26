@@ -43,7 +43,7 @@ extern ConVar sk_plr_num_shotgun_pellets;
 //Whether or not the synth should spawn health on death
 ConVar	synth_epawn_health( "synth_epawn_health", "1" );
 
-ConVar  add_yourmom_prob( "add_yourmom_prob", "0", 0,
+ConVar  add_yourmom_prob( "add_yourmom_prob", "1", 0,
 	"Every synth soldier has this chance to spawn a hunter" );
 
 LINK_ENTITY_TO_CLASS( npc_synth_e, CNPC_SynthE );
@@ -102,7 +102,7 @@ void CNPC_SynthE::Spawn( void )
 			for (int i = 0; i < nNumEnemies && nearby_hunters < 2; i++)
 			{
 				// We only care about hunters
-				if (pSearch[i] == NULL || pSearch[i]->Classify() != CLASS_COMBINE_HUNTER )
+				if (pSearch[i] == NULL || pSearch[i]->Classify() != CLASS_SHADOW )
 					continue;
 
 				++nearby_hunters;
@@ -113,7 +113,7 @@ void CNPC_SynthE::Spawn( void )
 			}
 
 			// Yep, spawn a hunter
-			CBaseEntity* pent = CreateEntityByName( "npc_hunter" );
+			CBaseEntity* pent = CreateEntityByName( "npc_hulk" );
 			CAI_BaseNPC* pHunter = dynamic_cast<CAI_BaseNPC*>(pent);
 			if (!pHunter)
 				return;

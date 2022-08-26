@@ -1157,6 +1157,7 @@ int CAI_PlayerAlly::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 
 	CTakeDamageInfo newInfo = info;
 
+#ifndef ARSENIO
 	if (tough_citizens.GetBool())
 	{
 		// Experimental cheat to make citizens tougher.
@@ -1165,6 +1166,7 @@ int CAI_PlayerAlly::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 		// them.
 		newInfo.ScaleDamage( 0.25 );
 	}
+#endif
 
 	return BaseClass::OnTakeDamage_Alive( newInfo );
 }
