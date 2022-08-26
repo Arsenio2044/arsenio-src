@@ -823,7 +823,7 @@ Class_T	CNPC_Citizen::Classify()
 	if (GlobalEntity_GetState("citizens_passive") == GLOBAL_ON)
 		return CLASS_CITIZEN_PASSIVE;
 
-	return CLASS_PLAYER_ALLY;
+	return CLASS_CONSCRIPT;
 }
 
 //-----------------------------------------------------------------------------
