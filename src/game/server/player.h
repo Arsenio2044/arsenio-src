@@ -27,7 +27,7 @@
 #include "econ_item_view.h"
 #endif
 
-#ifndef OPTUX3_DLL
+#ifndef OPTUX3_DLL_OLD
 
 // For queuing and processing usercmds
 class CCommandContext
@@ -231,6 +231,7 @@ public:
 
 	virtual void RunPlayerMove( CBotCmd *ucmd );
 	virtual void SetLastUserCommand( const CBotCmd &cmd );
+
 
 	virtual CBotCmd GetLastUserCommand();
 
@@ -1629,7 +1630,7 @@ enum
 
 #endif
 #endif
-#ifdef OPTUX3_DLL
+#ifdef OPTUX3_DLL_OLD
 
 // For queuing and processing usercmds
 class CCommandContext

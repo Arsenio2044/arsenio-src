@@ -84,10 +84,7 @@ $Project "Server - Arsenio"
 
 		}
 
-		$Folder	"IVEngine 2"
-		{
-			$File	"IVEngine2\point_cutscene.cpp"
-		}
+
 
 		$Folder	"HL2 DLL"
 		{

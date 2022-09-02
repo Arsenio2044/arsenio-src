@@ -461,8 +461,7 @@ void CHL2_Player::Precache( void )
 	PrecacheScriptSound( "Player.JumpGear" );
 	PrecacheScriptSound( "Player.Land" );
 	PrecacheScriptSound( "Player.HeartBeat" );
-
-
+	PrecacheScriptSound( "Player.Spawn" );
 	PrecacheScriptSound( "Player.Die" );
 
 
@@ -1168,6 +1167,10 @@ void CHL2_Player::Spawn(void)
 		SetNextThink(gpGlobals->curtime + 1);
 
 	}
+
+	CPASAttenuationFilter filter(this);
+	filter.UsePredictionRules();
+	EmitSound(filter, entindex(), "Player.Spawn");
 
 	if ( !IsSuitEquipped() )
 		 StartWalking();

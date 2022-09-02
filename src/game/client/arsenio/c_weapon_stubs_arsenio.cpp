@@ -49,4 +49,6 @@ STUB_WEAPON_CLASS(weapon_gauss, WeaponGaussGun, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_50cal, Weapon50cal, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_kilo, WeaponKILO, C_HLSelectFireMachineGun);
 STUB_WEAPON_CLASS(weapon_oicw, WeaponOICW, C_HLSelectFireMachineGun);
+//STUB_WEAPON_CLASS( weapon_egon, WeaponEgon, C_BaseHLCombatWeapon );
+
 

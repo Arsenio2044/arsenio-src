@@ -12,6 +12,7 @@
 #include "in_buttons.h"
 #include "gamestats.h"
 
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -95,7 +96,8 @@ void CHLMachineGun::PrimaryAttack( void )
 	info.m_flDistance = MAX_TRACE_LENGTH;
 	info.m_iAmmoType = m_iPrimaryAmmoType;
 	info.m_iTracerFreq = 2;
-	FireBullets( info );
+	FireBullets(info);
+
 
 	//Factor in the view kick
 	AddViewKick();

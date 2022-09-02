@@ -5020,6 +5020,8 @@ void CBasePlayer::Spawn(void)
 
 	SetClassname("player");
 
+
+
 	// Shared spawning code..
 	SharedSpawn();
 
@@ -6440,6 +6442,8 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		GiveNamedItem("weapon_oicw");
 		GiveNamedItem("weapon_50cal");
 		GiveNamedItem("weapon_mp5k");
+		//GiveNamedItem("weapon_egon");
+
 
 
 

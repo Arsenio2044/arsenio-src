@@ -73,10 +73,7 @@ $Project "Server - Optux 3"
 
 		}
 
-		$Folder	"IVEngine 2"
-		{
-			$File	"IVEngine2\point_cutscene.cpp"
-		}
+
 
 		$Folder	"HL2 DLL"
 		{

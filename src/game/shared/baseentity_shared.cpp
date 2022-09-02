@@ -1619,6 +1619,20 @@ void CBaseEntity::FireBullets( const FireBulletsInfo_t &info )
 	{
 		CBasePlayer *pPlayer = dynamic_cast<CBasePlayer*>(this);
 
+#ifdef ARSENIO_DLL
+
+		CBaseCombatWeapon* pWeapon = pPlayer->GetActiveWeapon();
+		if (!pWeapon)
+			return;
+#endif
+
+#ifdef OPTUX3_DLL
+
+		CBaseCombatWeapon* pWeapon = pPlayer->GetActiveWeapon();
+		if (!pWeapon)
+			return;
+#endif
+
 		int rumbleEffect = pPlayer->GetActiveWeapon()->GetRumbleEffect();
 
 		if( rumbleEffect != RUMBLE_INVALID )

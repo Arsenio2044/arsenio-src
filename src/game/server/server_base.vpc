@@ -77,6 +77,13 @@ $Project
 		$File	"$SRCDIR\game\shared\replay_gamestats_shared.h"	[$BUILD_REPLAY]
 	}
 	
+	$Folder	"IVEngine 2"
+	{
+		$File	"IVEngine2\point_cutscene.cpp"
+		$File	"IVEngine2\actual_bullet.cpp"
+		$File	"IVEngine2\actual_bullet.h"
+	}
+
 	$Folder	"Source Files"
 	{
 		$File	"$SRCDIR\game\shared\achievement_saverestore.cpp"

@@ -647,8 +647,8 @@ Activity CZombie::NPC_TranslateActivity( Activity newActivity )
 {
 	newActivity = BaseClass::NPC_TranslateActivity( newActivity );
 
-	if ( newActivity == ACT_RUN )
-		return ACT_SPRINT;
+	if (newActivity == ACT_RUN)
+		return ACT_WALK;
 		
 	if ( m_fIsTorso && ( newActivity == ACT_ZOMBIE_TANTRUM ) )
 		return ACT_IDLE;

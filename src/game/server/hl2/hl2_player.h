@@ -209,6 +209,11 @@ public:
 
 	const impactdamagetable_t &GetPhysicsImpactDamageTable();
 	virtual int			OnTakeDamage( const CTakeDamageInfo &info );
+
+	// TUX: HOLSTER CODE.
+	bool					IsSpawning() { return m_bSpawning; }
+
+
 	virtual int			OnTakeDamage_Alive( const CTakeDamageInfo &info );
 	virtual void		OnDamagedByExplosion( const CTakeDamageInfo &info );
 	bool				ShouldShootMissTarget( CBaseCombatCharacter *pAttacker );
@@ -311,6 +316,9 @@ private:
 
 	void				OnSquadMemberKilled( inputdata_t &data );
 	float				m_flNextPainSound; // When does the player emit a pain sound next?
+	bool				m_bSpawning; // TUX: HOLSTER.
+
+
 
 
 	Class_T				m_nControlClass;			// Class when player is controlling another entity

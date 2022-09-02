@@ -4,6 +4,9 @@
     <Filter Include="Header Files">
       <UniqueIdentifier>{1680C80B-FF1E-EA4D-9817-CC12254F2E40}</UniqueIdentifier>
     </Filter>
+    <Filter Include="IVEngine 2">
+      <UniqueIdentifier>{391AD3F9-F5CB-8B36-25D4-282CEE462F96}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Link Libraries">
       <UniqueIdentifier>{C5D73B3A-C648-896C-B7CE-F174808E5BA5}</UniqueIdentifier>
     </Filter>
@@ -18,9 +21,6 @@
     </Filter>
     <Filter Include="Source Files\HL2 DLL\unused">
       <UniqueIdentifier>{A52C827A-EB95-73A5-F031-C0395B5E2677}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\IVEngine 2">
-      <UniqueIdentifier>{ED4601E5-6AAE-6370-9DD1-7C6D84B103A1}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\OPTUX3 DLL">
       <UniqueIdentifier>{A74B12D0-8540-ADC8-B827-1385A3C01814}</UniqueIdentifier>
@@ -703,6 +703,9 @@
     </ClInclude>
     <ClInclude Include="..\..\public\zip_uncompressed.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="IVEngine2\actual_bullet.h">
+      <Filter>IVEngine 2</Filter>
     </ClInclude>
     <ClInclude Include="..\..\common\replay\ireplaysessionrecorder.h">
       <Filter>Replay</Filter>
@@ -1816,6 +1819,12 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="IVEngine2\actual_bullet.cpp">
+      <Filter>IVEngine 2</Filter>
+    </ClCompile>
+    <ClCompile Include="IVEngine2\point_cutscene.cpp">
+      <Filter>IVEngine 2</Filter>
+    </ClCompile>
     <ClCompile Include="gamedll_replay.cpp">
       <Filter>Replay</Filter>
     </ClCompile>
@@ -3366,9 +3375,6 @@
     </ClCompile>
     <ClCompile Include="hl2\weapon_flaregun.cpp">
       <Filter>Source Files\HL2 DLL\unused</Filter>
-    </ClCompile>
-    <ClCompile Include="IVEngine2\point_cutscene.cpp">
-      <Filter>Source Files\IVEngine 2</Filter>
     </ClCompile>
     <ClCompile Include="..\..\game\shared\gamemovement_duck.cpp">
       <Filter>Source Files\OPTUX3 DLL</Filter>

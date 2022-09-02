@@ -15,7 +15,10 @@
 #ifdef GAME_DLL
 #include "globalstate.h"
 #include "string_t.h"
+
 #endif
+
+
 
 // NVNT start extra includes
 #include "haptics/haptic_utils.h"
@@ -2428,6 +2431,8 @@ void CBaseCombatWeapon::PrimaryAttack( void )
 #endif // CLIENT_DLL
 
 	pPlayer->FireBullets( info );
+
+
 
 	if (!m_iClip1 && pPlayer->GetAmmoCount(m_iPrimaryAmmoType) <= 0)
 	{

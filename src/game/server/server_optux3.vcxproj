@@ -437,6 +437,7 @@
     <ClInclude Include="..\..\public\winlite.h" />
     <ClInclude Include="..\..\public\worldsize.h" />
     <ClInclude Include="..\..\public\zip_uncompressed.h" />
+    <ClInclude Include="IVEngine2\actual_bullet.h" />
     <ClInclude Include="..\..\common\replay\ireplaysessionrecorder.h" />
     <ClInclude Include="..\..\game\shared\achievement_saverestore.h" />
     <ClInclude Include="..\..\game\shared\achievementmgr.h" />
@@ -809,6 +810,8 @@
     <ClInclude Include="toolframework_server.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="IVEngine2\actual_bullet.cpp" />
+    <ClCompile Include="IVEngine2\point_cutscene.cpp" />
     <ClCompile Include="gamedll_replay.cpp" />
     <ClCompile Include="..\..\game\shared\achievement_saverestore.cpp" />
     <ClCompile Include="..\..\game\shared\achievementmgr.cpp" />
@@ -1416,7 +1419,6 @@
     <ClCompile Include="hl2\vehicle_apc.cpp" />
     <ClCompile Include="hl2\weapon_cguard.cpp" />
     <ClCompile Include="hl2\weapon_flaregun.cpp" />
-    <ClCompile Include="IVEngine2\point_cutscene.cpp" />
     <ClCompile Include="..\..\game\shared\gamemovement_duck.cpp" />
     <ClCompile Include="..\..\game\shared\gamemovement_mobility.cpp" />
     <ClCompile Include="optux3\npc_aliengrunt.cpp" />

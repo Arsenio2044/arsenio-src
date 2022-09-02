@@ -355,6 +355,9 @@ ConVar	sk_plr_dmg_molotov		( "sk_plr_dmg_molotov","0", FCVAR_REPLICATED);
 ConVar	sk_npc_dmg_molotov		( "sk_npc_dmg_molotov","0", FCVAR_REPLICATED);
 ConVar	sk_max_molotov			( "sk_max_molotov","0", FCVAR_REPLICATED);
 
+ConVar	sk_plr_dmg_egon_wide("sk_plr_dmg_egon_wide", "50", FCVAR_REPLICATED);
+
+
 ConVar	sk_plr_dmg_grenade		( "sk_plr_dmg_grenade","0", FCVAR_REPLICATED);
 ConVar	sk_npc_dmg_grenade		( "sk_npc_dmg_grenade","0", FCVAR_REPLICATED);
 ConVar	sk_max_grenade			( "sk_max_grenade","0", FCVAR_REPLICATED);

@@ -19,6 +19,7 @@
 #include "vstdlib/random.h"
 #include "gamestats.h"
 
+
 // TUX: Remind me later JAMU to add the weapon armory to this.
 
 // memdbgon must be the last include file in a .cpp file!!! shit you
@@ -482,6 +483,9 @@ void CWeaponBULK::PrimaryAttack(void)
 	{
 		ShotgunFire(11, 8, true); //The same as above
 	}
+
+
+
 }
 
 //-----------------------------------------------------------------------------
