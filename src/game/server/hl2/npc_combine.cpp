@@ -29,11 +29,31 @@
 #include "weapon_physcannon.h"
 #include "SoundEmitterSystem/isoundemittersystembase.h"
 #include "npc_headcrab.h"
-
+#ifdef ARSENIO
+#include "hl2_player.h"
+#include "npc_citizen17.h"
+#endif
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
 int g_fCombineQuestion;				// true if an idle grunt asked a question. Cleared when someone answers. YUCK old global from grunt code
+
+#ifdef ARSENIO
+ConVar npc_combine_give_enabled("npc_combine_give_enabled", "1", FCVAR_NONE, "Allows players to \"give\" weapons to Combine soldiers in their squad by holding one in front of them for a few seconds.");
+ConVar npc_combine_give_stare_dist("npc_combine_give_stare_dist", "112", FCVAR_NONE, "The distance needed for soldiers to consider the possibility the player wants to give them a weapon.");
+ConVar npc_combine_give_stare_time("npc_combine_give_stare_time", "1", FCVAR_NONE, "The amount of time the player needs to be staring at a soldier in order for them to pick up a weapon they're holding.");
+
+ConVar npc_combine_order_surrender_max_dist("npc_combine_order_surrender_max_dist", "224", FCVAR_NONE, "The maximum distance a soldier can order surrenders from. Beyond that, they will only pursue.");
+ConVar npc_combine_order_surrender_min_tlk_surrender("npc_combine_order_surrender_min_tlk_surrender", "2.0", FCVAR_NONE, "The minimum amount of time that must pass after a citizen speaks TLK_SURRENDER before being considered for surrenders, assuming they haven't already spoken TLK_BEG.");
+ConVar npc_combine_order_surrender_min_tlk_beg("npc_combine_order_surrender_min_tlk_beg", "0.5", FCVAR_NONE, "The minimum amount of time that must pass after a citizen speaks TLK_BEG before being considered for surrenders, assuming they haven't already spoken TLK_SURRENDER.");
+
+ConVar	sv_squadmate_glow("sv_squadmate_glow", "1", FCVAR_REPLICATED, "If 1, Combine soldier squadmates will glow when they are in the player's squad. The color of the glow represents their HP.");
+ConVar	sv_squadmate_glow_style("sv_squadmate_glow_style", "1", FCVAR_REPLICATED, "Different colors for Combine squadmate glows. 0: Green means 100 HP, red means 0 HP\t1: White means 100 HP, red means 0 HP");
+ConVar	sv_squadmate_glow_alpha("sv_squadmate_glow_alpha", "0.6", FCVAR_REPLICATED, "On a scale of 0-1, how much alpha should the squadmate glow have");
+
+#define COMBINE_GLOW_STYLE_REDGREEN	0
+#define COMBINE_GLOW_STYLE_REDWHITE	1
+#endif
 
 #define COMBINE_SKIN_DEFAULT		0
 #define COMBINE_SKIN_SHOTGUNNER		1
@@ -480,6 +500,8 @@ void CNPC_Combine::DelayAltFireAttack( float flDelay )
 		m_flNextAltFireTime = flNextAltFire;
 	}
 }
+
+
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
