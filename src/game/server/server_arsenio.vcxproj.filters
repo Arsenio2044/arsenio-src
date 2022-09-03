@@ -1532,6 +1532,12 @@
     <ClInclude Include="arsenio\npc_bullsquid.h">
       <Filter>Source Files\Arsenio</Filter>
     </ClInclude>
+    <ClInclude Include="arsenio\npc_conscript.h">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClInclude>
+    <ClInclude Include="arsenio\npc_houndeye.h">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClInclude>
     <ClInclude Include="arsenio\npc_synth_e.h">
       <Filter>Source Files\Arsenio</Filter>
     </ClInclude>
@@ -2945,6 +2951,12 @@
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_bullsquid.cpp">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClCompile>
+    <ClCompile Include="arsenio\npc_conscript.cpp">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClCompile>
+    <ClCompile Include="arsenio\npc_houndeye.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_hulk.cpp">

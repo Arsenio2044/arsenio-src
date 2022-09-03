@@ -456,6 +456,7 @@ public:
 	virtual void            PlayAirjumpSound( Vector &vecOrigin );
 	virtual void            PlayPowerSlideSound( Vector &vecOrigin );
 	virtual void            StopPowerSlideSound( void );
+
 	virtual void            PlayWallRunSound( Vector &vecOrigin );
 	virtual void            StopWallRunSound( void );
 
@@ -599,9 +600,10 @@ public:
 
 	void					AvoidPhysicsProps( CUserCmd *pCmd );
 
-	// Mobility mod
+	// ARSENIO PARKOUR CREDIT Mobility mod
 	bool m_bLessClip = false;
 	bool m_bIsPowerSliding = false;
+
 	WallRunState m_nWallRunState = WALLRUN_NOT;
 	Vector m_vecWallNorm;
 	float m_flAutoViewTime; // if wallrunning, when should start adjusting the view 
@@ -609,14 +611,28 @@ public:
 	Vector m_vecLastWallRunPos; // Position when we ended the last wallrun
 	AirJumpState m_nAirJumpState; // Is the airjump ready, in progress, or done?
 	// Is the player allowed to jump while in the air
+	#ifdef ARSENIO
 	bool                CanAirJump(void)
+	
 	{
 		return IsSuitEquipped() &&
 			m_nAirJumpState != AIRJUMP_DONE &&
 			m_nAirJumpState != AIRJUMP_NORM_JUMPING;
 	}
+	#else
+
+	bool                CanAirJump(void)
+
+	{
+		return IsHLTV() &&
+			m_nAirJumpState != AIRJUMP_DONE &&
+			m_nAirJumpState != AIRJUMP_NORM_JUMPING;
+	}
+	#endif
 	HSOUNDSCRIPTHANDLE m_hssPowerSlideSound;
+
 	HSOUNDSCRIPTHANDLE m_hssWallRunSound;
+
 
 	float m_flCoyoteTime; // When a wallrun ends or we go over a cliff, allow a window when
 	                      // jumping counts as a normal jump off the ground/wall, even though

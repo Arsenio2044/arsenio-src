@@ -1845,7 +1845,7 @@ void CBasePlayer::CalcViewModelView(const Vector& eyeOrigin, const QAngle& eyeAn
 
 }
 //#endif
-#ifdef OPTUX3
+#ifdef OPTUX3_CLIENT
 void CBasePlayer::AddViewBob(Vector& eyeOrigin, QAngle& eyeAngles, bool calculate)
 {
 	static float bobtime, lastbobtime;
@@ -1931,7 +1931,7 @@ void CBasePlayer::CalcPlayerView( Vector& eyeOrigin, QAngle& eyeAngles, float& f
 	m_flObserverChaseDistance = 0.0;
 #endif
 
-#ifdef OPTUX3
+#ifdef OPTUX3_CLIENT
 
 	AddViewBob(eyeOrigin, eyeAngles, true);
 

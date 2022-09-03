@@ -24,7 +24,7 @@
 // ACT_FLINCH_PHYSICS
 
 #ifdef OPTUX3
-ConVar	sk_zombie_health( "sk_zombie_health","100");
+ConVar	sk_zombie_health( "sk_zombie_health","10");
 #else
 ConVar	sk_zombie_health("sk_zombie_health", "0");
 #endif

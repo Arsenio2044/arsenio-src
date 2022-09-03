@@ -52,7 +52,7 @@ public:
 
 	virtual const Vector& GetBulletSpread( void )
 	{
-		static const Vector cone = VECTOR_CONE_15DEGREES;
+		static const Vector cone = VECTOR_CONE_20DEGREES;
 		return cone;
 	}
 
@@ -141,7 +141,7 @@ IMPLEMENT_ACTTABLE(CWeaponSMG1);
 CWeaponSMG1::CWeaponSMG1( )
 {
 	m_fMinRange1		= 0;// No minimum range. 
-	m_fMaxRange1		= 520;
+	m_fMaxRange1		= 200;
 
 	m_bAltFiresUnderwater = false;
 }

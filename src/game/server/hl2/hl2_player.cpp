@@ -1217,7 +1217,7 @@ void CHL2_Player::DeriveMaxSpeed( void )
 	{
 		newMaxSpeed = sv_wallrun_speed.GetFloat();
 	}
-	else if ( m_fIsSprinting )
+	else if (m_fIsSprinting)
 	{
 		newMaxSpeed = HL2_SPRINT_SPEED;
 	}
@@ -1899,6 +1899,7 @@ void CHL2_Player::SuitPower_Update( void )
 					// If player's not moving, don't drain sprint juice.
 					flPowerLoad -= SuitDeviceSprint.GetDeviceDrainRate();
 				}
+
 			}
 		}
 

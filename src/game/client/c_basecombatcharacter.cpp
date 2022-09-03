@@ -25,9 +25,9 @@
 //-----------------------------------------------------------------------------
 C_BaseCombatCharacter::C_BaseCombatCharacter()
 {
-	for ( int i=0; i < m_iAmmo.Count(); i++ )
+	for (int i = 0; i < m_iAmmo.Count(); i++)
 	{
-		m_iAmmo.Set( i, 0 );
+		m_iAmmo.Set(i, 0);
 	}
 
 #ifdef GLOWS_ENABLE
@@ -60,9 +60,9 @@ int	C_BaseCombatCharacter::GetAmmoCount( char *szName ) const
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void C_BaseCombatCharacter::OnPreDataChanged( DataUpdateType_t updateType )
+void C_BaseCombatCharacter::OnPreDataChanged(DataUpdateType_t updateType)
 {
-	BaseClass::OnPreDataChanged( updateType );
+	BaseClass::OnPreDataChanged(updateType);
 
 #ifdef GLOWS_ENABLE
 	m_bOldGlowEnabled = m_bGlowEnabled;
@@ -72,12 +72,12 @@ void C_BaseCombatCharacter::OnPreDataChanged( DataUpdateType_t updateType )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void C_BaseCombatCharacter::OnDataChanged( DataUpdateType_t updateType )
+void C_BaseCombatCharacter::OnDataChanged(DataUpdateType_t updateType)
 {
-	BaseClass::OnDataChanged( updateType );
+	BaseClass::OnDataChanged(updateType);
 
 #ifdef GLOWS_ENABLE
-	if ( m_bOldGlowEnabled != m_bGlowEnabled )
+	if (m_bOldGlowEnabled != m_bGlowEnabled)
 	{
 		UpdateGlowEffect();
 	}
@@ -90,8 +90,8 @@ void C_BaseCombatCharacter::OnDataChanged( DataUpdateType_t updateType )
 void C_BaseCombatCharacter::DoMuzzleFlash()
 {
 	// Our weapon takes our muzzle flash command
-	C_BaseCombatWeapon *pWeapon = GetActiveWeapon();
-	if ( pWeapon )
+	C_BaseCombatWeapon* pWeapon = GetActiveWeapon();
+	if (pWeapon)
 	{
 		pWeapon->DoMuzzleFlash();
 		//NOTENOTE: We do not chain to the base here
@@ -106,7 +106,7 @@ void C_BaseCombatCharacter::DoMuzzleFlash()
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void C_BaseCombatCharacter::GetGlowEffectColor( float *r, float *g, float *b )
+void C_BaseCombatCharacter::GetGlowEffectColor(float* r, float* g, float* b)
 {
 	*r = 0.76f;
 	*g = 0.76f;
@@ -116,30 +116,30 @@ void C_BaseCombatCharacter::GetGlowEffectColor( float *r, float *g, float *b )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void C_BaseCombatCharacter::UpdateGlowEffect( void )
+void C_BaseCombatCharacter::UpdateGlowEffect(void)
 {
 	// destroy the existing effect
-	if ( m_pGlowEffect )
+	if (m_pGlowEffect)
 	{
 		DestroyGlowEffect();
 	}
 
 	// create a new effect
-	if ( m_bGlowEnabled )
+	if (m_bGlowEnabled)
 	{
 		float r, g, b;
-		GetGlowEffectColor( &r, &g, &b );
+		GetGlowEffectColor(&r, &g, &b);
 
-		m_pGlowEffect = new CGlowObject( this, Vector( r, g, b ), 1.0, true );
+		m_pGlowEffect = new CGlowObject(this, Vector(r, g, b), 1.0, true);
 	}
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void C_BaseCombatCharacter::DestroyGlowEffect( void )
+void C_BaseCombatCharacter::DestroyGlowEffect(void)
 {
-	if ( m_pGlowEffect )
+	if (m_pGlowEffect)
 	{
 		delete m_pGlowEffect;
 		m_pGlowEffect = NULL;
@@ -150,39 +150,31 @@ void C_BaseCombatCharacter::DestroyGlowEffect( void )
 IMPLEMENT_CLIENTCLASS(C_BaseCombatCharacter, DT_BaseCombatCharacter, CBaseCombatCharacter);
 
 // Only send active weapon index to local player
-BEGIN_RECV_TABLE_NOBASE( C_BaseCombatCharacter, DT_BCCLocalPlayerExclusive )
-	RecvPropTime( RECVINFO( m_flNextAttack ) ),
+BEGIN_RECV_TABLE_NOBASE(C_BaseCombatCharacter, DT_BCCLocalPlayerExclusive)
+RecvPropTime(RECVINFO(m_flNextAttack)),
 END_RECV_TABLE();
 
 
 BEGIN_RECV_TABLE(C_BaseCombatCharacter, DT_BaseCombatCharacter)
-	RecvPropDataTable( "bcc_localdata", 0, 0, &REFERENCE_RECV_TABLE(DT_BCCLocalPlayerExclusive) ),
-	RecvPropEHandle( RECVINFO( m_hActiveWeapon ) ),
-	RecvPropArray3( RECVINFO_ARRAY(m_hMyWeapons), RecvPropEHandle( RECVINFO( m_hMyWeapons[0] ) ) ),
-	// TUX: Weapon holster.
-	RecvPropEHandle(RECVINFO(m_hDeployingWeapon)),
-
-
+RecvPropDataTable("bcc_localdata", 0, 0, &REFERENCE_RECV_TABLE(DT_BCCLocalPlayerExclusive)),
+RecvPropEHandle(RECVINFO(m_hActiveWeapon)),
+RecvPropArray3(RECVINFO_ARRAY(m_hMyWeapons), RecvPropEHandle(RECVINFO(m_hMyWeapons[0]))),
 #ifdef GLOWS_ENABLE
-	RecvPropBool( RECVINFO( m_bGlowEnabled ) ),
+RecvPropBool(RECVINFO(m_bGlowEnabled)),
 #endif // GLOWS_ENABLE
 
 #ifdef INVASION_CLIENT_DLL
-	RecvPropInt( RECVINFO( m_iPowerups ) ),
+RecvPropInt(RECVINFO(m_iPowerups)),
 #endif
 
 END_RECV_TABLE()
 
 
-BEGIN_PREDICTION_DATA( C_BaseCombatCharacter )
+BEGIN_PREDICTION_DATA(C_BaseCombatCharacter)
 
-	DEFINE_PRED_ARRAY( m_iAmmo, FIELD_INTEGER,  MAX_AMMO_TYPES, FTYPEDESC_INSENDTABLE ),
-	DEFINE_PRED_FIELD( m_flNextAttack, FIELD_FLOAT, FTYPEDESC_INSENDTABLE ),
-	DEFINE_PRED_FIELD( m_hActiveWeapon, FIELD_EHANDLE, FTYPEDESC_INSENDTABLE ),
-	DEFINE_PRED_ARRAY( m_hMyWeapons, FIELD_EHANDLE, MAX_WEAPONS, FTYPEDESC_INSENDTABLE ),
-	// TUX: Weapon holster.
-	DEFINE_PRED_FIELD(m_hDeployingWeapon, FIELD_EHANDLE, FTYPEDESC_INSENDTABLE),
-
-
+DEFINE_PRED_ARRAY(m_iAmmo, FIELD_INTEGER, MAX_AMMO_TYPES, FTYPEDESC_INSENDTABLE),
+DEFINE_PRED_FIELD(m_flNextAttack, FIELD_FLOAT, FTYPEDESC_INSENDTABLE),
+DEFINE_PRED_FIELD(m_hActiveWeapon, FIELD_EHANDLE, FTYPEDESC_INSENDTABLE),
+DEFINE_PRED_ARRAY(m_hMyWeapons, FIELD_EHANDLE, MAX_WEAPONS, FTYPEDESC_INSENDTABLE),
 
 END_PREDICTION_DATA()

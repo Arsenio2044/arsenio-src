@@ -235,9 +235,14 @@ void CGameMovement::AnticipateWallRun( void )
 void CGameMovement::CheckWallRun( Vector &vecWallNormal, trace_t &pm )
 {
 	// Can't wallrun without the suit
+#ifdef ARSENIO
 	if (!player->IsSuitEquipped())
 		return;
+#else
 
+	if (!player->IsBot())
+		return;
+#endif
 
 	// Don't attach to wall if ducking - super annoying
 	if (mv->m_nButtons & IN_DUCK)
