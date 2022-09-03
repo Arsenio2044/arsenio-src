@@ -1,6 +1,6 @@
 //========= Copyright © Glitch Software, All rights reserved. ============//
 //
-// Purpose: A big heavily-armored monstrosity who works for the Shadow and carries the Shadow 
+// Purpose: A big heavily-armored monstrosity who works for Shadow and carries the Shadow 
 // equivalent to the BFG.
 //=============================================================================//
 
