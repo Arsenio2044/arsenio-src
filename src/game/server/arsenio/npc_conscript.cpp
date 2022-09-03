@@ -104,7 +104,7 @@ void CNPC_Conscript::Spawn( void )
 			for (int i = 0; i < nNumEnemies && nearby_hunters < 2; i++)
 			{
 				// We only care about hunters
-				if (pSearch[i] == NULL || pSearch[i]->Classify() != CLASS_SHADOW )
+				if (pSearch[i] == NULL || pSearch[i]->Classify() != CLASS_CONSCRIPT )
 					continue;
 
 				++nearby_hunters;
