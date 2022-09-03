@@ -24,6 +24,8 @@
 #include "hl2_gamerules.h"
 #include "gameweaponmanager.h"
 #include "vehicle_base.h"
+#include "globalstate.h"
+
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -148,7 +150,10 @@ void CNPC_Conscript::Spawn( void )
 Class_T	CNPC_Conscript::Classify()
 {
 
-	return CLASS_SHADOW;
+	if (GlobalEntity_GetState("conscript_ally") == GLOBAL_ON)
+		return CLASS_PLAYER_ALLY;
+
+	return CLASS_CONSCRIPT;
 }
 
 //-----------------------------------------------------------------------------
