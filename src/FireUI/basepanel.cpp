@@ -1,6 +1,6 @@
-//========= TuxUI ===================//
+//========= FireUI ===================//
 //
-// Purpose: Replace GameUI with TuxUI.
+// Purpose: Replace GameUI with FireUI
 //
 //
 //=============================================================================//
@@ -34,7 +34,7 @@ BasePanel::BasePanel(vgui::VPANEL Parent) : BaseClass(nullptr)
 	SetProportional(false);
 	SetVisible(false);
 	SetPostChildPaintEnabled(true);
-	
+
 	BackgroundMusic = "Interface.Music";
 	BackgroundMusicGUID = 0;
 
@@ -78,7 +78,7 @@ void BasePanel::OnThink()
 		}
 		else if (IsBackgroundMusicPlaying() == true)
 		{
-			if (GetGameUI2().IsInBackgroundLevel() == false || GetGameUI2().IsInLoading() == false || GetGameUI2().IsInLevel() == true)
+			if (GetGameUI2().IsInBackgroundLevel() == false || GetGameUI2().IsInLevel() == true)
 				ReleaseBackgroundMusic();
 		}
 	}
