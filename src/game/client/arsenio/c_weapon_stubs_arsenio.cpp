@@ -48,7 +48,7 @@ STUB_WEAPON_CLASS(weapon_smg3, WeaponSMG3, C_HLSelectFireMachineGun);
 STUB_WEAPON_CLASS(weapon_gauss, WeaponGaussGun, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_50cal, Weapon50cal, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_kilo, WeaponKILO, C_HLSelectFireMachineGun);
-STUB_WEAPON_CLASS(weapon_oicw, WeaponOICW, C_HLSelectFireMachineGun);
+STUB_WEAPON_CLASS(weapon_oicw, WeaponOICW, C_HLMachineGun);
 STUB_WEAPON_CLASS(weapon_minigun, WeaponMiniGun, C_HLMachineGun);
 
 #ifdef ARSENIO_CUT
