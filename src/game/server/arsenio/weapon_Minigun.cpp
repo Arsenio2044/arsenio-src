@@ -1,4 +1,4 @@
-//========= Copyright Valve Corporation, All rights reserved. ============//
+//========= Copyright Glitch Software, All rights reserved. ============//
 //
 // Purpose: Minigun, coded by glitchy for the base
 //
