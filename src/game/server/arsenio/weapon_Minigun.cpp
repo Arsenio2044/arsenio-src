@@ -140,8 +140,8 @@ IMPLEMENT_ACTTABLE(CWeaponSMG1);
 //=========================================================
 CWeaponSMG1::CWeaponSMG1()
 {
-	m_fMinRange1 = 0;// No minimum range. 
-	m_fMaxRange1 = 200;
+	m_fMinRange1 = 230;// No minimum range. 
+	m_fMaxRange1 = 830;
 
 	m_bAltFiresUnderwater = false;
 }
@@ -302,9 +302,9 @@ bool CWeaponSMG1::Reload(void)
 //-----------------------------------------------------------------------------
 void CWeaponSMG1::AddViewKick(void)
 {
-#define	EASY_DAMPEN			2.5f	// Yes.
-#define	MAX_VERTICAL_KICK	11.0f	//Degrees - was 1.0
-#define	SLIDE_LIMIT			2.0f	//Seconds - was 2.0
+#define	EASY_DAMPEN			1.5f	// How damped it is
+#define	MAX_VERTICAL_KICK	35.0f	//Degrees - was 1.0
+#define	SLIDE_LIMIT			1.0f	//Seconds - was 2.0
 
 	// Credit Breadman for the viewkick, btw E:Z 2 looks really good!
 
@@ -322,11 +322,12 @@ void CWeaponSMG1::AddViewKick(void)
 // Purpose: 
 //-----------------------------------------------------------------------------
 void CWeaponSMG1::SecondaryAttack(void)
+if DEEZNUTS2 {
 {
 	// Only the player fires this way so we can cast
 	CBasePlayer *pPlayer = ToBasePlayer(GetOwner());
 
-	if (pPlayer == NULL)
+	//if (pPlayer == NULL)
 		return;
 
 	//Must have ammo
@@ -385,6 +386,8 @@ void CWeaponSMG1::SecondaryAttack(void)
 	m_iSecondaryAttacks++;
 	gamestats->Event_WeaponFired(pPlayer, false, GetClassname());
 }
+endif
+return;
 
 #define	COMBINE_MIN_GRENADE_CLEAR_DIST 256
 
