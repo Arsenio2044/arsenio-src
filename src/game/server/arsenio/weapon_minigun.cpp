@@ -1,7 +1,9 @@
-//========= Copyright Valve Corporation, All rights reserved. ============//
+//========= Copyright Glitch Software, All rights reserved. ============//
 //
-// Purpose: Minigun, coded by glitchy for the base
-//
+// Purpose: The MiniGun has a huge firerate and is awarded by killing a Hulk.
+// 
+/////////////////////////////////////////////////////////////////////////////////
+// Coded by: Glitchy and Tuxxego
 //=============================================================================//
 
 #include "cbase.h"
@@ -23,13 +25,13 @@
 
 extern ConVar    sk_plr_dmg_smg1_grenade;
 
-class CWeaponSMG1 : public CHLSelectFireMachineGun
+class CWeaponMiniGun : public CHLSelectFireMachineGun
 {
 	DECLARE_DATADESC();
 public:
-	DECLARE_CLASS(CWeaponSMG1, CHLSelectFireMachineGun);
+	DECLARE_CLASS(CWeaponMiniGun, CHLSelectFireMachineGun);
 
-	CWeaponSMG1();
+	CWeaponMiniGun();
 
 	DECLARE_SERVERCLASS();
 
@@ -70,20 +72,20 @@ protected:
 	float	m_flNextGrenadeCheck;
 };
 
-IMPLEMENT_SERVERCLASS_ST(CWeaponSMG1, DT_WeaponSMG1)
+IMPLEMENT_SERVERCLASS_ST(CWeaponMiniGun, DT_WeaponMiniGun)
 END_SEND_TABLE()
 
-LINK_ENTITY_TO_CLASS(weapon_smg1, CWeaponSMG1);
-PRECACHE_WEAPON_REGISTER(weapon_smg1);
+LINK_ENTITY_TO_CLASS(weapon_minigun, CWeaponMiniGun);
+PRECACHE_WEAPON_REGISTER(weapon_minigun);
 
-BEGIN_DATADESC(CWeaponSMG1)
+BEGIN_DATADESC(CWeaponMiniGun)
 
 DEFINE_FIELD(m_vecTossVelocity, FIELD_VECTOR),
 DEFINE_FIELD(m_flNextGrenadeCheck, FIELD_TIME),
 
 END_DATADESC()
 
-acttable_t	CWeaponSMG1::m_acttable[] =
+acttable_t	CWeaponMiniGun::m_acttable[] =
 {
 	{ ACT_RANGE_ATTACK1, ACT_RANGE_ATTACK_SMG1, true },
 	{ ACT_RELOAD, ACT_RELOAD_SMG1, true },
@@ -135,13 +137,13 @@ acttable_t	CWeaponSMG1::m_acttable[] =
 	{ ACT_GESTURE_RELOAD, ACT_GESTURE_RELOAD_SMG1, true },
 };
 
-IMPLEMENT_ACTTABLE(CWeaponSMG1);
+IMPLEMENT_ACTTABLE(CWeaponMiniGun);
 
 //=========================================================
-CWeaponSMG1::CWeaponSMG1()
+CWeaponMiniGun::CWeaponMiniGun()
 {
-	m_fMinRange1 = 0;// No minimum range. 
-	m_fMaxRange1 = 200;
+	m_fMinRange1 = 230;// No minimum range. 
+	m_fMaxRange1 = 830;
 
 	m_bAltFiresUnderwater = false;
 }
@@ -149,7 +151,7 @@ CWeaponSMG1::CWeaponSMG1()
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CWeaponSMG1::Precache(void)
+void CWeaponMiniGun::Precache(void)
 {
 	UTIL_PrecacheOther("grenade_ar2");
 
@@ -159,7 +161,7 @@ void CWeaponSMG1::Precache(void)
 //-----------------------------------------------------------------------------
 // Purpose: Give this weapon longer range when wielded by an ally NPC.
 //-----------------------------------------------------------------------------
-void CWeaponSMG1::Equip(CBaseCombatCharacter *pOwner)
+void CWeaponMiniGun::Equip(CBaseCombatCharacter *pOwner)
 {
 	if (pOwner->Classify() == CLASS_PLAYER_ALLY)
 	{
@@ -176,7 +178,7 @@ void CWeaponSMG1::Equip(CBaseCombatCharacter *pOwner)
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CWeaponSMG1::FireNPCPrimaryAttack(CBaseCombatCharacter *pOperator, Vector &vecShootOrigin, Vector &vecShootDir)
+void CWeaponMiniGun::FireNPCPrimaryAttack(CBaseCombatCharacter *pOperator, Vector &vecShootOrigin, Vector &vecShootDir)
 {
 	// FIXME: use the returned number of bullets to account for >10hz firerate
 	WeaponSoundRealtime(SINGLE_NPC);
@@ -192,7 +194,7 @@ void CWeaponSMG1::FireNPCPrimaryAttack(CBaseCombatCharacter *pOperator, Vector &
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CWeaponSMG1::Operator_ForceNPCFire(CBaseCombatCharacter *pOperator, bool bSecondary)
+void CWeaponMiniGun::Operator_ForceNPCFire(CBaseCombatCharacter *pOperator, bool bSecondary)
 {
 	// Ensure we have enough rounds in the clip
 	m_iClip1++;
@@ -207,7 +209,7 @@ void CWeaponSMG1::Operator_ForceNPCFire(CBaseCombatCharacter *pOperator, bool bS
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CWeaponSMG1::Operator_HandleAnimEvent(animevent_t *pEvent, CBaseCombatCharacter *pOperator)
+void CWeaponMiniGun::Operator_HandleAnimEvent(animevent_t *pEvent, CBaseCombatCharacter *pOperator)
 {
 	switch (pEvent->event)
 	{
@@ -262,7 +264,7 @@ void CWeaponSMG1::Operator_HandleAnimEvent(animevent_t *pEvent, CBaseCombatChara
 // Purpose: 
 // Output : Activity
 //-----------------------------------------------------------------------------
-Activity CWeaponSMG1::GetPrimaryAttackActivity(void)
+Activity CWeaponMiniGun::GetPrimaryAttackActivity(void)
 {
 	if (m_nShotsFired < 2)
 		return ACT_VM_PRIMARYATTACK;
@@ -278,7 +280,7 @@ Activity CWeaponSMG1::GetPrimaryAttackActivity(void)
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-bool CWeaponSMG1::Reload(void)
+bool CWeaponMiniGun::Reload(void)
 {
 	bool fRet;
 	float fCacheTime = m_flNextSecondaryAttack;
@@ -300,11 +302,11 @@ bool CWeaponSMG1::Reload(void)
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CWeaponSMG1::AddViewKick(void)
+void CWeaponMiniGun::AddViewKick(void)
 {
-#define	EASY_DAMPEN			2.5f	// Yes.
-#define	MAX_VERTICAL_KICK	11.0f	//Degrees - was 1.0
-#define	SLIDE_LIMIT			2.0f	//Seconds - was 2.0
+#define	EASY_DAMPEN			1.5f	// How damped it is
+#define	MAX_VERTICAL_KICK	35.0f	//Degrees - was 1.0
+#define	SLIDE_LIMIT			1.0f	//Seconds - was 2.0
 
 	// Credit Breadman for the viewkick, btw E:Z 2 looks really good!
 
@@ -321,12 +323,13 @@ void CWeaponSMG1::AddViewKick(void)
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CWeaponSMG1::SecondaryAttack(void)
+#ifdef DEEZNUTS2 
+void CWeaponMiniGun::SecondaryAttack(void)
 {
 	// Only the player fires this way so we can cast
 	CBasePlayer *pPlayer = ToBasePlayer(GetOwner());
 
-	if (pPlayer == NULL)
+	//if (pPlayer == NULL)
 		return;
 
 	//Must have ammo
@@ -386,6 +389,11 @@ void CWeaponSMG1::SecondaryAttack(void)
 	gamestats->Event_WeaponFired(pPlayer, false, GetClassname());
 }
 
+// Glitchy you fucking dumbass get better grammer.
+return;
+
+#endif
+
 #define	COMBINE_MIN_GRENADE_CLEAR_DIST 256
 
 //-----------------------------------------------------------------------------
@@ -394,7 +402,7 @@ void CWeaponSMG1::SecondaryAttack(void)
 //			flDist - 
 // Output : int
 //-----------------------------------------------------------------------------
-int CWeaponSMG1::WeaponRangeAttack2Condition(float flDot, float flDist)
+int CWeaponMiniGun::WeaponRangeAttack2Condition(float flDot, float flDist)
 {
 	CAI_BaseNPC *npcOwner = GetOwner()->MyNPCPointer();
 
@@ -495,7 +503,7 @@ int CWeaponSMG1::WeaponRangeAttack2Condition(float flDot, float flDist)
 }
 
 //-----------------------------------------------------------------------------
-const WeaponProficiencyInfo_t *CWeaponSMG1::GetProficiencyValues()
+const WeaponProficiencyInfo_t *CWeaponMiniGun::GetProficiencyValues()
 {
 	static WeaponProficiencyInfo_t proficiencyTable[] =
 	{
