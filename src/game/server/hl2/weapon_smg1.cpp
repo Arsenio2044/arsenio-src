@@ -326,8 +326,8 @@ void CWeaponSMG1::AddViewKick( void )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CWeaponSMG1::SecondaryAttack( void )
-{ /*
+void CWeaponSMG1::SecondaryAttack( void ) // Disabled, can be usually enabled by deleting the lines with arrows
+{ /* // <-----------
 	// Only the player fires this way so we can cast
 	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
 	
@@ -389,7 +389,7 @@ void CWeaponSMG1::SecondaryAttack( void )
 
 	m_iSecondaryAttacks++;
 	gamestats->Event_WeaponFired( pPlayer, false, GetClassname() );
-	*/
+	*/ // <-----------
 }
 
 #define	COMBINE_MIN_GRENADE_CLEAR_DIST 256
