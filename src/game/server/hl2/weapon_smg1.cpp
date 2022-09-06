@@ -326,7 +326,7 @@ void CWeaponSMG1::AddViewKick( void )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CWeaponSMG1::SecondaryAttack( void ) // Disabled, can be usually enabled by deleting the lines with arrows
+void CWeaponSMG1::SecondaryAttack( void ) // Disabled, can be easily enabled by deleting the lines with arrows
 { /* // <-----------
 	// Only the player fires this way so we can cast
 	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
