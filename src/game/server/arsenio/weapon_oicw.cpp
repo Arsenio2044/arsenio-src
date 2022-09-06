@@ -200,7 +200,7 @@ void CWeaponOICW::ItemPostFrame(void)
 		}
 	}
 
-#ifdef BE
+#ifdef ARSENIO_DLL
 
 	//Throw a grenade.
 	if (pOwner->m_afButtonPressed & IN_ATTACK3)
