@@ -6408,6 +6408,8 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		gEvilImpulse101 = true;
 
 		EquipSuit();
+		EquipExo();
+
 
 #ifndef OPTUX3_DLL
 
@@ -8931,6 +8933,11 @@ bool CBasePlayer::IsFakeClient() const
 void CBasePlayer::EquipSuit(bool bPlayEffects)
 {
 	m_Local.m_bWearingSuit = true;
+}
+
+void CBasePlayer::EquipExo(bool bPlayEffects)
+{
+	m_Local.m_bWearingExo = true;
 }
 
 

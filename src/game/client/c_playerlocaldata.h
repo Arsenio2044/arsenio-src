@@ -71,6 +71,7 @@ public:
 	CInterpolatedVar< QAngle >	m_iv_vecPunchAngleVel;
 	bool					m_bDrawViewmodel;
 	bool					m_bWearingSuit;
+	bool					m_bWearingExo;
 	bool					m_bPoisoned;
 	float					m_flStepSize;
 	bool					m_bAllowAutoMovement;

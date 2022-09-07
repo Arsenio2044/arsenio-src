@@ -3625,6 +3625,9 @@
     <ClCompile Include="toolframework_server.cpp">
       <Filter>Tools Framework</Filter>
     </ClCompile>
+    <ClCompile Include="arsenio\item_exo.cpp">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

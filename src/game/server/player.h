@@ -615,7 +615,7 @@ public:
 	bool                CanAirJump(void)
 	
 	{
-		return IsSuitEquipped() &&
+		return IsExoEquipped() &&
 			m_nAirJumpState != AIRJUMP_DONE &&
 			m_nAirJumpState != AIRJUMP_NORM_JUMPING;
 	}
@@ -728,6 +728,7 @@ public:
 	bool	IsConnected() const		{ return m_iConnected != PlayerDisconnected; }
 	bool	IsDisconnecting() const	{ return m_iConnected == PlayerDisconnecting; }
 	bool	IsSuitEquipped() const	{ return m_Local.m_bWearingSuit; }
+	bool	IsExoEquipped() const	{ return m_Local.m_bWearingExo; }
 	int		ArmorValue() const		{ return m_ArmorValue; }
 	bool	HUDNeedsRestart() const { return m_fInitHUD; }
 	float	MaxSpeed() const		{ return m_flMaxspeed; }
@@ -767,6 +768,7 @@ public:
 
 	void	SetConnected( PlayerConnectedState iConnected ) { m_iConnected = iConnected; }
 	virtual void EquipSuit( bool bPlayEffects = true );
+	virtual void EquipExo( bool bPlayEffects = true );
 	virtual void RemoveSuit( void );
 	void	SetMaxSpeed( float flMaxSpeed ) { m_flMaxspeed = flMaxSpeed; }
 

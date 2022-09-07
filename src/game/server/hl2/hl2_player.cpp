@@ -497,7 +497,22 @@ void CHL2_Player::EquipSuit( bool bPlayEffects )
 	
 	m_HL2Local.m_bDisplayReticle = true;
 
+	CPASAttenuationFilter filter(this);
+	filter.UsePredictionRules();
+	EmitSound(filter, entindex(), "Player.Spawn");
+
 	if ( bPlayEffects == true )
+	{
+		StartAdmireGlovesAnimation();
+	}
+}
+
+void CHL2_Player::EquipExo(bool bPlayEffects)
+{
+	MDLCACHE_CRITICAL_SECTION();
+	BaseClass::EquipExo();
+
+	if (bPlayEffects == true)
 	{
 		StartAdmireGlovesAnimation();
 	}
@@ -1168,9 +1183,7 @@ void CHL2_Player::Spawn(void)
 
 	}
 
-	CPASAttenuationFilter filter(this);
-	filter.UsePredictionRules();
-	EmitSound(filter, entindex(), "Player.Spawn");
+
 
 	if ( !IsSuitEquipped() )
 		 StartWalking();

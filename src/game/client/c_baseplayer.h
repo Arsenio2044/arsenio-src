@@ -182,6 +182,8 @@ public:
 
 
 	bool			IsSuitEquipped( void ) { return m_Local.m_bWearingSuit; };
+	bool			IsExoEquipped( void ) { return m_Local.m_bWearingExo; };
+
 
 	// Team handlers
 	virtual void	TeamChange( int iNewTeam );

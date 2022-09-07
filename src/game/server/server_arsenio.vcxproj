@@ -852,6 +852,7 @@ exit 1
     <ClInclude Include="toolframework_server.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="arsenio\item_exo.cpp" />
     <ClCompile Include="IVEngine2\actual_bullet.cpp" />
     <ClCompile Include="IVEngine2\point_cutscene.cpp" />
     <ClCompile Include="gamedll_replay.cpp" />

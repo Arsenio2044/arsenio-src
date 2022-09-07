@@ -273,6 +273,7 @@ public:
 	virtual surfacedata_t *GetLadderSurface( const Vector &origin );
 
 	virtual void EquipSuit( bool bPlayEffects = true );
+	virtual void EquipExo( bool bPlayEffects = true );
 	virtual void RemoveSuit( void );
 	void  HandleAdmireGlovesAnimation( void );
 	void  StartAdmireGlovesAnimation( void );

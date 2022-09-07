@@ -236,7 +236,7 @@ void CGameMovement::CheckWallRun( Vector &vecWallNormal, trace_t &pm )
 {
 	// Can't wallrun without the suit
 #ifdef ARSENIO
-	if (!player->IsSuitEquipped())
+	if (!player->IsExoEquipped())
 		return;
 #else
 
