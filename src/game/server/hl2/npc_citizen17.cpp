@@ -3201,13 +3201,15 @@ bool CNPC_Citizen::IsFollowingCommandPoint()
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-struct SquadMemberInfo_t
-{
-	CNPC_Citizen *	pMember;
-	bool			bSeesPlayer;
-	float			distSq;
-};
-
+//#ifndef ARSENIO
+//struct SquadMemberInfo_t
+//{
+//	CNPC_Citizen *	pMember;
+//	bool			bSeesPlayer;
+//	float			distSq;
+//};
+//
+//#ifdef NON
 int __cdecl SquadSortFunc( const SquadMemberInfo_t *pLeft, const SquadMemberInfo_t *pRight )
 {
 	if ( pLeft->bSeesPlayer && !pRight->bSeesPlayer )
@@ -3222,6 +3224,8 @@ int __cdecl SquadSortFunc( const SquadMemberInfo_t *pLeft, const SquadMemberInfo
 
 	return ( pLeft->distSq - pRight->distSq );
 }
+//#endif
+
 
 CAI_BaseNPC *CNPC_Citizen::GetSquadCommandRepresentative()
 {

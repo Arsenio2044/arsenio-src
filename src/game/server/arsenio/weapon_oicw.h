@@ -56,7 +56,7 @@ public:
 
 		if (GetOwner() && GetOwner()->IsPlayer())
 		{
-			cone = (m_bZoomed) ? VECTOR_CONE_1DEGREES : VECTOR_CONE_3DEGREES;
+			cone = (m_bZoomed) ? VECTOR_CONE_1DEGREES : VECTOR_CONE_15DEGREES;
 		}
 		else
 		{

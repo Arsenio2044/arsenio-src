@@ -1,6 +1,6 @@
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
-// Purpose: One of the most powerful weapons ingame. 
+// Purpose: One of the most powerful weapons ingame. Can fire both grenades and has a functioning scope.
 //
 //=============================================================================//
 
@@ -203,7 +203,7 @@ void CWeaponOICW::ItemPostFrame(void)
 #ifdef ARSENIO_DLL
 
 	//Throw a grenade.
-	if (pOwner->m_afButtonPressed & IN_ATTACK3)
+	if (pOwner->m_afButtonPressed & IN_OICWSWITCH1)
 	{
 		if (m_iFireMode == 0)
 		{

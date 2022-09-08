@@ -17,32 +17,32 @@
 class CItemExo : public CItem
 {
 public:
-	DECLARE_CLASS( CItemExo, CItem );
+	DECLARE_CLASS(CItemExo, CItem);
 
-	void Spawn( void )
-	{ 
-		Precache( );
-		SetModel( "models/items/hevsuit.mdl" );
-		BaseClass::Spawn( );
-		
-		CollisionProp()->UseTriggerBounds( false, 0 );
-	}
-	void Precache( void )
+	void Spawn(void)
 	{
-		PrecacheModel ("models/items/hevsuit.mdl");
+		Precache();
+		SetModel("models/items/hevsuit.mdl");
+		BaseClass::Spawn();
+
+		CollisionProp()->UseTriggerBounds(false, 0);
 	}
-	bool MyTouch( CBasePlayer *pPlayer )
+	void Precache(void)
 	{
-		if ( pPlayer->IsExoEquipped() )
+		PrecacheModel("models/items/hevsuit.mdl");
+	}
+	bool MyTouch(CBasePlayer* pPlayer)
+	{
+		if (pPlayer->IsExoEquipped())
 			return FALSE;
 
-		if ( m_spawnflags & SF_SUIT_SHORTLOGON )
+		if (m_spawnflags & SF_SUIT_SHORTLOGON)
 			UTIL_EmitSoundSuit(pPlayer->edict(), "!HEV_A0");		// short version of suit logon,
 		else
 			UTIL_EmitSoundSuit(pPlayer->edict(), "!HEV_AAx");	// long version of suit logon
 
 		pPlayer->EquipExo();
-				
+
 		return true;
 	}
 };

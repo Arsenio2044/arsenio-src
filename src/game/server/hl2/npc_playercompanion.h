@@ -430,6 +430,20 @@ protected:
 	DEFINE_CUSTOM_AI;
 };
 
+//-----------------------------------------------------------------------------
+// Blixibon - Moved to CNPC_PlayerCompanion so soldiers can use it
+//-----------------------------------------------------------------------------
+struct SquadMemberInfo_t
+{
+	CNPC_PlayerCompanion* pMember;
+	bool			bSeesPlayer;
+	float			distSq;
+};
+
+int __cdecl SquadSortFunc(const SquadMemberInfo_t* pLeft, const SquadMemberInfo_t* pRight);
+
+
+
 // Used for quick override move searches against certain types of entities
 void OverrideMoveCache_ForceRepopulateList( void );
 CBaseEntity *OverrideMoveCache_FindTargetsInRadius( CBaseEntity *pFirstEntity, const Vector &vecOrigin, float flRadius );
