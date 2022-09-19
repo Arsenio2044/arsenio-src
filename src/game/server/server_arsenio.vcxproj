@@ -185,7 +185,7 @@ if ERRORLEVEL 1 exit /b 1
       <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
       <BrowseInformation>false</BrowseInformation>
       <WarningLevel>Level4</WarningLevel>
-      <TreatWarningAsError>true</TreatWarningAsError>
+      <TreatWarningAsError>false</TreatWarningAsError>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsCpp</CompileAs>
       <UseFullPaths>true</UseFullPaths>
@@ -853,6 +853,7 @@ exit 1
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="arsenio\item_exo.cpp" />
+    <ClCompile Include="arsenio\weapon_Minigun.cpp" />
     <ClCompile Include="IVEngine2\actual_bullet.cpp" />
     <ClCompile Include="IVEngine2\point_cutscene.cpp" />
     <ClCompile Include="gamedll_replay.cpp" />

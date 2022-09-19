@@ -422,7 +422,7 @@ void CBaseViewModel::AddViewModelBob(CBasePlayer *owner, Vector& eyePosition, QA
 
 
 
-	float dotForward = RemapVal(DotProduct(owner->GetLocalVelocity(), MainViewForward()), -cl_vm_sway_offset.GetFloat(), cl_vm_sway_offset.GetFloat(), -1.0f, 1.0f);
+	float dotForward = RemapVal(DotProduct(owner->GetLocalVelocity(), MainViewForward()), -cl_vm_sway_offset.GetFloat(), cl_vm_sway_offset.GetFloat(), -10.0f, 10.0f);
 	float movement = abs(dotForward) > 0.5f ? cl_vm_sway_offset.GetFloat() : 0;
 	m_flForwardOffsetResult = Approach(movement, m_flForwardOffsetResult, gpGlobals->frametime * 10.0f * m_flForwardOffsetDifference);
 	m_flForwardOffsetDifference = fabs(movement - m_flForwardOffsetResult);
@@ -444,6 +444,8 @@ void CBaseViewModel::AddViewModelBob(CBasePlayer *owner, Vector& eyePosition, QA
 
 #define LAG_POSITION_COMPENSATION	0.2f
 #define LAG_FLIP_FACTOR				1.0f
+
+
 
 
 

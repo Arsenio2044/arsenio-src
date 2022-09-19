@@ -3628,6 +3628,9 @@
     <ClCompile Include="arsenio\item_exo.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
+    <ClCompile Include="arsenio\weapon_Minigun.cpp">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>

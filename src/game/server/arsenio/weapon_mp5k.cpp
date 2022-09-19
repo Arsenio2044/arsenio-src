@@ -16,6 +16,10 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+ConVar    arsenio_mp5k_accuracy("arsenio_mp5k_accuracy", "1");
+
+#define    MP5K_ACCURACY_MAXIMUM_PENALTY_TIME    3.5f    // Maximum penalty to deal out
+
 class CWeaponMP5K : public CHLSelectFireMachineGun
 {
 public:
@@ -25,14 +29,70 @@ public:
 
 	DECLARE_SERVERCLASS();
 
-	const Vector	&GetBulletSpread( void );
+    virtual const Vector& GetBulletSpread(void)
+    {
+        // Handle NPCs first
+        static Vector npcCone = VECTOR_CONE_5DEGREES;
+        if (GetOwner() && GetOwner()->IsNPC())
+            return npcCone;
 
+        static Vector cone;
+
+        /*
+        if ( pistol_use_new_accuracy.GetBool() )
+        {
+            float ramp = RemapValClamped(    m_flAccuracyPenalty,
+                                            0.0f,
+                                            PISTOL_ACCURACY_MAXIMUM_PENALTY_TIME,
+                                            0.0f,
+                                            1.0f );
+
+            // We lerp from very accurate to inaccurate over time
+            VectorLerp( VECTOR_CONE_1DEGREES, VECTOR_CONE_6DEGREES, ramp, cone );
+        }
+        else
+        {
+            // Old value
+            cone = VECTOR_CONE_4DEGREES;
+        }
+        */
+
+        if (m_nNumShotsFired >= 0 && m_nNumShotsFired < 3)
+        {
+            cone = VECTOR_CONE_1DEGREES;
+        }
+        else if (m_nNumShotsFired >= 3 && m_nNumShotsFired < 5)
+        {
+            cone = VECTOR_CONE_3DEGREES;
+        }
+        else if (m_nNumShotsFired >= 5 && m_nNumShotsFired < 7)
+        {
+            cone = VECTOR_CONE_5DEGREES;
+        }
+        else if (m_nNumShotsFired >= 7 && m_nNumShotsFired < 10)
+        {
+            cone = VECTOR_CONE_10DEGREES;
+        }
+        else if (m_nNumShotsFired >= 10)
+        {
+            cone = VECTOR_CONE_20DEGREES;
+        }
+
+        return cone;
+    }
 	void			Precache( void );
 	void			AddViewKick( void );
 	void			Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator );
 
 	float			GetFireRate( void ) { return 0.1f; }
 	int				CapabilitiesGet( void ) { return bits_CAP_WEAPON_RANGE_ATTACK1; }
+
+private:
+
+	float	m_flAccuracyPenalty;
+    int		m_nNumShotsFired;
+
+
 
 	DECLARE_ACTTABLE();
 };
@@ -65,15 +125,7 @@ void CWeaponMP5K::Precache( void )
 	BaseClass::Precache();  // TUX: We don't got shit to precache
 }
 
-//-----------------------------------------------------------------------------
-// Purpose: 
-// Output : const Vector
-//-----------------------------------------------------------------------------
-const Vector &CWeaponMP5K::GetBulletSpread( void )
-{
-	static const Vector cone = VECTOR_CONE_10DEGREES;
-	return cone;
-}
+
 
 //-----------------------------------------------------------------------------
 // Purpose: 
