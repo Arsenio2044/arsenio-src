@@ -347,10 +347,6 @@ static ConVar s_cl_class("cl_class", "default", FCVAR_USERINFO | FCVAR_ARCHIVE, 
 static ConVar cl_discord_appid("cl_discord_appid", "949352645989113906", FCVAR_DEVELOPMENTONLY | FCVAR_CHEAT);
 static int64_t startTimestamp = time(0);
 #endif
-#ifdef OPTUX3
-static ConVar cl_discord_appid("cl_discord_appid", "1005626020818329740", FCVAR_DEVELOPMENTONLY | FCVAR_CHEAT);
-static int64_t startTimestamp = time(0);
-#endif
 #ifdef HL1MP_CLIENT_DLL
 static ConVar s_cl_load_hl1_content("cl_load_hl1_content", "0", FCVAR_ARCHIVE, "Mount the content from Half-Life: Source if possible");
 #endif
@@ -1185,29 +1181,17 @@ int CHLClient::Init(CreateInterfaceFn appSystemFactory, CreateInterfaceFn physic
 	{
 		DiscordRichPresence discordPresence;
 		memset(&discordPresence, 0, sizeof(discordPresence));
-#ifdef OPTUX3
-		discordPresence.state = "In-Game";
-		discordPresence.details = "Survival";
-		discordPresence.startTimestamp = startTimestamp;
-		discordPresence.largeImageKey = "img";
-		Discord_UpdatePresence(&discordPresence);
-		discordPresence.partyId = "UNKNOWN";
-		discordPresence.partySize = 1;
-		discordPresence.partyMax = 5;
-		discordPresence.joinSecret = "TI4NzM0OjFpMmhuZToxMjMxMjM=";
-#else
 
 		discordPresence.state = "In-Game";
 		discordPresence.details = "Main Menu";
 		discordPresence.startTimestamp = startTimestamp;
 		discordPresence.largeImageKey = "deez";
 		Discord_UpdatePresence(&discordPresence);
+	
 
 
-#endif
+		return true;
 	}
-
-	return true;
 }
 
 bool CHLClient::ReplayInit(CreateInterfaceFn fnReplayFactory)
@@ -1830,28 +1814,12 @@ void CHLClient::LevelInitPreEntity(char const* pMapName)
 		DiscordRichPresence discordPresence;
 		memset(&discordPresence, 0, sizeof(discordPresence));
 
-		
-
-#ifdef OPTUX3 
-
+		char buffer[256];
 		discordPresence.state = "In-Game";
-		discordPresence.details = "Survival";
-		discordPresence.startTimestamp = startTimestamp;
-		discordPresence.largeImageKey = "img";
-		discordPresence.partyId = "UNKNOWN";
-		discordPresence.partySize = 1;
-		discordPresence.partyMax = 5;
-		discordPresence.joinSecret = "TI4NzM0OjFpMmhuZToxMjMxMjM=";
-		Discord_UpdatePresence(&discordPresence);
-
-#endif
-#ifdef ARSENIO
-		discordPresence.state = "In-Game";
-		//sprintf(buffer, "Map: %s", pMapName);
-		//discordPresence.details = buffer;
+		sprintf(buffer, "Map: %s", pMapName);
+		discordPresence.details = buffer;
 		discordPresence.largeImageKey = "deez";
 		Discord_UpdatePresence(&discordPresence);
-#endif
 	}
 
 	// Check low violence settings for this map
@@ -1972,25 +1940,15 @@ void CHLClient::LevelShutdown(void)
 		DiscordRichPresence discordPresence;
 		memset(&discordPresence, 0, sizeof(discordPresence));
 
-#ifdef OPTUX3
-		discordPresence.state = "In-Game";
-		discordPresence.details = "Survival";
-		discordPresence.startTimestamp = startTimestamp;
-		discordPresence.largeImageKey = "img";
-		Discord_UpdatePresence(&discordPresence);
-		discordPresence.partyId = "UNKNOWN";
-		discordPresence.partySize = 1;
-		discordPresence.partyMax = 5;
-		discordPresence.joinSecret = "TI4NzM0OjFpMmhuZToxMjMxMjM=";
-#endif
-#ifdef ARSENIO
+
+
 
 		discordPresence.state = "In-Game";
 		discordPresence.details = "Main Menu";
 		discordPresence.startTimestamp = startTimestamp;
 		discordPresence.largeImageKey = "deez";
 		Discord_UpdatePresence(&discordPresence);
-#endif
+
 	}
 
 	internalCenterPrint->Clear();
