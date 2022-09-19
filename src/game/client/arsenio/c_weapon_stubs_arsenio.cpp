@@ -1,6 +1,6 @@
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
-// Purpose: Gay balls of weapons for arse.
+// Purpose: Custom weapon stubs file for ARSENIO.
 //
 //=============================================================================//
 
@@ -51,6 +51,8 @@ STUB_WEAPON_CLASS(weapon_kilo, WeaponKILO, C_HLSelectFireMachineGun);
 STUB_WEAPON_CLASS(weapon_oicw, WeaponOICW, C_HLMachineGun);
 STUB_WEAPON_CLASS(weapon_minigun, WeaponMiniGun, C_HLMachineGun);
 STUB_WEAPON_CLASS(weapon_addamm557, WeaponAdamm557, C_BaseHLCombatWeapon);
+STUB_WEAPON_CLASS(weapon_mobileturret, WeaponMobileTurret, C_BaseHLBludgeonWeapon);
+
 
 
 #ifdef ARSENIO_CUT
