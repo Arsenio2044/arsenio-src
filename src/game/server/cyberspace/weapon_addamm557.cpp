@@ -35,8 +35,8 @@ extern void TE_GaussExplosion(IRecipientFilter& filter, float delay,
 IMPLEMENT_SERVERCLASS_ST(CWeaponAdamm557, DT_WeaponAdamm557)
 END_SEND_TABLE()
 
-LINK_ENTITY_TO_CLASS( weapon_gauss, CWeaponAdamm557 );
-PRECACHE_WEAPON_REGISTER( weapon_gauss );
+LINK_ENTITY_TO_CLASS( weapon_addamm557, CWeaponAdamm557 );
+PRECACHE_WEAPON_REGISTER(weapon_addamm557);
 
 acttable_t	CWeaponAdamm557::m_acttable[] = 
 {

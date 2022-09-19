@@ -60,12 +60,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <PreBuildEvent>
-      <Command>if EXIST ..\..\..\game\mod_arsenio\bin\.\$(TargetFileName) for /f "delims=" %%A in ('attrib "..\..\..\game\mod_arsenio\bin\.\$(TargetFileName)"') do set valveTmpIsReadOnly="%%A"
-set valveTmpIsReadOnlyLetter=%valveTmpIsReadOnly:~6,1%
-if "%valveTmpIsReadOnlyLetter%"=="R" del /q "$(TargetDir)"$(TargetFileName)
-if exist "..\..\devtools\bin\vpc.exe" "..\..\devtools\bin\vpc.exe" -crc2 "server_arsenio.vcxproj"
-if ERRORLEVEL 1 exit /b 1
-</Command>
+      <Command>if EXIST ..\..\..\game\mod_arsenio\bin\.\$(TargetFileName) for /f &quot;delims=&quot; %%A in (&apos;attrib &quot;..\..\..\game\mod_arsenio\bin\.\$(TargetFileName)&quot;&apos;) do set valveTmpIsReadOnly=&quot;%%A&quot;&#x0D;&#x0A;set valveTmpIsReadOnlyLetter=%valveTmpIsReadOnly:~6,1%&#x0D;&#x0A;if &quot;%valveTmpIsReadOnlyLetter%&quot;==&quot;R&quot; del /q &quot;$(TargetDir)&quot;$(TargetFileName)&#x0D;&#x0A;if exist &quot;..\..\devtools\bin\vpc.exe&quot; &quot;..\..\devtools\bin\vpc.exe&quot; -crc2 &quot;server_arsenio.vcxproj&quot;&#x0D;&#x0A;if ERRORLEVEL 1 exit /b 1&#x0D;&#x0A;</Command>
     </PreBuildEvent>
     <ClCompile>
       <AdditionalOptions>/Zm200 /Gw</AdditionalOptions>
@@ -115,8 +110,7 @@ if ERRORLEVEL 1 exit /b 1
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(IntDir)/$(TargetName).pdb</ProgramDatabaseFile>
       <SubSystem>Windows</SubSystem>
-      <BaseAddress>
-      </BaseAddress>
+      <BaseAddress> </BaseAddress>
       <TargetMachine>MachineX86</TargetMachine>
       <LinkErrorReporting>PromptImmediately</LinkErrorReporting>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -134,31 +128,14 @@ if ERRORLEVEL 1 exit /b 1
     </Bscmake>
     <PostBuildEvent>
       <Message>Publishing to ..\..\..\game\mod_arsenio\bin\.</Message>
-      <Command>if not exist "..\..\..\game\mod_arsenio\bin\." mkdir "..\..\..\game\mod_arsenio\bin\."
-copy "$(TargetDir)$(TargetFileName)" "..\..\..\game\mod_arsenio\bin\.\$(TargetFileName)"
-if ERRORLEVEL 1 goto BuildEventFailed
-if exist "$(TargetDir)$(TargetName).map" copy "$(TargetDir)$(TargetName).map" ..\..\..\game\mod_arsenio\bin\.\$(TargetName).map
-copy "$(TargetDir)$(TargetName).pdb" ..\..\..\game\mod_arsenio\bin\.\$(TargetName).pdb
-if ERRORLEVEL 1 goto BuildEventFailed
-goto BuildEventOK
-:BuildEventFailed
-echo *** ERROR! PostBuildStep FAILED for $(ProjectName)! EXE or DLL is probably running. ***
-del /q "$(TargetDir)$(TargetFileName)"
-exit 1
-:BuildEventOK
-</Command>
+      <Command>if not exist &quot;..\..\..\game\mod_arsenio\bin\.&quot; mkdir &quot;..\..\..\game\mod_arsenio\bin\.&quot;&#x0D;&#x0A;copy &quot;$(TargetDir)$(TargetFileName)&quot; &quot;..\..\..\game\mod_arsenio\bin\.\$(TargetFileName)&quot;&#x0D;&#x0A;if ERRORLEVEL 1 goto BuildEventFailed&#x0D;&#x0A;if exist &quot;$(TargetDir)$(TargetName).map&quot; copy &quot;$(TargetDir)$(TargetName).map&quot; ..\..\..\game\mod_arsenio\bin\.\$(TargetName).map&#x0D;&#x0A;copy &quot;$(TargetDir)$(TargetName).pdb&quot; ..\..\..\game\mod_arsenio\bin\.\$(TargetName).pdb&#x0D;&#x0A;if ERRORLEVEL 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo *** ERROR! PostBuildStep FAILED for $(ProjectName)! EXE or DLL is probably running. ***&#x0D;&#x0A;del /q &quot;$(TargetDir)$(TargetFileName)&quot;&#x0D;&#x0A;exit 1&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;</Command>
     </PostBuildEvent>
     <CustomBuildStep>
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <PreBuildEvent>
-      <Command>if EXIST ..\..\..\game\mod_arsenio\bin\.\$(TargetFileName) for /f "delims=" %%A in ('attrib "..\..\..\game\mod_arsenio\bin\.\$(TargetFileName)"') do set valveTmpIsReadOnly="%%A"
-set valveTmpIsReadOnlyLetter=%valveTmpIsReadOnly:~6,1%
-if "%valveTmpIsReadOnlyLetter%"=="R" del /q "$(TargetDir)"$(TargetFileName)
-if exist "..\..\devtools\bin\vpc.exe" "..\..\devtools\bin\vpc.exe" -crc2 "server_arsenio.vcxproj"
-if ERRORLEVEL 1 exit /b 1
-</Command>
+      <Command>if EXIST ..\..\..\game\mod_arsenio\bin\.\$(TargetFileName) for /f &quot;delims=&quot; %%A in (&apos;attrib &quot;..\..\..\game\mod_arsenio\bin\.\$(TargetFileName)&quot;&apos;) do set valveTmpIsReadOnly=&quot;%%A&quot;&#x0D;&#x0A;set valveTmpIsReadOnlyLetter=%valveTmpIsReadOnly:~6,1%&#x0D;&#x0A;if &quot;%valveTmpIsReadOnlyLetter%&quot;==&quot;R&quot; del /q &quot;$(TargetDir)&quot;$(TargetFileName)&#x0D;&#x0A;if exist &quot;..\..\devtools\bin\vpc.exe&quot; &quot;..\..\devtools\bin\vpc.exe&quot; -crc2 &quot;server_arsenio.vcxproj&quot;&#x0D;&#x0A;if ERRORLEVEL 1 exit /b 1&#x0D;&#x0A;</Command>
     </PreBuildEvent>
     <ClCompile>
       <AdditionalOptions>/Zm200 /d2Zi+ /Gw</AdditionalOptions>
@@ -185,7 +162,7 @@ if ERRORLEVEL 1 exit /b 1
       <GenerateXMLDocumentationFiles>false</GenerateXMLDocumentationFiles>
       <BrowseInformation>false</BrowseInformation>
       <WarningLevel>Level4</WarningLevel>
-      <TreatWarningAsError>false</TreatWarningAsError>
+      <TreatWarningAsError>true</TreatWarningAsError>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <CompileAs>CompileAsCpp</CompileAs>
       <UseFullPaths>true</UseFullPaths>
@@ -213,8 +190,7 @@ if ERRORLEVEL 1 exit /b 1
       <SubSystem>Windows</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
-      <BaseAddress>
-      </BaseAddress>
+      <BaseAddress> </BaseAddress>
       <TargetMachine>MachineX86</TargetMachine>
       <LinkErrorReporting>PromptImmediately</LinkErrorReporting>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
@@ -232,19 +208,7 @@ if ERRORLEVEL 1 exit /b 1
     </Bscmake>
     <PostBuildEvent>
       <Message>Publishing to ..\..\..\game\mod_arsenio\bin\.</Message>
-      <Command>if not exist "..\..\..\game\mod_arsenio\bin\." mkdir "..\..\..\game\mod_arsenio\bin\."
-copy "$(TargetDir)$(TargetFileName)" "..\..\..\game\mod_arsenio\bin\.\$(TargetFileName)"
-if ERRORLEVEL 1 goto BuildEventFailed
-if exist "$(TargetDir)$(TargetName).map" copy "$(TargetDir)$(TargetName).map" ..\..\..\game\mod_arsenio\bin\.\$(TargetName).map
-copy "$(TargetDir)$(TargetName).pdb" ..\..\..\game\mod_arsenio\bin\.\$(TargetName).pdb
-if ERRORLEVEL 1 goto BuildEventFailed
-goto BuildEventOK
-:BuildEventFailed
-echo *** ERROR! PostBuildStep FAILED for $(ProjectName)! EXE or DLL is probably running. ***
-del /q "$(TargetDir)$(TargetFileName)"
-exit 1
-:BuildEventOK
-</Command>
+      <Command>if not exist &quot;..\..\..\game\mod_arsenio\bin\.&quot; mkdir &quot;..\..\..\game\mod_arsenio\bin\.&quot;&#x0D;&#x0A;copy &quot;$(TargetDir)$(TargetFileName)&quot; &quot;..\..\..\game\mod_arsenio\bin\.\$(TargetFileName)&quot;&#x0D;&#x0A;if ERRORLEVEL 1 goto BuildEventFailed&#x0D;&#x0A;if exist &quot;$(TargetDir)$(TargetName).map&quot; copy &quot;$(TargetDir)$(TargetName).map&quot; ..\..\..\game\mod_arsenio\bin\.\$(TargetName).map&#x0D;&#x0A;copy &quot;$(TargetDir)$(TargetName).pdb&quot; ..\..\..\game\mod_arsenio\bin\.\$(TargetName).pdb&#x0D;&#x0A;if ERRORLEVEL 1 goto BuildEventFailed&#x0D;&#x0A;goto BuildEventOK&#x0D;&#x0A;:BuildEventFailed&#x0D;&#x0A;echo *** ERROR! PostBuildStep FAILED for $(ProjectName)! EXE or DLL is probably running. ***&#x0D;&#x0A;del /q &quot;$(TargetDir)$(TargetFileName)&quot;&#x0D;&#x0A;exit 1&#x0D;&#x0A;:BuildEventOK&#x0D;&#x0A;</Command>
     </PostBuildEvent>
     <CustomBuildStep>
     </CustomBuildStep>
@@ -267,7 +231,6 @@ exit 1
     <ClInclude Include="..\..\public\mathlib\amd3dx.h" />
     <ClInclude Include="..\..\game\shared\ammodef.h" />
     <ClInclude Include="..\..\game\shared\base_playeranimstate.h" />
-    <ClInclude Include="arsenio\weapon_oicw.h" />
     <ClInclude Include="base_transmit_proxy.h" />
     <ClInclude Include="..\..\public\basehandle.h" />
     <ClInclude Include="basetempentity.h" />
@@ -756,6 +719,7 @@ exit 1
     <ClInclude Include="arsenio\npc_wyluxian_ally.h" />
     <ClInclude Include="..\..\game\shared\player_mobility_defs.h" />
     <ClInclude Include="searchpath_manager.h" />
+    <ClInclude Include="cyberspace\weapon_addamm557.h" />
     <ClInclude Include="hl2\weapon_egar.h" />
     <ClInclude Include="weapon_frag.h" />
     <ClInclude Include="arsenio\weapon_tau.h" />
@@ -852,8 +816,6 @@ exit 1
     <ClInclude Include="toolframework_server.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="arsenio\item_exo.cpp" />
-    <ClCompile Include="arsenio\weapon_Minigun.cpp" />
     <ClCompile Include="IVEngine2\actual_bullet.cpp" />
     <ClCompile Include="IVEngine2\point_cutscene.cpp" />
     <ClCompile Include="gamedll_replay.cpp" />
@@ -1319,6 +1281,7 @@ exit 1
     <ClCompile Include="arsenio\npc_wyluxian_ally.cpp" />
     <ClCompile Include="searchpath_manager.cpp" />
     <ClCompile Include="arsenio\weapon_50calSniper.cpp" />
+    <ClCompile Include="cyberspace\weapon_addamm557.cpp" />
     <ClCompile Include="hl2\weapon_egar.cpp" />
     <ClCompile Include="arsenio\weapon_kilo.cpp" />
     <ClCompile Include="arsenio\weapon_mp5k.cpp" />
@@ -1549,22 +1512,18 @@ exit 1
   <ItemGroup>
     <CustomBuild Include="..\..\public\tier0\pointeroverride.asm">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Compiling pointeroverride.asm</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(VCInstallDir)bin\ml.exe" /safeseh /c /Cp /Zi /Fo"$(IntDir)\%(Filename).obj" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">&quot;$(VCInstallDir)bin\ml.exe&quot; /safeseh /c /Cp /Zi /Fo&quot;$(IntDir)\%(Filename).obj&quot; &quot;%(FullPath)&quot;</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)\%(Filename).obj</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Compiling pointeroverride.asm</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(VCInstallDir)bin\ml.exe" /safeseh /c /Cp /Zi /Fo"$(IntDir)\%(Filename).obj" "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">&quot;$(VCInstallDir)bin\ml.exe&quot; /safeseh /c /Cp /Zi /Fo&quot;$(IntDir)\%(Filename).obj&quot; &quot;%(FullPath)&quot;</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)\%(Filename).obj</Outputs>
     </CustomBuild>
     <CustomBuild Include="server_arsenio.vpc">
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Running VPC CRC Check - server_arsenio.vpc</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">if exist "..\..\devtools\bin\vpc.exe" "..\..\devtools\bin\vpc.exe" -crc2 "server_arsenio.vcxproj"
-if ERRORLEVEL 1 exit /b 1
-echo crc_complete &gt; C:\Users\tuxx3\source\repos\IVEngine-2\src\game\server\server_arsenio.vpc.sentinel</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">if exist &quot;..\..\devtools\bin\vpc.exe&quot; &quot;..\..\devtools\bin\vpc.exe&quot; -crc2 &quot;server_arsenio.vcxproj&quot;&#x0D;&#x0A;if ERRORLEVEL 1 exit /b 1&#x0D;&#x0A;echo crc_complete &gt; C:\Users\tuxx3\source\repos\IVEngine-2\src\game\server\server_arsenio.vpc.sentinel</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\tuxx3\source\repos\IVEngine-2\src\game\server\server_arsenio.vpc.sentinel</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Running VPC CRC Check - server_arsenio.vpc</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">if exist "..\..\devtools\bin\vpc.exe" "..\..\devtools\bin\vpc.exe" -crc2 "server_arsenio.vcxproj"
-if ERRORLEVEL 1 exit /b 1
-echo crc_complete &gt; C:\Users\tuxx3\source\repos\IVEngine-2\src\game\server\server_arsenio.vpc.sentinel</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">if exist &quot;..\..\devtools\bin\vpc.exe&quot; &quot;..\..\devtools\bin\vpc.exe&quot; -crc2 &quot;server_arsenio.vcxproj&quot;&#x0D;&#x0A;if ERRORLEVEL 1 exit /b 1&#x0D;&#x0A;echo crc_complete &gt; C:\Users\tuxx3\source\repos\IVEngine-2\src\game\server\server_arsenio.vpc.sentinel</Command>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\tuxx3\source\repos\IVEngine-2\src\game\server\server_arsenio.vpc.sentinel</Outputs>
     </CustomBuild>
   </ItemGroup>

@@ -1550,6 +1550,9 @@
     <ClInclude Include="searchpath_manager.h">
       <Filter>Source Files\Arsenio</Filter>
     </ClInclude>
+    <ClInclude Include="cyberspace\weapon_addamm557.h">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClInclude>
     <ClInclude Include="hl2\weapon_egar.h">
       <Filter>Source Files\Arsenio</Filter>
     </ClInclude>
@@ -1831,9 +1834,6 @@
     </ClInclude>
     <ClInclude Include="toolframework_server.h">
       <Filter>Tools Framework</Filter>
-    </ClInclude>
-    <ClInclude Include="arsenio\weapon_oicw.h">
-      <Filter>Source Files\Arsenio</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2980,6 +2980,9 @@
     <ClCompile Include="arsenio\weapon_50calSniper.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
+    <ClCompile Include="cyberspace\weapon_addamm557.cpp">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClCompile>
     <ClCompile Include="hl2\weapon_egar.cpp">
       <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
@@ -3624,12 +3627,6 @@
     </ClCompile>
     <ClCompile Include="toolframework_server.cpp">
       <Filter>Tools Framework</Filter>
-    </ClCompile>
-    <ClCompile Include="arsenio\item_exo.cpp">
-      <Filter>Source Files\Arsenio</Filter>
-    </ClCompile>
-    <ClCompile Include="arsenio\weapon_Minigun.cpp">
-      <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
