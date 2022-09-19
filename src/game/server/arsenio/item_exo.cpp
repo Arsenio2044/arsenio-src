@@ -36,10 +36,7 @@ public:
 		if (pPlayer->IsExoEquipped())
 			return FALSE;
 
-		if (m_spawnflags & SF_SUIT_SHORTLOGON)
-			UTIL_EmitSoundSuit(pPlayer->edict(), "!HEV_A0");		// short version of suit logon,
-		else
-			UTIL_EmitSoundSuit(pPlayer->edict(), "!HEV_AAx");	// long version of suit logon
+		//TODO: Add a voiceline 
 
 		pPlayer->EquipExo();
 

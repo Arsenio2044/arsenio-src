@@ -3310,7 +3310,6 @@ int C_BaseAnimating::InternalDrawModel( int flags )
 
 extern ConVar muzzleflash_light;
 
-extern ConVar muzzleflash_light;
 
 void C_BaseAnimating::ProcessMuzzleFlashEvent()
 {

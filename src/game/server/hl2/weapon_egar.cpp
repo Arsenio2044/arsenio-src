@@ -1,3 +1,8 @@
+//========= Copyright Glitch Software, All rights reserved. ============//
+//
+// Purpose: Rockt launcher that's automated.
+//
+//=============================================================================//
 
 #include "cbase.h"
 #include "basehlcombatweapon.h"

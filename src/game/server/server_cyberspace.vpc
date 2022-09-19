@@ -1,0 +1,32 @@
+//-----------------------------------------------------------------------------
+//	SERVER_CYBERSPACEVPC
+//
+//	Project Script
+//-----------------------------------------------------------------------------
+
+$Macro SRCDIR		"..\.."
+$Macro GAMENAME 	"cyberspace" [!$SOURCESDK]
+$Macro GAMENAME 	"mod_arsenio_cyberspace" [$SOURCESDK]
+
+$Include "$SRCDIR\game\server\server_base.vpc"
+$Include "$SRCDIR\game\server\server_arsenio.vpc"
+
+$Configuration
+{
+	$Compiler
+	{
+		$AdditionalIncludeDirectories	"$BASE;$SRCDIR\game\shared\hl2;$SRCDIR\game\shared\episodic;.\hl2;.\episodic"
+		$PreprocessorDefinitions		"$BASE;HL2_DLL;ARSENIO;HL2_EPISODIC;USES_SAVERESTORE;ARSENIO_DLL"
+	}
+}
+
+$Project "Server - Arsenio (CYBERSPACE)"
+{
+	$Folder	"Source Files"
+	{
+
+		$File	"IVEngine2\point_cutscene.cpp"
+		$File	"IVEngine2\actual_bullet.cpp"
+		$File	"IVEngine2\actual_bullet.h"
+
+}
