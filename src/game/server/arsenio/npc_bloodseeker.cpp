@@ -105,9 +105,8 @@ void CNPC_BloodSeeker::Precache()
 
 	PrecacheModel("models/arsenio/npc/bloodseeker.mdl");
 
-#ifdef OPTUX3_DLL
-	UTIL_PrecacheOther("npc_headcrab");
-#endif
+	UTIL_PrecacheOther("npc_handgrenade");
+
 
 	PrecacheScriptSound("BloodSeeker.Shot");
 	PrecacheScriptSound("BloodSeeker.Beamsound");
@@ -126,7 +125,7 @@ int CNPC_BloodSeeker::GetSoundInterests(void)
 
 Class_T	CNPC_BloodSeeker::Classify(void)
 {
-	return CLASS_SHADOW; // Should be CLASS_SHADOW, but I haven't set up the relationship table yet.
+	return CLASS_SHADOW; 
 }
 
 //=========================================================

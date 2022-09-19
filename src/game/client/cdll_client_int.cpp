@@ -1187,7 +1187,7 @@ int CHLClient::Init(CreateInterfaceFn appSystemFactory, CreateInterfaceFn physic
 		discordPresence.startTimestamp = startTimestamp;
 		discordPresence.largeImageKey = "deez";
 		Discord_UpdatePresence(&discordPresence);
-	
+
 
 
 		return true;
