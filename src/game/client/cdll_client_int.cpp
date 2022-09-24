@@ -343,10 +343,10 @@ static ConVar s_CV_ShowParticleCounts("showparticlecounts", "0", 0, "Display num
 static ConVar s_cl_team("cl_team", "default", FCVAR_USERINFO | FCVAR_ARCHIVE, "Default team when joining a game");
 static ConVar s_cl_class("cl_class", "default", FCVAR_USERINFO | FCVAR_ARCHIVE, "Default class when joining a game");
 // Discord RPC
-#ifdef ARSENIO
+
 static ConVar cl_discord_appid("cl_discord_appid", "949352645989113906", FCVAR_DEVELOPMENTONLY | FCVAR_CHEAT);
 static int64_t startTimestamp = time(0);
-#endif
+
 #ifdef HL1MP_CLIENT_DLL
 static ConVar s_cl_load_hl1_content("cl_load_hl1_content", "0", FCVAR_ARCHIVE, "Mount the content from Half-Life: Source if possible");
 #endif
@@ -1187,19 +1187,18 @@ int CHLClient::Init(CreateInterfaceFn appSystemFactory, CreateInterfaceFn physic
 		discordPresence.startTimestamp = startTimestamp;
 		discordPresence.largeImageKey = "deez";
 		Discord_UpdatePresence(&discordPresence);
-
-
-
-		return true;
 	}
+
+	return true;
 }
+
 
 bool CHLClient::ReplayInit(CreateInterfaceFn fnReplayFactory)
 {
 #if defined( REPLAY_ENABLED )
 	if (!IsPC())
 		return false;
-	if ((g_pReplay = (IReplaySystem *)fnReplayFactory(REPLAY_INTERFACE_VERSION, NULL)) == NULL)
+	if ((g_pReplay = (IReplaySystem*)fnReplayFactory(REPLAY_INTERFACE_VERSION, NULL)) == NULL)
 		return false;
 	if ((g_pClientReplayContext = g_pReplay->CL_GetContext()) == NULL)
 		return false;

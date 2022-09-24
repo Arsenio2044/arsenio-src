@@ -1835,6 +1835,9 @@
     <ClInclude Include="toolframework_server.h">
       <Filter>Tools Framework</Filter>
     </ClInclude>
+    <ClInclude Include="arsenio\npc_mobile_turret.h">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="IVEngine2\actual_bullet.cpp">
@@ -3627,6 +3630,12 @@
     </ClCompile>
     <ClCompile Include="toolframework_server.cpp">
       <Filter>Tools Framework</Filter>
+    </ClCompile>
+    <ClCompile Include="arsenio\npc_mobile_turret.cpp">
+      <Filter>Source Files\Arsenio</Filter>
+    </ClCompile>
+    <ClCompile Include="arsenio\weapon_mobileturret.cpp">
+      <Filter>Source Files\Arsenio</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
