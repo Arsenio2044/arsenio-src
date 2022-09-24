@@ -1,9 +1,7 @@
-//========= Copyright Valve Corporation, All rights reserved. ============//
+//========= Copyright Glitch Software, All rights reserved. ============//
 //
-// Purpose: Moved all the duck functions out of gamemovement.cpp into this
-//          file, to keep the size under control.
+// Purpose:
 //
-// $NoKeywords: $
 //=============================================================================//
 #include "cbase.h"
 #include "gamemovement.h"

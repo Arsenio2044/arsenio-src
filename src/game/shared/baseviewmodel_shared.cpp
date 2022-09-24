@@ -75,12 +75,12 @@ CBaseViewModel::CBaseViewModel()
 
 #endif // CLIENT_DLL
 }
-ConVar cl_vm_sway("cl_vm_sway", "1.0");
-ConVar cl_vm_sway_rate("cl_vm_sway_rate", "1.0");
-ConVar cl_vm_sway_wiggle_rate("cl_vm_sway_wiggle_rate", "1.0");
-ConVar cl_vm_sway_tilt("cl_vm_sway_tilt", "280.0");
-ConVar cl_vm_sway_offset("cl_vm_sway_offset", "5.0");
-ConVar cl_vm_sway_jump_velocity_division("cl_vm_sway_jump_velocity_division", "24.0");
+ConVar arsenio_sway("arsenio_sway", "1.0");
+ConVar arsenio_sway_rate("arsenio_sway_rate", "1.0");
+ConVar arsenio_sway_wiggle_rate("arsenio_sway_wiggle_rate", "1.0");
+ConVar arsenio_sway_tilt("arsenio_sway_tilt", "280.0");
+ConVar arsenio_sway_offset("arsenio_sway_offset", "5.0");
+ConVar arsenio_sway_jump_velocity_division("arsenio_sway_jump_velocity_division", "24.0");
 
 
 
@@ -422,12 +422,12 @@ void CBaseViewModel::AddViewModelBob(CBasePlayer *owner, Vector& eyePosition, QA
 
 
 
-	float dotForward = RemapVal(DotProduct(owner->GetLocalVelocity(), MainViewForward()), -cl_vm_sway_offset.GetFloat(), cl_vm_sway_offset.GetFloat(), -10.0f, 10.0f);
-	float movement = abs(dotForward) > 0.5f ? cl_vm_sway_offset.GetFloat() : 0;
+	float dotForward = RemapVal(DotProduct(owner->GetLocalVelocity(), MainViewForward()), -arsenio_sway_offset.GetFloat(), arsenio_sway_offset.GetFloat(), -10.0f, 10.0f);
+	float movement = abs(dotForward) > 0.5f ? arsenio_sway_offset.GetFloat() : 0;
 	m_flForwardOffsetResult = Approach(movement, m_flForwardOffsetResult, gpGlobals->frametime * 10.0f * m_flForwardOffsetDifference);
 	m_flForwardOffsetDifference = fabs(movement - m_flForwardOffsetResult);
 
-	float dotRight = RemapVal(DotProduct(owner->GetLocalVelocity(), MainViewRight()), -cl_vm_sway_tilt.GetFloat(), cl_vm_sway_tilt.GetFloat(), -1.0f, 1.0f) * 15 * 0.5f;
+	float dotRight = RemapVal(DotProduct(owner->GetLocalVelocity(), MainViewRight()), -arsenio_sway_tilt.GetFloat(), arsenio_sway_tilt.GetFloat(), -1.0f, 1.0f) * 15 * 0.5f;
 	m_flSideTiltResult = Approach(dotRight, m_flSideTiltResult, gpGlobals->frametime * 10.0f * m_flSideTiltDifference);
 	m_flSideTiltDifference = fabs(dotRight - m_flSideTiltResult);
 
@@ -462,8 +462,8 @@ void CBaseViewModel::CalcViewModelLag(Vector& origin, QAngle& angles, QAngle& or
 	if (gpGlobals->frametime != 0.0f)
 	{
 		float flFrametime = clamp(gpGlobals->frametime, 0.001, 1.0f / 20.0f);
-		float flWiggleFactor = (1.0f - cl_vm_sway_wiggle_rate.GetFloat()) / 0.6f + 0.15f;
-		float flSwayRate = powf(cl_vm_sway_rate.GetFloat(), 1.5f) * 10.0f;
+		float flWiggleFactor = (1.0f - arsenio_sway_wiggle_rate.GetFloat()) / 0.6f + 0.15f;
+		float flSwayRate = powf(arsenio_sway_rate.GetFloat(), 1.5f) * 10.0f;
 		float clampFac = 1.1f - MIN((fabs(m_angMotion[PITCH]) + fabs(m_angMotion[YAW]) + fabs(m_angMotion[ROLL])) / 20.0f, 1.0f);
 
 		m_angViewPunch = pPlayer->m_Local.m_vecPunchAngle;
@@ -479,7 +479,7 @@ void CBaseViewModel::CalcViewModelLag(Vector& origin, QAngle& angles, QAngle& or
 
 		m_angOldFacing = m_angEyeAngles;
 
-		m_angOldFacing[PITCH] -= (pPlayer->GetLocalVelocity().z / MAX(1, cl_vm_sway_jump_velocity_division.GetFloat()));
+		m_angOldFacing[PITCH] -= (pPlayer->GetLocalVelocity().z / MAX(1, arsenio_sway_jump_velocity_division.GetFloat()));
 
 		m_angCounterMotion = Lerp(flFrametime * (flSwayRate * (0.75f + (0.5f - flWiggleFactor))), m_angCounterMotion, -m_angMotion);
 		m_angCompensation[PITCH] = AngleDiff(m_angMotion[PITCH], -m_angCounterMotion[PITCH]);
@@ -488,7 +488,7 @@ void CBaseViewModel::CalcViewModelLag(Vector& origin, QAngle& angles, QAngle& or
 		m_angMotion = Lerp(flFrametime * flSwayRate, m_angMotion, m_angDelta + m_angCompensation);
 	}
 
-	float flFraction = cl_vm_sway.GetFloat();
+	float flFraction = arsenio_sway.GetFloat();
 	origin += (m_angMotion[YAW] * LAG_POSITION_COMPENSATION * 0.66f * dirRight * LAG_FLIP_FACTOR) * flFraction;
 	origin += (m_angMotion[PITCH] * LAG_POSITION_COMPENSATION * dirUp) * flFraction;
 

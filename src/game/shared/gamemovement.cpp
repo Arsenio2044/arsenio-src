@@ -73,11 +73,11 @@ ConVar player_limit_jump_speed( "player_limit_jump_speed", "1", FCVAR_REPLICATED
 
 #if !defined ( OPTUX3_CLIENT ) && !defined( OPTUX3_DLL )
 // Camera Bob for Arsenio.
-ConVar cl_viewbob_enabled("cl_viewbob_enabled", "1", 0, "Oscillation Toggle", true, 0, true, 1);
-ConVar cl_viewbob_timer("cl_viewbob_timer", "6", 0, "Speed of Oscillation");
-ConVar cl_viewbob_scale_x("cl_viewbob_scale_x", "0.0", 0, "Magnitude of Oscillation");
-ConVar cl_viewbob_scale_y("cl_viewbob_scale_y", "0.1", 0, "Magnitude of Oscillation");
-ConVar cl_viewbob_scale_z("cl_viewbob_scale_z", "0.1", 0, "Magnitude of Oscillation");
+ConVar arsenio_viewbob_enabled("arsenio_viewbob_enabled", "1", 0, "Oscillation Toggle", true, 0, true, 1);
+ConVar arsenio_viewbob_timer("arsenio_viewbob_timer", "6", 0, "Speed of Oscillation");
+ConVar arsenio_viewbob_scale_x("arsenio_viewbob_scale_x", "0.0", 0, "Magnitude of Oscillation");
+ConVar arsenio_viewbob_scale_y("arsenio_viewbob_scale_y", "0.1", 0, "Magnitude of Oscillation");
+ConVar arsenio_viewbob_scale_z("arsenio_viewbob_scale_z", "0.1", 0, "Magnitude of Oscillation");
 #endif
 
 // option_duck_method is a carrier convar. Its sole purpose is to serve an easy-to-flip
@@ -1964,7 +1964,7 @@ void CGameMovement::AirMove( void )
 	VectorSubtract( mv->m_vecVelocity, player->GetBaseVelocity(), mv->m_vecVelocity );
 
 	if ( !( mv->m_nButtons & IN_DUCK ) &&
-		( sv_wallrun_anticipation.GetInt() >= 1 ) &&
+		( arsenio_wallrun_anticipation.GetInt() >= 1 ) &&
 		player->IsSuitEquipped() )
 	{
 		AnticipateWallRun();
@@ -2071,11 +2071,11 @@ void CGameMovement::WalkMove( void )
 {
 #if !defined ( OPTUX3_CLIENT ) && !defined( OPTUX3_DLL )
 	//view bob code for Arsenio
-	if (cl_viewbob_enabled.GetInt() == 1 && !engine->IsPaused())
+	if (arsenio_viewbob_enabled.GetInt() == 1 && !engine->IsPaused())
 	{
-		float xoffset = sin(2 * gpGlobals->curtime * cl_viewbob_timer.GetFloat()) * player->GetAbsVelocity().Length() * cl_viewbob_scale_x.GetFloat() / 400;
-		float yoffset = sin(2 * gpGlobals->curtime * cl_viewbob_timer.GetFloat()) * player->GetAbsVelocity().Length() * cl_viewbob_scale_y.GetFloat() / 400;
-		float zoffset = sin(2 * gpGlobals->curtime * cl_viewbob_timer.GetFloat()) * player->GetAbsVelocity().Length() * cl_viewbob_scale_z.GetFloat() / 400;
+		float xoffset = sin(2 * gpGlobals->curtime * arsenio_viewbob_timer.GetFloat()) * player->GetAbsVelocity().Length() * arsenio_viewbob_scale_x.GetFloat() / 400;
+		float yoffset = sin(2 * gpGlobals->curtime * arsenio_viewbob_timer.GetFloat()) * player->GetAbsVelocity().Length() * arsenio_viewbob_scale_y.GetFloat() / 400;
+		float zoffset = sin(2 * gpGlobals->curtime * arsenio_viewbob_timer.GetFloat()) * player->GetAbsVelocity().Length() * arsenio_viewbob_scale_z.GetFloat() / 400;
 
 		player->ViewPunch(QAngle(xoffset, yoffset, zoffset));
 	}
@@ -2133,13 +2133,13 @@ void CGameMovement::WalkMove( void )
 	wishvel[2] = 0;             // Zero out z part of velocity
 
 	if (player->m_bIsPowerSliding && 
-		( sv_slide_lock.GetBool() 
+		( arsenio_slide_lock.GetBool() 
 #ifndef CLIENT_DLL
 		|| ( player->GetGroundVPhysics() && wishvel.Length2D() == 0.0f )
 #endif
 		) )
 	{
-		// can't change direction in slide if sv_slide_lock on.
+		// can't change direction in slide if arsenio_slide_lock on.
 		// Also there's some weird behaviour with sliding on 
 		// physics objects which can be fixed by pretending they 
 		// are holding the button down 
@@ -2794,7 +2794,7 @@ bool CGameMovement::CheckJumpButton( void )
 
 		if (player->m_nWallRunState > WALLRUN_NOT) {
 
-			flSpeedBoostPerc = sv_wallrun_jump_boost.GetFloat();
+			flSpeedBoostPerc = arsenio_wallrun_jump_boost.GetFloat();
 		}
 		
 		float flSpeedAddition = fabs( mv->m_flForwardMove * flSpeedBoostPerc );
@@ -2823,8 +2823,8 @@ bool CGameMovement::CheckJumpButton( void )
 			// acceleration should be limited still
 			flSpeedAddition =
                 MIN( flSpeedAddition,
-					sv_wallrun_jump_boost.GetFloat() * 
-					sv_wallrun_speed.GetFloat() );
+					arsenio_wallrun_jump_boost.GetFloat() * 
+					arsenio_wallrun_speed.GetFloat() );
 
 			//Msg( "Adding speed in jump\n" );
 		}
@@ -2880,7 +2880,7 @@ bool CGameMovement::CheckJumpButton( void )
 			// Jump out from the wall 
 			float wall_push_scale =
 				//(fabs( cos( DEG2RAD( GetWallRunYaw() ) ) ) ) *
-				 flNewSpeed * sv_wallrun_jump_push.GetFloat();
+				 flNewSpeed * arsenio_wallrun_jump_push.GetFloat();
 			VectorScale( player->m_vecWallNorm, wall_push_scale, vecWallPush );
 			VectorAdd( vecWallPush, mv->m_vecVelocity, mv->m_vecVelocity );
 		}
@@ -3582,14 +3582,14 @@ void CGameMovement::CheckVelocity( void )
 		{
 			mv->m_vecVelocity.z =
 				clamp( mv->m_vecVelocity.z,
-				    sv_wallrun_min_rise.GetFloat(),
-				    sv_wallrun_max_rise.GetFloat() );
+				    arsenio_wallrun_min_rise.GetFloat(),
+				    arsenio_wallrun_max_rise.GetFloat() );
 		}
 		else if (player->m_nWallRunState == WALLRUN_STALL)
 		{
 			mv->m_vecVelocity.z =
 				clamp( mv->m_vecVelocity.z,
-				    sv_wallrun_min_rise.GetFloat(),
+				    arsenio_wallrun_min_rise.GetFloat(),
 				    0.0);
 		}
 	}

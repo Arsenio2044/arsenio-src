@@ -828,7 +828,7 @@ CON_COMMAND( give, "Give item to player.\n\tArguments: <item_name>" )
 		pPlayer->GiveNamedItem( STRING(iszItem) );
 	}
 }
-
+/*
 // Buyable items
 const char* g_ppszBuyableItems[] =
 {
@@ -879,7 +879,7 @@ CON_COMMAND(buy, "Buy's buyable items if the player is in the buy zone.")
 		}
 	}
 }
-
+*/
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------

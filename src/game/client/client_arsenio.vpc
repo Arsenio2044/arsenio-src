@@ -27,7 +27,7 @@ $Project "Client - Arsenio"
 		$File	"c_team_objectiveresource.cpp"
 		$File	"c_team_objectiveresource.h"
 		
-		$Folder	"Arsenio"
+		$Folder	"ARSENIO DLL"
 		{
 			$File	"c_vehicle_airboat.h"			
 			$File	"c_weapon_egar.h"
@@ -37,8 +37,8 @@ $Project "Client - Arsenio"
 			$File	"hl2\hud_frag.cpp"
 			$File	"hl2\hud_fragcount.cpp"
 			$File	"$SRCDIR\game\shared\player_mobility_defs.h"
-			$File	"$SRCDIR\game\shared\gamemovement_duck.cpp"
-			$File	"$SRCDIR\game\shared\gamemovement_mobility.cpp"
+			$File	"$SRCDIR\game\shared\IVEngine2\gamemovement_duck.cpp"
+			$File	"$SRCDIR\game\shared\arsenio\gamemovement_mobility.cpp"
 			$File	"arsenio\c_weapon_stubs_arsenio.cpp"
 		}
 

@@ -1228,7 +1228,7 @@ void CHL2_Player::DeriveMaxSpeed( void )
 	float newMaxSpeed;
 	if ( m_nWallRunState >= WALLRUN_RUNNING )
 	{
-		newMaxSpeed = sv_wallrun_speed.GetFloat();
+		newMaxSpeed = arsenio_wallrun_speed.GetFloat();
 	}
 	else if (m_fIsSprinting)
 	{

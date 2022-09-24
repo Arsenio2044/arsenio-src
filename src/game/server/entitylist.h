@@ -14,7 +14,7 @@
 #endif
 
 #include "baseentity.h"
-#include "searchpath_manager.h"
+#include "IVEngine2/searchpath_manager.h"
 
 class IEntityListener;
 

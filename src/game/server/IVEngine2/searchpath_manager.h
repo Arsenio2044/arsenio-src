@@ -1,4 +1,13 @@
-
+//========= Copyright Glitch Software, All rights reserved. ============//
+//
+// Purpose: This class holds logic to rearrange the search path so that the right files are loaded for the right maps.E.g.HL2 maps need the HL2 Alyx
+//			model, or you get missing animations and broken scenes.Ditto the Ep2 maps and Ep2 Alyx model.And other things of that nature.
+//			The search path is read from gameinfo.txt in the mod directory.It points
+//			to the hl2 directories.
+//
+// $NoKeywords: $
+//
+//=============================================================================//
 
 #ifndef SEARCHPATH_MANAGER_H
 #define SEARCHPATH_MANAGER_H

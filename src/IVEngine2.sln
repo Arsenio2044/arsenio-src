@@ -3,13 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client - Optux3", "game\client\client_optux3.vcxproj", "{08FC5FD4-5A15-C5C1-0F5B-3983E82C6F6F}"
-	ProjectSection(ProjectDependencies) = postProject
-		{BAB92FF0-D72A-D7E5-1988-74628D39B94F} = {BAB92FF0-D72A-D7E5-1988-74628D39B94F}
-		{EC1C516D-E1D9-BC0A-F79D-E91E954ED8EC} = {EC1C516D-E1D9-BC0A-F79D-E91E954ED8EC}
-		{F69B3672-C5E8-CD1A-257F-253A25B5B939} = {F69B3672-C5E8-CD1A-257F-253A25B5B939}
-	EndProjectSection
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client - Arsenio", "game\client\client_arsenio.vcxproj", "{4805D596-827F-6EEE-28C5-2977FA0D9F1E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BAB92FF0-D72A-D7E5-1988-74628D39B94F} = {BAB92FF0-D72A-D7E5-1988-74628D39B94F}
@@ -20,12 +13,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mathlib", "mathlib\mathlib.vcxproj", "{BAB92FF0-D72A-D7E5-1988-74628D39B94F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IVEngine 2 RTX", "raytrace\raytrace.vcxproj", "{95D67225-8415-236F-9128-DCB171B7DEC6}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Server - Optux 3", "game\server\server_optux3.vcxproj", "{239A9F03-5C2C-7F7F-F97C-0FEC969456BC}"
-	ProjectSection(ProjectDependencies) = postProject
-		{BAB92FF0-D72A-D7E5-1988-74628D39B94F} = {BAB92FF0-D72A-D7E5-1988-74628D39B94F}
-		{EC1C516D-E1D9-BC0A-F79D-E91E954ED8EC} = {EC1C516D-E1D9-BC0A-F79D-E91E954ED8EC}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Server - Arsenio", "game\server\server_arsenio.vcxproj", "{238FBBD9-01A2-B064-DC7C-8933973127D5}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -147,10 +134,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{08FC5FD4-5A15-C5C1-0F5B-3983E82C6F6F}.Debug|x86.ActiveCfg = Debug|Win32
-		{08FC5FD4-5A15-C5C1-0F5B-3983E82C6F6F}.Debug|x86.Build.0 = Debug|Win32
-		{08FC5FD4-5A15-C5C1-0F5B-3983E82C6F6F}.Release|x86.ActiveCfg = Release|Win32
-		{08FC5FD4-5A15-C5C1-0F5B-3983E82C6F6F}.Release|x86.Build.0 = Release|Win32
 		{4805D596-827F-6EEE-28C5-2977FA0D9F1E}.Debug|x86.ActiveCfg = Debug|Win32
 		{4805D596-827F-6EEE-28C5-2977FA0D9F1E}.Debug|x86.Build.0 = Debug|Win32
 		{4805D596-827F-6EEE-28C5-2977FA0D9F1E}.Release|x86.ActiveCfg = Release|Win32
@@ -163,10 +146,6 @@ Global
 		{95D67225-8415-236F-9128-DCB171B7DEC6}.Debug|x86.Build.0 = Debug|Win32
 		{95D67225-8415-236F-9128-DCB171B7DEC6}.Release|x86.ActiveCfg = Release|Win32
 		{95D67225-8415-236F-9128-DCB171B7DEC6}.Release|x86.Build.0 = Release|Win32
-		{239A9F03-5C2C-7F7F-F97C-0FEC969456BC}.Debug|x86.ActiveCfg = Debug|Win32
-		{239A9F03-5C2C-7F7F-F97C-0FEC969456BC}.Debug|x86.Build.0 = Debug|Win32
-		{239A9F03-5C2C-7F7F-F97C-0FEC969456BC}.Release|x86.ActiveCfg = Release|Win32
-		{239A9F03-5C2C-7F7F-F97C-0FEC969456BC}.Release|x86.Build.0 = Release|Win32
 		{238FBBD9-01A2-B064-DC7C-8933973127D5}.Debug|x86.ActiveCfg = Debug|Win32
 		{238FBBD9-01A2-B064-DC7C-8933973127D5}.Debug|x86.Build.0 = Debug|Win32
 		{238FBBD9-01A2-B064-DC7C-8933973127D5}.Release|x86.ActiveCfg = Release|Win32
@@ -256,6 +235,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {D7899EA4-FA97-4436-9865-ADB0E6CCFFF0}
+		SolutionGuid = {1E9743D0-6ED1-4A4F-BCB6-5C4A4FC42D13}
 	EndGlobalSection
 EndGlobal

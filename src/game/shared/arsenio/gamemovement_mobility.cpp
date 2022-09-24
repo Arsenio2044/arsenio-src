@@ -180,7 +180,7 @@ float CGameMovement::GetWallRunYaw( void )
 //-----------------------------------------------------------------------------
 float CGameMovement::GetWallRunRollAngle( void )
 {
-	return sv_wallrun_roll.GetFloat() * 
+	return arsenio_wallrun_roll.GetFloat() * 
 			   sin( DEG2RAD( GetWallRunYaw() ) );
 }
 
@@ -322,7 +322,7 @@ void CGameMovement::CheckWallRun( Vector &vecWallNormal, trace_t &pm )
 
 	float newmaxspeed = 
 		MAX( 
-			(sv_wallrun_speed.GetFloat()) + sv_wallrun_boost.GetFloat() ,
+			(arsenio_wallrun_speed.GetFloat()) + arsenio_wallrun_boost.GetFloat() ,
 			(mv->m_vecVelocity.Length2D())
 		);
 
@@ -333,7 +333,7 @@ void CGameMovement::CheckWallRun( Vector &vecWallNormal, trace_t &pm )
 
 	// give speed boost
 	float speed = mv->m_vecVelocity.Length2D();
-	float newspeed = speed + sv_wallrun_boost.GetFloat();
+	float newspeed = speed + arsenio_wallrun_boost.GetFloat();
 	mv->m_vecVelocity.z = 0.0f; // might be better to lerp down to zero instead of slamming
 	VectorScale( mv->m_vecVelocity, newspeed / speed, mv->m_vecVelocity );
 	player->PlayWallRunSound( (Vector &)mv->GetAbsOrigin() );
@@ -414,15 +414,15 @@ void CGameMovement::WallRunMove( void )
 
 	// Set the new maxspeed = current speed + some fraction of boost speed that decays for
 	// first half of wallrun
-	float decel_time = sv_wallrun_time.GetFloat();
+	float decel_time = arsenio_wallrun_time.GetFloat();
 	float fraction = MAX(
 		(player->m_Local.m_flWallRunTime / decel_time),
 		0 );
 
 	// If you stay on the wall for the full time limit you should end up at this speed
-	float end_speed = sv_wallrun_speed.GetFloat(); // 300
+	float end_speed = arsenio_wallrun_speed.GetFloat(); // 300
 	float start_speed = 
-		MAX( mv->m_vecVelocity.Length2D() + sv_wallrun_boost.GetFloat(),
+		MAX( mv->m_vecVelocity.Length2D() + arsenio_wallrun_boost.GetFloat(),
 		     end_speed);
 	
 	float delta_speed = fabs(start_speed - end_speed);
@@ -434,25 +434,25 @@ void CGameMovement::WallRunMove( void )
 	// Set pmove velocity
 	mv->m_vecVelocity.z = 
 		clamp( mv->m_vecVelocity.z, 
-		       sv_wallrun_min_rise.GetFloat(), 
-			   sv_wallrun_max_rise.GetFloat() );
+		       arsenio_wallrun_min_rise.GetFloat(), 
+			   arsenio_wallrun_max_rise.GetFloat() );
 
 	player->m_surfaceFriction = 1.0;
 
-	Accelerate( wishdir, wishspeed, sv_wallrun_accel.GetFloat() );
+	Accelerate( wishdir, wishspeed, arsenio_wallrun_accel.GetFloat() );
 
-    // Derive max climb - this is in the range -5 to sv_wallrun_max_rise, based on 
+    // Derive max climb - this is in the range -5 to arsenio_wallrun_max_rise, based on 
 	// wallrun yaw angle. The idea here is that you can wallrun upwards if you're 
 	// running along the wall, but if you're facing into the wall you'll drop slowly.
 	max_climb = fabs( sin( DEG2RAD( GetWallRunYaw() ) ) ) *  // 
-		        (sv_wallrun_max_rise.GetFloat() + 5) - 5; 
+		        (arsenio_wallrun_max_rise.GetFloat() + 5) - 5; 
 
 	if (player->m_nWallRunState == WALLRUN_STALL)
 		max_climb = -5;
 
 	mv->m_vecVelocity.z =
 		clamp( mv->m_vecVelocity.z,
-		       sv_wallrun_min_rise.GetFloat(),
+		       arsenio_wallrun_min_rise.GetFloat(),
 			   max_climb );
 
 
@@ -504,12 +504,12 @@ void CGameMovement::WallRunMove( void )
 		}
 	}
 	if ( // facing out from wall 
-		    ((fabs( wallrun_yaw ) < sv_wallrun_stick_angle.GetFloat() ||
-		    fabs( wallrun_yaw ) > 360 - sv_wallrun_stick_angle.GetFloat()) &&
+		    ((fabs( wallrun_yaw ) < arsenio_wallrun_stick_angle.GetFloat() ||
+		    fabs( wallrun_yaw ) > 360 - arsenio_wallrun_stick_angle.GetFloat()) &&
 		    fmove > 0.0) ||
 			// backing out from wall
-			((fabs( wallrun_yaw ) > 180 - sv_wallrun_stick_angle.GetFloat() &&
-			fabs( wallrun_yaw ) < 180 + sv_wallrun_stick_angle.GetFloat()) &&
+			((fabs( wallrun_yaw ) > 180 - arsenio_wallrun_stick_angle.GetFloat() &&
+			fabs( wallrun_yaw ) < 180 + arsenio_wallrun_stick_angle.GetFloat()) &&
 			fmove < 0.0)
 		)
 	{   // Trying to move outward from wall
@@ -554,7 +554,7 @@ void CGameMovement::WallRunMove( void )
 
 	if ( player->GetEscapeVel().Length() == 0 &&
 		fabs( AngleDiff( oldAngleV[YAW], newAngleV[YAW] ) ) > 
-		  sv_wallrun_stick_angle.GetFloat() * 1.2 &&
+		  arsenio_wallrun_stick_angle.GetFloat() * 1.2 &&
 		  mv->m_vecVelocity.Length2D() > 250 )
 	{
 		mv->m_vecVelocity = oldvel;
@@ -612,7 +612,7 @@ void CGameMovement::WallRunMove( void )
 	VectorSubtract( mv->m_vecVelocity, player->GetBaseVelocity(), mv->m_vecVelocity );
 	
 	// Turn out from the wall slightly if there's a bump coming up
-	if (sv_wallrun_anticipation.GetInt() >= 2)
+	if (arsenio_wallrun_anticipation.GetInt() >= 2)
 	    WallRunAnticipateBump();
 
 }
@@ -659,7 +659,7 @@ void CGameMovement::WallRunAnticipateBump( void )
 	old_yaw = AngleNormalizePositive( angles[YAW] );
 
 	// how far we travel in the lookahead time
-	move = mv->m_vecVelocity * sv_wallrun_lookahead.GetFloat();
+	move = mv->m_vecVelocity * arsenio_wallrun_lookahead.GetFloat();
 	move.z = 0; // let's ignore height movement
 	dest = start + move;
 
@@ -705,7 +705,7 @@ void CGameMovement::WallRunAnticipateBump( void )
 	if ( pm.fraction == 1.0 )
 	{
 		// Made it all the way - could we turn towards the wall more?
-		Vector wallwards = player->m_vecWallNorm * sv_wallrun_inness.GetFloat() * -1 * gpGlobals->frametime;
+		Vector wallwards = player->m_vecWallNorm * arsenio_wallrun_inness.GetFloat() * -1 * gpGlobals->frametime;
 		dest += wallwards;
 
 		// See how far we can go
@@ -733,8 +733,8 @@ void CGameMovement::WallRunAnticipateBump( void )
 				// Guess whether the player wants to go around the corner or end the 
 				// wallrun based on their yaw
 				float player_wallrun_yaw = fabs(GetWallRunYaw());
-				if (player_wallrun_yaw < sv_wallrun_corner_stick_angle.GetFloat() || 
-					player_wallrun_yaw > 360 - sv_wallrun_corner_stick_angle.GetFloat())
+				if (player_wallrun_yaw < arsenio_wallrun_corner_stick_angle.GetFloat() || 
+					player_wallrun_yaw > 360 - arsenio_wallrun_corner_stick_angle.GetFloat())
 				{
 					EndWallRun();
 					return;
@@ -816,7 +816,7 @@ void CGameMovement::WallRunAnticipateBump( void )
 		Vector block_norm = pm.plane.normal;
 
 		dest += player->m_vecWallNorm * 
-			    sv_wallrun_outness.GetFloat() *
+			    arsenio_wallrun_outness.GetFloat() *
 				gpGlobals->frametime;
 
 		newheading = dest - start;
@@ -830,7 +830,7 @@ void CGameMovement::WallRunAnticipateBump( void )
 	}
 
 	// Automatically aim their view along the wall if they aren't moving the mouse
-	if (sv_wallrun_lookness.GetFloat() > 0 && 
+	if (arsenio_wallrun_lookness.GetFloat() > 0 && 
 		fabs( sin( DEG2RAD( GetWallRunYaw() ) ) ) > 0.2f && // not facing straight into or out from wall
 		gpGlobals->curtime - player->m_flAutoViewTime > 0.300)  // haven't moved the mouse in more than 300 ms
 	{
@@ -923,7 +923,7 @@ void CGameMovement::CheckWallRunScramble( bool& steps )
 		// Make sure we have room to move up
 		vecUp.z = mv->GetAbsOrigin().z +
 			      player->GetViewOffset().z + 
-				  sv_wallrun_scramble_z.GetFloat();
+				  arsenio_wallrun_scramble_z.GetFloat();
 
 		TracePlayerBBox( vecStart, vecUp, PlayerSolidMask(), COLLISION_GROUP_PLAYER_MOVEMENT, tr );
 		if (tr.endpos.z < vecStart.z + player->GetStepSize())
@@ -988,7 +988,7 @@ void CGameMovement::CheckWallRunScramble( bool& steps )
 void CGameMovement::CheckFeetCanReachWall( void )
 {
 	Vector start, end, move, actual_wall_norm;
-	float minz = -60.0f + sv_wallrun_feet_z.GetFloat();
+	float minz = -60.0f + arsenio_wallrun_feet_z.GetFloat();
 	start = mv->GetAbsOrigin();
 	trace_t pm;
 	// First compensate for any current distance from the wall

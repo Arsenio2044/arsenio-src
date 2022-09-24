@@ -69,7 +69,7 @@
 #include "dt_utlvector_send.h"
 #include "vote_controller.h"
 #include "ai_speech.h"
-#include "arsenio/func_shop.h"
+//#include "arsenio/func_shop.h"
 
 #include "weapon_frag.h"
 #include "basebludgeonweapon.h"
@@ -2060,23 +2060,24 @@ bool CBasePlayer::IsOnLadder(void)
 }
 
 // In-Game "weapon shop". - Tux
-bool CBasePlayer::IsinShop(void)
-{
-	CBaseEntity* pEntity = NULL;
 
-	if ((pEntity = gEntList.FindEntityByClassname(pEntity, "func_shop")) != NULL)
-	{
-		CShop* pShop = NULL;
-		float flDist = GetAbsOrigin().DistTo(pShop->GetAbsOrigin());
-
-		if (flDist < 60)
-			return pShop->isinshop;
-
-		return false;
-	}
-	else
-		return false;
-}
+//bool CBasePlayer::IsinShop(void)
+//{
+//	CBaseEntity* pEntity = NULL;
+//
+//	if ((pEntity = gEntList.FindEntityByClassname(pEntity, "func_shop")) != NULL)
+//	{
+//		CShop* pShop = NULL;
+//		float flDist = GetAbsOrigin().DistTo(pShop->GetAbsOrigin());
+//
+//		if (flDist < 60)
+//			return pShop->isinshop;
+//
+//		return false;
+//	}
+//	else
+//		return false;
+//}
 
 
 float CBasePlayer::GetWaterJumpTime() const
@@ -6429,21 +6430,18 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		GiveNamedItem("weapon_frag");
 		GiveNamedItem("weapon_crowbar");
 		GiveNamedItem("weapon_pistol");
-		GiveNamedItem("weapon_ar2");
+		GiveNamedItem("weapon_oicw");
 		GiveNamedItem("weapon_shotgun");
 		GiveNamedItem("weapon_physcannon");
-		GiveNamedItem("weapon_bugbait");
+		GiveNamedItem("weapon_mp5k");
 		GiveNamedItem("weapon_rpg");
 		GiveNamedItem("weapon_357");
 		GiveNamedItem("weapon_crossbow");
+		GiveNamedItem("weapon_50cal");
 		GiveNamedItem("weapon_bulk");
 		GiveNamedItem("weapon_pro836");
 		GiveNamedItem("weapon_gauss");
-		GiveNamedItem("weapon_smg3");
-		GiveNamedItem("weapon_kilo");
-		GiveNamedItem("weapon_oicw");
-		GiveNamedItem("weapon_50cal");
-		GiveNamedItem("weapon_mp5k");
+//		GiveNamedItem("weapon_kilo");
 		//GiveNamedItem("weapon_egon");
 
 

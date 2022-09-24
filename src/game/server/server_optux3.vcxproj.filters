@@ -707,6 +707,9 @@
     <ClInclude Include="IVEngine2\actual_bullet.h">
       <Filter>IVEngine 2</Filter>
     </ClInclude>
+    <ClInclude Include="IVEngine2\searchpath_manager.h">
+      <Filter>IVEngine 2</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\common\replay\ireplaysessionrecorder.h">
       <Filter>Replay</Filter>
     </ClInclude>
@@ -1784,9 +1787,6 @@
     <ClInclude Include="..\..\game\shared\player_mobility_defs.h">
       <Filter>Source Files\OPTUX3 DLL</Filter>
     </ClInclude>
-    <ClInclude Include="searchpath_manager.h">
-      <Filter>Source Files\OPTUX3 DLL</Filter>
-    </ClInclude>
     <ClInclude Include="weapon_frag.h">
       <Filter>Source Files\OPTUX3 DLL</Filter>
     </ClInclude>
@@ -1822,7 +1822,13 @@
     <ClCompile Include="IVEngine2\actual_bullet.cpp">
       <Filter>IVEngine 2</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\game\shared\IVEngine2\gamemovement_duck.cpp">
+      <Filter>IVEngine 2</Filter>
+    </ClCompile>
     <ClCompile Include="IVEngine2\point_cutscene.cpp">
+      <Filter>IVEngine 2</Filter>
+    </ClCompile>
+    <ClCompile Include="IVEngine2\searchpath_manager.cpp">
       <Filter>IVEngine 2</Filter>
     </ClCompile>
     <ClCompile Include="gamedll_replay.cpp">
@@ -3376,12 +3382,6 @@
     <ClCompile Include="hl2\weapon_flaregun.cpp">
       <Filter>Source Files\HL2 DLL\unused</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\game\shared\gamemovement_duck.cpp">
-      <Filter>Source Files\OPTUX3 DLL</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\game\shared\gamemovement_mobility.cpp">
-      <Filter>Source Files\OPTUX3 DLL</Filter>
-    </ClCompile>
     <ClCompile Include="optux3\npc_aliengrunt.cpp">
       <Filter>Source Files\OPTUX3 DLL</Filter>
     </ClCompile>
@@ -3392,9 +3392,6 @@
       <Filter>Source Files\OPTUX3 DLL</Filter>
     </ClCompile>
     <ClCompile Include="optux3\nz_common.cpp">
-      <Filter>Source Files\OPTUX3 DLL</Filter>
-    </ClCompile>
-    <ClCompile Include="searchpath_manager.cpp">
       <Filter>Source Files\OPTUX3 DLL</Filter>
     </ClCompile>
     <ClCompile Include="hl2\weapon_egar.cpp">
