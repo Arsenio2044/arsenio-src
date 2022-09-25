@@ -59,8 +59,8 @@ public:
 	{
 		// Define "spread" parameters based on the "owner" and what they are doing
 		static Vector plrDuckCone = VECTOR_CONE_2DEGREES;
-		static Vector plrStandCone = VECTOR_CONE_3DEGREES;
-		static Vector plrMoveCone = VECTOR_CONE_4DEGREES;
+		static Vector plrStandCone = VECTOR_CONE_7DEGREES;
+		static Vector plrMoveCone = VECTOR_CONE_20DEGREES;
 		static Vector npcCone = VECTOR_CONE_5DEGREES;
 		static Vector plrRunCone = VECTOR_CONE_6DEGREES;
 		static Vector plrJumpCone = VECTOR_CONE_9DEGREES;

@@ -6441,8 +6441,9 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		GiveNamedItem("weapon_bulk");
 		GiveNamedItem("weapon_pro836");
 		GiveNamedItem("weapon_gauss");
-//		GiveNamedItem("weapon_kilo");
-		//GiveNamedItem("weapon_egon");
+		GiveNamedItem("weapon_addamm557");
+		GiveNamedItem("weapon_egar");
+		GiveNamedItem("weapon_mobileturret");
 
 
 
