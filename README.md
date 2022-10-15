@@ -3,7 +3,7 @@
 
 
 
-Arsenio is a total conversion mod for Half-Life 2: Episode Two that takes place in the far dark future.
+> Arsenio is a total conversion mod for Half-Life 2: Episode Two that takes place in the far dark future.
 
 # Features
 
