@@ -1281,6 +1281,7 @@
     <ClCompile Include="arsenio\weapon_50calSniper.cpp" />
     <ClCompile Include="cyberspace\weapon_addamm557.cpp" />
     <ClCompile Include="hl2\weapon_egar.cpp" />
+    <ClCompile Include="arsenio\weapon_glock.cpp" />
     <ClCompile Include="arsenio\weapon_mobileturret.cpp" />
     <ClCompile Include="arsenio\weapon_mp5k.cpp" />
     <ClCompile Include="arsenio\weapon_oicw.cpp" />

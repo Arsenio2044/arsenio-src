@@ -80,6 +80,14 @@ ConVar arsenio_viewbob_scale_y("arsenio_viewbob_scale_y", "0.1", 0, "Magnitude o
 ConVar arsenio_viewbob_scale_z("arsenio_viewbob_scale_z", "0.1", 0, "Magnitude of Oscillation");
 #endif
 
+
+
+// TUXXEGO: Idle Camera Bob 
+ConVar arsenio_idlebob_enabled("arsenio_idlebob_enabled", "1", 0, "Oscillation Toggle", true, 0, true, 1);
+ConVar arsenio_idlebob_timer("arsenio_idlebob_timer", "1", 0, "Speed of Oscillation");
+ConVar arsenio_idlebob_scale_x("arsenio_idlebob_scale_x", "0.1", 0, "Magnitude of Oscillation");
+ConVar arsenio_idlebob_scale_y("arsenio_idlebob_scale_y", "0.0", 0, "Magnitude of Oscillation");
+ConVar arsenio_idlebob_scale_z("arsenio_idlebob_scale_z", "0.0", 0, "Magnitude of Oscillation");
 // option_duck_method is a carrier convar. Its sole purpose is to serve an easy-to-flip
 // convar which is ONLY set by the X360 controller menu to tell us which way to bind the
 // duck controls. Its value is meaningless anytime we don't have the options window open.
@@ -2081,6 +2089,17 @@ void CGameMovement::WalkMove( void )
 	}
 	//end view bob code
 #endif
+
+		//Idle bob code for Arsenio
+	if (arsenio_idlebob_enabled.GetInt() == 1 && !engine->IsPaused())
+	{
+		float xoffset = sin(2 * gpGlobals->curtime * arsenio_idlebob_timer.GetFloat()) * arsenio_idlebob_scale_x.GetFloat() / 400;
+		float yoffset = sin(2 * gpGlobals->curtime * arsenio_idlebob_timer.GetFloat()) * arsenio_idlebob_scale_y.GetFloat() / 400;
+		float zoffset = sin(2 * gpGlobals->curtime * arsenio_idlebob_timer.GetFloat()) * arsenio_idlebob_scale_z.GetFloat() / 400;
+
+		player->ViewPunch(QAngle(xoffset, yoffset, zoffset));
+	}
+
 
 	int i;
 

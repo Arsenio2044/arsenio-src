@@ -1344,6 +1344,8 @@ void UTIL_SetOrigin( CBaseEntity *entity, const Vector &vecOrigin, bool bFireTri
 }
 
 
+
+
 void UTIL_ParticleEffect( const Vector &vecOrigin, const Vector &vecDirection, ULONG ulColor, ULONG ulCount )
 {
 	Msg( "UTIL_ParticleEffect:  Disabled\n" );

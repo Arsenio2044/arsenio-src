@@ -1332,6 +1332,9 @@ public:
 	// Sets the local position from a transform
 	void					SetLocalTransform( const matrix3x4_t &localTransform );
 
+	// Relink into the spatial partition.
+	void					Relink();
+
 	// See CSoundEmitterSystem
 	void					EmitSound( const char *soundname, float soundtime = 0.0f, float *duration = NULL );  // Override for doing the general case of CPASAttenuationFilter filter( this ), and EmitSound( filter, entindex(), etc. );
 	void					EmitSound( const char *soundname, HSOUNDSCRIPTHANDLE& handle, float soundtime = 0.0f, float *duration = NULL );  // Override for doing the general case of CPASAttenuationFilter filter( this ), and EmitSound( filter, entindex(), etc. );

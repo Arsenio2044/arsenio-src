@@ -2980,6 +2980,9 @@
     <ClCompile Include="hl2\weapon_egar.cpp">
       <Filter>Source Files\ARSENIO DLL</Filter>
     </ClCompile>
+    <ClCompile Include="arsenio\weapon_glock.cpp">
+      <Filter>Source Files\ARSENIO DLL</Filter>
+    </ClCompile>
     <ClCompile Include="arsenio\weapon_mobileturret.cpp">
       <Filter>Source Files\ARSENIO DLL</Filter>
     </ClCompile>

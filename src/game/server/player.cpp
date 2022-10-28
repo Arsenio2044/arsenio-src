@@ -6429,7 +6429,7 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		GiveNamedItem("weapon_smg1");
 		GiveNamedItem("weapon_frag");
 		GiveNamedItem("weapon_crowbar");
-		GiveNamedItem("weapon_pistol");
+		GiveNamedItem("weapon_glock");
 		GiveNamedItem("weapon_oicw");
 		GiveNamedItem("weapon_shotgun");
 		GiveNamedItem("weapon_physcannon");

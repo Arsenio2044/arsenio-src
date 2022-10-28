@@ -79,6 +79,7 @@ $Project "Server - Arsenio"
 			$File	"arsenio\npc_conscript.h"
 			$File	"cyberspace\weapon_addamm557.cpp"
 			$File	"cyberspace\weapon_addamm557.h"
+			$File	"arsenio\weapon_glock.cpp"
 
 
 		}
