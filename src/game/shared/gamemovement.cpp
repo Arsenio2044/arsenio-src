@@ -2100,7 +2100,7 @@ void CGameMovement::WalkMove( void )
 		player->ViewPunch(QAngle(xoffset, yoffset, zoffset));
 	}
 
-
+	// hi clash
 	int i;
 
 	Vector wishvel;
