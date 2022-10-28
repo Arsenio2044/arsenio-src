@@ -1,46 +1,26 @@
 
-![ivengine2](https://user-images.githubusercontent.com/65312637/179425232-0be43355-625e-4d1a-907b-b5b245ca560a.png)
+![ivengine2](https://user-images.githubusercontent.com/65312637/196008880-339841fb-4387-4f2d-b225-fcb0939d47d3.png)
 
 
 
-IVEngine 2 is an heavily improved engine based on Source SDK 2013.
+> Arsenio is a total conversion mod for Half-Life 2: Episode Two that takes place in the far dark future.
 
 # Features
 
-- New UI system
-- Many new entities
-- Fixes to the engines code and gameplay
+- Multiple different factions of enemies and allies.
+- Parkour system (Credit to Mobility mod)
+- Too many weapons (trust me)
+- Completely redesigned combat system.
+- Runs in IVEngine 2 (No not VScript. IVEngine 2 is an overhaul of the source engine)
+- Many more features are unannounced or still in development.
 
 More will be documented on the wiki.
 
 
-# The games
-
-Arsenio
-
-it is recommended you use the code for "arsenio" as it is more stable compared to Optux3.
-
-Operation: Tuxxego 3
-
-WIP code and some of it may be unstable.
-
-Data Redacted
-
-Currently not available.
 
  
- # Credits
- 
- - NicholasDe - GameUI2/TuxUI
- 
- - Mobility Mod - A large ammount of Parkour code.
- 
- - Valve - the engine
- 
- - Halo: Source - Minimap
 
 
-# Original Source license Info
 
 Please see the Source SDK 2013 license below:
 
