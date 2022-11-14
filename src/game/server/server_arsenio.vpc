@@ -80,6 +80,7 @@ $Project "Server - Arsenio"
 			$File	"cyberspace\weapon_addamm557.cpp"
 			$File	"cyberspace\weapon_addamm557.h"
 			$File	"arsenio\weapon_glock.cpp"
+			$File	"arsenio\item_exo.cpp"
 
 
 		}

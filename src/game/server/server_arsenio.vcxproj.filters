@@ -2947,6 +2947,9 @@
     <ClCompile Include="..\..\game\shared\arsenio\gamemovement_mobility.cpp">
       <Filter>Source Files\ARSENIO DLL</Filter>
     </ClCompile>
+    <ClCompile Include="arsenio\item_exo.cpp">
+      <Filter>Source Files\ARSENIO DLL</Filter>
+    </ClCompile>
     <ClCompile Include="arsenio\npc_bloodseeker.cpp">
       <Filter>Source Files\ARSENIO DLL</Filter>
     </ClCompile>
