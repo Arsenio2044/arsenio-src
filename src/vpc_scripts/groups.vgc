@@ -12,7 +12,7 @@ $Group "gamedlls"
 {
 	"client"
 	"server"
-	"fireui"
+	"ivui"
 }
 
 $Group "game"
@@ -23,7 +23,7 @@ $Group "game"
 	"server"
 	"tier1"
 	"vgui_controls"
-	"fireui"
+	"ivui"
 	"captioncompiler"
 	"fgdlib"
 	"glview"

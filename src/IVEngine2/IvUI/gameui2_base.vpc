@@ -1,0 +1,133 @@
+//-----------------------------------------------------------------------------
+//	IVUI_BASE.VPC
+//
+//	Project Script
+//-----------------------------------------------------------------------------
+
+$Macro OUTBINNAME	"IvUI"
+$Macro OUTBINDIR	"$SRCDIR\..\game\$GAMENAME\bin"
+$Macro SRCDIR		"..\.."
+
+$Include "$SRCDIR\vpc_scripts\source_dll_base.vpc"
+
+$Configuration	"Debug"
+{
+	$General
+	{
+		$OutputDirectory			".\Debug_$GAMENAME"			[$WIN32]
+		$IntermediateDirectory		".\Debug_$GAMENAME"			[$WIN32]
+	}
+}
+
+$Configuration	"Release"
+{
+	$General
+	{
+		$OutputDirectory			".\Release_$GAMENAME"		[$WIN32]
+		$IntermediateDirectory		".\Release_$GAMENAME"		[$WIN32]
+	}
+}
+
+$Configuration
+{
+	$General
+	{
+			$OutputDirectory			".\$GAMENAME"		[$OSXALL]
+	}
+	
+	$Compiler
+	{
+		$AdditionalIncludeDirectories	"$BASE;.\;$SRCDIR\vgui2\include;$SRCDIR\vgui2\controls;$SRCDIR\IVEngine2\IvUI;..\..\public"
+		$PreprocessorDefinitions		"$BASE;GAMEUI2_DLL;VERSION_SAFE_STEAM_API_INTERFACES;strncpy=use_Q_strncpy_instead;_snprintf=use_Q_snprintf_instead"
+	}
+
+	$Linker
+	{
+		$SystemLibraries				"iconv" [$OSXALL]
+		$SystemFrameworks				"Carbon" [$OSXALL]
+		$SystemLibraries				"rt" [$LINUXALL]
+		$IgnoreImportLibrary			"TRUE"
+		$AdditionalDependencies			"$BASE winmm.lib"	[$WIN32]
+		$AdditionalDependencies			"$BASE wsock32.lib Ws2_32.lib" [$BUILD_REPLAY]
+	}
+}
+
+$Project "IvUI"
+{
+	$Folder	"Base Files"
+	{
+		$File	"$SRCDIR\public\vgui_controls\vgui_controls.cpp"
+		$File	"$SRCDIR\common\language.cpp"
+	}
+
+	$Folder	"Header Files"
+	{
+		$File	"$SRCDIR\IVEngine2\IvUI\igameui2.h"
+	}
+
+	$Folder	"Link Libraries"
+	{
+		$Lib		bitmap
+		$Lib		choreoobjects
+		$Lib		mathlib
+		$Lib		matsys_controls
+		$Lib		tier1
+		$Lib		tier2
+		$Lib		tier3
+		$Lib		vgui_controls
+		$Lib		vtf
+		$ImpLib		steam_api
+		
+		$Lib $LIBCOMMON/libcrypto [$POSIX]
+
+		$ImpLib	"$LIBCOMMON\curl"	  [$OSXALL]
+
+		$Lib	"$LIBCOMMON\libcurl" [$WIN32]
+		$Lib   "libz" [$WIN32]
+
+		$Libexternal libz [$LINUXALL]
+		$Libexternal "$LIBCOMMON/libcurl" [$LINUXALL]
+		$Libexternal "$LIBCOMMON/libcurlssl" [$LINUXALL]
+		$Libexternal "$LIBCOMMON/libssl" [$LINUXALL]
+ 	}
+
+	$Folder	"Source Files"
+	{
+		$Folder	"Buttons"
+		{
+			$File	"$SRCDIR\IVEngine2\IvUI\button_mainmenu.cpp"
+			$File	"$SRCDIR\IVEngine2\IvUI\button_mainmenu.h"
+			$File	"$SRCDIR\IVEngine2\IvUI\button_panel.cpp"
+			$File	"$SRCDIR\IVEngine2\IvUI\button_panel.h"
+		}
+		
+		$Folder	"Main menu"
+		{
+			$File	"$SRCDIR\IVEngine2\IvUI\mainmenu.cpp"
+			$File	"$SRCDIR\IVEngine2\IvUI\mainmenu.h"
+		}
+
+		$Folder	"Panels"
+		{
+			$File	"$SRCDIR\IVEngine2\IvUI\panel_options.cpp"
+			$File	"$SRCDIR\IVEngine2\IvUI\panel_options.h"
+			$File	"$SRCDIR\IVEngine2\IvUI\panel_quitgame.cpp"
+			$File	"$SRCDIR\IVEngine2\IvUI\panel_quitgame.h"
+		}
+
+		$Folder	"VGUI 2D"
+		{
+			$File	"$SRCDIR\IVEngine2\IvUI\vgui2d\button2d.cpp"
+			$File	"$SRCDIR\IVEngine2\IvUI\vgui2d\button2d.h"
+			$File	"$SRCDIR\IVEngine2\IvUI\vgui2d\frame2d.cpp"
+			$File	"$SRCDIR\IVEngine2\IvUI\vgui2d\frame2d.h"
+			$File	"$SRCDIR\IVEngine2\IvUI\vgui2d\panel2d.cpp"
+			$File	"$SRCDIR\IVEngine2\IvUI\vgui2d\panel2d.h"
+		}
+
+		$File	"$SRCDIR\IVEngine2\IvUI\basepanel.cpp"
+		$File	"$SRCDIR\IVEngine2\IvUI\basepanel.h"
+		$File	"$SRCDIR\IVEngine2\IvUI\gameui2_interface.cpp"
+		$File	"$SRCDIR\IVEngine2\IvUI\gameui2_interface.h"
+	}
+}

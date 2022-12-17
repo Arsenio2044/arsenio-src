@@ -136,9 +136,9 @@ $Project "vvis_launcher"
 	"utils\vvis_launcher\vvis_launcher.vpc" [$WIN32]
 }
 
-$Project "fireui"
+$Project "ivui"
 {
-	"FireUI\gameui2_base.vpc"		[($WIN32||$X360||$POSIX)]
+	"IVEngine2\IvUI\gameui2_base.vpc"		[($WIN32||$X360||$POSIX) && $ARSENIO]
 
 }
 
