@@ -216,7 +216,7 @@ void CBaseHLCombatWeapon::WeaponIdle(void)
 
 	float speed = pPlayer->GetLocalVelocity().Length2D();
 
-	if ( pPlayer->IsSprinting() && speed >= 300 )
+	if ( pPlayer->IsSprinting() && speed >= 290 )
 	{
 		int iActivity = GetActivity();
 		if (HasWeaponIdleTimeElapsed() || 
@@ -261,7 +261,7 @@ void CBaseHLCombatWeapon::WeaponIdle(void)
 			SendWeaponAnim(GetIdleLoweredActivity());
 		}
 	}
-	else if (CanWalkBob() && speed >= 100 && pPlayer->GetWaterLevel() != 3 && (pPlayer->GetFlags() & FL_ONGROUND))
+	else if (CanWalkBob() && speed >= 110 && pPlayer->GetWaterLevel() != 3 && (pPlayer->GetFlags() & FL_ONGROUND))
 	{
 		if (GetActivity() != GetWalkActivity() && (GetActivity() == GetIdleActivity() || GetActivity() == GetSprintActivity()))
 		{
@@ -313,7 +313,7 @@ void CBaseHLCombatWeapon::WeaponIdle(void)
 float	g_lateralBob;
 float	g_verticalBob;
 
-#if defined( CLIENT_DLL ) && ( !defined( HL2MP ) && !defined( IVENGINE2 ) )
+#if defined( CLIENT_DLL ) && ( !defined( HL2MP ) && defined( IVENGINE2 ) )
 
 #define	HL2_BOB_CYCLE_MIN	1.0f
 #define	HL2_BOB_CYCLE_MAX	0.45f

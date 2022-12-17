@@ -6,6 +6,10 @@
 #include "cbase.h"
 #include "func_ladder.h"
 
+#if !defined( CLIENT_DLL )
+#include "globalstate.h" // TUX: yes.
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -394,6 +398,7 @@ void CFuncLadder::PlayerGotOn( CBasePlayer *pPlayer )
 #if !defined( CLIENT_DLL )
 	m_OnPlayerGotOnLadder.FireOutput(this, pPlayer);
 	pPlayer->EmitSound( "Ladder.StepRight" );
+	//GlobalEntity_SetState(MAKE_STRING("friendly_encounter"), GLOBAL_ON);
 #endif
 }
 
@@ -405,6 +410,8 @@ void CFuncLadder::PlayerGotOff( CBasePlayer *pPlayer )
 {
 #if !defined( CLIENT_DLL )
 	m_OnPlayerGotOffLadder.FireOutput(this, pPlayer);
+	//GlobalEntity_SetState(MAKE_STRING("friendly_encounter"), GLOBAL_OFF);
+
 #endif
 }
 

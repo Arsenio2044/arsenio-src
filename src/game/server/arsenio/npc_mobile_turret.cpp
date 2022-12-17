@@ -37,8 +37,8 @@
 #include "Sprite.h"
 
 ConVar mobileturret_headshot_freq( "mobileturret_headshot_freq", "2" );
-ConVar ai_newmobileturret ( "ai_newmobileturret", "0" );
-ConVar sk_mobileturret_health( "sk_mobileturret_health","0");
+ConVar ai_newmobileturret ( "ai_newmobileturret", "1" );
+ConVar sk_mobileturret_health( "sk_mobileturret_health","20");
 
 #define MOBILETURRET_BEAM_SPRITE "materials/effects/bluelaser2.vmt"
 #define MOBILETURRET_GLOW_SPRITE "sprites/glow1.vmt" //

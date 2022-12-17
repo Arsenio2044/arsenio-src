@@ -2057,6 +2057,7 @@ void CBasePlayer::WaterMove()
 bool CBasePlayer::IsOnLadder(void)
 {
 	return (GetMoveType() == MOVETYPE_LADDER);
+
 }
 
 // In-Game "weapon shop". - Tux
@@ -6426,12 +6427,10 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		GiveAmmo(32, "357");
 		GiveAmmo(16, "XBowBolt");
 
-		GiveNamedItem("weapon_smg1");
 		GiveNamedItem("weapon_frag");
 		GiveNamedItem("weapon_crowbar");
 		GiveNamedItem("weapon_glock");
 		GiveNamedItem("weapon_oicw");
-		GiveNamedItem("weapon_shotgun");
 		GiveNamedItem("weapon_physcannon");
 		GiveNamedItem("weapon_mp5k");
 		GiveNamedItem("weapon_rpg");
