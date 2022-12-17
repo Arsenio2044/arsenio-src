@@ -1228,7 +1228,9 @@ bool CHLClient::ReplayPostInit()
 #endif
 }
 
-
+#ifdef ARSENIO
+void SwapDisconnectCommand();
+#endif
 
 
 //-----------------------------------------------------------------------------
@@ -1309,9 +1311,12 @@ void CHLClient::PostInit()
 			ConColorMsg(Color(0, 148, 255, 255), "Unable to load IvUI.dll from:\n%s\n", GameUI2Path);
 			Error("Couldn't load Library IvUI.dll ");
 		}
+
 	}
 
-
+	#ifdef ARSENIO
+	SwapDisconnectCommand();
+	#endif
 
 
 

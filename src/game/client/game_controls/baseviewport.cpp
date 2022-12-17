@@ -36,6 +36,7 @@
 #include "spectatorgui.h"
 #include "teammenu.h"
 #include "vguitextwindow.h"
+#include "arsenio/menu_background.h"
 #include "IGameUIFuncs.h"
 #include "mapoverview.h"
 #include "hud.h"
@@ -157,6 +158,8 @@ CBaseViewport::CBaseViewport() : vgui::EditablePanel( NULL, "CBaseViewport")
 	m_GameEventManager = NULL;
 	SetKeyBoardInputEnabled( false );
 	SetMouseInputEnabled( false );
+	m_pMainMenuPanel = NULL;
+
 
 #ifndef _XBOX
 	m_pBackGround = NULL;
@@ -203,6 +206,18 @@ void CBaseViewport::OnScreenSizeChanged(int iOldWide, int iOldTall)
 
 	// recreate all the default panels
 	RemoveAllPanels();
+
+	bool bRestartMainMenuVideo = false;
+
+	if (m_pMainMenuPanel)
+		bRestartMainMenuVideo = m_pMainMenuPanel->IsVideoPlaying();
+
+	m_pMainMenuPanel = new CMainMenu(NULL, NULL);
+	m_pMainMenuPanel->SetZPos(500);
+	m_pMainMenuPanel->SetVisible(false);
+
+	if (bRestartMainMenuVideo)
+		m_pMainMenuPanel->StartVideo();
 #ifndef _XBOX
 	m_pBackGround = new CBackGroundPanel( NULL );
 	m_pBackGround->SetZPos( -20 ); // send it to the back 
@@ -460,6 +475,13 @@ void CBaseViewport::RemoveAllPanels( void)
 		vgui::VPANEL vPanel = m_Panels[i]->GetVPanel();
 		vgui::ipanel()->DeletePanel( vPanel );
 	}
+
+	if (m_pMainMenuPanel)
+	{
+		m_pMainMenuPanel->MarkForDeletion();
+		m_pMainMenuPanel = NULL;
+	}
+
 #ifndef _XBOX
 	if ( m_pBackGround )
 	{
@@ -486,6 +508,10 @@ CBaseViewport::~CBaseViewport()
 	RemoveAllPanels();
 
 	gameeventmanager->RemoveListener( this );
+
+	if (!m_bHasParent && m_pMainMenuPanel)
+		m_pMainMenuPanel->MarkForDeletion();
+	m_pMainMenuPanel = NULL;
 }
 
 
@@ -507,6 +533,11 @@ void CBaseViewport::Start( IGameUIFuncs *pGameUIFuncs, IGameEventManager2 * pGam
 	m_GameEventManager->AddListener( this, "game_newmap", false );
 	
 	m_bInitialized = true;
+
+	m_pMainMenuPanel = new CMainMenu(NULL, NULL);
+	m_pMainMenuPanel->SetZPos(500);
+	m_pMainMenuPanel->SetVisible(false);
+	m_pMainMenuPanel->StartVideo();
 }
 
 /*
@@ -706,6 +737,24 @@ void CBaseViewport::ReloadScheme(const char *fromFile)
 int CBaseViewport::GetDeathMessageStartHeight( void )
 {
 	return YRES(2);
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CBaseViewport::StartMainMenuVideo()
+{
+	if (m_pMainMenuPanel)
+		m_pMainMenuPanel->StartVideo();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CBaseViewport::StopMainMenuVideo()
+{
+	if (m_pMainMenuPanel)
+		m_pMainMenuPanel->StopVideo();
 }
 
 void CBaseViewport::Paint()
