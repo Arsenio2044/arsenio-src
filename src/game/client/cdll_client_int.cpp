@@ -172,7 +172,7 @@ extern vgui::IInputInternal *g_InputInternal;
 #endif
 
 
-#include "..\FireUI\iGameUI2.h"
+#include "..\IVEngine2\IvUI\iGameUI2.h"
 
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -1266,22 +1266,22 @@ void CHLClient::PostInit()
 
 	
 
-	if (CommandLine()->FindParm("-nofireui") == 0)
+	if (CommandLine()->FindParm("-noivui") == 0)
 	{
 		char GameUI2Path[2048];
-		Q_snprintf(GameUI2Path, sizeof(GameUI2Path), "%s\\bin\\FireUI.dll", engine->GetGameDirectory());
+		Q_snprintf(GameUI2Path, sizeof(GameUI2Path), "%s\\IVEngine2\\IvUI.dll", engine->GetGameDirectory());
 
 		CSysModule* GameUI2Module = Sys_LoadModule(GameUI2Path);
 		if (GameUI2Module != nullptr)
 		{
-			ConColorMsg(Color(0, 148, 255, 255), "Loaded FireUI.dll\n");
+			ConColorMsg(Color(0, 148, 255, 255), "Loaded IvUI.dll\n");
 			CreateInterfaceFn GameUI2Factory = Sys_GetFactory(GameUI2Module);
 			if (GameUI2Factory)
 			{
 				GameUI2 = (IGameUI2*)GameUI2Factory(GAMEUI2_DLL_INTERFACE_VERSION, NULL);
 				if (GameUI2 != nullptr)
 				{
-					ConColorMsg(Color(0, 148, 255, 255), "FireUI: Started with runtime: 995B12\n");
+					ConColorMsg(Color(0, 148, 255, 255), "IvUI: Started with runtime: 995B12\n");
 
 					factorylist_t Factories;
 					FactoryList_Retrieve(Factories);
@@ -1290,15 +1290,15 @@ void CHLClient::PostInit()
 				}
 				else
 				{
-					ConColorMsg(Color(0, 148, 255, 255), "Unable to pull IFireUI interface.\n");
-					Error("FireUI: Unable to pull IFireUI interface ");
+					ConColorMsg(Color(0, 148, 255, 255), "Unable to pull IIvUI interface.\n");
+					Error("IvUI: Unable to pull IIvUI interface ");
 
 				}
 			}
 			else
 			{
-				ConColorMsg(Color(0, 148, 255, 255), "Unable to get FireUI factory.\n");
-				Error("FireUI: No factory! ");
+				ConColorMsg(Color(0, 148, 255, 255), "Unable to get IvUI factory.\n");
+				Error("IvUI: No factory! ");
 
 			}
 		}
@@ -1306,8 +1306,8 @@ void CHLClient::PostInit()
 
 
 		{
-			ConColorMsg(Color(0, 148, 255, 255), "Unable to load FireUI.dll from:\n%s\n", GameUI2Path);
-			Error("Couldn't load Library FireUI.dll ");
+			ConColorMsg(Color(0, 148, 255, 255), "Unable to load IvUI.dll from:\n%s\n", GameUI2Path);
+			Error("Couldn't load Library IvUI.dll ");
 		}
 	}
 
