@@ -203,7 +203,6 @@ ConVar sv_regeneration_rate("sv_regeneration_rate", "15", FCVAR_REPLICATED);
 
 
 
-//ConVar	player_usercommand_timeout( "player_usercommand_timeout", "10", 0, "After this many seconds without a usercommand from a player, the client is kicked." );
 #ifdef _DEBUG
 ConVar  sv_player_net_suppress_usercommands("sv_player_net_suppress_usercommands", "0", FCVAR_CHEAT, "For testing usercommand hacking sideeffects. DO NOT SHIP");
 #endif // _DEBUG
@@ -256,7 +255,6 @@ static ConCommand givecurrentammo("givecurrentammo", CC_GiveCurrentAmmo, "Give a
 
 // pl
 BEGIN_SIMPLE_DATADESC(CPlayerState)
-// DEFINE_FIELD( netname, FIELD_STRING ),  // Don't stomp player name with what's in save/restore
 DEFINE_FIELD(v_angle, FIELD_VECTOR),
 DEFINE_FIELD(deadflag, FIELD_BOOLEAN),
 
@@ -317,21 +315,12 @@ DEFINE_FIELD(m_afPhysicsFlags, FIELD_INTEGER),
 DEFINE_FIELD(m_hVehicle, FIELD_EHANDLE),
 
 // recreate, don't restore
-// DEFINE_FIELD( m_CommandContext, CUtlVector < CCommandContext > ),
-//DEFINE_FIELD( m_pPhysicsController, FIELD_POINTER ),
-//DEFINE_FIELD( m_pShadowStand, FIELD_POINTER ),
-//DEFINE_FIELD( m_pShadowCrouch, FIELD_POINTER ),
-//DEFINE_FIELD( m_vphysicsCollisionState, FIELD_INTEGER ),
 DEFINE_ARRAY(m_szNetworkIDString, FIELD_CHARACTER, MAX_NETWORKID_LENGTH),
 DEFINE_FIELD(m_oldOrigin, FIELD_POSITION_VECTOR),
 DEFINE_FIELD(m_vecSmoothedVelocity, FIELD_VECTOR),
-//DEFINE_FIELD( m_touchedPhysObject, FIELD_BOOLEAN ),
-//DEFINE_FIELD( m_bPhysicsWasFrozen, FIELD_BOOLEAN ),
-//DEFINE_FIELD( m_iPlayerSound, FIELD_INTEGER ),	// Don't restore, set in Precache()
 DEFINE_FIELD(m_iTargetVolume, FIELD_INTEGER),
 DEFINE_AUTO_ARRAY(m_rgItems, FIELD_INTEGER),
-//DEFINE_FIELD( m_fNextSuicideTime, FIELD_TIME ),
-// DEFINE_FIELD( m_PlayerInfo, CPlayerInfo ),
+
 
 DEFINE_FIELD(m_flSwimTime, FIELD_TIME),
 DEFINE_FIELD(m_flDuckTime, FIELD_TIME),
@@ -351,15 +340,7 @@ DEFINE_FIELD(m_flLastDamageTime, FIELD_TIME),
 DEFINE_FIELD(m_flStepSoundTime, FIELD_FLOAT),
 DEFINE_ARRAY(m_szNetname, FIELD_CHARACTER, MAX_PLAYER_NAME_LENGTH),
 
-//DEFINE_FIELD( m_flgeigerRange, FIELD_FLOAT ),	// Don't restore, reset in Precache()
-//DEFINE_FIELD( m_flgeigerDelay, FIELD_FLOAT ),	// Don't restore, reset in Precache()
-//DEFINE_FIELD( m_igeigerRangePrev, FIELD_FLOAT ),	// Don't restore, reset in Precache()
-//DEFINE_FIELD( m_iStepLeft, FIELD_INTEGER ), // Don't need to restore
-//DEFINE_FIELD( m_chTextureType, FIELD_CHARACTER ), // Don't need to restore
-//DEFINE_FIELD( m_surfaceProps, FIELD_INTEGER ),	// don't need to restore, reset by gamemovement
-// DEFINE_FIELD( m_pSurfaceData, surfacedata_t* ),
-//DEFINE_FIELD( m_surfaceFriction, FIELD_FLOAT ),
-//DEFINE_FIELD( m_chPreviousTextureType, FIELD_CHARACTER ),
+
 
 DEFINE_FIELD(m_idrowndmg, FIELD_INTEGER),
 DEFINE_FIELD(m_idrownrestored, FIELD_INTEGER),
@@ -372,14 +353,7 @@ DEFINE_FIELD(m_fInitHUD, FIELD_BOOLEAN),
 DEFINE_FIELD(m_flDeathTime, FIELD_TIME),
 DEFINE_FIELD(m_flDeathAnimTime, FIELD_TIME),
 
-//DEFINE_FIELD( m_fGameHUDInitialized, FIELD_BOOLEAN ), // only used in multiplayer games
-//DEFINE_FIELD( m_fWeapon, FIELD_BOOLEAN ),  // Don't restore, client needs reset
-//DEFINE_FIELD( m_iUpdateTime, FIELD_INTEGER ), // Don't need to restore
-//DEFINE_FIELD( m_iClientBattery, FIELD_INTEGER ), // Don't restore, client needs reset
-//DEFINE_FIELD( m_iClientHideHUD, FIELD_INTEGER ), // Don't restore, client needs reset
-//DEFINE_FIELD( m_vecAutoAim, FIELD_VECTOR ), // Don't save/restore - this is recomputed
-//DEFINE_FIELD( m_lastx, FIELD_INTEGER ),
-//DEFINE_FIELD( m_lasty, FIELD_INTEGER ),
+
 
 DEFINE_FIELD(m_iFrags, FIELD_INTEGER),
 DEFINE_FIELD(m_iDeaths, FIELD_INTEGER),
