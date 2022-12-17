@@ -15,7 +15,7 @@ $Configuration
 	$Compiler
 	{
 		$AdditionalIncludeDirectories	".\hl2;.\hl2\elements;$SRCDIR\game\shared\hl2;$SRCDIR\game\shared\episodic;..\..\public;$BASE"
-		$PreprocessorDefinitions		"$BASE;HL2_CLIENT_DLL;HL2_EPISODIC;ARSENIO;IVENGINE2"
+		$PreprocessorDefinitions		"$BASE;HL2_CLIENT_DLL;HL2_EPISODIC;ARSENIO;IVENGINE2;ARSENIO_CLIENT"
 	}
 }
 
@@ -40,6 +40,8 @@ $Project "Client - Arsenio"
 			$File	"$SRCDIR\game\shared\IVEngine2\gamemovement_duck.cpp"
 			$File	"$SRCDIR\game\shared\arsenio\gamemovement_mobility.cpp"
 			$File	"arsenio\c_weapon_stubs_arsenio.cpp"
+			$File	"arsenio\menu_background.cpp"
+			$File	"arsenio\menu_background.h"
 		}
 
 		$Folder	"IVEngine2"

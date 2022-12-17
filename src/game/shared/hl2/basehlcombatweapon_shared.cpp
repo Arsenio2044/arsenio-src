@@ -466,10 +466,10 @@ void CBaseHLCombatWeapon::AddViewmodelBob(CBaseViewModel *viewmodel, Vector &ori
 		CalcViewmodelBob();
 
 		// Apply bob, but scaled down to 40%
-		VectorMA(origin, g_verticalBob * 0.1f, forward, origin);
+		VectorMA(origin, g_verticalBob * 1.0f, forward, origin);
 
 		// Z bob a bit more
-		origin[2] += g_verticalBob * 0.2f;
+		origin[2] += g_verticalBob * 1.0f;
 
 	// bob the angles
 	angles[ROLL] += g_verticalBob * 0.3f;
@@ -495,7 +495,7 @@ void CBaseHLCombatWeapon::AddViewmodelBob(CBaseViewModel *viewmodel, Vector &ori
 	if (m_flBobKickZ < 5.0f && m_flBobKickZ > -5.0f)
 		angles[PITCH] -= m_flBobKickZ;
 
-	VectorMA(origin, g_lateralBob * 0.3f, right, origin);
+	VectorMA(origin, g_lateralBob * 0.9f, right, origin);
 
 	//ConVar g_lateralBob("g_lateralBob", "0.3", FCVAR_REPLICATED);
 

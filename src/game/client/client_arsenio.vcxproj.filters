@@ -1841,6 +1841,9 @@
     <ClInclude Include="c_weapon_egar.h">
       <Filter>Source Files\ARSENIO DLL</Filter>
     </ClInclude>
+    <ClInclude Include="arsenio\menu_background.h">
+      <Filter>Source Files\ARSENIO DLL</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\game\shared\player_mobility_defs.h">
       <Filter>Source Files\ARSENIO DLL</Filter>
     </ClInclude>
@@ -2993,6 +2996,9 @@
       <Filter>Source Files\ARSENIO DLL</Filter>
     </ClCompile>
     <ClCompile Include="hud_speedo.cpp">
+      <Filter>Source Files\ARSENIO DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="arsenio\menu_background.cpp">
       <Filter>Source Files\ARSENIO DLL</Filter>
     </ClCompile>
     <ClCompile Include="game_controls\basemodel_panel.cpp">

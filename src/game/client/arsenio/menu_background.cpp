@@ -1,6 +1,6 @@
 //========= Copyright Jorge "BSVino" Rodriguez, All rights reserved. ============//
 //
-// Purpose: 
+// Purpose: Used from https://developer.valvesoftware.com/wiki/Animated_Menu_Background. Originally used from Optux 2 but i had to fix something.
 //
 //====================================================================================//
 

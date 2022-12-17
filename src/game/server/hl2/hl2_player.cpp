@@ -86,8 +86,8 @@ extern int gEvilImpulse101;
 ConVar sv_autojump( "sv_autojump", "0" );
 
 ConVar hl2_walkspeed( "hl2_walkspeed", "0" );
-ConVar hl2_normspeed( "hl2_normspeed", "190" );
-ConVar hl2_sprintspeed( "hl2_sprintspeed", "250" );
+ConVar hl2_normspeed( "hl2_normspeed", "160" );
+ConVar hl2_sprintspeed( "hl2_sprintspeed", "290" );
 ConVar hl2_incapspeed( "hl2_incapspeed", "150" );
 
 

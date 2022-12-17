@@ -109,7 +109,7 @@ public:
 	C_BaseViewModel		*GetViewModel( int viewmodelindex = 0, bool bObserverOK=true );
 	C_BaseCombatWeapon	*GetActiveWeapon( void ) const;
 	const char			*GetTracerType( void );
-#ifdef OPTUX3_CLIENT
+#ifdef ARSENIO_CLIENT
 	void				AddViewBob(Vector& eyeOrigin, QAngle& eyeAngles, bool calculate = false);
 #endif
 

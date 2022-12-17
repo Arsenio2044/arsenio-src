@@ -53,13 +53,13 @@
 	
 #endif
 
-#ifdef OPTUX3
+#ifdef ARSENIO
 	
 	ConVar cl_viewpunch_power("cl_viewpunch_power", "0.4", 0, "", true, 0.0f, true, 1.0f);
 
-	ConVar ivengine2_viewbob_speed("ivengine2_viewbob_speed", "10");
-	ConVar ivengine2_viewbob_height("ivengine2_viewbob_height", "5");
-//	ConVar ivengine2_viewbob_viewmodel_add("ivengine2_viewbob_viewmodel_add", "0.1");
+	ConVar arsenio_viewbob_speed("arsenio_viewbob_speed", "10");
+	ConVar arsenio_viewbob_height("arsenio_viewbob_height", "5");
+//	ConVar arsenio_viewbob_viewmodel_add("arsenio_viewbob_viewmodel_add", "0.1");
 #endif
 
 
@@ -1807,7 +1807,7 @@ void CBasePlayer::CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, 
 	}
 }
 
-//#ifdef OPTUX3
+//#ifdef ARSENIO
 //void CBasePlayer::CalcViewModelView(const Vector& eyeOrigin, const QAngle& eyeAngles)
 //{
 //
@@ -1826,11 +1826,11 @@ void CBasePlayer::CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, 
 //		QAngle blah;
 //		AddViewBob(bobOffset, blah);
 //
-//		vm->CalcViewModelView(this, eyeOrigin + bobOffset * ivengine2_viewbob_viewmodel_add.GetFloat(), punchedAngle);
+//		vm->CalcViewModelView(this, eyeOrigin + bobOffset * arsenio_viewbob_viewmodel_add.GetFloat(), punchedAngle);
 //	}
 //}
 //#endif
-//#ifndef OPTUX3
+//#ifndef ARSENIO
 
 void CBasePlayer::CalcViewModelView(const Vector& eyeOrigin, const QAngle& eyeAngles)
 {
@@ -1845,7 +1845,7 @@ void CBasePlayer::CalcViewModelView(const Vector& eyeOrigin, const QAngle& eyeAn
 
 }
 //#endif
-#ifdef OPTUX3_CLIENT
+#ifdef ARSENIO_CLIENT
 void CBasePlayer::AddViewBob(Vector& eyeOrigin, QAngle& eyeAngles, bool calculate)
 {
 	static float bobtime, lastbobtime;
@@ -1864,13 +1864,13 @@ void CBasePlayer::AddViewBob(Vector& eyeOrigin, QAngle& eyeAngles, bool calculat
 	// this should prevent it
 	if (calculate)
 	{
-		bobtime += (gpGlobals->curtime - lastbobtime) * bob_offset * ivengine2_viewbob_speed.GetFloat();
+		bobtime += (gpGlobals->curtime - lastbobtime) * bob_offset * arsenio_viewbob_speed.GetFloat();
 		lastbobtime = gpGlobals->curtime;
 	}
 
 	cycle = bobtime;
 
-	eyeOrigin.z += abs(sin(cycle)) * ivengine2_viewbob_height.GetFloat() * bob_offset;
+	eyeOrigin.z += abs(sin(cycle)) * arsenio_viewbob_height.GetFloat() * bob_offset;
 }
 #endif
 
@@ -1931,7 +1931,7 @@ void CBasePlayer::CalcPlayerView( Vector& eyeOrigin, QAngle& eyeAngles, float& f
 	m_flObserverChaseDistance = 0.0;
 #endif
 
-#ifdef OPTUX3_CLIENT
+#ifdef ARSENIO_CLIENT
 
 	AddViewBob(eyeOrigin, eyeAngles, true);
 
