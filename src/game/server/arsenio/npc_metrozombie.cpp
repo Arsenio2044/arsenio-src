@@ -24,10 +24,10 @@
 // ACT_FLINCH_PHYSICS
 
 
-ConVar	sk_metroz_health("sk_metroz_health", "0");
+ConVar	sk_metroz_health("sk_metroz_health", "36");
 
 
-envelopePoint_t envZombieMoanVolumeFast[] =
+envelopePoint_t envMetrozMoanVolumeFast[] =
 {
 	{	7.0f, 7.0f,
 		0.1f, 0.1f,
@@ -42,7 +42,7 @@ static const char* modelnames[] =
 "classic.mdl", // 0
 "runner.mdl", // 1
 };
-envelopePoint_t envZombieMoanVolume[] =
+envelopePoint_t envMetrozMoanVolume[] =
 {
 	{	1.0f, 1.0f,
 		0.1f, 0.1f,
@@ -55,7 +55,7 @@ envelopePoint_t envZombieMoanVolume[] =
 	},
 };
 
-envelopePoint_t envZombieMoanVolumeLong[] =
+envelopePoint_t envMetrozMoanVolumeLong[] =
 {
 	{	1.0f, 1.0f,
 		0.3f, 0.5f,
@@ -68,7 +68,7 @@ envelopePoint_t envZombieMoanVolumeLong[] =
 	},
 };
 
-envelopePoint_t envZombieMoanIgnited[] =
+envelopePoint_t envMetrozMoanIgnited[] =
 {
 	{	1.0f, 1.0f,
 		0.5f, 1.0f,
@@ -225,8 +225,8 @@ enum
 
 //-----------------------------------------------------------------------------
 
-int ACT_ZOMBIE_TANTRUM;
-int ACT_ZOMBIE_WALLPOUND;
+int ACT_METROZ_TANTRUM;
+int ACT_METROZ_WALLPOUND;
 
 BEGIN_DATADESC( CMetroZombie )
 
@@ -246,8 +246,8 @@ void CMetroZombie::Precache( void )
 {
 	BaseClass::Precache();
 
-	PrecacheModel( "models/zombie/classic.mdl" );
-	PrecacheModel( "models/zombie/classic_torso.mdl" );
+	PrecacheModel( "models/arsenio/npc/metroz.mdl" );
+	PrecacheModel( "models/arsenio/npc/metroz_torso.mdl" );
 	PrecacheModel( "models/zombie/classic_legs.mdl" );
 
 	PrecacheScriptSound( "Zombie.FootstepRight" );
@@ -646,7 +646,7 @@ Activity CMetroZombie::NPC_TranslateActivity( Activity newActivity )
 	if (newActivity == ACT_RUN)
 		return ACT_WALK;
 		
-	if ( m_fIsTorso && ( newActivity == ACT_ZOMBIE_TANTRUM ) )
+	if ( m_fIsTorso && ( newActivity == ACT_METROZ_TANTRUM ) )
 		return ACT_IDLE;
 
 	return newActivity;
@@ -670,7 +670,7 @@ void CMetroZombie::StartTask( const Task_t *pTask )
 		{
 			if ( random->RandomInt( 1, 4 ) == 2 )
 			{
-				SetIdealActivity( (Activity)ACT_ZOMBIE_TANTRUM );
+				SetIdealActivity( (Activity)ACT_METROZ_TANTRUM );
 			}
 			else
 			{
@@ -786,7 +786,7 @@ Activity CMetroZombie::SelectDoorBash()
 {
 	if ( random->RandomInt( 1, 3 ) == 1 )
 		return ACT_MELEE_ATTACK1;
-	return (Activity)ACT_ZOMBIE_WALLPOUND;
+	return (Activity)ACT_METROZ_WALLPOUND;
 }
 
 //---------------------------------------------------------
@@ -803,7 +803,7 @@ void CMetroZombie::Ignite( float flFlameLifetime, bool bNPCOnly, float flSize, b
 		{
 			RemoveSpawnFlags( SF_NPC_GAG );
 
-			MoanSound( envZombieMoanIgnited, ARRAYSIZE( envZombieMoanIgnited ) );
+			MoanSound( envMetrozMoanIgnited, ARRAYSIZE( envMetrozMoanIgnited ) );
 
 			if ( m_pMoanSound )
 			{
@@ -933,15 +933,15 @@ AI_BEGIN_CUSTOM_NPC( npc_metrozombie, CMetroZombie )
 	DECLARE_TASK( TASK_ZOMBIE_ATTACK_DOOR )
 	DECLARE_TASK( TASK_ZOMBIE_CHARGE_ENEMY )
 	
-	DECLARE_ACTIVITY( ACT_ZOMBIE_TANTRUM );
-	DECLARE_ACTIVITY( ACT_ZOMBIE_WALLPOUND );
+	DECLARE_ACTIVITY( ACT_METROZ_TANTRUM );
+	DECLARE_ACTIVITY( ACT_METROZ_WALLPOUND );
 
 	DEFINE_SCHEDULE
 	( 
 		SCHED_ZOMBIE_BASH_DOOR,
 
 		"	Tasks"
-		"		TASK_SET_ACTIVITY				ACTIVITY:ACT_ZOMBIE_TANTRUM"
+		"		TASK_SET_ACTIVITY				ACTIVITY:ACT_METROZ_TANTRUM"
 		"		TASK_SET_FAIL_SCHEDULE			SCHEDULE:SCHED_TAKE_COVER_FROM_ENEMY"
 		"		TASK_ZOMBIE_YAW_TO_DOOR			0"
 		"		TASK_FACE_IDEAL					0"
@@ -979,7 +979,7 @@ AI_BEGIN_CUSTOM_NPC( npc_metrozombie, CMetroZombie )
 		"		TASK_ZOMBIE_CHARGE_ENEMY		0"
 		"		TASK_WALK_PATH					0"
 		"		TASK_WAIT_FOR_MOVEMENT			0"
-		"		TASK_PLAY_SEQUENCE				ACTIVITY:ACT_ZOMBIE_TANTRUM" /* placeholder until frustration/rage/fence shake animation available */
+		"		TASK_PLAY_SEQUENCE				ACTIVITY:ACT_METROZ_TANTRUM" /* placeholder until frustration/rage/fence shake animation available */
 		""
 		"	Interrupts"
 		"		COND_ZOMBIE_RELEASECRAB"
@@ -995,7 +995,7 @@ AI_BEGIN_CUSTOM_NPC( npc_metrozombie, CMetroZombie )
 
 		"	Tasks"
 		"		TASK_STOP_MOVING		0"
-		"		TASK_SET_ACTIVITY		ACTIVITY:ACT_ZOMBIE_TANTRUM"
+		"		TASK_SET_ACTIVITY		ACTIVITY:ACT_METROZ_TANTRUM"
 		"		TASK_WAIT				1"
 		"		TASK_WAIT_PVS			0"
 		""

@@ -115,7 +115,7 @@ void CNPC_Mobile_Turret::Precache()
 {
 	PrecacheModel( MOBILETURRET_BEAM_SPRITE );
 	PrecacheModel( MOBILETURRET_GLOW_SPRITE );
-
+	// yes
 	PrecacheModel( "models/MobileTurret/mobile_turret.mdl" );
 	
 	PrecacheScriptSound( "NPC_Citizen.FootstepLeft" );

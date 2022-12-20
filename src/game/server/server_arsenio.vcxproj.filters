@@ -2965,6 +2965,9 @@
     <ClCompile Include="arsenio\npc_hulk.cpp">
       <Filter>Source Files\ARSENIO DLL</Filter>
     </ClCompile>
+    <ClCompile Include="arsenio\npc_metrozombie.cpp">
+      <Filter>Source Files\ARSENIO DLL</Filter>
+    </ClCompile>
     <ClCompile Include="arsenio\npc_mobile_turret.cpp">
       <Filter>Source Files\ARSENIO DLL</Filter>
     </ClCompile>
