@@ -494,12 +494,12 @@ void CMetroZombie::SetZombieModel( void )
 
 	if ( m_fIsTorso )
 	{
-		SetModel( "models/zombie/classic_torso.mdl" );
+		SetModel( "models/arsenio/npc/metroz_torso.mdl" );
 		SetHullType( HULL_TINY );
 	}
 	else
 	{
-		SetModel( "models/zombie/classic.mdl" );
+		SetModel( "models/arsenio/npc/metroz.mdl" );
 		SetHullType( HULL_HUMAN );
 	}
 
