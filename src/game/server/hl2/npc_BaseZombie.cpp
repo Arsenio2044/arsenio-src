@@ -1719,8 +1719,8 @@ void CNPC_BaseZombie::Spawn( void )
 	// Always fade the corpse
 	AddSpawnFlags( SF_NPC_FADE_CORPSE );
 #endif // _XBOX
-
-	m_NPCState			= NPC_STATE_NONE;
+	// TUX: zombies always alert.
+	m_NPCState			= NPC_STATE_ALERT;
 
 	CapabilitiesAdd( bits_CAP_MOVE_GROUND | bits_CAP_INNATE_MELEE_ATTACK1 );
 	CapabilitiesAdd( bits_CAP_SQUAD );
@@ -1737,8 +1737,8 @@ void CNPC_BaseZombie::Spawn( void )
 
 	m_bIsSlumped = false;
 
-	// Zombies get to cheat for 6 seconds (sjb)
-	GetEnemies()->SetFreeKnowledgeDuration( 6.0 );
+	// Zombies get to cheat for 6 seconds (sjb) TUX: Why??
+	GetEnemies()->SetFreeKnowledgeDuration( 6.0 ); // TUX: Why lmao.
 
 	m_ActBusyBehavior.SetUseRenderBounds(true);
 }
