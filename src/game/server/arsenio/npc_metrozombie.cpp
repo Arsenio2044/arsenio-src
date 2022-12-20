@@ -1,6 +1,6 @@
-//========= Copyright Valve Corporation, All rights reserved. ============//
+//========= Copyright Glitch Software, All rights reserved. ============//
 //
-// Purpose: A slow-moving, once-human headcrab victim with only melee attacks.
+// Purpose: A metrocop headcrab zombie.
 //
 //=============================================================================//
 
@@ -23,11 +23,9 @@
 
 // ACT_FLINCH_PHYSICS
 
-#ifdef OPTUX3
-ConVar	sk_zombie_health( "sk_zombie_health","10");
-#else
+
 ConVar	sk_zombie_health("sk_zombie_health", "0");
-#endif
+
 
 envelopePoint_t envZombieMoanVolumeFast[] =
 {
@@ -287,12 +285,10 @@ void CMetroZombie::Spawn( void )
 		m_fIsTorso = true;
 	}
 
-#ifdef OPTUX3 
+
 	// No more headcrabs.
 	m_fIsHeadless = true; 
-#else
-	m_fIsHeadless = false;
-#endif
+
 
 
 	SetBloodColor(BLOOD_COLOR_RED);
