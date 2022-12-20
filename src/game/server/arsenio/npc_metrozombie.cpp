@@ -250,18 +250,18 @@ void CMetroZombie::Precache( void )
 	PrecacheModel( "models/arsenio/npc/metroz_torso.mdl" );
 	PrecacheModel( "models/zombie/classic_legs.mdl" );
 
-	PrecacheScriptSound( "Zombie.FootstepRight" );
-	PrecacheScriptSound( "Zombie.FootstepLeft" );
-	PrecacheScriptSound( "Zombie.FootstepLeft" );
-	PrecacheScriptSound( "Zombie.ScuffRight" );
-	PrecacheScriptSound( "Zombie.ScuffLeft" );
-	PrecacheScriptSound( "Zombie.AttackHit" );
-	PrecacheScriptSound( "Zombie.AttackMiss" );
-	PrecacheScriptSound( "Zombie.Pain" );
-	PrecacheScriptSound( "Zombie.Die" );
-	PrecacheScriptSound( "Zombie.Alert" );
-	PrecacheScriptSound( "Zombie.Idle" );
-	PrecacheScriptSound( "Zombie.Attack" );
+	PrecacheScriptSound( "Metroz.FootstepRight" );
+	PrecacheScriptSound( "Metroz.FootstepLeft" );
+	PrecacheScriptSound( "Metroz.FootstepLeft" );
+	PrecacheScriptSound( "Metroz.ScuffRight" );
+	PrecacheScriptSound( "Metroz.ScuffLeft" );
+	PrecacheScriptSound( "Metroz.AttackHit" );
+	PrecacheScriptSound( "Metroz.AttackMiss" );
+	PrecacheScriptSound( "Metroz.Pain" );
+	PrecacheScriptSound( "Metroz.Die" );
+	PrecacheScriptSound( "Metroz.Alert" );
+	PrecacheScriptSound( "Metroz.Idle" );
+	PrecacheScriptSound( "Metroz.Attack" );
 
 	PrecacheScriptSound( "NPC_BaseZombie.Moan1" );
 	PrecacheScriptSound( "NPC_BaseZombie.Moan2" );
@@ -346,11 +346,11 @@ void CMetroZombie::FootstepSound( bool fRightFoot )
 {
 	if( fRightFoot )
 	{
-		EmitSound(  "Zombie.FootstepRight" );
+		EmitSound(  "Metroz.FootstepRight" );
 	}
 	else
 	{
-		EmitSound( "Zombie.FootstepLeft" );
+		EmitSound( "Metroz.FootstepLeft" );
 	}
 }
 
@@ -361,11 +361,11 @@ void CMetroZombie::FootscuffSound( bool fRightFoot )
 {
 	if( fRightFoot )
 	{
-		EmitSound( "Zombie.ScuffRight" );
+		EmitSound( "Metroz.ScuffRight" );
 	}
 	else
 	{
-		EmitSound( "Zombie.ScuffLeft" );
+		EmitSound( "Metroz.ScuffLeft" );
 	}
 }
 
@@ -374,7 +374,7 @@ void CMetroZombie::FootscuffSound( bool fRightFoot )
 //-----------------------------------------------------------------------------
 void CMetroZombie::AttackHitSound( void )
 {
-	EmitSound( "Zombie.AttackHit" );
+	EmitSound( "Metroz.AttackHit" );
 }
 
 //-----------------------------------------------------------------------------
@@ -383,7 +383,7 @@ void CMetroZombie::AttackHitSound( void )
 void CMetroZombie::AttackMissSound( void )
 {
 	// Play a random attack miss sound
-	EmitSound( "Zombie.AttackMiss" );
+	EmitSound( "Metroz.AttackMiss" );
 }
 
 //-----------------------------------------------------------------------------
@@ -397,14 +397,14 @@ void CMetroZombie::PainSound( const CTakeDamageInfo &info )
 		return;
 	}
 
-	EmitSound( "Zombie.Pain" );
+	EmitSound( "Metroz.Pain" );
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
 void CMetroZombie::DeathSound( const CTakeDamageInfo &info ) 
 {
-	EmitSound( "Zombie.Die" );
+	EmitSound( "Metroz.Die" );
 }
 
 //-----------------------------------------------------------------------------
@@ -412,7 +412,7 @@ void CMetroZombie::DeathSound( const CTakeDamageInfo &info )
 //-----------------------------------------------------------------------------
 void CMetroZombie::AlertSound( void )
 {
-	EmitSound( "Zombie.Alert" );
+	EmitSound( "Metroz.Alert" );
 
 	// Don't let a moan sound cut off the alert sound.
 	m_flNextMoanSound += random->RandomFloat( 2.0, 4.0 );
@@ -443,7 +443,7 @@ void CMetroZombie::IdleSound( void )
 		return;
 	}
 
-	EmitSound( "Zombie.Idle" );
+	EmitSound( "Metroz.Idle" );
 	MakeAISpookySound( 360.0f );
 }
 
@@ -452,7 +452,7 @@ void CMetroZombie::IdleSound( void )
 //-----------------------------------------------------------------------------
 void CMetroZombie::AttackSound( void )
 {
-	EmitSound( "Zombie.Attack" );
+	EmitSound( "Metroz.Attack" );
 }
 
 //-----------------------------------------------------------------------------
