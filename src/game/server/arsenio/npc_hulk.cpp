@@ -41,7 +41,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-ConVar sk_hulk_health( "sk_hulk_health", "800" );
+ConVar sk_hulk_health( "sk_hulk_health", "1800" );
 
 
 class CSprite;
