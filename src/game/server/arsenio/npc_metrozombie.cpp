@@ -24,7 +24,7 @@
 // ACT_FLINCH_PHYSICS
 
 
-ConVar	sk_zombie_health("sk_zombie_health", "0");
+ConVar	sk_metroz_health("sk_metroz_health", "0");
 
 
 envelopePoint_t envZombieMoanVolumeFast[] =
@@ -293,7 +293,7 @@ void CMetroZombie::Spawn( void )
 
 	SetBloodColor(BLOOD_COLOR_RED);
 
-	m_iHealth			= sk_zombie_health.GetFloat();
+	m_iHealth			= sk_metroz_health.GetFloat();
 	m_flFieldOfView		= 0.2;
 
 	CapabilitiesClear();
