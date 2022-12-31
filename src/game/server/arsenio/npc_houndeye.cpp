@@ -1,5 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
-//
+//========= Copyright © Glitch Software, All rights reserved. ============////
 // Purpose:		Cute hound like Alien.
 //
 // $NoKeywords: $
@@ -108,7 +107,7 @@ void CNPC_Houndeye::Spawn()
 	
 	SetRenderColor( 255, 255, 255, 255 );
 
-	SetModel( "models/houndeye.mdl" );
+	SetModel( "models/arsenio/npc/houndeye.mdl" );
 	
 	SetHullType(HULL_TINY);
 	SetHullSizeNormal();
@@ -137,7 +136,7 @@ void CNPC_Houndeye::Spawn()
 //=========================================================
 void CNPC_Houndeye::Precache()
 {
-	PrecacheModel("models/houndeye.mdl");
+	PrecacheModel("models/arsenio/npc/houndeye.mdl");
 
 	m_iSpriteTexture = PrecacheModel( "sprites/shockwave.vmt" );
 
@@ -296,7 +295,7 @@ float CNPC_Houndeye::MaxYawSpeed  ( void )
 //=========================================================
 Class_T	CNPC_Houndeye::Classify ( void )
 {
-	return CLASS_COMBINE;
+	return CLASS_SHADOW;
 }
 
 //=========================================================
@@ -1174,7 +1173,7 @@ LINK_ENTITY_TO_CLASS(npc_houndeye, CNPC_HoundeyeHD);
 //=========================================================
 void CNPC_HoundeyeHD::Precache()
 {
-	PrecacheModel("models/houndeye.mdl");
+	PrecacheModel("models/arsenio/npc/houndeye.mdl");
 
 	m_iSpriteTexture = PrecacheModel( "sprites/shockwave.vmt" );
 
@@ -1200,7 +1199,7 @@ void CNPC_HoundeyeHD::Spawn()
 	
 	SetRenderColor( 255, 255, 255, 255 );
 
-	SetModel( "models/houndeye.mdl" );
+	SetModel( "models/arsenio/npc/houndeye.mdl" );
 	
 	SetHullType(HULL_TINY);
 	SetHullSizeNormal();
