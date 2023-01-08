@@ -2971,6 +2971,9 @@
     <ClCompile Include="arsenio\npc_mobile_turret.cpp">
       <Filter>Source Files\ARSENIO DLL</Filter>
     </ClCompile>
+    <ClCompile Include="arsenio\npc_roach.cpp">
+      <Filter>Source Files\ARSENIO DLL</Filter>
+    </ClCompile>
     <ClCompile Include="arsenio\npc_synth_e.cpp">
       <Filter>Source Files\ARSENIO DLL</Filter>
     </ClCompile>
