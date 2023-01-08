@@ -202,6 +202,9 @@ void CNPC_Hulk::Precache( void )
 	PrecacheScriptSound( "NPC_Hulk.FootstepRight" );
 	PrecacheScriptSound( "NPC_Hulk.Fire" );
 	PrecacheScriptSound( "Hulk.Evil" );
+	PrecacheScriptSound( "Hulk.Pain" );
+	PrecacheScriptSound( "Hulk.Talk" );
+	PrecacheScriptSound( "Hulk.Die" );
 	PrecacheScriptSound( "NPC_Hulk.Charging" );
 
 	BaseClass::Precache();
@@ -249,6 +252,8 @@ void CNPC_Hulk::Spawn( void )
 	m_PitchControl = LookupPoseParameter( "aim_pitch" );
 	m_MuzzleAttachment = LookupAttachment( "muzzle" );
 
+
+
 	m_fOffBalance = false;
 
 	BaseClass::Spawn();
@@ -290,6 +295,9 @@ void CNPC_Hulk::Event_Killed( const CTakeDamageInfo &info )
 		
 		angGunAngles.y += 180;
 		pGun = DropItem( "weapon_gauss", vecGunPos, angGunAngles );
+
+		CPASAttenuationFilter filter(this);
+		EmitSound(filter, entindex(), "Hulk.Die");
 
 	}
 
@@ -577,6 +585,7 @@ int CNPC_Hulk::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 		DevMsg( "physics collision: 5X DAMAGE DONE TO HULK!\n" );
 	}	
 
+	EmitSound( "Hulk.Pain" );
 	int nDamageTaken = BaseClass::OnTakeDamage_Alive( newInfo );
 
 
@@ -631,6 +640,8 @@ void CNPC_Hulk::FireRangeWeapon( void )
 	Vector vecSrc, vecAiming;
 	Vector vecShootOrigin;
 
+	EmitSound("Hulk.Talk");
+
 	GetVectors( &vecAiming, NULL, NULL );
 	vecSrc = WorldSpaceCenter() + vecAiming * 64;
 	
@@ -660,6 +671,9 @@ bool CNPC_Hulk::AimGunAt( CBaseEntity *pEntity, float flInterval )
 {
 	if ( !pEntity )
 		return true;
+
+
+
 
 	matrix3x4_t gunMatrix;
 	GetAttachment( m_MuzzleAttachment, gunMatrix );

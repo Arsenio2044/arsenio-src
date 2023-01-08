@@ -197,8 +197,8 @@ ConVar sv_regeneration_wait_time("sv_regeneration_wait_time", "7.0", FCVAR_REPLI
 ConVar sv_regeneration_rate("sv_regeneration_rate", "1.5", FCVAR_REPLICATED);
 #else
 ConVar sv_regeneration("sv_regeneration", "1", FCVAR_REPLICATED);
-ConVar sv_regeneration_wait_time("sv_regeneration_wait_time", "5.0", FCVAR_REPLICATED);
-ConVar sv_regeneration_rate("sv_regeneration_rate", "15", FCVAR_REPLICATED);
+ConVar sv_regeneration_wait_time("sv_regeneration_wait_time", "20.0", FCVAR_REPLICATED);
+ConVar sv_regeneration_rate("sv_regeneration_rate", "10", FCVAR_REPLICATED);
 #endif
 
 
@@ -4639,7 +4639,7 @@ void CBasePlayer::PostThink()
 			}
 
 			// Regenerate heath
-			if (IsAlive() && GetHealth() < GetMaxHealth() && (sv_regeneration.GetInt() == 1))
+			if (IsAlive() && GetHealth() < GetMaxHealth() && !GetHealth() < 30 && (sv_regeneration.GetInt() == 1))
 			{
 				// Color to overlay on the screen while the player is taking damage
 				color32 hurtScreenOverlay = { 80, 0, 0, 64 };
@@ -4648,6 +4648,8 @@ void CBasePlayer::PostThink()
 				{
 					//Regenerate based on rate, and scale it by the frametime
 					m_fRegenRemander += sv_regeneration_rate.GetFloat() * gpGlobals->frametime;
+
+					EmitSound("LeOS.Regen");
 
 					if (m_fRegenRemander >= 1)
 					{
