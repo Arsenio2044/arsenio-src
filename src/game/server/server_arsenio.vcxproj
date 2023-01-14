@@ -716,6 +716,7 @@
     <ClInclude Include="arsenio\npc_conscript.h" />
     <ClInclude Include="arsenio\npc_houndeye.h" />
     <ClInclude Include="arsenio\npc_mobile_turret.h" />
+    <ClInclude Include="arsenio\npc_ranto_s.h" />
     <ClInclude Include="arsenio\npc_synth_e.h" />
     <ClInclude Include="..\..\game\shared\player_mobility_defs.h" />
     <ClInclude Include="cyberspace\weapon_addamm557.h" />
@@ -1278,6 +1279,7 @@
     <ClCompile Include="arsenio\npc_hulk.cpp" />
     <ClCompile Include="arsenio\npc_metrozombie.cpp" />
     <ClCompile Include="arsenio\npc_mobile_turret.cpp" />
+    <ClCompile Include="arsenio\npc_ranto_s.cpp" />
     <ClCompile Include="arsenio\npc_roach.cpp" />
     <ClCompile Include="arsenio\npc_synth_e.cpp" />
     <ClCompile Include="arsenio\npc_trillionair.cpp" />

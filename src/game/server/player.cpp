@@ -4638,6 +4638,12 @@ void CBasePlayer::PostThink()
 				m_Local.m_flFallVelocity = 0;
 			}
 
+			if (IsAlive() && (GetHealth() < 30))
+			{
+				color32 hurtScreenOverlay = { 80, 0, 0, 64 };
+				UTIL_ScreenFade(this, hurtScreenOverlay, 1.0f, 0.1f, FFADE_IN | FFADE_PURGE);
+
+			}
 			// Regenerate heath
 			if (IsAlive() && GetHealth() < GetMaxHealth() && !(GetHealth() < 30) && (sv_regeneration.GetInt() == 1))
 			{

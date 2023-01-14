@@ -442,12 +442,13 @@ void CBaseViewModel::AddViewModelBob(CBasePlayer *owner, Vector& eyePosition, QA
 }
 
 
-#define LAG_POSITION_COMPENSATION	0.2f
+#define LAG_POSITION_COMPENSATION	0.5f
 #define LAG_FLIP_FACTOR				1.0f
 
 
-
-
+#ifdef ARSENIO_OLD
+float g_fMaxViewModelLag = 0.5f;
+#endif
 
 
 void CBaseViewModel::CalcViewModelLag(Vector& origin, QAngle& angles, QAngle& original_angles)
@@ -495,6 +496,59 @@ void CBaseViewModel::CalcViewModelLag(Vector& origin, QAngle& angles, QAngle& or
 	angles[PITCH] += (m_angMotion[PITCH]) * flFraction;
 	angles[YAW] += (m_angMotion[YAW] * 0.66f * LAG_FLIP_FACTOR) * flFraction;
 	angles[ROLL] += (m_angCounterMotion[ROLL] * 0.5f * LAG_FLIP_FACTOR) * flFraction;
+#ifdef ARSENIO_OLD
+		Vector vOriginalOrigin = origin;
+	QAngle vOriginalAngles = angles;
+
+	// Calculate our drift
+	Vector	forward;
+	AngleVectors(angles, &forward, NULL, NULL);
+
+	if (gpGlobals->frametime != 0.0f)
+	{
+		Vector vDifference;
+		VectorSubtract(forward, m_vecLastFacing, vDifference);
+
+		float flSpeed = 10.0f;
+
+		// If we start to lag too far behind, we'll increase the "catch up" speed.  Solves the problem with fast cl_yawspeed, m_yaw or joysticks
+		//  rotating quickly.  The old code would slam lastfacing with origin causing the viewmodel to pop to a new position
+		float flDiff = vDifference.Length();
+		if ((flDiff > g_fMaxViewModelLag) && (g_fMaxViewModelLag > 0.0f))
+		{
+			float flScale = flDiff / g_fMaxViewModelLag;
+			flSpeed *= flScale;
+		}
+
+		// FIXME:  Needs to be predictable?
+		VectorMA(m_vecLastFacing, flSpeed * gpGlobals->frametime, vDifference, m_vecLastFacing);
+		// Make sure it doesn't grow out of control!!!
+		VectorNormalize(m_vecLastFacing);
+		VectorMA(origin, 5.0f, vDifference * -1.0f, origin);
+
+		Assert(m_vecLastFacing.IsValid());
+	}
+
+	Vector right, up;
+	AngleVectors(original_angles, &forward, &right, &up);
+
+	float pitch = original_angles[PITCH];
+	if (pitch > 180.0f)
+		pitch -= 360.0f;
+	else if (pitch < -180.0f)
+		pitch += 360.0f;
+
+	if (g_fMaxViewModelLag == 0.0f)
+	{
+		origin = vOriginalOrigin;
+		angles = vOriginalAngles;
+	}
+
+	//FIXME: These are the old settings that caused too many exposed polys on some models
+	VectorMA(origin, -pitch * 0.035f, forward, origin);
+	VectorMA(origin, -pitch * 0.03f, right, origin);
+	VectorMA(origin, -pitch * 0.02f, up, origin);
+#endif
 }
 
 

@@ -83,6 +83,8 @@ $Project "Server - Arsenio"
 			$File	"arsenio\weapon_glock.cpp"
 			$File	"arsenio\item_exo.cpp"
 			$File	"arsenio\npc_metrozombie.cpp"
+			$File	"arsenio\npc_ranto_s.cpp"
+			$File	"arsenio\npc_ranto_s.h"
 
 
 		}

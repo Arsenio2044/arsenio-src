@@ -315,13 +315,13 @@ float	g_verticalBob;
 
 #if defined( CLIENT_DLL ) && ( !defined( HL2MP ) && defined( IVENGINE2 ) )
 
-#define	HL2_BOB_CYCLE_MIN	1.0f
+#define	HL2_BOB_CYCLE_MIN	0.5f
 #define	HL2_BOB_CYCLE_MAX	0.45f
 #define	HL2_BOB			0.002f
 #define	HL2_BOB_UP		0.5f
 
 
-static ConVar	cl_bobcycle("cl_bobcycle", "0.8");
+static ConVar	cl_bobcycle("cl_bobcycle", "0.5");
 static ConVar	cl_bob("cl_bob", "0.002");
 static ConVar	cl_bobup("cl_bobup", "0.5");
 
@@ -466,10 +466,10 @@ void CBaseHLCombatWeapon::AddViewmodelBob(CBaseViewModel *viewmodel, Vector &ori
 		CalcViewmodelBob();
 
 		// Apply bob, but scaled down to 40%
-		VectorMA(origin, g_verticalBob * 1.0f, forward, origin);
+		VectorMA(origin, g_verticalBob * 0.3f, forward, origin);
 
 		// Z bob a bit more
-		origin[2] += g_verticalBob * 1.0f;
+		origin[2] += g_verticalBob * 0.3f;
 
 	// bob the angles
 	angles[ROLL] += g_verticalBob * 0.3f;
@@ -495,7 +495,7 @@ void CBaseHLCombatWeapon::AddViewmodelBob(CBaseViewModel *viewmodel, Vector &ori
 	if (m_flBobKickZ < 5.0f && m_flBobKickZ > -5.0f)
 		angles[PITCH] -= m_flBobKickZ;
 
-	VectorMA(origin, g_lateralBob * 0.9f, right, origin);
+	VectorMA(origin, g_lateralBob * 0.3f, right, origin);
 
 	//ConVar g_lateralBob("g_lateralBob", "0.3", FCVAR_REPLICATED);
 

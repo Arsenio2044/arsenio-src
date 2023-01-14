@@ -1541,6 +1541,9 @@
     <ClInclude Include="arsenio\npc_mobile_turret.h">
       <Filter>Source Files\ARSENIO DLL</Filter>
     </ClInclude>
+    <ClInclude Include="arsenio\npc_ranto_s.h">
+      <Filter>Source Files\ARSENIO DLL</Filter>
+    </ClInclude>
     <ClInclude Include="arsenio\npc_synth_e.h">
       <Filter>Source Files\ARSENIO DLL</Filter>
     </ClInclude>
@@ -2969,6 +2972,9 @@
       <Filter>Source Files\ARSENIO DLL</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_mobile_turret.cpp">
+      <Filter>Source Files\ARSENIO DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="arsenio\npc_ranto_s.cpp">
       <Filter>Source Files\ARSENIO DLL</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_roach.cpp">
