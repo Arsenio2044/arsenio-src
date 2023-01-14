@@ -1,6 +1,6 @@
-//========= Copyright Valve Corporation, All rights reserved. ============//
+//========= Copyright Glitch Software, All rights reserved. ============//
 //
-// Purpose: The downtrodden citizens of City 17.
+// Purpose: Common soldier for the Ranto faction.
 //
 //=============================================================================//
 
@@ -53,7 +53,7 @@ extern ConVar sk_healthvial;
 
 const int MAX_PLAYER_SQUAD = 4;
 
-ConVar	arsenio_rantos_health				( "arsenio_rantos_health",					"0");
+ConVar	arsenio_rantos_health				( "arsenio_rantos_health",					"45");
 ConVar	arsenio_rantos_heal_player			( "arsenio_rantos_heal_player",				"25");
 ConVar	arsenio_rantos_heal_player_delay	( "arsenio_rantos_heal_player_delay",		"25");
 ConVar	arsenio_rantos_giveammo_player_delay( "arsenio_rantos_giveammo_player_delay",	"10");
