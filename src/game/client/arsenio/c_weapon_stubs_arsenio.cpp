@@ -51,6 +51,7 @@ STUB_WEAPON_CLASS(weapon_minigun, WeaponMiniGun, C_HLMachineGun);
 STUB_WEAPON_CLASS(weapon_addamm557, WeaponAdamm557, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_mobileturret, WeaponMobileTurret, C_BaseHLBludgeonWeapon);
 STUB_WEAPON_CLASS(weapon_glock, WeaponGlock, C_BaseHLCombatWeapon);
+STUB_WEAPON_CLASS(weapon_k189, WeaponK189, C_HLMachineGun );
 
 
 
