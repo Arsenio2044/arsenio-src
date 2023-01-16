@@ -91,6 +91,7 @@ $Project "Server - Arsenio"
 			$File	"arsenio\weapon_spas.cpp"
 			$File	"hl2\weapon_egar.h"
 			$File	"hl2\weapon_egar.cpp"
+			$File	"arsenio\weapon_k189.cpp"
                         }
 
 
