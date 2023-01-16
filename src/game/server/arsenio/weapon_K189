@@ -13,7 +13,6 @@
 #include "player.h"
 #include "game.h"
 #include "in_buttons.h"
-#include "grenade_ar2.h"
 #include "ai_memory.h"
 #include "soundent.h"
 #include "rumble_shared.h"
@@ -21,8 +20,6 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
-
-extern ConVar    sk_plr_dmg_smg1_grenade;	
 
 class CWeaponK189 : public CHLSelectFireMachineGun
 {
@@ -38,13 +35,10 @@ public:
 	void	AddViewKick( void );
 	void	SecondaryAttack( void );
 
-	int		GetMinBurst() { return 2; }
-	int		GetMaxBurst() { return 5; }
-
 	virtual void Equip( CBaseCombatCharacter *pOwner );
 	bool	Reload( void );
 
-	float	GetFireRate( void ) { return 0.0625f; }	// 16hz
+	float	GetFireRate( void ) { return 0.0425f; }	// 16hz
 	int		CapabilitiesGet( void ) { return bits_CAP_WEAPON_RANGE_ATTACK1; }
 	int		WeaponRangeAttack2Condition( float flDot, float flDist );
 	Activity	GetPrimaryAttackActivity( void );
@@ -152,8 +146,6 @@ CWeaponK189::CWeaponK189( )
 //-----------------------------------------------------------------------------
 void CWeaponK189::Precache( void )
 {
-	UTIL_PrecacheOther("grenade_ar2");
-
 	BaseClass::Precache();
 }
 
@@ -327,8 +319,9 @@ void CWeaponK189::AddViewKick( void )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CWeaponK189::SecondaryAttack( void ) // Disabled, can be easily enabled by deleting the lines with arrows
-{ /* // <-----------
+/*
+void CWeaponK189::SecondaryAttack( void )
+{
 	// Only the player fires this way so we can cast
 	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
 	
@@ -390,11 +383,8 @@ void CWeaponK189::SecondaryAttack( void ) // Disabled, can be easily enabled by 
 
 	m_iSecondaryAttacks++;
 	gamestats->Event_WeaponFired( pPlayer, false, GetClassname() );
-	*/ // <-----------
 }
-
-#define	COMBINE_MIN_GRENADE_CLEAR_DIST 256
-
+*/
 //-----------------------------------------------------------------------------
 // Purpose: 
 // Input  : flDot - 
