@@ -65,17 +65,13 @@ protected:
 	float	m_flNextGrenadeCheck;
 };
 
-IMPLEMENT_SERVERCLASS_ST(CWeaponK189, DT_WeaponSMG1)
+IMPLEMENT_SERVERCLASS_ST(CWeaponK189, DT_WeaponK189)
 END_SEND_TABLE()
 
 LINK_ENTITY_TO_CLASS( weapon_K189, CWeaponK189 );
 PRECACHE_WEAPON_REGISTER(weapon_K189);
 
 BEGIN_DATADESC( CWeaponK189 )
-
-	DEFINE_FIELD( m_vecTossVelocity, FIELD_VECTOR ),
-	DEFINE_FIELD( m_flNextGrenadeCheck, FIELD_TIME ),
-
 END_DATADESC()
 
 acttable_t	CWeaponK189::m_acttable[] = 
