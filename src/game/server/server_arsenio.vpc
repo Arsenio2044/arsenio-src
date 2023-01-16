@@ -85,6 +85,8 @@ $Project "Server - Arsenio"
 			$File	"arsenio\npc_metrozombie.cpp"
 			$File	"arsenio\npc_ranto_s.cpp"
 			$File	"arsenio\npc_ranto_s.h"
+			$File	"arsenio\npc_gargantua.cpp"
+			$File	"arsenio\hl1_npc_gargantua.h"
 
 
 		}

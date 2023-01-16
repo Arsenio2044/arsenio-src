@@ -711,6 +711,7 @@
     <ClInclude Include="..\..\game\shared\weapon_parse.h" />
     <ClInclude Include="..\..\game\shared\weapon_proficiency.h" />
     <ClInclude Include="world.h" />
+    <ClInclude Include="arsenio\hl1_npc_gargantua.h" />
     <ClInclude Include="arsenio\npc_bloodseeker.h" />
     <ClInclude Include="arsenio\npc_bullsquid.h" />
     <ClInclude Include="arsenio\npc_conscript.h" />
@@ -1275,6 +1276,7 @@
     <ClCompile Include="arsenio\npc_bloodseeker.cpp" />
     <ClCompile Include="arsenio\npc_bullsquid.cpp" />
     <ClCompile Include="arsenio\npc_conscript.cpp" />
+    <ClCompile Include="arsenio\npc_gargantua.cpp" />
     <ClCompile Include="arsenio\npc_houndeye.cpp" />
     <ClCompile Include="arsenio\npc_hulk.cpp" />
     <ClCompile Include="arsenio\npc_metrozombie.cpp" />

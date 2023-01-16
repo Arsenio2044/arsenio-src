@@ -1526,6 +1526,9 @@
     <ClInclude Include="world.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="arsenio\hl1_npc_gargantua.h">
+      <Filter>Source Files\ARSENIO DLL</Filter>
+    </ClInclude>
     <ClInclude Include="arsenio\npc_bloodseeker.h">
       <Filter>Source Files\ARSENIO DLL</Filter>
     </ClInclude>
@@ -2960,6 +2963,9 @@
       <Filter>Source Files\ARSENIO DLL</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_conscript.cpp">
+      <Filter>Source Files\ARSENIO DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="arsenio\npc_gargantua.cpp">
       <Filter>Source Files\ARSENIO DLL</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_houndeye.cpp">
