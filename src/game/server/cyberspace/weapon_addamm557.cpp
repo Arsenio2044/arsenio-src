@@ -1,6 +1,6 @@
 //========= Copyright Glitch Software, All rights reserved. ============////
 //
-// Purpose: Very powerful lazer cannon used in Cyberspace.
+// Purpose: The Addamm557, One of the last weapons you unlock ingame.
 //
 //=============================================================================
 
@@ -129,8 +129,8 @@ void CWeaponAdamm557::Fire( void )
 
 	//Gassian spread
 	do {
-		x = random->RandomFloat(-0.5,0.5) + random->RandomFloat(-0.5,0.5);
-		y = random->RandomFloat(-0.5,0.5) + random->RandomFloat(-0.5,0.5);
+		x = random->RandomFloat(-1.5,2.5) + random->RandomFloat(-2.5,3.5); // GLITCHY: guessing values rn, havent downloaded the src yet
+		y = random->RandomFloat(-2.5,4.5) + random->RandomFloat(-6.5,4.5);
 		z = x*x+y*y;
 	} while (z > 1);
 
