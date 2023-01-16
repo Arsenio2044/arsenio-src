@@ -1,7 +1,7 @@
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
-// Purpose: HL2 beta weapon improved.
-//
+// Purpose: The MP5K "Kurz" is a small automatic submachine gun used by the player and various npcs.
+// It is slow and has high recoil, but makes up for it in its accuracy and damage.
 //=============================================================================//
 
 #include "cbase.h"
