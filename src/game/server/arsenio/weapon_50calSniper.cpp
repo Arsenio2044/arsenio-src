@@ -1,3 +1,4 @@
+/*
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
 // Purpose: Implements a sniper rifle weapon. ( Based on valves )
@@ -444,4 +445,6 @@ void CWeapon50cal::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCha
 		}
 	}
 }
+/*
+// Unused for gameplay purposes
 
