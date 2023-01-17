@@ -77,7 +77,6 @@ public:
 	void FinishReload(void);
 	void CheckHolsterReload(void);
 	void Pump(void);
-	//	void WeaponIdle( void );
 	void ItemHolsterFrame(void);
 	void ItemPostFrame(void);
 	void PrimaryAttack(void);
@@ -426,7 +425,7 @@ void CWeaponBULK::Pump(void)
 	if (m_Autoloading)
 	{
 		EmitSound("Weapon_Shotgun.Chamber");
-		SendWeaponAnim(ACT_SHOTGUN_CHAMBER); //Hello there, change me to ACT_SHOTGUN_PUMP if you don't want different animation or give me references.
+		SendWeaponAnim(ACT_SHOTGUN_PUMP); //Hello there, change me to ACT_SHOTGUN_PUMP if you don't want different animation or give me references.
 	}
 	else
 	{
@@ -530,13 +529,14 @@ void CWeaponBULK::ShotgunFire(int PelletsNum, int PelletDamage, bool UsePump)
 	{
 		SendWeaponAnim(ACT_VM_SECONDARYATTACK);			   // autoloading needs different animation because it ejects shell
 		m_flNextPrimaryAttack = gpGlobals->curtime + 0.28f; // Rate of fire in autoloading mode (default 214 RPM)
+		m_iClip1 -= 1;
 	}
 	else
 	{
 		SendWeaponAnim(ACT_VM_PRIMARYATTACK);
 		m_flNextPrimaryAttack = gpGlobals->curtime + SequenceDuration(); //When there is SequenceDuration() this has to be under SendWeaponAnim !
+		m_iClip1 -= 2;
 	}
-	m_iClip1 -= 1;
 
 	Vector	vecSrc = pPlayer->Weapon_ShootPosition();
 	Vector	vecAiming = pPlayer->GetAutoaimVector(AUTOAIM_SCALE_DEFAULT);
@@ -545,7 +545,14 @@ void CWeaponBULK::ShotgunFire(int PelletsNum, int PelletDamage, bool UsePump)
 
 	pPlayer->FireBullets(PelletsNum, vecSrc, vecAiming, GetBulletSpread(), MAX_TRACE_LENGTH, m_iPrimaryAmmoType, 0, -1, -1, PelletDamage, NULL, true, true); // weapon stats
 
+	if (m_Autoloading)
+	{
+	pPlayer->ViewPunch(QAngle(random->RandomFloat(-6, -3), random->RandomFloat(-7, 7), 0));
+	}
+	else
+	{
 	pPlayer->ViewPunch(QAngle(random->RandomFloat(-2, -1), random->RandomFloat(-2, 2), 0));
+	}
 
 	CSoundEnt::InsertSound(SOUND_COMBAT, GetAbsOrigin(), SOUNDENT_VOLUME_SHOTGUN, 0.2, GetOwner());
 
@@ -681,7 +688,7 @@ void CWeaponBULK::ItemPostFrame(void)
 			// If only one shell is left, do a single shot instead	
 			if (m_iClip1 == 1)
 			{
-				SecondaryAttack();
+				PrimaryAttack();
 			}
 			else if (!pOwner->GetAmmoCount(m_iPrimaryAmmoType))
 			{
