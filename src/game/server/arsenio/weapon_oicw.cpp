@@ -250,12 +250,12 @@ Activity CWeaponOICW::GetPrimaryAttackActivity(void)
 		return ACT_VM_PRIMARYATTACK;
 
 	if (m_nShotsFired < 3)
-		return ACT_VM_HITLEFT;
+		return ACT_VM_RECOIL1;
 
 	if (m_nShotsFired < 4)
-		return ACT_VM_HITLEFT2;
+		return ACT_VM_RECOIL2;
 
-	return ACT_VM_HITRIGHT;
+	return ACT_VM_RECOIL3;
 }
 
 //---------------------------------------------------------
