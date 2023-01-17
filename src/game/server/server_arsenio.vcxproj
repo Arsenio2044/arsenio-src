@@ -711,6 +711,7 @@
     <ClInclude Include="..\..\game\shared\weapon_parse.h" />
     <ClInclude Include="..\..\game\shared\weapon_proficiency.h" />
     <ClInclude Include="world.h" />
+    <ClInclude Include="..\..\game\shared\player_mobility_defs.h" />
     <ClInclude Include="arsenio\hl1_npc_gargantua.h" />
     <ClInclude Include="arsenio\npc_bloodseeker.h" />
     <ClInclude Include="arsenio\npc_bullsquid.h" />
@@ -719,7 +720,6 @@
     <ClInclude Include="arsenio\npc_mobile_turret.h" />
     <ClInclude Include="arsenio\npc_ranto_s.h" />
     <ClInclude Include="arsenio\npc_synth_e.h" />
-    <ClInclude Include="..\..\game\shared\player_mobility_defs.h" />
     <ClInclude Include="cyberspace\weapon_addamm557.h" />
     <ClInclude Include="hl2\weapon_egar.h" />
     <ClInclude Include="weapon_frag.h" />
@@ -1285,10 +1285,10 @@
     <ClCompile Include="arsenio\npc_roach.cpp" />
     <ClCompile Include="arsenio\npc_synth_e.cpp" />
     <ClCompile Include="arsenio\npc_trillionair.cpp" />
-    <ClCompile Include="arsenio\weapon_50calSniper.cpp" />
     <ClCompile Include="cyberspace\weapon_addamm557.cpp" />
     <ClCompile Include="hl2\weapon_egar.cpp" />
     <ClCompile Include="arsenio\weapon_glock.cpp" />
+    <ClCompile Include="arsenio\weapon_k189.cpp" />
     <ClCompile Include="arsenio\weapon_mobileturret.cpp" />
     <ClCompile Include="arsenio\weapon_mp5k.cpp" />
     <ClCompile Include="arsenio\weapon_oicw.cpp" />

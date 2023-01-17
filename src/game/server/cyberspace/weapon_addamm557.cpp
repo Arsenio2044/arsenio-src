@@ -129,7 +129,7 @@ void CWeaponAdamm557::Fire( void )
 
 	//Gassian spread
 	do {
-		x = random->RandomFloat(-1.5,2.5) + random->RandomFloat(-2.5,3.5); // GLITCHY: guessing values rn, havent downloaded the src yet
+		x = random->RandomFloat(-1.5,2.5) + random->RandomFloat(-2.5,3.5); // GLITCHY: guessing values rn, havent downloaded the src yet Glitchy you fucking bitch you don't know shit.
 		y = random->RandomFloat(-2.5,4.5) + random->RandomFloat(-6.5,4.5);
 		z = x*x+y*y;
 	} while (z > 1);
