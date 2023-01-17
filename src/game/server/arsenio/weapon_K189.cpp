@@ -65,6 +65,9 @@ protected:
 	float	m_flNextGrenadeCheck;
 };
 
+#define	COMBINE_MIN_GRENADE_CLEAR_DIST 256
+
+
 IMPLEMENT_SERVERCLASS_ST(CWeaponK189, DT_WeaponK189)
 END_SEND_TABLE()
 
