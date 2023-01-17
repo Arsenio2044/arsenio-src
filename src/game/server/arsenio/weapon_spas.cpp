@@ -547,11 +547,11 @@ void CWeaponBULK::ShotgunFire(int PelletsNum, int PelletDamage, bool UsePump)
 
 	if (m_Autoloading)
 	{
-	pPlayer->ViewPunch(QAngle(random->RandomFloat(-6, -3), random->RandomFloat(-7, 7), 0));
+	pPlayer->ViewPunch(QAngle(random->RandomFloat(-6, -3), random->RandomFloat(-9, 3), 0));
 	}
 	else
 	{
-	pPlayer->ViewPunch(QAngle(random->RandomFloat(-2, -1), random->RandomFloat(-2, 2), 0));
+	pPlayer->ViewPunch(QAngle(random->RandomFloat(-3, -2), random->RandomFloat(-2, 3), 0));
 	}
 
 	CSoundEnt::InsertSound(SOUND_COMBAT, GetAbsOrigin(), SOUNDENT_VOLUME_SHOTGUN, 0.2, GetOwner());
