@@ -132,7 +132,7 @@ IMPLEMENT_ACTTABLE(CWeaponK189);
 //=========================================================
 CWeaponK189::CWeaponK189( )
 {
-	m_fMinRange1		= 0;// No minimum range. 
+	m_fMinRange1		= 100;// No minimum range. 
 	m_fMaxRange1		= 200;
 
 	m_bAltFiresUnderwater = false;
@@ -220,33 +220,6 @@ void CWeaponK189::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatChar
 		}
 		break;
 
-		/*//FIXME: Re-enable
-		case EVENT_WEAPON_AR2_GRENADE:
-		{
-		CAI_BaseNPC *npc = pOperator->MyNPCPointer();
-
-		Vector vecShootOrigin, vecShootDir;
-		vecShootOrigin = pOperator->Weapon_ShootPosition();
-		vecShootDir = npc->GetShootEnemyDir( vecShootOrigin );
-
-		Vector vecThrow = m_vecTossVelocity;
-
-		CGrenadeAR2 *pGrenade = (CGrenadeAR2*)Create( "grenade_ar2", vecShootOrigin, vec3_angle, npc );
-		pGrenade->SetAbsVelocity( vecThrow );
-		pGrenade->SetLocalAngularVelocity( QAngle( 0, 400, 0 ) );
-		pGrenade->SetMoveType( MOVETYPE_FLYGRAVITY ); 
-		pGrenade->m_hOwner			= npc;
-		pGrenade->m_pMyWeaponAR2	= this;
-		pGrenade->SetDamage(sk_npc_dmg_ar2_grenade.GetFloat());
-
-		// FIXME: arrgg ,this is hard coded into the weapon???
-		m_flNextGrenadeCheck = gpGlobals->curtime + 6;// wait six seconds before even looking again to see if a grenade can be thrown.
-
-		m_iClip2--;
-		}
-		break;
-		*/
-
 	default:
 		BaseClass::Operator_HandleAnimEvent( pEvent, pOperator );
 		break;
@@ -281,11 +254,6 @@ bool CWeaponK189::Reload( void )
 	fRet = DefaultReload( GetMaxClip1(), GetMaxClip2(), ACT_VM_RELOAD );
 	if ( fRet )
 	{
-		// Undo whatever the reload process has done to our secondary
-		// attack timer. We allow you to interrupt reloading to fire
-		// a grenade.
-		m_flNextSecondaryAttack = GetOwner()->m_flNextAttack = fCacheTime;
-
 		WeaponSound( RELOAD );
 	}
 
@@ -314,7 +282,7 @@ void CWeaponK189::AddViewKick( void )
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: 
+// Purpose: Going to revisit this at some point,need to add scope
 //-----------------------------------------------------------------------------
 /*
 void CWeaponK189::SecondaryAttack( void )
