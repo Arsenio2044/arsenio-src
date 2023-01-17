@@ -247,7 +247,6 @@ Activity CWeaponMP5K::GetPrimaryAttackActivity( void )
 bool CWeaponMP5K::Reload( void )
 {
 	bool fRet;
-	float fCacheTime = m_flNextSecondaryAttack;
 
 	fRet = DefaultReload( GetMaxClip1(), GetMaxClip2(), ACT_VM_RELOAD );
 	if ( fRet )
