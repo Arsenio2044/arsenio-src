@@ -446,5 +446,5 @@ void CWeapon50cal::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCha
 	}
 }
 /*
-// Unused for gameplay purposes
+// Unused due to gameplay reasons / no work
 
