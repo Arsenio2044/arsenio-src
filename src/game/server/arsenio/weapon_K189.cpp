@@ -33,7 +33,6 @@ public:
 	
 	void	Precache( void );
 	void	AddViewKick( void );
-	void	SecondaryAttack( void );
 
 	virtual void Equip( CBaseCombatCharacter *pOwner );
 	bool	Reload( void );
