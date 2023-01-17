@@ -62,7 +62,6 @@ public:
 
 	bool	Reload( void );
 
-	float	GetFireRate( void ) { return 0.1f; } // Glitchy: made the mp5k accurate to its original firerate!
 	float	GetFullAutoFireRate( void ) { return arsenio_mp5k_altfire_rate.GetFloat(); }
 	int		CapabilitiesGet( void ) { return bits_CAP_WEAPON_RANGE_ATTACK1; }
 	Activity	GetPrimaryAttackActivity( void );
