@@ -94,7 +94,7 @@ END_DATADESC()
 
 acttable_t	CWeaponMP5K::m_acttable[] = 
 {
-	{ ACT_RANGE_ATTACK1,			ACT_RANGE_ATTACK_AR2,			true },
+	{ ACT_RANGE_ATTACK1,			ACT_RANGE_ATTACK_SMG1,			true },
 	{ ACT_RELOAD,					ACT_RELOAD_SMG1,				true },
 	{ ACT_IDLE,						ACT_IDLE_SMG1,					true },
 	{ ACT_IDLE_ANGRY,				ACT_IDLE_ANGRY_SMG1,			true },
