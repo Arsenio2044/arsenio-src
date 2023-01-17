@@ -1,8 +1,8 @@
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
 // Purpose: A shotgun that replaces a shotgun. It has a manual pump feature.
-//
-//			Primary attack: single barrel shot.
+// Auto uses 1 round, semi uses 2, clip size has to be 8 so it doesnt overflow the ammo counter
+//			Primary attack: single barrel shot. 
 //			Secondary attack: double barrel shot.
 // Uses Leos favorite shotgun model (the broken optux 3 one)
 //=============================================================================//
