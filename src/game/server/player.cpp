@@ -6422,7 +6422,7 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		GiveNamedItem("weapon_357");
 		GiveNamedItem("weapon_crossbow");
 		//GiveNamedItem("weapon_50cal");
-		GiveNamedItem("weapon_bulk");
+		//GiveNamedItem("weapon_bulk");
 		GiveNamedItem("weapon_pro836");
 		GiveNamedItem("weapon_gauss");
 		GiveNamedItem("weapon_addamm557");
