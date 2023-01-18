@@ -1,4 +1,4 @@
-//========= Copyright © Glitch Software, All rights reserved. ============////
+//========= Copyright  Glitch Software, All rights reserved. ============////
 // Purpose:		Cute hound like Alien.
 //
 // $NoKeywords: $
@@ -36,7 +36,7 @@
 
 #define HOUNDEYE_TOP_MASS	 300.0f
 
-ConVar sk_houndeye_health ( "sk_houndeye_health", "20" );
+ConVar sk_houndeye_health ( "sk_houndeye_health", "15" );
 ConVar sk_houndeye_dmg_blast ( "sk_houndeye_dmg_blast", "15" );
 
 
