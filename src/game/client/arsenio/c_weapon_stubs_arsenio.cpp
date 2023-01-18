@@ -47,6 +47,7 @@ STUB_WEAPON_CLASS(weapon_addamm557, WeaponAdamm557, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_mobileturret, WeaponMobileTurret, C_BaseHLBludgeonWeapon);
 STUB_WEAPON_CLASS(weapon_glock, WeaponGlock, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_k189, WeaponK189, C_HLMachineGun );
+STUB_WEAPON_CLASS(weapon_smg1, WeaponSMG1, C_HLSelectFireMachineGun); 
 
 
 
@@ -58,7 +59,6 @@ STUB_WEAPON_CLASS(weapon_kilo, WeaponKILO, C_HLSelectFireMachineGun);
 STUB_WEAPON_CLASS(weapon_50cal, Weapon50cal, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_minigun, WeaponMiniGun, C_HLMachineGun);
 STUB_WEAPON_CLASS(weapon_oicw, WeaponOICW, C_HLMachineGun); // yeeted vol 2
-STUB_WEAPON_CLASS(weapon_smg1, WeaponSMG1, C_HLSelectFireMachineGun); // yeeted vol 3
 STUB_WEAPON_CLASS(weapon_binoculars, WeaponBinoculars, C_BaseHLCombatWeapon); // yeeted vol 4
 STUB_WEAPON_CLASS(weapon_bulk, WeaponBULK, C_BaseHLCombatWeapon); // yeeted vol 5
 // yeeted
