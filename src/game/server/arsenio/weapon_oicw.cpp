@@ -1,3 +1,4 @@
+#ifdef CUT
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
 // Purpose: One of the most powerful weapons ingame. Can fire both grenades and has a functioning scope.
@@ -493,3 +494,4 @@ void CWeaponOICW::Drop(const Vector& velocity)
 
 	BaseClass::Drop(velocity);
 }
+#endif CUT
