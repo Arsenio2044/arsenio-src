@@ -1,3 +1,5 @@
+#ifdef CUT
+/*
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
 // Purpose: A shotgun that replaces a shotgun. It has a manual pump feature.
@@ -861,3 +863,4 @@ SendWeaponAnim( ACT_VM_IDLE_ACTIVE );
 }
 }
 */
+#endif CUT
