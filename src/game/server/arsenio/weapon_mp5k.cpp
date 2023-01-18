@@ -246,7 +246,6 @@ Activity CWeaponMP5K::GetPrimaryAttackActivity( void )
 bool CWeaponMP5K::Reload( void )
 {
 	bool fRet;
-	float fCacheTime = m_flNextSecondaryAttack;
 
 
 	fRet = DefaultReload( GetMaxClip1(), GetMaxClip2(), ACT_VM_RELOAD );
@@ -255,8 +254,6 @@ bool CWeaponMP5K::Reload( void )
 		// Undo whatever the reload process has done to our secondary
 		// attack timer. We allow you to interrupt reloading to fire
 		// a grenade.
-		m_flNextSecondaryAttack = GetOwner()->m_flNextAttack = fCacheTime;
-
 		WeaponSound( RELOAD );
 	}
 
