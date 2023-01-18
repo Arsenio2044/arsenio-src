@@ -6456,7 +6456,7 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 
 		if (GetHealth() < 100)
 		{
-			TakeHealth(25, DMG_GENERIC);
+			TakeHealth(10, DMG_GENERIC);
 		}
 
 		gEvilImpulse101 = false;
