@@ -165,8 +165,8 @@ void PrecacheFileWeaponInfoDatabase( IFileSystem *filesystem, const unsigned cha
 	if ( m_WeaponInfoDatabase.Count() )
 		return;
 
-	KeyValues *manifest = new KeyValues( "weaponscripts" );
-	if ( manifest->LoadFromFile( filesystem, "scripts/weapon_manifest.txt", "GAME" ) )
+	KeyValues *manifest = new KeyValues( "weapondata/weapons" );
+	if ( manifest->LoadFromFile( filesystem, "data/weapons/weapon_manifest.txt", "GAME" ) )
 	{
 		for ( KeyValues *sub = manifest->GetFirstSubKey(); sub != NULL ; sub = sub->GetNextKey() )
 		{
@@ -283,7 +283,7 @@ bool ReadWeaponDataFromFileForSlot( IFileSystem* filesystem, const char *szWeapo
 		return true;
 
 	char sz[128];
-	Q_snprintf( sz, sizeof( sz ), "scripts/%s", szWeaponName );
+	Q_snprintf( sz, sizeof( sz ), "data/weapons/%s", szWeaponName );
 
 	KeyValues *pKV = ReadEncryptedKVFile( filesystem, sz, pICEKey,
 #if defined( DOD_DLL )
@@ -433,7 +433,7 @@ void FileWeaponInfo_t::Parse( KeyValues *pKeyValuesData, const char *szWeaponNam
 	iRumbleEffect = pKeyValuesData->GetInt( "rumble", -1 );
 	
 	// LAME old way to specify item flags.
-	// Weapon scripts should use the flag names.
+	// Weapon data/weapons should use the flag names.
 	iFlags = pKeyValuesData->GetInt( "item_flags", ITEM_FLAG_LIMITINWORLD );
 
 	for ( int i=0; i < ARRAYSIZE( g_ItemFlags ); i++ )
