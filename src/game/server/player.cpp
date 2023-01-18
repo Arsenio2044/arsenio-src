@@ -6400,10 +6400,6 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 
 		EquipSuit();
 		EquipExo();
-
-
-#ifndef OPTUX3_DLL
-
 		// Give the player everything!
 		GiveAmmo(255, "Pistol");
 		GiveAmmo(255, "AR2");
@@ -6432,11 +6428,6 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		GiveNamedItem("weapon_addamm557");
 		GiveNamedItem("weapon_egar");
 		GiveNamedItem("weapon_mobileturret");
-
-
-
-
-#endif
 
 #ifdef OPTUX3_DLL_OLD
 
