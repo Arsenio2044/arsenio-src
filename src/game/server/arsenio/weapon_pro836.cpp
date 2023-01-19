@@ -6,6 +6,7 @@
 
 #include "cbase.h"
 #include "basehlcombatweapon.h"
+#include "basehlcombatweapon_shared.h"
 #include "npcevent.h"
 #include "basecombatcharacter.h"
 #include "ai_basenpc.h"
@@ -42,11 +43,18 @@ public:
 	void			Precache();
 	void			AddViewKick();
 	void			SecondaryAttack();
+	void	        ToggleZoom(void);
+	void	            CheckZoomToggle(void);
+	bool				m_bInZoom;
+	bool				m_bMustReload;
 
 	int				GetMinBurst() { return 2; }
 	int				GetMaxBurst() { return 5; }
 
 	virtual void	Equip( CBaseCombatCharacter *pOwner );
+	virtual bool	IsWeaponZoomed() { return m_bInZoom; }
+	virtual void	ItemPostFrame(void);
+	virtual void	ItemBusyFrame(void);
 	bool			Reload();
 
 	float			GetFireRate() { return 0.075f; } // RPS, 60sec/800 rounds = 0.075
@@ -109,6 +117,7 @@ LINK_ENTITY_TO_CLASS( weapon_pro836, CWeaponPRO836 );
 PRECACHE_WEAPON_REGISTER( weapon_pro836 );
 
 BEGIN_DATADESC( CWeaponPRO836 )
+DEFINE_FIELD(m_bInZoom, FIELD_BOOLEAN),
 END_DATADESC()
 
 acttable_t CWeaponPRO836::m_acttable[] =
@@ -172,7 +181,73 @@ CWeaponPRO836::CWeaponPRO836()
 {
 	m_fMinRange1 = 0; // No minimum range
 	m_fMaxRange1 = 1400;
+	m_bInZoom = false;
 }
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CWeaponPRO836::ToggleZoom(void)
+{
+	CBasePlayer* pPlayer = ToBasePlayer(GetOwner());
+
+	if (pPlayer == NULL)
+		return;
+
+	if (m_bInZoom)
+	{
+		if (pPlayer->SetFOV(this, 0, 0.2f))
+		{
+			m_bInZoom = false;
+		}
+	}
+	else
+	{
+		if (pPlayer->SetFOV(this, 20, 0.1f))
+		{
+			m_bInZoom = true;
+		}
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CWeaponPRO836::CheckZoomToggle(void)
+{
+	CBasePlayer* pPlayer = ToBasePlayer(GetOwner());
+
+	if (pPlayer->m_afButtonPressed & IN_ATTACK2)
+	{
+		ToggleZoom();
+	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CWeaponPRO836::ItemBusyFrame(void)
+{
+	// Allow zoom toggling even when we're reloading
+	CheckZoomToggle();
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CWeaponPRO836::ItemPostFrame(void)
+{
+	// Allow zoom toggling
+	CheckZoomToggle();
+
+	if (m_bMustReload && HasWeaponIdleTimeElapsed())
+	{
+		Reload();
+	}
+
+	BaseClass::ItemPostFrame();
+}
+
 
 //-----------------------------------------------------------------------------
 // Purpose: 
@@ -292,7 +367,7 @@ void CWeaponPRO836::AddViewKick()
 {
 	#define EASY_DAMPEN			2.3f
 	#define MAX_VERTICAL_KICK	17.0f // Degrees
-	#define SLIDE_LIMIT			0.11f // Seconds
+	#define SLIDE_LIMIT			3.11f // Seconds
 
 	// Get the view kick
 	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
