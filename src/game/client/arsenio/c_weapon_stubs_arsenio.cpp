@@ -52,6 +52,8 @@ STUB_WEAPON_CLASS(weapon_smg1, WeaponSMG1, C_HLSelectFireMachineGun);
 #ifdef BALLS
 STUB_WEAPON_CLASS(weapon_BJ69, WeaponSMG1, C_HLSelectFireMachineGun); // nicknamed sex gun.
 STUB_WEAPON_CLASS(weapon_KLO99, WeaponSMG1, C_HLMachineGun); // High power LMG
+STUB_WEAPON_CLASS(weapon_MP99K, WeaponMP599K, C_BaseHLCombatWeapon);
+
 #endif
 
 
