@@ -2269,6 +2269,9 @@
     <ClCompile Include="env_screenoverlay.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="env_skydome.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="env_texturetoggle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -3016,13 +3019,7 @@
     <ClCompile Include="arsenio\weapon_mp5k.cpp">
       <Filter>Source Files\ARSENIO DLL\Weapons</Filter>
     </ClCompile>
-    <ClCompile Include="arsenio\weapon_oicw.cpp">
-      <Filter>Source Files\ARSENIO DLL\Weapons</Filter>
-    </ClCompile>
     <ClCompile Include="arsenio\weapon_pro836.cpp">
-      <Filter>Source Files\ARSENIO DLL\Weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="arsenio\weapon_spas.cpp">
       <Filter>Source Files\ARSENIO DLL\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\weapon_tau.cpp">

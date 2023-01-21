@@ -1787,6 +1787,9 @@
     <ClInclude Include="..\..\game\shared\baseprojectile.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="c_env_skydome.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
     <ClInclude Include="c_props.h">
       <Filter>Source Files</Filter>
     </ClInclude>
@@ -2099,6 +2102,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="c_env_screenoverlay.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="c_env_skydome.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="c_env_tonemap_controller.cpp">

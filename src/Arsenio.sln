@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.32602.291
+VisualStudioVersion = 16.0.31112.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client - Arsenio", "game\client\client_arsenio.vcxproj", "{4805D596-827F-6EEE-28C5-2977FA0D9F1E}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -216,6 +216,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {96223FAB-04D0-4193-92F4-8A21032418B1}
+		SolutionGuid = {B7D411D2-483D-482B-8500-AB4D1B3F45B0}
 	EndGlobalSection
 EndGlobal
