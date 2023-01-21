@@ -48,6 +48,13 @@ STUB_WEAPON_CLASS(weapon_glock, WeaponGlock, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_k189, WeaponK189, C_HLMachineGun );
 STUB_WEAPON_CLASS(weapon_smg1, WeaponSMG1, C_HLSelectFireMachineGun); 
 
+// Coming soon
+#ifdef BALLS
+STUB_WEAPON_CLASS(weapon_BJ69, WeaponSMG1, C_HLSelectFireMachineGun); // nicknamed sex gun.
+STUB_WEAPON_CLASS(weapon_KLO99, WeaponSMG1, C_HLMachineGun); // High power LMG
+#endif
+
+
 
 
 
