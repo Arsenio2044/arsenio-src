@@ -356,7 +356,7 @@ void CNPC_Roach::Look ( int iDistance )
 				case	D_NU:
 					break;
 				default:
-					Msg ( "%s can't asses %s\n", GetClassname(), pSightEnt->GetClassname() );
+	//				Msg ( "%s can't asses %s\n", GetClassname(), pSightEnt->GetClassname() );
 					break;
 				}
 			}
