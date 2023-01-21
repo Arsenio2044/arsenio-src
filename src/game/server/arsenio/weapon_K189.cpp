@@ -249,7 +249,7 @@ Activity CWeaponK189::GetPrimaryAttackActivity( void )
 bool CWeaponK189::Reload( void )
 {
 	bool fRet;
-	float fCacheTime = m_flNextSecondaryAttack;
+	//float fCacheTime = m_flNextSecondaryAttack;
 
 	fRet = DefaultReload( GetMaxClip1(), GetMaxClip2(), ACT_VM_RELOAD );
 	if ( fRet )
