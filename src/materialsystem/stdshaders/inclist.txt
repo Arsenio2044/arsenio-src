@@ -1,0 +1,2 @@
+fxctmp9_tmp\skydome_ps30.inc
+fxctmp9_tmp\skydome_vs30.inc

@@ -56,6 +56,9 @@ $Project
 
 		$File	"Bloom.cpp"
 		$File	"screenspace_general.cpp"
+		$File	"skydome_atmosphere.cpp"
+		$File	"skydome_atmosphere_helper.cpp"
+		$File	"skydome_atmosphere_helper.h"
 	}
 
 	$Folder	"Header Files"

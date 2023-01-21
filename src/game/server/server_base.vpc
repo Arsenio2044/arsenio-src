@@ -671,6 +671,11 @@ $Project
 		$File	"$SRCDIR\game\shared\SharedFunctorUtils.h"
 		$File	"$SRCDIR\game\server\vote_controller.h"
 		$File	"$SRCDIR\game\server\vote_controller.cpp"
+
+		// Experimental Skydome
+		$file	"env_skydome.cpp"
+		
+
 		//Haptics
 		$File	"$SRCDIR\public\haptics\haptic_msgs.cpp"
 		$File	"$SRCDIR\public\haptics\haptic_utils.cpp"	[$WIN32]
