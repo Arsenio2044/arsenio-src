@@ -27,7 +27,7 @@
 #define INPS2KPH(X) ( X * 25.4 * 3600 / 1000000 )
 
 using namespace vgui;
-
+// Is the player in a speedo or something?
 //-----------------------------------------------------------------------------
 // Purpose: Displays current ammunition level
 //-----------------------------------------------------------------------------
