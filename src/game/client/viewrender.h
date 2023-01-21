@@ -423,6 +423,9 @@ public:
 	{
 		m_UnderWaterOverlayMaterial.Init( pMaterial );
 	}
+#ifdef SKYDOME
+	void			DrawSky(const CViewSetup& view);
+#endif
 private:
 	int				m_BuildWorldListsNumber;
 
@@ -487,6 +490,9 @@ private:
 	CMaterialReference	m_ModulateSingleColor;
 	CMaterialReference	m_ScreenOverlayMaterial;
 	CMaterialReference m_UnderWaterOverlayMaterial;
+#ifdef SKYDOME
+	CMaterialReference	m_SkydomeMaterial;
+#endif
 
 	Vector			m_vecLastFacing;
 	float			m_flCheapWaterStartDistance;

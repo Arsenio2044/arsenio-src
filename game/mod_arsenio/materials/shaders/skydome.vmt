@@ -1,0 +1,5 @@
+"SKYDOME_ATMOSPHERE"
+{
+  "$lut" "skybox/sky_fake_white"
+  "$ALPHATESTREFERENCE" 1
+}
