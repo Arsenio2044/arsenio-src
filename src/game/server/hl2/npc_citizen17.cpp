@@ -406,6 +406,25 @@ void CNPC_Citizen::Precache()
 	PrecacheInstancedScene( "scenes/Expressions/CitizenAlert_loop.vcd" );
 	PrecacheInstancedScene( "scenes/Expressions/CitizenCombat_loop.vcd" );
 
+#ifdef ARSENIO
+	// TUX: Ooopsie, forgot to do this!
+	PrecacheModel("models/gibs/pgib_p1.mdl");
+	PrecacheModel("models/gibs/pgib_p2.mdl");
+	PrecacheModel("models/gibs/pgib_p3.mdl");
+	PrecacheModel("models/gibs/pgib_p4.mdl");
+	PrecacheModel("models/gibs/pgib_p5.mdl");
+	PrecacheModel("models/gibs/hgibs_jaw.mdl");
+	PrecacheModel("models/gibs/hgibs_scapula.mdl");
+	PrecacheModel("models/gibs/hgibs_scapula.mdl");
+	PrecacheModel("models/gibs/rgib_p1.mdl");
+	PrecacheModel("models/gibs/rgib_p2.mdl");
+	PrecacheModel("models/gibs/rgib_p3.mdl");
+	PrecacheModel("models/gibs/rgib_p4.mdl");
+	PrecacheModel("models/gibs/rgib_p5.mdl");
+	PrecacheModel("models/gibs/rgib_p6.mdl");
+	PrecacheModel("models/gibs/gibhead.mdl");
+#endif
+
 	for ( int i = 0; i < STATES_WITH_EXPRESSIONS; i++ )
 	{
 		for ( int j = 0; j < ARRAYSIZE(ScaredExpressions[i].szExpressions); j++ )
