@@ -2998,6 +2998,9 @@
     <ClCompile Include="arsenio\npc_synth_e.cpp">
       <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
     </ClCompile>
+    <ClCompile Include="arsenio\npc_trillionair.cpp">
+      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+    </ClCompile>
     <ClCompile Include="cyberspace\weapon_addamm557.cpp">
       <Filter>Source Files\ARSENIO DLL\Weapons</Filter>
     </ClCompile>
