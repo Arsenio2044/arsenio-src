@@ -12,6 +12,7 @@
 - Completely redesigned combat system.
 - Runs in IVEngine 2 (No not VScript. IVEngine 2 is an overhaul of the source engine)
 - Many more features are unannounced or still in development.
+- An idiot who commits broken af updates to the main branch.
 
 More will be documented on the wiki.
 
