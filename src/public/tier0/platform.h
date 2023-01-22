@@ -704,27 +704,7 @@ typedef uint32 HMODULE;
 typedef void *HANDLE;
 #endif
 
-//-----------------------------------------------------------------------------
-// fsel
-//-----------------------------------------------------------------------------
-#ifndef _X360
 
-static FORCEINLINE float fsel(float fComparand, float fValGE, float fLT)
-{
-	return fComparand >= 0 ? fValGE : fLT;
-}
-static FORCEINLINE double fsel(double fComparand, double fValGE, double fLT)
-{
-	return fComparand >= 0 ? fValGE : fLT;
-}
-
-#else
-
-// __fsel(double fComparand, double fValGE, double fLT) == fComparand >= 0 ? fValGE : fLT
-// this is much faster than if ( aFloat > 0 ) { x = .. }
-#define fsel __fsel
-
-#endif
 
 
 //-----------------------------------------------------------------------------
