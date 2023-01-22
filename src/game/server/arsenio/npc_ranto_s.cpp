@@ -1,6 +1,6 @@
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
-// Purpose:  soldier for the Ranto faction.
+// Purpose: Common soldier for the Ranto faction.
 //
 //=============================================================================//
 
