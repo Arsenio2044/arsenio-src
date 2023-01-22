@@ -1829,6 +1829,7 @@ void CHLClient::LevelInitPreEntity(char const* pMapName)
 		sprintf(buffer, "Map: %s", pMapName);
 		discordPresence.details = buffer;
 		discordPresence.largeImageKey = "deez";
+		discordPresence.startTimestamp = startTimestamp;
 		Discord_UpdatePresence(&discordPresence);
 	}
 
