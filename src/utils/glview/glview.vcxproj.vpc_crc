@@ -8,8 +8,8 @@ d752cf80 ..\..\vpc_scripts\platform_dirs.vpc
 f09eb9d1 ..\..\vpc_scripts\source_exe_win_win32_base.vpc
 486b766d ..\..\vpc_scripts\version.vpc
 846102f0 ..\..\vpc_scripts\loadaddress.vpc
-0d7192b8 ..\..\vpc_scripts\source_exe_win_win32_debug.vpc
-18e1f8e0 ..\..\vpc_scripts\source_exe_win_win32_release.vpc
+20e0ba10 ..\..\vpc_scripts\source_exe_win_win32_debug.vpc
+ccc6fa4e ..\..\vpc_scripts\source_exe_win_win32_release.vpc
 34c37fcf ..\..\vpc_scripts\source_win32_base.vpc
 346bda4a ..\..\vpc_scripts\source_video_base.vpc
 30bf2216 ..\..\vpc_scripts\definitions\win32_2010.def
