@@ -420,6 +420,8 @@ inline void DataMapAccess(T *ignored, datamap_t **p)
 	*p = &T::m_DataMap;
 }
 
+template <typename T> datamap_t* DataMapInit(T*);
+
 //-----------------------------------------------------------------------------
 
 class CDatadescGeneratedNameHolder
