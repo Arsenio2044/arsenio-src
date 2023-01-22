@@ -1287,7 +1287,6 @@
     <ClCompile Include="arsenio\npc_ranto_s.cpp" />
     <ClCompile Include="arsenio\npc_roach.cpp" />
     <ClCompile Include="arsenio\npc_synth_e.cpp" />
-    <ClCompile Include="arsenio\npc_trillionair.cpp" />
     <ClCompile Include="cyberspace\weapon_addamm557.cpp" />
     <ClCompile Include="hl2\weapon_egar.cpp" />
     <ClCompile Include="arsenio\weapon_glock.cpp" />

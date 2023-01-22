@@ -39,6 +39,7 @@ $Group "game"
 	"vtfdiff"
 	"vvis_dll"
 	"vvis_launcher"
+	"responserules"
 }
 
 $Group "shaders"

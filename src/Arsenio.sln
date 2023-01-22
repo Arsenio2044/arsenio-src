@@ -117,6 +117,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Vvis_launcher", "utils\vvis
 		{EC1C516D-E1D9-BC0A-F79D-E91E954ED8EC} = {EC1C516D-E1D9-BC0A-F79D-E91E954ED8EC}
 	EndProjectSection
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "responserules_runtime", "responserules\runtime\responserules.vcxproj", "{E3AA5C48-0E8B-D6DC-78F0-98A9167BD297}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x86 = Debug|x86
@@ -211,11 +213,15 @@ Global
 		{E3E2CF1C-9EE4-3173-C39F-D0D4F5483CB6}.Debug|x86.Build.0 = Debug|Win32
 		{E3E2CF1C-9EE4-3173-C39F-D0D4F5483CB6}.Release|x86.ActiveCfg = Release|Win32
 		{E3E2CF1C-9EE4-3173-C39F-D0D4F5483CB6}.Release|x86.Build.0 = Release|Win32
+		{E3AA5C48-0E8B-D6DC-78F0-98A9167BD297}.Debug|x86.ActiveCfg = Debug|Win32
+		{E3AA5C48-0E8B-D6DC-78F0-98A9167BD297}.Debug|x86.Build.0 = Debug|Win32
+		{E3AA5C48-0E8B-D6DC-78F0-98A9167BD297}.Release|x86.ActiveCfg = Release|Win32
+		{E3AA5C48-0E8B-D6DC-78F0-98A9167BD297}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {CD1BCF52-DF62-4255-A224-9167411DCB58}
+		SolutionGuid = {C96C2DCC-D5F8-4FAA-909F-2283008DCEF1}
 	EndGlobalSection
 EndGlobal

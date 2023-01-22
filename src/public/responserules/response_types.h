@@ -13,7 +13,7 @@
 
 #include "tier1/utlrbtree.h"
 #include "tier1/utlsymbol.h"
-#include "tier2/interval.h"
+#include "tier1/interval.h"
 #include "mathlib/compressed_vector.h"
 #include "datamap.h"
 #include "soundflags.h"
@@ -65,16 +65,16 @@ namespace ResponseRules
 		float						followup_delay;								// 20
 		const char 					*followup_target;							// 24 -- to whom is this despatched?
 		// AIConceptHandle_t			hConcept;
-	    const char					*followup_entityiotarget;	//< if this rule involves firing entity io
-	    const char					*followup_entityioinput;	//< if this rule involves firing entity io
+		const char					*followup_entityiotarget;	//< if this rule involves firing entity io
+		const char					*followup_entityioinput;	//< if this rule involves firing entity io
 		float						followup_entityiodelay;
 		bool						bFired;
 
-        inline bool IsValid( void ) const { return (followup_concept && followup_contexts); }
-        inline void Invalidate() { followup_concept = NULL; followup_contexts = NULL; }
-        inline void SetFired( bool fired ) { bFired = fired; }
-        inline bool HasBeenFired() { return bFired; }
-    
+		inline bool IsValid( void ) const { return (followup_concept && followup_contexts); }
+		inline void Invalidate() { followup_concept = NULL; followup_contexts = NULL; }
+		inline void SetFired( bool fired ) { bFired = fired; }
+		inline bool HasBeenFired() { return bFired; }
+
 		AI_ResponseFollowup( void ) : followup_concept(NULL), followup_contexts(NULL), followup_delay(0), followup_target(NULL), followup_entityiotarget(NULL), followup_entityioinput(NULL), followup_entityiodelay(0), bFired(false)
 		{};
 		AI_ResponseFollowup( char *_followup_concept, char *_followup_contexts, float _followup_delay, char *_followup_target,
@@ -96,9 +96,32 @@ namespace ResponseRules
 		RESPONSE_RESPONSE, // A reference to another response by name
 		RESPONSE_PRINT,
 		RESPONSE_ENTITYIO, // poke an input on an entity
+#ifdef MAPBASE
+		RESPONSE_VSCRIPT, // Run VScript code
+		RESPONSE_VSCRIPT_FILE, // Run a VScript file (bypasses ugliness and character limits when just using IncludeScript() with RESPONSE_VSCRIPT)
+#endif
 
 		NUM_RESPONSES,
 	};
+
+#ifdef MAPBASE
+	// The "apply to world" context option has been replaced with a flag-based integer which can apply contexts to more things.
+	// 
+	// New ones should be implemented in: 
+	// CResponseSystem::BuildDispatchTables() - AI_ResponseSystem.cpp (with their own funcs for m_RuleDispatch)
+	// CRR_Response::Describe() - rr_response.cpp
+	// CAI_Expresser::SpeakDispatchResponse() - ai_speech.cpp
+	// 
+	// Also mind that this is 8-bit
+	enum : uint8
+	{
+		APPLYCONTEXT_SELF = (1 << 0), // Included for contexts that apply to both self and something else
+		APPLYCONTEXT_WORLD = (1 << 1), // Apply to world
+
+		APPLYCONTEXT_SQUAD = (1 << 2), // Apply to squad
+		APPLYCONTEXT_ENEMY = (1 << 3), // Apply to enemy
+	};
+#endif
 
 
 #pragma pack(push,1)
@@ -212,67 +235,67 @@ namespace ResponseRules
 		/// entity, subsequent to the match but BEFORE the dispatch.
 		/// Returns the number of contexts modified. If it returns 0, then 
 		/// pSetOnWorld is empty.
-	    static int InterceptWorldSetContexts( CriteriaSet * RESTRICT pFrom, 
-		    CriteriaSet * RESTRICT pSetOnWorld );
+		static int InterceptWorldSetContexts( CriteriaSet * RESTRICT pFrom, 
+			CriteriaSet * RESTRICT pSetOnWorld );
 
 	private:
-	void		RemoveCriteria( int idx, bool bTestForPrefix );
+		void		RemoveCriteria( int idx, bool bTestForPrefix );
 
 		struct CritEntry_t
 		{
 			CritEntry_t() :
-		criterianame( UTL_INVAL_SYMBOL ),
-			weight( 0.0f )
-		{
-			value[ 0 ] = 0;
-		}
-
-		CritEntry_t( const CritEntry_t& src )
-		{
-			criterianame = src.criterianame;
-			value[ 0 ] = 0;
-			weight = src.weight;
-			SetValue( src.value );
-		}
-
-		CritEntry_t& operator=( const CritEntry_t& src )
-		{
-			if ( this == &src )
-				return *this;
-
-			criterianame = src.criterianame;
-			weight = src.weight;
-			SetValue( src.value );
-
-			return *this;
-		}
-
-		static bool LessFunc( const CritEntry_t& lhs, const CritEntry_t& rhs )
-		{
-			return lhs.criterianame < rhs.criterianame;
-		}
-
-		void SetValue( char const *str )
-		{
-			if ( !str )
+				criterianame( UTL_INVAL_SYMBOL ),
+				weight( 0.0f )
 			{
 				value[ 0 ] = 0;
 			}
-			else
-			{
-				Q_strncpy( value, str, sizeof( value ) );
-			}
-		}
 
-		CritSymbol_t criterianame;
-		char		value[ 64 ];
-		float		weight;
+			CritEntry_t( const CritEntry_t& src )
+			{
+				criterianame = src.criterianame;
+				value[ 0 ] = 0;
+				weight = src.weight;
+				SetValue( src.value );
+			}
+
+			CritEntry_t& operator=( const CritEntry_t& src )
+			{
+				if ( this == &src )
+					return *this;
+
+				criterianame = src.criterianame;
+				weight = src.weight;
+				SetValue( src.value );
+
+				return *this;
+			}
+
+			static bool LessFunc( const CritEntry_t& lhs, const CritEntry_t& rhs )
+			{
+				return lhs.criterianame < rhs.criterianame;
+			}
+
+			void SetValue( char const *str )
+			{
+				if ( !str )
+				{
+					value[ 0 ] = 0;
+				}
+				else
+				{
+					Q_strncpy( value, str, sizeof( value ) );
+				}
+			}
+
+			CritSymbol_t criterianame;
+			char		value[ 64 ];
+			float		weight;
 		};
 
 		static CUtlSymbolTable sm_CriteriaSymbols;
-	    typedef CUtlRBTree< CritEntry_t, short > Dict_t;
-	    Dict_t m_Lookup;
-	    int m_nNumPrefixedContexts; // number of contexts prefixed with kAPPLYTOWORLDPREFIX
+		typedef CUtlRBTree< CritEntry_t, short > Dict_t;
+		Dict_t m_Lookup;
+		int m_nNumPrefixedContexts; // number of contexts prefixed with kAPPLYTOWORLDPREFIX
 		bool m_bOverrideOnAppend;
 	};
 
@@ -303,6 +326,11 @@ namespace ResponseRules
 
 		void			GetName( char *buf, size_t buflen ) const;
 		void			GetResponse( char *buf, size_t buflen ) const;
+#ifdef MAPBASE
+		void			GetRule( char *buf, size_t buflen ) const;
+#endif
+		const char* GetNamePtr() const;
+		const char* GetResponsePtr() const;
 		const ResponseParams *GetParams() const { return &m_Params; }
 		ResponseType_t	GetType() const { return (ResponseType_t)m_Type; }
 		soundlevel_t	GetSoundLevel() const;
@@ -326,7 +354,15 @@ namespace ResponseRules
 		inline float	GetMatchScore( void ) { return m_fMatchScore; }
 		inline void		SetMatchScore( float f ) { m_fMatchScore = f; }
 
+#ifdef MAPBASE
+		int				GetContextFlags() { return m_iContextFlags; }
+		bool			IsApplyContextToWorld( void ) { return (m_iContextFlags & APPLYCONTEXT_WORLD) != 0; }
+
+		inline short	*GetInternalIndices() { return m_InternalIndices; }
+		inline void		SetInternalIndices( short iGroup, short iWithinGroup ) { m_InternalIndices[0] = iGroup; m_InternalIndices[1] = iWithinGroup; }
+#else
 		bool			IsApplyContextToWorld( void ) { return m_bApplyContextToWorld; }
+#endif
 
 		void Describe( const CriteriaSet *pDebugCriteria = NULL ); 
 
@@ -336,6 +372,15 @@ namespace ResponseRules
 			const char *matchingRule,
 			const char *applyContext,
 			bool bApplyContextToWorld );
+
+#ifdef MAPBASE
+		void	Init( ResponseType_t type,
+			const char *responseName,
+			const ResponseParams& responseparams,
+			const char *matchingRule,
+			const char *applyContext,
+			int iContextFlags );
+#endif
 
 		static const char *DescribeResponse( ResponseType_t type );
 
@@ -355,7 +400,15 @@ namespace ResponseRules
 		float	m_fMatchScore; // when instantiated dynamically in SpeakFindResponse, the score of the rule that matched it.
 
 		char *			m_szContext; // context data we apply to character after running
+#ifdef MAPBASE
+		int				m_iContextFlags;
+
+		// The response's original indices in the system. [0] is the group's index, [1] is the index within the group.
+		// For now, this is only set in prospecctive mode. It's used to call back to the ParserResponse and mark a prospectively chosen response as used.
+		short			m_InternalIndices[2];
+#else
 		bool			m_bApplyContextToWorld;
+#endif
 
 #ifdef _MANAGED
 		friend ref class ResponseRulesCLI::ResponseQueryResult;
@@ -378,6 +431,15 @@ namespace ResponseRules
 		virtual bool FindBestResponse( const CriteriaSet& set, CRR_Response& response, IResponseFilter *pFilter = NULL ) = 0;
 		virtual void GetAllResponses( CUtlVector<CRR_Response> *pResponses ) = 0;
 		virtual void PrecacheResponses( bool bEnable ) = 0;
+
+#ifdef MAPBASE
+		// (Optional) Call this before and after using FindBestResponse() for a prospective lookup, e.g. a response that might not actually be used
+		// and should not trigger displayfirst, etc.
+		virtual void SetProspective( bool bToggle ) {};
+
+		// (Optional) Marks a prospective response as used
+		virtual void MarkResponseAsUsed( short iGroup, short iWithinGroup ) {};
+#endif
 	};
 
 
@@ -395,20 +457,20 @@ namespace ResponseRules
 		return ( index >= 0 && index < ((int)(m_Lookup.Count())) );
 	}
 
-    inline int CriteriaSet::Head() const
-    {
-	    return m_Lookup.FirstInorder();
-    }
-    
-    inline int CriteriaSet::Next( int i ) const
-    {
-	    return m_Lookup.NextInorder(i);
-    }
-    
-    inline const char *CriteriaSet::SymbolToStr( const CritSymbol_t &symbol )
-    {
-	    return sm_CriteriaSymbols.String(symbol);
-    }
+	inline int CriteriaSet::Head() const
+	{
+		return m_Lookup.FirstInorder();
+	}
+
+	inline int CriteriaSet::Next( int i ) const
+	{
+		return m_Lookup.NextInorder(i);
+	}
+
+	inline const char *CriteriaSet::SymbolToStr( const CritSymbol_t &symbol )
+	{
+		return sm_CriteriaSymbols.String(symbol);
+	}
 
 }
 

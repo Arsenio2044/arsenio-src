@@ -31,6 +31,11 @@ namespace ResponseRules
 		///  reading position
 		virtual const char			*ParseFile( const char *data, char *token, int maxlen ) = 0;
 
+#ifdef MAPBASE
+		/// (Optional) Same as ParseFile, but with casing preserved and escaped quotes supported
+		virtual const char			*ParseFilePreserve( const char *data, char *token, int maxlen ) { return ParseFile( data, token, maxlen ); }
+#endif
+
 		/// Return a pointer to an IFileSystem we can use to read and process scripts.
 		virtual IFileSystem *GetFilesystem() = 0;
 
