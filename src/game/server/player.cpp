@@ -4645,7 +4645,7 @@ void CBasePlayer::PostThink()
 
 			}
 			// Regenerate heath
-			if (IsAlive() && GetHealth() < GetMaxHealth() && !(GetHealth() < 30) && (sv_regeneration.GetInt() == 1))
+			if  (IsExoEquipped() && IsAlive() && GetHealth() < GetMaxHealth() && !(GetHealth() < 30) && (sv_regeneration.GetInt() == 1))
 			{
 				// Color to overlay on the screen while the player is taking damage
 				color32 hurtScreenOverlay = { 80, 0, 0, 64 };
