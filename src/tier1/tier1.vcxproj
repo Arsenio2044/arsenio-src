@@ -256,6 +256,7 @@
     <ClCompile Include="generichash.cpp" />
     <ClCompile Include="ilocalize.cpp" />
     <ClCompile Include="interface.cpp" />
+    <ClCompile Include="interval.cpp" />
     <ClCompile Include="KeyValues.cpp" />
     <ClCompile Include="kvpacker.cpp" />
     <ClCompile Include="lzmaDecoder.cpp" />

@@ -253,6 +253,9 @@
     <ClCompile Include="interface.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="interval.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="KeyValues.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
