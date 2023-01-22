@@ -2714,7 +2714,7 @@ float CNPC_MetroPolice::MaxYawSpeed( void )
 //-----------------------------------------------------------------------------
 Class_T	CNPC_MetroPolice::Classify ( void )
 {
-	return CLASS_METROPOLICE;
+	return CLASS_PLAYER;
 }
 
 //-----------------------------------------------------------------------------

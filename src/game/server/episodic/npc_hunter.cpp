@@ -2023,7 +2023,7 @@ void CNPC_Hunter::UpdateOnRemove()
 //-----------------------------------------------------------------------------
 Class_T CNPC_Hunter::Classify()
 {
-	return CLASS_COMBINE_HUNTER;
+	return CLASS_PLAYER;
 }
 
 //-----------------------------------------------------------------------------
