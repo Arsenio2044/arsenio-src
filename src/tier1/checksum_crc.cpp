@@ -1,6 +1,6 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
-// Purpose: Generic CRC functions
+// Purpose: Generic CRC functions i hate you
 //
 //=============================================================================//
 
