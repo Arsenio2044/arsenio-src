@@ -21,7 +21,6 @@
 
 #if defined( DX_TO_GL_ABSTRACTION )
 // Swap these so that we do color swapping on 10.6.2, which doesn't have EXT_vertex_array_bgra
-#define	OPENGL_SWAP_COLORS
 #endif
 
 //-----------------------------------------------------------------------------
