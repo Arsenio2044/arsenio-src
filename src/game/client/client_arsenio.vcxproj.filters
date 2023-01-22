@@ -266,9 +266,6 @@
     <ClInclude Include="..\..\game\shared\in_buttons.h">
       <Filter>Game Shared Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\game\shared\interval.h">
-      <Filter>Game Shared Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\game\shared\iplayeranimstate.h">
       <Filter>Game Shared Header Files</Filter>
     </ClInclude>
@@ -1401,6 +1398,9 @@
       <Filter>Public Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\public\interpolatortypes.h">
+      <Filter>Public Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\public\tier1\interval.h">
       <Filter>Public Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\public\vgui\IPanel.h">
@@ -2567,9 +2567,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\public\interpolatortypes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\game\shared\interval.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="IsNPCProxy.cpp">

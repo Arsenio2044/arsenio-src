@@ -31,6 +31,9 @@
     <Filter Include="Source Files\HL2 DLL\unused">
       <UniqueIdentifier>{A52C827A-EB95-73A5-F031-C0395B5E2677}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Link Libraries">
+      <UniqueIdentifier>{2DD1941D-D5D1-EB0F-4E97-1D2FEC6CE0E8}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Source Files\Precompiled Header">
       <UniqueIdentifier>{A7D26A13-21F4-C6B5-5922-8A4FB05AF07D}</UniqueIdentifier>
     </Filter>
@@ -348,6 +351,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\public\inetchannelinfo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\public\tier1\interval.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\game\shared\iplayeranimstate.h">
@@ -1212,9 +1218,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\public\interpolatortypes.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\game\shared\interval.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\public\iregistry.h">
@@ -2480,9 +2483,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\public\interpolatortypes.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\game\shared\interval.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="item_world.cpp">

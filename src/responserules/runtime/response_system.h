@@ -58,9 +58,9 @@ namespace ResponseRules
 
 		bool		IsCustomManagable()	{ return m_bCustomManagable; }
 
-#ifdef MAPBASE
+
 		virtual
-#endif
+
 		void		Clear();
 
 		void		DumpDictionary( const char *pszName );
