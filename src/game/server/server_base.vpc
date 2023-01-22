@@ -133,8 +133,10 @@ $Project
 		$File	"ai_concommands.cpp"
 		$File	"ai_condition.cpp"
 		$File	"ai_condition.h"
-		$File	"AI_Criteria.cpp"
+		$File	"AI_Criteria.cpp" [!$NEW_RESPONSE_SYSTEM]
 		$File	"AI_Criteria.h"
+		$File	"$SRCDIR\game\shared\ai_criteria_new.cpp" [$NEW_RESPONSE_SYSTEM]
+		$File	"$SRCDIR\game\shared\ai_criteria_new.h" [$NEW_RESPONSE_SYSTEM]
 		$File	"ai_debug.h"
 		$File	"$SRCDIR\game\shared\ai_debug_shared.h"
 		$File	"ai_default.cpp"
