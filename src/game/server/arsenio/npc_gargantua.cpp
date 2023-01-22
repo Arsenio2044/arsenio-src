@@ -1,6 +1,6 @@
 //====== Copyright Glitch Software, All rights reserved. ============//
 //
-// Purpose: scary. Ported from hl source by Wumpus.
+// Purpose: scary. Ported from hll source by Wumpus.
 //
 //=============================================================================//
 
