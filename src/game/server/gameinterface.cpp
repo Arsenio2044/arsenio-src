@@ -786,6 +786,7 @@ bool CServerGameDLL::DLLInit( CreateInterfaceFn appSystemFactory,
 	gamestatsuploader->InitConnection();
 #endif
 
+	ConColorMsg(LOG_COLOR_YELLOW, "%s %u.%u.%u client dll (%s %s)\n", GAME_NAME, GAME_VERSION_MAJOR, GAME_VERSION_MINOR, GAME_VERSION_PATCH, __DATE__, __TIME__);
 	return true;
 }
 
