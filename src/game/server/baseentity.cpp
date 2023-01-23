@@ -63,6 +63,10 @@
 #include "tier1/utlstring.h"
 #include "utlhashtable.h"
 
+#ifdef NEW_RESPONSE_SYSTEM
+#include "ai_speech.h"
+#endif
+
 #if defined( TF_DLL )
 #include "tf_gamerules.h"
 #endif
@@ -6523,6 +6527,12 @@ void CBaseEntity::AddContext( const char *contextName )
 	const char *p = contextName;
 	while ( p )
 	{
+
+#ifdef NEW_RESPONSE_SYSTEM
+		p = SplitContext(p, key, sizeof(key), value, sizeof(value), NULL, nameandvalue);
+#else
+		p = SplitContext(p, key, sizeof(key), value, sizeof(value), NULL);
+#endif
 		duration = 0.0f;
 		p = SplitContext( p, key, sizeof( key ), value, sizeof( value ), &duration );
 		if ( duration )

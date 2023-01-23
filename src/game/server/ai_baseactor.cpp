@@ -1902,6 +1902,13 @@ bool CAI_BaseActor::UseSemaphore( void )
 
 CAI_Expresser *CAI_BaseActor::CreateExpresser()
 {
+
+#ifdef NEW_RESPONSE_SYSTEM
+	m_pExpresser = new CAI_ExpresserWithFollowup(this);
+#else
+	m_pExpresser = new CAI_Expresser(this);
+#endif
+
 	m_pExpresser = new CAI_Expresser(this);
 	return m_pExpresser;
 }
