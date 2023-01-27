@@ -4,12 +4,11 @@
 //
 //=============================================================================//
 
-#ifdef NEW_RESPONSE_SYSTEM
-#include "ai_criteria_new.h"
-#else
 #ifndef AI_CRITERIA_H
 #define AI_CRITERIA_H
 #ifdef _WIN32
+#pragma once
+#endif
 
 #include "tier1/utlrbtree.h"
 #include "tier1/utlsymbol.h"
@@ -235,10 +234,4 @@ private:
 	bool			m_bApplyContextToWorld;
 };
 
-#endif 
-
-#endif
-
-#endif
-
-// TUX: Sloppy #endifs I know but idc.
+#endif // AI_CRITERIA_H

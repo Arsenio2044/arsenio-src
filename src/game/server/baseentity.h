@@ -22,8 +22,6 @@
 #include "engine/ivmodelinfo.h"
 
 
-
-
 class CDamageModifier;
 class CDmgAccumulator;
 
