@@ -5,7 +5,6 @@
 //=============================================================================//
 
 #include "cbase.h"
-#include "hl2_player.h"
 #include "globalstate.h"
 #include "game.h"
 #include "gamerules.h"
@@ -48,6 +47,15 @@
 #include "tier0/icommandline.h"
 #include "gamemovement.h"
 #include "SoundEmitterSystem/isoundemittersystembase.h"
+
+#ifdef ARSENIO
+#include "hl2_player.h"
+#include "ai_speech.h"
+#include "ai_playerally.h"
+#include "arsenio/ai_sensorydummy.h"
+#include "arsenio/ai_concept_response.h"
+#include "GameEventListener.h"
+#endif
 
 
 
@@ -3815,16 +3823,18 @@ void CHL2_Player::StopLoopingSounds( void )
 	BaseClass::StopLoopingSounds();
 }
 
-//-----------------------------------------------------------------------------
-void CHL2_Player::ModifyOrAppendPlayerCriteria( AI_CriteriaSet& set )
-{
-	BaseClass::ModifyOrAppendPlayerCriteria( set );
 
-	if ( GlobalEntity_GetIndex( "gordon_precriminal" ) == -1 )
+//-----------------------------------------------------------------------------
+void CHL2_Player::ModifyOrAppendPlayerCriteria(AI_CriteriaSet& set)
+{
+	BaseClass::ModifyOrAppendPlayerCriteria(set);
+
+	if (GlobalEntity_GetIndex("gordon_precriminal") == -1)
 	{
-		set.AppendCriteria( "gordon_precriminal", "0" );
+		set.AppendCriteria("gordon_precriminal", "0");
 	}
 }
+
 
 
 //-----------------------------------------------------------------------------
