@@ -259,29 +259,16 @@ class CMattsPipe : public CWeaponCrowbar
 
 static const char *g_ppszRandomHeads[] = 
 {
-	"male_01.mdl",
-	"male_02.mdl",
-	"female_01.mdl",
-	"male_03.mdl",
-	"female_02.mdl",
-	"male_04.mdl",
-	"female_03.mdl",
-	"male_05.mdl",
-	"female_04.mdl",
-	"male_06.mdl",
-	"female_06.mdl",
-	"male_07.mdl",
-	"female_07.mdl",
-	"male_08.mdl",
-	"male_09.mdl",
+	"crim.mdl",
+
 };
 
 static const char *g_ppszModelLocs[] =
 {
 //	"Group01",
 //	"Group01",
-	"Group03",
-	"Group03%s",
+	"npc",
+	"npc%s",
 };
 
 #define IsExcludedHead( type, bMedic, iHead) false // see XBox codeline for an implementation
@@ -454,7 +441,7 @@ void CNPC_CRIMS::PrecacheAllOfType( CrimsType_t type )
 	{
 		if ( !IsExcludedHead( type, false, i ) )
 		{
-			PrecacheModel( CFmtStr( "models/crim/%s/%s", (const char *)(CFmtStr(g_ppszModelLocs[m_Type], "")), g_ppszRandomHeads[i] ) );
+			PrecacheModel( CFmtStr( "models/arsenio/crim/%s/%s", (const char *)(CFmtStr(g_ppszModelLocs[m_Type], "")), g_ppszRandomHeads[i] ) );
 		}
 	}
 
@@ -843,7 +830,7 @@ Class_T	CNPC_CRIMS::Classify()
 	if (GlobalEntity_GetState("citizens_passive") == GLOBAL_ON)
 		return CLASS_CITIZEN_PASSIVE;
 
-	return CLASS_WYLUXIA; // TUX: I'm not sure if this faction works as it was made for a cut enemy.
+	return CLASS_CRIM; // TUX: I'm not sure if this faction works as it was made for a cut enemy.
 }
 
 //-----------------------------------------------------------------------------
