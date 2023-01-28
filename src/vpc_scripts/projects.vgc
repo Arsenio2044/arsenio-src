@@ -136,18 +136,3 @@ $Project "vvis_launcher"
 	"utils\vvis_launcher\vvis_launcher.vpc" [$WIN32]
 }
 
-$Project "ivui"
-{
-	"IVEngine2\IvUI\gameui2_base.vpc"		[($WIN32||$X360||$POSIX) && $ARSENIO]
-
-}
-
-
-
-
-
-// IGNORE
-$Project "missionchooser"
-{
-	"game\missionchooser\missionchooser_swarm.vpc"	[$ARSENIO]
-}

@@ -172,7 +172,6 @@ extern vgui::IInputInternal *g_InputInternal;
 #endif
 
 
-#include "..\IVEngine2\IvUI\iGameUI2.h"
 
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -222,7 +221,6 @@ IReplaySystem *g_pReplay = NULL;
 #endif
 
 
-IGameUI2* GameUI2 = nullptr;
 
 
 IHaptics* haptics = NULL;// NVNT haptics system interface singleton
@@ -359,16 +357,7 @@ class IClientPurchaseInterfaceV2 *g_pClientPurchaseInterface = (class IClientPur
 
 static ConVar *g_pcv_ThreadMode = NULL;
 
-// Load any external DLLs (sike this doesn't work)
-//static class DllOverride {
-//public:
-//	DllOverride() {
-//		Sys_LoadInterface("FireWork_RenderSystem.dll", FIREWORK_INTERFACE_VERSION, nullptr, (void **)&g_pFullFileSystem);
-//		const char *pGameDir = CommandLine()->ParmValue("-game", "hl2");
-//		pGameDir = VarArgs("%s/bin", pGameDir);
-//		g_pFullFileSystem->AddSearchPath(pGameDir, "EXECUTABLE_PATH", PATH_ADD_TO_HEAD);
-//	}
-//} g_DllOverride;
+
 
 //-----------------------------------------------------------------------------
 // Purpose: interface for gameui to modify voice bans
@@ -1274,51 +1263,7 @@ void CHLClient::PostInit()
 
 	
 
-	if (CommandLine()->FindParm("-noivui") == 0)
-	{
-		char GameUI2Path[2048];
-		Q_snprintf(GameUI2Path, sizeof(GameUI2Path), "%s\\IVEngine2\\IvUI.dll", engine->GetGameDirectory());
 
-		CSysModule* GameUI2Module = Sys_LoadModule(GameUI2Path);
-		if (GameUI2Module != nullptr)
-		{
-			ConColorMsg(Color(0, 148, 255, 255), "Loaded IvUI.dll\n");
-			CreateInterfaceFn GameUI2Factory = Sys_GetFactory(GameUI2Module);
-			if (GameUI2Factory)
-			{
-				GameUI2 = (IGameUI2*)GameUI2Factory(GAMEUI2_DLL_INTERFACE_VERSION, NULL);
-				if (GameUI2 != nullptr)
-				{
-					ConColorMsg(Color(0, 148, 255, 255), "IvUI: Started with runtime: 995B12\n");
-
-					factorylist_t Factories;
-					FactoryList_Retrieve(Factories);
-					GameUI2->Initialize(Factories.appSystemFactory);
-					GameUI2->OnInitialize();
-				}
-				else
-				{
-					ConColorMsg(Color(0, 148, 255, 255), "Unable to pull IIvUI interface.\n");
-					Error("IvUI: Unable to pull IIvUI interface ");
-
-				}
-			}
-			else
-			{
-				ConColorMsg(Color(0, 148, 255, 255), "Unable to get IvUI factory.\n");
-				Error("IvUI: No factory! ");
-
-			}
-		}
-		else
-
-
-		{
-			ConColorMsg(Color(0, 148, 255, 255), "Unable to load IvUI.dll from:\n%s\n", GameUI2Path);
-			Error("Couldn't load Library IvUI.dll ");
-		}
-
-	}
 
 	#ifdef ARSENIO
 	SwapDisconnectCommand();
@@ -1371,11 +1316,7 @@ void CHLClient::Shutdown(void)
 	IGameSystem::ShutdownAllSystems();
 
 
-	if (GameUI2 != nullptr)
-	{
-		GameUI2->OnShutdown();
-		GameUI2->Shutdown();
-	}
+
 
 
 
@@ -1480,8 +1421,7 @@ void CHLClient::HudUpdate(bool bActive)
 #endif
 
 
-	if (GameUI2 != nullptr)
-		GameUI2->OnUpdate();
+
 
 
 }
@@ -1847,8 +1787,7 @@ void CHLClient::LevelInitPreEntity(char const* pMapName)
 #endif
 
 
-	if (GameUI2 != nullptr)
-		GameUI2->OnLevelInitializePreEntity();
+
 
 
 
@@ -1865,8 +1804,7 @@ void CHLClient::LevelInitPostEntity()
 	internalCenterPrint->Clear();
 
 
-	if (GameUI2 != nullptr)
-		GameUI2->OnLevelInitializePostEntity();
+
 
 
 
@@ -1937,8 +1875,7 @@ void CHLClient::LevelShutdown(void)
 	StopAllRumbleEffects();
 
 
-	if (GameUI2 != nullptr)
-		GameUI2->OnLevelShutdown();
+
 
 
 

@@ -12,7 +12,6 @@ $Group "gamedlls"
 {
 	"client"
 	"server"
-	"ivui"
 }
 
 $Group "game"
@@ -23,7 +22,6 @@ $Group "game"
 	"server"
 	"tier1"
 	"vgui_controls"
-	"ivui"
 	"captioncompiler"
 	"fgdlib"
 	"glview"
