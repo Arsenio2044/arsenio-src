@@ -4643,6 +4643,7 @@ void CBasePlayer::PostThink()
 				color32 hurtScreenOverlay = { 80, 0, 0, 64 };
 				UTIL_ScreenFade(this, hurtScreenOverlay, 1.0f, 0.1f, FFADE_IN | FFADE_PURGE);
 
+
 			}
 			// Regenerate heath
 			if  (IsExoEquipped() && IsAlive() && GetHealth() < GetMaxHealth() && !(GetHealth() < 30) && (sv_regeneration.GetInt() == 1))
@@ -4654,9 +4655,13 @@ void CBasePlayer::PostThink()
 				{
 					//Regenerate based on rate, and scale it by the frametime
 					m_fRegenRemander += sv_regeneration_rate.GetFloat() * gpGlobals->frametime;
-
-					EmitSound("LeOS.Regen");
-
+#ifdef ARSENIO
+					// TUX: This should work, i'm not sure.
+					if (IsLeOSActive())
+					{
+						EmitSound("LeOS.Regen");
+					}
+#endif
 					if (m_fRegenRemander >= 1)
 					{
 						TakeHealth(m_fRegenRemander, DMG_GENERIC);

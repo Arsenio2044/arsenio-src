@@ -274,6 +274,9 @@ public:
 
 	virtual void EquipSuit( bool bPlayEffects = true );
 	virtual void EquipExo( bool bPlayEffects = true );
+#ifdef ARSENIO
+	virtual void ActivateLeOS( bool bPlayEffects = true );
+#endif
 	virtual void RemoveSuit( void );
 	void  HandleAdmireGlovesAnimation( void );
 	void  StartAdmireGlovesAnimation( void );

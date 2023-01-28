@@ -518,6 +518,25 @@ void CHL2_Player::EquipExo(bool bPlayEffects)
 	}
 }
 
+#ifdef ARSENIO
+void CHL2_Player::ActivateLeOS(bool bPlayEffects)
+{
+	MDLCACHE_CRITICAL_SECTION();
+	BaseClass::ActivateLeOS();
+
+	m_HL2Local.m_bDisplayReticle = true;
+
+	CPASAttenuationFilter filter(this);
+	filter.UsePredictionRules();
+	EmitSound(filter, entindex(), "LeOS.Activate");
+
+	if (bPlayEffects == true)
+	{
+		StartAdmireGlovesAnimation();
+	}
+}
+#endif
+
 void CHL2_Player::RemoveSuit( void )
 {
 	BaseClass::RemoveSuit();
