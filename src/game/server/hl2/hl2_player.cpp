@@ -497,9 +497,9 @@ void CHL2_Player::EquipSuit( bool bPlayEffects )
 	
 	m_HL2Local.m_bDisplayReticle = true;
 
-	CPASAttenuationFilter filter(this);
-	filter.UsePredictionRules();
-	EmitSound(filter, entindex(), "Player.Spawn");
+	//CPASAttenuationFilter filter(this);
+	//filter.UsePredictionRules();
+	//EmitSound(filter, entindex(), "Player.Spawn");
 
 	if ( bPlayEffects == true )
 	{
@@ -511,6 +511,13 @@ void CHL2_Player::EquipExo(bool bPlayEffects)
 {
 	MDLCACHE_CRITICAL_SECTION();
 	BaseClass::EquipExo();
+
+#ifdef ARSENIO
+	if (IsLeOSActive())
+	{
+		EmitSound("LeOS.Exo");
+	}
+#endif
 
 	if (bPlayEffects == true)
 	{
