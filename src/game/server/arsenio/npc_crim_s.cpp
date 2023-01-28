@@ -830,7 +830,7 @@ Class_T	CNPC_CRIMS::Classify()
 	if (GlobalEntity_GetState("citizens_passive") == GLOBAL_ON)
 		return CLASS_CITIZEN_PASSIVE;
 
-	return CLASS_CRIM; // TUX: I'm not sure if this faction works as it was made for a cut enemy.
+	return CLASS_CRIM; 
 }
 
 //-----------------------------------------------------------------------------
