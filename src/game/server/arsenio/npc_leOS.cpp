@@ -2,6 +2,7 @@
 //
 // Purpose: LeOS is a prototype AI designed by GreyBox Labs to aid the Combine during and outside of combat. 
 // LeOS aids Arsenio during his journey by providing details on enemies and managing his body.
+// LeOS will also appear as a figure during some scripted sequences.
 //
 //=============================================================================//
 
