@@ -3310,32 +3310,27 @@ int C_BaseAnimating::InternalDrawModel( int flags )
 
 extern ConVar muzzleflash_light;
 
-
+// TUX: Finally working lighting for this!
+#ifdef ARSENIO
 void C_BaseAnimating::ProcessMuzzleFlashEvent()
 {
-	// If we have an attachment, then stick a light on it.
-	if (muzzleflash_light.GetBool())
-	{
-		//FIXME: We should really use a named attachment for this
-		if (m_Attachments.Count() > 0)
-		{
-			Vector vAttachment;
-			QAngle dummyAngles;
-			GetAttachment(1, vAttachment, dummyAngles);
+	Vector vAttachment;
+	QAngle dummyAngles;
+	GetAttachment(1, vAttachment, dummyAngles);
 
-			// Make an elight
-			dlight_t* el = effects->CL_AllocElight(LIGHT_INDEX_MUZZLEFLASH + index);
-			el->origin = vAttachment;
-			el->radius = random->RandomInt(32, 64);
-			el->decay = el->radius / 0.05f;
-			el->die = gpGlobals->curtime + 0.05f;
-			el->color.r = 255;
-			el->color.g = 192;
-			el->color.b = 64;
-			el->color.exponent = 5;
-		}
-	}
+	dlight_t* dl = effects->CL_AllocDlight(LIGHT_INDEX_MUZZLEFLASH + index);
+	dl->origin = vAttachment;
+	dl->radius = 80;
+	dl->decay = dl->radius / 0.37f;
+	dl->die = gpGlobals->curtime + 8.30f;
+	dl->color.r = 255;
+	dl->color.g = 200;
+	dl->color.b = 74;
+	dl->color.exponent = 6;
+		
+	
 }
+#endif
 
 
 //-----------------------------------------------------------------------------
