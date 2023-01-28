@@ -846,7 +846,7 @@ Class_T	CNPC_Citizen::Classify()
 	if (GlobalEntity_GetState("citizens_passive") == GLOBAL_ON)
 		return CLASS_CITIZEN_PASSIVE;
 
-	return CLASS_MILITARY;
+	return CLASS_CITIZEN_REBEL;
 }
 
 //-----------------------------------------------------------------------------

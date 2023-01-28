@@ -2929,6 +2929,9 @@
     <ClCompile Include="..\..\game\shared\vehicle_viewblend_shared.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="vgui_text_display.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="vguiscreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

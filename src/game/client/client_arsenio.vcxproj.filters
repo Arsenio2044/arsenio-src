@@ -2248,6 +2248,9 @@
     <ClCompile Include="c_vehicle_jeep.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="c_vgui_text_display.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="c_vguiscreen.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

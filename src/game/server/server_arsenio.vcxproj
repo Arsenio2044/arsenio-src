@@ -1260,6 +1260,7 @@
     <ClCompile Include="vehicle_baseserver.cpp" />
     <ClCompile Include="vehicle_choreo_generic.cpp" />
     <ClCompile Include="..\..\game\shared\vehicle_viewblend_shared.cpp" />
+    <ClCompile Include="vgui_text_display.cpp" />
     <ClCompile Include="vguiscreen.cpp" />
     <ClCompile Include="..\..\game\shared\voice_gamemgr.cpp" />
     <ClCompile Include="..\..\game\server\vote_controller.cpp" />
