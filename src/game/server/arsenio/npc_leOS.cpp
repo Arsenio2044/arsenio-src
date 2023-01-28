@@ -54,14 +54,6 @@ public:
 LINK_ENTITY_TO_CLASS(item_LeOS, CLeOS);
 
 
-
-
-
-
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
 class CNPC_LeOS : public CAI_BaseActor
 {
 public:
@@ -84,7 +76,7 @@ LINK_ENTITY_TO_CLASS(npc_LeOS, CNPC_LeOS);
 //-----------------------------------------------------------------------------
 Class_T	CNPC_LeOS::Classify(void)
 {
-	return	CLASS_PLAYER_ALLY_VITAL;
+	return	CLASS_PLAYER;
 }
 
 
@@ -113,7 +105,7 @@ int CNPC_LeOS::GetSoundInterests(void)
 }
 
 //-----------------------------------------------------------------------------
-// Spawn
+// LeOS does nothing without a scripted sequence when spawned as an NPC. 
 //-----------------------------------------------------------------------------
 void CNPC_LeOS::Spawn()
 {
