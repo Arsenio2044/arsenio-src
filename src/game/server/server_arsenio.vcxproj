@@ -718,6 +718,7 @@
     <ClInclude Include="arsenio\npc_bloodseeker.h" />
     <ClInclude Include="arsenio\npc_bullsquid.h" />
     <ClInclude Include="arsenio\npc_conscript.h" />
+    <ClInclude Include="arsenio\npc_crim_s.h" />
     <ClInclude Include="arsenio\npc_houndeye.h" />
     <ClInclude Include="arsenio\npc_mobile_turret.h" />
     <ClInclude Include="arsenio\npc_ranto_s.h" />
@@ -1275,6 +1276,7 @@
     <ClCompile Include="arsenio\npc_bloodseeker.cpp" />
     <ClCompile Include="arsenio\npc_bullsquid.cpp" />
     <ClCompile Include="arsenio\npc_conscript.cpp" />
+    <ClCompile Include="arsenio\npc_crim_s.cpp" />
     <ClCompile Include="arsenio\npc_gargantua.cpp" />
     <ClCompile Include="arsenio\npc_houndeye.cpp" />
     <ClCompile Include="arsenio\npc_hulk.cpp" />

@@ -1550,6 +1550,9 @@
     <ClInclude Include="arsenio\npc_conscript.h">
       <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
     </ClInclude>
+    <ClInclude Include="arsenio\npc_crim_s.h">
+      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+    </ClInclude>
     <ClInclude Include="arsenio\npc_houndeye.h">
       <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
     </ClInclude>
@@ -2972,6 +2975,9 @@
       <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_conscript.cpp">
+      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+    </ClCompile>
+    <ClCompile Include="arsenio\npc_crim_s.cpp">
       <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_gargantua.cpp">

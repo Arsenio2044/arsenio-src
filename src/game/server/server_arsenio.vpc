@@ -106,6 +106,8 @@ $Project "Server - Arsenio"
 			$File	"arsenio\npc_conscript.h"
 			$File	"arsenio\npc_synth_e.h"
 			$File	"arsenio\npc_synth_e.cpp"
+			$File	"arsenio\npc_crim_s.h"
+			$File	"arsenio\npc_crim_s.cpp"
                         }
 
 		}
