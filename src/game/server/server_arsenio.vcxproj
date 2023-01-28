@@ -1274,6 +1274,7 @@
     <ClCompile Include="world.cpp" />
     <ClCompile Include="..\..\game\shared\arsenio\gamemovement_mobility.cpp" />
     <ClCompile Include="arsenio\item_exo.cpp" />
+    <ClCompile Include="arsenio\npc_LeOS.cpp" />
     <ClCompile Include="arsenio\npc_bloodseeker.cpp" />
     <ClCompile Include="arsenio\npc_bullsquid.cpp" />
     <ClCompile Include="arsenio\npc_conscript.cpp" />

@@ -72,6 +72,9 @@ public:
 	bool					m_bDrawViewmodel;
 	bool					m_bWearingSuit;
 	bool					m_bWearingExo;
+#ifdef ARSENIO
+	bool					m_bWearingLeOS; // Is LeOS activated?
+#endif
 	bool					m_bPoisoned;
 	float					m_flStepSize;
 	bool					m_bAllowAutoMovement;

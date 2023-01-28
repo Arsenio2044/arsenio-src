@@ -8918,6 +8918,13 @@ void CBasePlayer::EquipExo(bool bPlayEffects)
 	m_Local.m_bWearingExo = true;
 }
 
+#ifdef ARSENIO
+void CBasePlayer::ActivateLeOS(bool bPlayEffects)
+{
+	m_Local.m_bWearingLeOS = true;
+}
+#endif
+
 
 void CBasePlayer::RemoveSuit(void)
 {

@@ -16,14 +16,14 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{BA03E055-4FA2-FCE3-8A1C-D348547D379C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ARSENIO DLL">
-      <UniqueIdentifier>{66A8A06F-6E77-8B09-FAE5-992372E86065}</UniqueIdentifier>
+    <Filter Include="Source Files\AR DLL">
+      <UniqueIdentifier>{C1DBCE06-4C43-18EA-53C2-922691767DB9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ARSENIO DLL\NPCS">
-      <UniqueIdentifier>{512E34D3-10EE-0F38-6D1D-CD9519814C63}</UniqueIdentifier>
+    <Filter Include="Source Files\AR DLL\NPCS">
+      <UniqueIdentifier>{43661426-D20A-7F0D-6B7C-7BAE981B3C1F}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ARSENIO DLL\Weapons">
-      <UniqueIdentifier>{315501D9-8B68-F248-8CD0-680C6F23D5C2}</UniqueIdentifier>
+    <Filter Include="Source Files\AR DLL\Weapons">
+      <UniqueIdentifier>{37AC29C3-9717-76BC-F0C2-1353A858D73D}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\HL2 DLL">
       <UniqueIdentifier>{3C43D38A-46AF-2183-A5E5-44383B1D2652}</UniqueIdentifier>
@@ -1536,46 +1536,46 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\game\shared\player_mobility_defs.h">
-      <Filter>Source Files\ARSENIO DLL</Filter>
+      <Filter>Source Files\AR DLL</Filter>
     </ClInclude>
     <ClInclude Include="arsenio\hl1_npc_gargantua.h">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClInclude>
     <ClInclude Include="arsenio\npc_bloodseeker.h">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClInclude>
     <ClInclude Include="arsenio\npc_bullsquid.h">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClInclude>
     <ClInclude Include="arsenio\npc_conscript.h">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClInclude>
     <ClInclude Include="arsenio\npc_crim_s.h">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClInclude>
     <ClInclude Include="arsenio\npc_houndeye.h">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClInclude>
     <ClInclude Include="arsenio\npc_mobile_turret.h">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClInclude>
     <ClInclude Include="arsenio\npc_ranto_s.h">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClInclude>
     <ClInclude Include="arsenio\npc_synth_e.h">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClInclude>
     <ClInclude Include="cyberspace\weapon_addamm557.h">
-      <Filter>Source Files\ARSENIO DLL\Weapons</Filter>
+      <Filter>Source Files\AR DLL\Weapons</Filter>
     </ClInclude>
     <ClInclude Include="hl2\weapon_egar.h">
-      <Filter>Source Files\ARSENIO DLL\Weapons</Filter>
+      <Filter>Source Files\AR DLL\Weapons</Filter>
     </ClInclude>
     <ClInclude Include="weapon_frag.h">
-      <Filter>Source Files\ARSENIO DLL\Weapons</Filter>
+      <Filter>Source Files\AR DLL\Weapons</Filter>
     </ClInclude>
     <ClInclude Include="arsenio\weapon_tau.h">
-      <Filter>Source Files\ARSENIO DLL\Weapons</Filter>
+      <Filter>Source Files\AR DLL\Weapons</Filter>
     </ClInclude>
     <ClInclude Include="hl2\ai_behavior_actbusy.h">
       <Filter>Source Files\HL2 DLL</Filter>
@@ -2966,70 +2966,73 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\game\shared\arsenio\gamemovement_mobility.cpp">
-      <Filter>Source Files\ARSENIO DLL</Filter>
+      <Filter>Source Files\AR DLL</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\item_exo.cpp">
-      <Filter>Source Files\ARSENIO DLL</Filter>
+      <Filter>Source Files\AR DLL</Filter>
+    </ClCompile>
+    <ClCompile Include="arsenio\npc_LeOS.cpp">
+      <Filter>Source Files\AR DLL</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_bloodseeker.cpp">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_bullsquid.cpp">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_conscript.cpp">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_crim_s.cpp">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_gargantua.cpp">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_houndeye.cpp">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_hulk.cpp">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_metrozombie.cpp">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_mobile_turret.cpp">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_ranto_s.cpp">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_roach.cpp">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\npc_synth_e.cpp">
-      <Filter>Source Files\ARSENIO DLL\NPCS</Filter>
+      <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClCompile>
     <ClCompile Include="cyberspace\weapon_addamm557.cpp">
-      <Filter>Source Files\ARSENIO DLL\Weapons</Filter>
+      <Filter>Source Files\AR DLL\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="hl2\weapon_egar.cpp">
-      <Filter>Source Files\ARSENIO DLL\Weapons</Filter>
+      <Filter>Source Files\AR DLL\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\weapon_glock.cpp">
-      <Filter>Source Files\ARSENIO DLL\Weapons</Filter>
+      <Filter>Source Files\AR DLL\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\weapon_k189.cpp">
-      <Filter>Source Files\ARSENIO DLL\Weapons</Filter>
+      <Filter>Source Files\AR DLL\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\weapon_mobileturret.cpp">
-      <Filter>Source Files\ARSENIO DLL\Weapons</Filter>
+      <Filter>Source Files\AR DLL\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\weapon_mp5k.cpp">
-      <Filter>Source Files\ARSENIO DLL\Weapons</Filter>
+      <Filter>Source Files\AR DLL\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\weapon_pro836.cpp">
-      <Filter>Source Files\ARSENIO DLL\Weapons</Filter>
+      <Filter>Source Files\AR DLL\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\weapon_tau.cpp">
-      <Filter>Source Files\ARSENIO DLL\Weapons</Filter>
+      <Filter>Source Files\AR DLL\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="..\..\game\shared\episodic\achievements_ep1.cpp">
       <Filter>Source Files\HL2 DLL</Filter>

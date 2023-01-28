@@ -183,6 +183,9 @@ public:
 
 	bool			IsSuitEquipped( void ) { return m_Local.m_bWearingSuit; };
 	bool			IsExoEquipped( void ) { return m_Local.m_bWearingExo; };
+#ifdef ARSENIO
+	bool			IsLeOSActive(void) { return m_Local.m_bWearingLeOS; };
+#endif
 
 
 	// Team handlers

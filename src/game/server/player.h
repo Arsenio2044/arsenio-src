@@ -729,6 +729,9 @@ public:
 	bool	IsDisconnecting() const	{ return m_iConnected == PlayerDisconnecting; }
 	bool	IsSuitEquipped() const	{ return m_Local.m_bWearingSuit; }
 	bool	IsExoEquipped() const	{ return m_Local.m_bWearingExo; }
+#ifdef ARSENIO
+	bool	IsLeOSActive() const	{ return m_Local.m_bWearingLeOS; }
+#endif
 	int		ArmorValue() const		{ return m_ArmorValue; }
 	bool	HUDNeedsRestart() const { return m_fInitHUD; }
 	float	MaxSpeed() const		{ return m_flMaxspeed; }
@@ -769,6 +772,9 @@ public:
 	void	SetConnected( PlayerConnectedState iConnected ) { m_iConnected = iConnected; }
 	virtual void EquipSuit( bool bPlayEffects = true );
 	virtual void EquipExo( bool bPlayEffects = true );
+#ifdef ARSENIO
+	virtual void ActivateLeOS(bool bPlayEffects = true); // Activate LeOS.
+#endif
 	virtual void RemoveSuit( void );
 	void	SetMaxSpeed( float flMaxSpeed ) { m_flMaxspeed = flMaxSpeed; }
 

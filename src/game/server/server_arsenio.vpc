@@ -55,11 +55,12 @@ $Project "Server - Arsenio"
 		$Lib	"responserules" [$NEW_RESPONSE_SYSTEM]
 		
 }
-		$Folder	"ARSENIO DLL"
+		$Folder	"AR DLL"
 		{		
 			$File	"$SRCDIR\game\shared\player_mobility_defs.h"
 			$File	"$SRCDIR\game\shared\arsenio\gamemovement_mobility.cpp"
 			$File	"arsenio\item_exo.cpp"
+			$File	"arsenio\npc_LeOS.cpp"
 			
 			$Folder	"Weapons"
 			{
