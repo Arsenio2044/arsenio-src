@@ -8,14 +8,14 @@ $Macro SRCDIR		"..\.."
 $Macro GAMENAME 	"dr" [!$SOURCESDK]
 $Macro GAMENAME 	"mod_dr" [$SOURCESDK]
 
-$Include "$SRCDIR\game\server\server_arsenio.vpc"
+$Include "$SRCDIR\game\server\server_base.vpc"
 
 $Configuration
 {
 	$Compiler
 	{
 		$AdditionalIncludeDirectories	"$BASE;$SRCDIR\game\shared\hl2;$SRCDIR\game\shared\episodic;.\hl2;.\episodic"
-		$PreprocessorDefinitions		"$BASE;HL2_DLL;ARSENIO;HL2_EPISODIC;USES_SAVERESTORE;ARSENIO_DLL;SKYDOME"
+		$PreprocessorDefinitions		"$BASE;HL2_DLL;ARSENIO;HL2_EPISODIC;USES_SAVERESTORE;ARSENIO_DLL;SKYDOME;DR;DR_DLL"
 		$PreprocessorDefinitions		"$BASE;NEW_RESPONSE_SYSTEM"		[$NEW_RESPONSE_SYSTEM]
 
 	}
@@ -55,19 +55,60 @@ $Project "Server - Data Redacted"
 		$Lib	"responserules" [$NEW_RESPONSE_SYSTEM]
 		
 }
-		$Folder	"DR DLL"
+		$Folder	"ARSENIO DLL"
 		{		
-
+			$File	"$SRCDIR\game\shared\player_mobility_defs.h"
+			$File	"$SRCDIR\game\shared\arsenio\gamemovement_mobility.cpp"
+			$File	"arsenio\item_exo.cpp"
 			
 			$Folder	"Weapons"
 			{
-
-    	                    	}
+			//$File	"hl2\weapon_pistolE3.cpp"
+			$File	"arsenio\weapon_mobileturret.cpp"
+			//$File	"arsenio\weapon_50calSniper.cpp"
+			//$File	"arsenio\weapon_oicw.cpp"
+			$File	"cyberspace\weapon_addamm557.cpp"
+			$File	"cyberspace\weapon_addamm557.h"
+			$File	"arsenio\weapon_glock.cpp"
+			$File	"arsenio\weapon_mp5k.cpp"
+			$File	"arsenio\weapon_pro836.cpp"
+			$File	"arsenio\weapon_tau.cpp"
+			$File	"arsenio\weapon_tau.h"
+			//$File	"arsenio\weapon_spas.cpp"
+			$File	"ai_expresserfollowup.cpp" [$NEW_RESPONSE_SYSTEM]
+			$File	"ai_speechqueue.cpp" [$NEW_RESPONSE_SYSTEM]
+			$File	"ai_speechqueue.h" [$NEW_RESPONSE_SYSTEM]
+			$File	"hl2\weapon_egar.h"
+			$File	"hl2\weapon_egar.cpp"
+			$File	"arsenio\weapon_k189.cpp"
+			$File	"weapon_frag.h"	
+                        }
 
 			$Folder	"NPCS"
 			{
-
-                        		}
+			$File	"arsenio\npc_metrozombie.cpp"
+			$File	"arsenio\npc_ranto_s.cpp"
+			$File	"arsenio\npc_ranto_s.h"
+			$File	"arsenio\npc_gargantua.cpp"
+			$File	"arsenio\hl1_npc_gargantua.h"
+			$File	"arsenio\npc_bloodseeker.h"
+			$File	"arsenio\npc_bloodseeker.cpp"
+			$File	"arsenio\npc_roach.cpp"
+			$File	"arsenio\npc_mobile_turret.h"
+			$File	"arsenio\npc_mobile_turret.cpp"
+			$File	"arsenio\npc_bullsquid.cpp"
+			$File	"arsenio\npc_bullsquid.h"
+			//$File	"arsenio\npc_trillionair.cpp"
+			$File	"arsenio\npc_hulk.cpp"
+			$File	"arsenio\npc_houndeye.h"
+			$File	"arsenio\npc_houndeye.cpp"
+			$File	"arsenio\npc_conscript.cpp"
+			$File	"arsenio\npc_conscript.h"
+			$File	"arsenio\npc_synth_e.h"
+			$File	"arsenio\npc_synth_e.cpp"
+			$File	"arsenio\npc_crim_s.h"
+			$File	"arsenio\npc_crim_s.cpp"
+                        }
 
 		}
 

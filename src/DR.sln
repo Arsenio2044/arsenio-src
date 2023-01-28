@@ -3,10 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 #
 # Automatically generated solution:
-# devtools\bin\vpc /arsenio +game /mksln Arsenio.sln 
+# devtools\bin\vpc /dr +game /mksln DR.sln 
 #
 #
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client - Arsenio", "game\client\client_arsenio.vcxproj", "{4805D596-827F-6EEE-28C5-2977FA0D9F1E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client - Data Redacted", "game\client\client_dr.vcxproj", "{85ABD047-FBE0-EF43-1106-66C43EB21359}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BAB92FF0-D72A-D7E5-1988-74628D39B94F} = {BAB92FF0-D72A-D7E5-1988-74628D39B94F}
 		{EC1C516D-E1D9-BC0A-F79D-E91E954ED8EC} = {EC1C516D-E1D9-BC0A-F79D-E91E954ED8EC}
@@ -17,7 +17,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "mathlib", "mathlib\mathlib.
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IVEngine 2 RTX", "raytrace\raytrace.vcxproj", "{95D67225-8415-236F-9128-DCB171B7DEC6}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Server - Arsenio", "game\server\server_arsenio.vcxproj", "{238FBBD9-01A2-B064-DC7C-8933973127D5}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Server - Data Redacted", "game\server\server_dr.vcxproj", "{4E36B091-5FE7-2FCE-6AE7-1FC6D3957099}"
 	ProjectSection(ProjectDependencies) = postProject
 		{BAB92FF0-D72A-D7E5-1988-74628D39B94F} = {BAB92FF0-D72A-D7E5-1988-74628D39B94F}
 		{EC1C516D-E1D9-BC0A-F79D-E91E954ED8EC} = {EC1C516D-E1D9-BC0A-F79D-E91E954ED8EC}
@@ -26,13 +26,6 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tier1", "tier1\tier1.vcxproj", "{EC1C516D-E1D9-BC0A-F79D-E91E954ED8EC}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vgui_controls", "vgui2\vgui_controls\vgui_controls.vcxproj", "{F69B3672-C5E8-CD1A-257F-253A25B5B939}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IvUI", "IVEngine2\IvUI\ivui_arsenio.vcxproj", "{1BEAC6E0-3DC2-8916-D3F8-9FB1BB1F18CD}"
-	ProjectSection(ProjectDependencies) = postProject
-		{BAB92FF0-D72A-D7E5-1988-74628D39B94F} = {BAB92FF0-D72A-D7E5-1988-74628D39B94F}
-		{EC1C516D-E1D9-BC0A-F79D-E91E954ED8EC} = {EC1C516D-E1D9-BC0A-F79D-E91E954ED8EC}
-		{F69B3672-C5E8-CD1A-257F-253A25B5B939} = {F69B3672-C5E8-CD1A-257F-253A25B5B939}
-	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Captioncompiler", "utils\captioncompiler\captioncompiler.vcxproj", "{E85D01E5-DA1B-00A2-5D72-A9B6DEA9A995}"
 	ProjectSection(ProjectDependencies) = postProject

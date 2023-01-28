@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>Client - Data Redacted</ProjectName>
+    <ProjectGuid>{85ABD047-FBE0-EF43-1106-66C43EB21359}</ProjectGuid>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <PlatformToolset>v120_xp</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>.\hl2;.\hl2\elements;..\..\game\shared\hl2;..\..\game\shared\episodic;..\..\public;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>;HL2_CLIENT_DLL;HL2_EPISODIC;ARSENIO;IVENGINE2;ARSENIO_CLIENT;SKYDOME;_EXTERNAL_DLL_EXT=.dll;VPCGAMECAPS=VALVE;PROJECTDIR=C:\Users\tuxx3\source\repos\IVEngine-2\src\game\client;_DLL_EXT=.dll;VPCGAME=valve;SOURCE1=1</PreprocessorDefinitions>
+    </ClCompile>
+    <ResourceCompile>
+    </ResourceCompile>
+    <PreLinkEvent>
+    </PreLinkEvent>
+    <Link>
+    </Link>
+    <Lib>
+    </Lib>
+    <Manifest>
+    </Manifest>
+    <Xdcmake>
+    </Xdcmake>
+    <Bscmake>
+    </Bscmake>
+    <PostBuildEvent>
+    </PostBuildEvent>
+    <CustomBuildStep>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <ClCompile>
+      <AdditionalIncludeDirectories>.\hl2;.\hl2\elements;..\..\game\shared\hl2;..\..\game\shared\episodic;..\..\public;</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>;HL2_CLIENT_DLL;HL2_EPISODIC;ARSENIO;IVENGINE2;ARSENIO_CLIENT;SKYDOME;_EXTERNAL_DLL_EXT=.dll;VPCGAMECAPS=VALVE;PROJECTDIR=C:\Users\tuxx3\source\repos\IVEngine-2\src\game\client;_DLL_EXT=.dll;VPCGAME=valve;SOURCE1=1</PreprocessorDefinitions>
+    </ClCompile>
+    <ResourceCompile>
+    </ResourceCompile>
+    <PreLinkEvent>
+    </PreLinkEvent>
+    <Link>
+    </Link>
+    <Lib>
+    </Lib>
+    <Manifest>
+    </Manifest>
+    <Xdcmake>
+    </Xdcmake>
+    <Bscmake>
+    </Bscmake>
+    <PostBuildEvent>
+    </PostBuildEvent>
+    <CustomBuildStep>
+    </CustomBuildStep>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="c_team_objectiveresource.h" />
+    <ClInclude Include="hl2\c_basehelicopter.h" />
+    <ClInclude Include="hl2\c_basehlcombatweapon.h" />
+    <ClInclude Include="hl2\c_basehlplayer.h" />
+    <ClInclude Include="hl2\c_corpse.h" />
+    <ClInclude Include="hl2\c_hl2_playerlocaldata.h" />
+    <ClInclude Include="hl2\c_prop_combine_ball.h" />
+    <ClInclude Include="hl2\c_vehicle_crane.h" />
+    <ClInclude Include="..\..\game\shared\hl2\citadel_effects_shared.h" />
+    <ClInclude Include="hl2\clientmode_hlnormal.h" />
+    <ClInclude Include="..\..\game\shared\hl2\env_headcrabcanister_shared.h" />
+    <ClInclude Include="episodic\episodic_screenspaceeffects.h" />
+    <ClInclude Include="..\..\game\shared\hl2\hl2_gamerules.h" />
+    <ClInclude Include="..\..\game\shared\hl2\hl2_shareddefs.h" />
+    <ClInclude Include="..\..\game\shared\hl2\hl_gamemovement.h" />
+    <ClInclude Include="hl2\hud_radar.h" />
+    <ClInclude Include="hl2\hud_suitpower.h" />
+    <ClInclude Include="..\..\game\shared\episodic\npc_advisor_shared.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="c_team_objectiveresource.cpp" />
+    <ClCompile Include="hud_chat.cpp" />
+    <ClCompile Include="..\..\game\shared\episodic\achievements_ep1.cpp" />
+    <ClCompile Include="..\..\game\shared\episodic\achievements_ep2.cpp" />
+    <ClCompile Include="..\..\game\shared\episodic\achievements_epx.cpp" />
+    <ClCompile Include="..\..\game\shared\hl2\basehlcombatweapon_shared.cpp" />
+    <ClCompile Include="hl2\c_antlion_dust.cpp" />
+    <ClCompile Include="hl2\c_ar2_explosion.cpp" />
+    <ClCompile Include="hl2\c_barnacle.cpp" />
+    <ClCompile Include="hl2\c_barney.cpp" />
+    <ClCompile Include="hl2\c_basehelicopter.cpp" />
+    <ClCompile Include="hl2\c_basehlcombatweapon.cpp" />
+    <ClCompile Include="hl2\c_basehlplayer.cpp" />
+    <ClCompile Include="hl2\c_citadel_effects.cpp" />
+    <ClCompile Include="hl2\c_corpse.cpp" />
+    <ClCompile Include="hl2\c_env_alyxtemp.cpp" />
+    <ClCompile Include="hl2\c_env_headcrabcanister.cpp" />
+    <ClCompile Include="hl2\c_env_starfield.cpp" />
+    <ClCompile Include="hl2\c_func_tankmortar.cpp" />
+    <ClCompile Include="hl2\c_hl2_playerlocaldata.cpp" />
+    <ClCompile Include="hl2\c_info_teleporter_countdown.cpp" />
+    <ClCompile Include="episodic\c_npc_advisor.cpp" />
+    <ClCompile Include="hl2\c_npc_antlionguard.cpp" />
+    <ClCompile Include="hl2\c_npc_combinegunship.cpp" />
+    <ClCompile Include="hl2\c_npc_manhack.cpp" />
+    <ClCompile Include="episodic\c_npc_puppet.cpp" />
+    <ClCompile Include="hl2\c_npc_rollermine.cpp" />
+    <ClCompile Include="hl2\c_plasma_beam_node.cpp" />
+    <ClCompile Include="hl2\c_prop_combine_ball.cpp" />
+    <ClCompile Include="episodic\c_prop_scalable.cpp" />
+    <ClCompile Include="hl2\c_rotorwash.cpp" />
+    <ClCompile Include="hl2\c_script_intro.cpp" />
+    <ClCompile Include="hl2\c_strider.cpp" />
+    <ClCompile Include="hl2\c_te_concussiveexplosion.cpp" />
+    <ClCompile Include="hl2\c_te_flare.cpp" />
+    <ClCompile Include="hl2\c_thumper_dust.cpp" />
+    <ClCompile Include="hl2\c_vehicle_airboat.cpp" />
+    <ClCompile Include="hl2\c_vehicle_cannon.cpp" />
+    <ClCompile Include="hl2\c_vehicle_crane.cpp" />
+    <ClCompile Include="episodic\c_vehicle_jeep_episodic.cpp" />
+    <ClCompile Include="hl2\c_vehicle_prisoner_pod.cpp" />
+    <ClCompile Include="episodic\c_vort_charge_token.cpp" />
+    <ClCompile Include="hl2\c_weapon_crossbow.cpp" />
+    <ClCompile Include="episodic\c_weapon_hopwire.cpp" />
+    <ClCompile Include="hl2\c_weapon_physcannon.cpp" />
+    <ClCompile Include="hl2\c_weapon_stunstick.cpp" />
+    <ClCompile Include="hl2\clientmode_hlnormal.cpp" />
+    <ClCompile Include="death.cpp" />
+    <ClCompile Include="..\..\game\shared\hl2\env_headcrabcanister_shared.cpp" />
+    <ClCompile Include="episodic\episodic_screenspaceeffects.cpp" />
+    <ClCompile Include="episodic\flesh_internal_material_proxy.cpp" />
+    <ClCompile Include="hl2\fx_antlion.cpp" />
+    <ClCompile Include="hl2\fx_bugbait.cpp" />
+    <ClCompile Include="hl2\fx_hl2_impacts.cpp" />
+    <ClCompile Include="hl2\fx_hl2_tracers.cpp" />
+    <ClCompile Include="hl2\hl2_clientmode.cpp" />
+    <ClCompile Include="..\..\game\shared\hl2\hl2_gamerules.cpp" />
+    <ClCompile Include="..\..\game\shared\hl2\hl2_usermessages.cpp" />
+    <ClCompile Include="..\..\game\shared\hl2\hl_gamemovement.cpp" />
+    <ClCompile Include="hl2\hl_in_main.cpp" />
+    <ClCompile Include="hl2\hl_prediction.cpp" />
+    <ClCompile Include="hl2\hud_ammo.cpp" />
+    <ClCompile Include="hl2\hud_battery.cpp" />
+    <ClCompile Include="hl2\hud_blood.cpp" />
+    <ClCompile Include="hl2\hud_credits.cpp" />
+    <ClCompile Include="hl2\hud_damageindicator.cpp" />
+    <ClCompile Include="hl2\hud_flashlight.cpp" />
+    <ClCompile Include="hl2\hud_health.cpp" />
+    <ClCompile Include="hl2\hud_locator.cpp" />
+    <ClCompile Include="hl2\hud_poisondamageindicator.cpp" />
+    <ClCompile Include="hud_posture.cpp" />
+    <ClCompile Include="hl2\hud_quickinfo.cpp" />
+    <ClCompile Include="hl2\hud_radar.cpp" />
+    <ClCompile Include="hud_squadstatus.cpp" />
+    <ClCompile Include="hl2\hud_suitpower.cpp" />
+    <ClCompile Include="hl2\hud_weaponselection.cpp" />
+    <ClCompile Include="hl2\hud_zoom.cpp" />
+    <ClCompile Include="..\..\game\shared\script_intro_shared.cpp" />
+    <ClCompile Include="hl2\shieldproxy.cpp" />
+    <ClCompile Include="..\..\game\shared\hl2\survival_gamerules.cpp" />
+    <ClCompile Include="hl2\vgui_rootpanel_hl2.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="client_dr.vpc">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Running VPC CRC Check - client_dr.vpc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">if exist "..\..\devtools\bin\vpc.exe" "..\..\devtools\bin\vpc.exe" -crc2 "client_dr.vcxproj"
+if ERRORLEVEL 1 exit /b 1
+echo crc_complete &gt; C:\Users\tuxx3\source\repos\IVEngine-2\src\game\client\client_dr.vpc.sentinel</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\Users\tuxx3\source\repos\IVEngine-2\src\game\client\client_dr.vpc.sentinel</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Running VPC CRC Check - client_dr.vpc</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">if exist "..\..\devtools\bin\vpc.exe" "..\..\devtools\bin\vpc.exe" -crc2 "client_dr.vcxproj"
+if ERRORLEVEL 1 exit /b 1
+echo crc_complete &gt; C:\Users\tuxx3\source\repos\IVEngine-2\src\game\client\client_dr.vpc.sentinel</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\Users\tuxx3\source\repos\IVEngine-2\src\game\client\client_dr.vpc.sentinel</Outputs>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
