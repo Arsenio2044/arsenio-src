@@ -15,7 +15,7 @@ $Project "captioncompiler"
 
 $Project "client"
 {
-	"game\client\client_optux3.vpc"		[($WIN32||$X360||$POSIX) && $OPTUX3]
+	"game\client\client_dr.vpc"		[($WIN32||$X360||$POSIX) && $DR]
 	"game\client\client_arsenio.vpc"		[($WIN32||$X360||$POSIX) && $ARSENIO]
 }
 
@@ -42,7 +42,7 @@ $Project "height2normal"
 
 $Project "server"
 {
-	"game\server\server_optux3.vpc"	[($WIN32||$X360||$POSIX) && $OPTUX3]
+	"game\server\server_dr.vpc"	[($WIN32||$X360||$POSIX) && $DR]
 	"game\server\server_arsenio.vpc"	[($WIN32||$X360||$POSIX) && $ARSENIO]
 }
 
