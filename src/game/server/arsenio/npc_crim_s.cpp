@@ -90,11 +90,11 @@ ConVar	arsenio_crims_heal_toss_player_delay("arsenio_crims_heal_toss_player_dela
 #define USE_EXPERIMENTAL_MEDIC_CODE() (npc_crim_s_heal_chuck_medkit.GetBool() && NameMatches("griggs"))
 #endif
 
-ConVar die_squad_autosummon_time( "die_squad_autosummon_time", "5" );
-ConVar die_squad_autosummon_move_tolerance( "die_squad_autosummon_move_tolerance", "20" );
-ConVar die_squad_autosummon_player_tolerance( "die_squad_autosummon_player_tolerance", "10" );
-ConVar die_squad_autosummon_time_after_combat( "die_squad_autosummon_time_after_combat", "8" );
-ConVar die_squad_autosummon_debug( "die_squad_autosummon_debug", "0" );
+ConVar cum_squad_autosummon_time( "cum_squad_autosummon_time", "5" );
+ConVar cum_squad_autosummon_move_tolerance( "cum_squad_autosummon_move_tolerance", "20" );
+ConVar cum_squad_autosummon_player_tolerance( "cum_squad_autosummon_player_tolerance", "10" );
+ConVar cum_squad_autosummon_time_after_combat( "cum_squad_autosummon_time_after_combat", "8" );
+ConVar cum_squad_autosummon_debug( "cum_squad_autosummon_debug", "0" );
 
 #define ShouldAutosquad() (npc_crim_s_auto_player_squad.GetBool())
 
@@ -170,18 +170,18 @@ crims_expression_list_t AngryExpressions[STATES_WITH_EXPRESSIONS] =
 
 #define COMMAND_POINT_CLASSNAME "info_target_command_point"
 
-class CCommandPointRa : public CPointEntity
+class CCommandPointAssShit : public CPointEntity
 {
-	DECLARE_CLASS( CCommandPointRa, CPointEntity );
+	DECLARE_CLASS( CCommandPointAssShit, CPointEntity );
 public:
-	CCommandPointRa()
+	CCommandPointAssShit()
 		: m_bNotInTransition(false)
 	{
 		if ( ++gm_nCommandPoints > 1 )
 			DevMsg( "WARNING: More than one citizen command point present\n" );
 	}
 
-	~CCommandPointRa()
+	~CCommandPointAssShit()
 	{
 		--gm_nCommandPoints;
 	}
@@ -229,10 +229,10 @@ private:
 	static int gm_nCommandPoints;
 };
 
-int CCommandPointRa::gm_nCommandPoints;
+int CCommandPointAssShit::gm_nCommandPoints;
 
-LINK_ENTITY_TO_CLASS( info_target_command_point, CCommandPointRa );
-BEGIN_DATADESC( CCommandPointRa )
+LINK_ENTITY_TO_CLASS( info_target_command_point, CCommandPointAssShit );
+BEGIN_DATADESC( CCommandPointAssShit )
 	
 //	DEFINE_FIELD( m_bNotInTransition,	FIELD_BOOLEAN ),
 	DEFINE_INPUTFUNC( FIELD_VOID,	"OutsideTransition",	InputOutsideTransition ),
@@ -451,7 +451,7 @@ void CNPC_CRIMS::PrecacheAllOfType( CrimsType_t type )
 		{
 			if ( !IsExcludedHead( type, true, i ) )
 			{
-				PrecacheModel( CFmtStr( "models/crim/%s/%s", (const char *)(CFmtStr(g_ppszModelLocs[m_Type], "m")), g_ppszRandomHeads[i] ) );
+				PrecacheModel( CFmtStr( "models/arsenio/crim/%s/%s", (const char *)(CFmtStr(g_ppszModelLocs[m_Type], "m")), g_ppszRandomHeads[i] ) );
 			}
 		}
 	}
@@ -2413,13 +2413,13 @@ bool CNPC_CRIMS::ShouldAutoSummon()
 	CHL2_Player *pPlayer = (CHL2_Player *)UTIL_GetLocalPlayer();
 	
 	float distMovedSq = ( pPlayer->GetAbsOrigin() - m_vAutoSummonAnchor ).LengthSqr();
-	float moveTolerance = die_squad_autosummon_move_tolerance.GetFloat() * 12;
+	float moveTolerance = cum_squad_autosummon_move_tolerance.GetFloat() * 12;
 	const Vector &vCommandGoal = GetCommandGoal();
 
 	if ( distMovedSq < Square(moveTolerance * 10) && (GetAbsOrigin() - vCommandGoal).LengthSqr() > Square(10*12) && IsCommandMoving() )
 	{
-		m_AutoSummonTimer.Set( die_squad_autosummon_time.GetFloat() );
-		if ( die_squad_autosummon_debug.GetBool() )
+		m_AutoSummonTimer.Set( cum_squad_autosummon_time.GetFloat() );
+		if ( cum_squad_autosummon_debug.GetBool() )
 			DevMsg( "Waiting for arrival before initiating autosummon logic\n");
 	}
 	else if ( m_AutoSummonTimer.Expired() )
@@ -2428,11 +2428,11 @@ bool CNPC_CRIMS::ShouldAutoSummon()
 		bool bTestEnemies = true;
 		
 		// Auto summon unconditionally if a significant amount of time has passed
-		if ( gpGlobals->curtime - m_AutoSummonTimer.GetNext() > die_squad_autosummon_time.GetFloat() * 2 )
+		if ( gpGlobals->curtime - m_AutoSummonTimer.GetNext() > cum_squad_autosummon_time.GetFloat() * 2 )
 		{
 			bSetFollow = true;
-			if ( die_squad_autosummon_debug.GetBool() )
-				DevMsg( "Auto summoning squad: long time (%f)\n", ( gpGlobals->curtime - m_AutoSummonTimer.GetNext() ) + die_squad_autosummon_time.GetFloat() );
+			if ( cum_squad_autosummon_debug.GetBool() )
+				DevMsg( "Auto summoning squad: long time (%f)\n", ( gpGlobals->curtime - m_AutoSummonTimer.GetNext() ) + cum_squad_autosummon_time.GetFloat() );
 		}
 			
 		// Player must move for autosummon
@@ -2443,12 +2443,12 @@ bool CNPC_CRIMS::ShouldAutoSummon()
 			// Auto summon if the player is close by the command point
 			if ( !bSetFollow && bCommandPointIsVisible && distMovedSq > Square(24) )
 			{
-				float closenessTolerance = die_squad_autosummon_player_tolerance.GetFloat() * 12;
+				float closenessTolerance = cum_squad_autosummon_player_tolerance.GetFloat() * 12;
 				if ( (pPlayer->GetAbsOrigin() - vCommandGoal).LengthSqr() < Square( closenessTolerance ) &&
 					 ((m_vAutoSummonAnchor - vCommandGoal).LengthSqr() > Square( closenessTolerance )) )
 				{
 					bSetFollow = true;
-					if ( die_squad_autosummon_debug.GetBool() )
+					if ( cum_squad_autosummon_debug.GetBool() )
 						DevMsg( "Auto summoning squad: player close to command point (%f)\n", (GetAbsOrigin() - vCommandGoal).Length() );
 				}
 			}
@@ -2460,7 +2460,7 @@ bool CNPC_CRIMS::ShouldAutoSummon()
 				{
 					bSetFollow = true;
 					bTestEnemies = ( distMovedSq < Square( moveTolerance * 10 ) );
-					if ( die_squad_autosummon_debug.GetBool() )
+					if ( cum_squad_autosummon_debug.GetBool() )
 						DevMsg( "Auto summoning squad: player very far from anchor (%f)\n", sqrt(distMovedSq) );
 				}
 				else if ( distMovedSq > Square( moveTolerance ) )
@@ -2468,7 +2468,7 @@ bool CNPC_CRIMS::ShouldAutoSummon()
 					if ( !bCommandPointIsVisible )
 					{
 						bSetFollow = true;
-						if ( die_squad_autosummon_debug.GetBool() )
+						if ( cum_squad_autosummon_debug.GetBool() )
 							DevMsg( "Auto summoning squad: player far from anchor (%f)\n", sqrt(distMovedSq) );
 					}
 				}
@@ -2481,7 +2481,7 @@ bool CNPC_CRIMS::ShouldAutoSummon()
 			for ( int i = 0; i < g_AI_Manager.NumAIs(); i++ )
 			{
 				CAI_BaseNPC *pNpc = g_AI_Manager.AccessAIs()[i];
-				float timeSinceCombatTolerance = die_squad_autosummon_time_after_combat.GetFloat();
+				float timeSinceCombatTolerance = cum_squad_autosummon_time_after_combat.GetFloat();
 				
 				if ( pNpc->IsInPlayerSquad() )
 				{
@@ -2513,7 +2513,7 @@ bool CNPC_CRIMS::ShouldAutoSummon()
 					}
 				}
 			}
-			if ( !bSetFollow && die_squad_autosummon_debug.GetBool() )
+			if ( !bSetFollow && cum_squad_autosummon_debug.GetBool() )
 				DevMsg( "Auto summon REVOKED: Combat recent \n");
 		}
 		
@@ -2592,7 +2592,7 @@ void CNPC_CRIMS::MoveOrder( const Vector &vecDest, CAI_BaseNPC **Allies, int num
 
 	CHL2_Player *pPlayer = (CHL2_Player *)UTIL_GetLocalPlayer();
 
-	m_AutoSummonTimer.Set( die_squad_autosummon_time.GetFloat() );
+	m_AutoSummonTimer.Set( cum_squad_autosummon_time.GetFloat() );
 	m_vAutoSummonAnchor = pPlayer->GetAbsOrigin();
 
 	if( m_StandoffBehavior.IsRunning() )
