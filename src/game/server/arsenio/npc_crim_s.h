@@ -413,9 +413,9 @@ private:
 
 //-------------------------------------
 
-class CDeathInsignia : public CBaseAnimating
+class CAssInsignia : public CBaseAnimating
 {
-	DECLARE_CLASS( CDeathInsignia, CBaseAnimating );
+	DECLARE_CLASS( CAssInsignia, CBaseAnimating );
 	void Spawn();
 };
 

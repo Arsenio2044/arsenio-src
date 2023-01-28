@@ -3244,7 +3244,7 @@ bool CNPC_CRIMS::IsFollowingCommandPoint()
 //};
 //
 //#ifdef NON
-int __cdecl DeathSortFunc( const SquadMemberInfo_t *pLeft, const SquadMemberInfo_t *pRight )
+int __cdecl AssSortFunc( const SquadMemberInfo_t *pLeft, const SquadMemberInfo_t *pRight )
 {
 	if ( pLeft->bSeesPlayer && !pRight->bSeesPlayer )
 	{
@@ -3295,7 +3295,7 @@ CAI_BaseNPC *CNPC_CRIMS::GetSquadCommandRepresentative()
 
 				if ( candidates.Count() > 0 )
 				{
-					candidates.Sort( DeathSortFunc );
+					candidates.Sort( AssSortFunc );
 					hCurrent = candidates[0].pMember;
 				}
 			}
@@ -4241,7 +4241,7 @@ void CNPC_CRIMS::RemoveInsignia()
 		if( pEntity->GetOwnerEntity() == this )
 		{
 			// Is this my insignia?
-			CDeathInsignia *pInsignia = dynamic_cast<CDeathInsignia *>(pEntity);
+			CAssInsignia *pInsignia = dynamic_cast<CAssInsignia *>(pEntity);
 
 			if( pInsignia )
 			{
@@ -4255,9 +4255,9 @@ void CNPC_CRIMS::RemoveInsignia()
 }
 
 //-----------------------------------------------------------------------------
-LINK_ENTITY_TO_CLASS( squadinsignia, CDeathInsignia );
+LINK_ENTITY_TO_CLASS( squadinsignia, CAssInsignia );
 
-void CDeathInsignia::Spawn()
+void CAssInsignia::Spawn()
 {
 	CAI_BaseNPC *pOwner = ( GetOwnerEntity() ) ? GetOwnerEntity()->MyNPCPointer() : NULL;
 
