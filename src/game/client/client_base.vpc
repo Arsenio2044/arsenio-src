@@ -502,6 +502,9 @@ $Project
 		$File	"$SRCDIR\game\client\c_vote_controller.h"
 		$File	"$SRCDIR\game\client\c_vote_controller.cpp"
 
+		// VGUI Panel
+		$File	"c_vgui_text_display.cpp"
+
 		// Experimental Skydome
 		$File	"c_env_skydome.cpp"
 		$File	"c_env_skydome.h"

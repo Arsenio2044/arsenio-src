@@ -672,6 +672,9 @@ $Project
 		$File	"$SRCDIR\game\server\vote_controller.h"
 		$File	"$SRCDIR\game\server\vote_controller.cpp"
 
+		// VGUI Panel
+		$File	"vgui_text_display.cpp"
+
 		// Experimental Skydome
 		$file	"env_skydome.cpp"
 		
