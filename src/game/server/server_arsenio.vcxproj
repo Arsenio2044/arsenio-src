@@ -723,6 +723,9 @@
     <ClInclude Include="arsenio\npc_mobile_turret.h" />
     <ClInclude Include="arsenio\npc_ranto_s.h" />
     <ClInclude Include="arsenio\npc_synth_e.h" />
+    <ClInclude Include="actanimating.h" />
+    <ClInclude Include="hl1\hl1_ai_basenpc.h" />
+    <ClInclude Include="hl1_CBaseHelicopter.h" />
     <ClInclude Include="cyberspace\weapon_addamm557.h" />
     <ClInclude Include="hl2\weapon_egar.h" />
     <ClInclude Include="weapon_frag.h" />
@@ -1287,6 +1290,12 @@
     <ClCompile Include="arsenio\npc_ranto_s.cpp" />
     <ClCompile Include="arsenio\npc_roach.cpp" />
     <ClCompile Include="arsenio\npc_synth_e.cpp" />
+    <ClCompile Include="actanimating.cpp" />
+    <ClCompile Include="hl1\hl1_ai_basenpc.cpp" />
+    <ClCompile Include="hl1\hl1_ents.cpp" />
+    <ClCompile Include="hl1\hl1_env_speaker.cpp" />
+    <ClCompile Include="hl1\hl1_eventlog.cpp" />
+    <ClCompile Include="hl1\hl1_npc_controller.cpp" />
     <ClCompile Include="cyberspace\weapon_addamm557.cpp" />
     <ClCompile Include="hl2\weapon_egar.cpp" />
     <ClCompile Include="arsenio\weapon_glock.cpp" />
