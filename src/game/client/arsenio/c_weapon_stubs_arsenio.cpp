@@ -46,13 +46,14 @@ STUB_WEAPON_CLASS(weapon_addamm557, WeaponAdamm557, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_mobileturret, WeaponMobileTurret, C_BaseHLBludgeonWeapon);
 STUB_WEAPON_CLASS(weapon_glock, WeaponGlock, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_k189, WeaponK189, C_HLMachineGun );
-STUB_WEAPON_CLASS(weapon_smg1, WeaponSMG1, C_HLSelectFireMachineGun); 
+STUB_WEAPON_CLASS(weapon_smg1, WeaponSMG1, C_HLSelectFireMachineGun);
+STUB_WEAPON_CLASS(weapon_MP99K, WeaponMP599K, C_BaseHLCombatWeapon); // Mp5K for modern world.
+
 
 // Coming soon
 #ifdef BALLS
 STUB_WEAPON_CLASS(weapon_BJ69, WeaponBJ69, C_HLSelectFireMachineGun); // nicknamed sex gun.
 STUB_WEAPON_CLASS(weapon_KLO99, WeaponKLO99, C_HLMachineGun); // High power LMG
-STUB_WEAPON_CLASS(weapon_MP99K, WeaponMP599K, C_BaseHLCombatWeapon); // Mp5K for modern world.
 STUB_WEAPON_CLASS(weapon_overlordgun, WeaponOverlord, C_BaseHLCombatWeapon); // Used for final boss.
 
 

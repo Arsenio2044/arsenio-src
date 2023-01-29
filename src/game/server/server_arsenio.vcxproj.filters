@@ -1565,15 +1565,6 @@
     <ClInclude Include="arsenio\npc_synth_e.h">
       <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClInclude>
-    <ClInclude Include="actanimating.h">
-      <Filter>Source Files\AR DLL\Weapons</Filter>
-    </ClInclude>
-    <ClInclude Include="hl1\hl1_ai_basenpc.h">
-      <Filter>Source Files\AR DLL\Weapons</Filter>
-    </ClInclude>
-    <ClInclude Include="hl1_CBaseHelicopter.h">
-      <Filter>Source Files\AR DLL\Weapons</Filter>
-    </ClInclude>
     <ClInclude Include="cyberspace\weapon_addamm557.h">
       <Filter>Source Files\AR DLL\Weapons</Filter>
     </ClInclude>
@@ -3019,21 +3010,6 @@
     <ClCompile Include="arsenio\npc_synth_e.cpp">
       <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClCompile>
-    <ClCompile Include="actanimating.cpp">
-      <Filter>Source Files\AR DLL\Weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="hl1\hl1_ai_basenpc.cpp">
-      <Filter>Source Files\AR DLL\Weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="hl1\hl1_ents.cpp">
-      <Filter>Source Files\AR DLL\Weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="hl1\hl1_env_speaker.cpp">
-      <Filter>Source Files\AR DLL\Weapons</Filter>
-    </ClCompile>
-    <ClCompile Include="hl1\hl1_eventlog.cpp">
-      <Filter>Source Files\AR DLL\Weapons</Filter>
-    </ClCompile>
     <ClCompile Include="hl1\hl1_npc_controller.cpp">
       <Filter>Source Files\AR DLL\Weapons</Filter>
     </ClCompile>
@@ -3053,6 +3029,9 @@
       <Filter>Source Files\AR DLL\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\weapon_mp5k.cpp">
+      <Filter>Source Files\AR DLL\Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="arsenio\weapon_mp99k.cpp">
       <Filter>Source Files\AR DLL\Weapons</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\weapon_pro836.cpp">
