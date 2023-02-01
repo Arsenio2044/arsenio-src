@@ -519,6 +519,17 @@ void CHL2_Player::EquipExo(bool bPlayEffects)
 	}
 #endif
 
+#ifdef ARSENIO
+
+	IGameEvent* pEvent = gameeventmanager->CreateEvent("instructor_exo");
+
+	if (pEvent)
+	{
+		pEvent->SetInt("userid", GetUserID());
+		gameeventmanager->FireEvent(pEvent);
+	}
+#endif
+
 	if (bPlayEffects == true)
 	{
 		StartAdmireGlovesAnimation();

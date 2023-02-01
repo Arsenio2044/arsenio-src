@@ -1654,7 +1654,7 @@ void CLocatorPanel::DrawStaticIcon(CLocatorTarget *pTarget)
         int nWide = pVguiTarget->GetWide();
         int nTall = pVguiTarget->GetTall();
 
-        const char *pchLookup = pTarget->GetVguiTargetLookup();
+//        const char *pchLookup = pTarget->GetVguiTargetLookup();
         /*if ( pchLookup[ 0 ] != '\0' )
         {
             bool bLookupSuccess = false;
