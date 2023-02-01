@@ -1,7 +1,7 @@
 //========= Copyright Valve Corporation, All rights reserved. ============//
 //
 // Purpose: Win32 replacements for XBox.
-//
+// this is fucking useless
 //=============================================================================
 
 #if !defined( XBOXSTUBS_H ) && !defined( _X360 )
