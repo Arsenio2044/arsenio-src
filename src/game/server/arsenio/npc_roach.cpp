@@ -58,7 +58,7 @@ public:
 	void Look ( int iDistance );
 	void Move ( float flInterval );
 
-	Class_T  Classify( void ) { return CLASS_EARTH_FAUNA; }
+	Class_T  Classify( void ) { return CLASS_INSECT; }
 
 	void Touch ( CBaseEntity *pOther );
 
