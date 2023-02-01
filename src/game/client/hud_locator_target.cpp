@@ -1566,10 +1566,10 @@ void CLocatorPanel::DrawPointerBackground(CLocatorTarget *pTarget, int nPointerX
     if (locator_background_style.GetInt() == 0 || pTarget->m_alpha == 0)
         return;
 
-    int nPosX = pTarget->GetIconX() + locator_background_shift_x.GetInt() - locator_background_thickness_x.GetInt() / 2;
-    int nPosY = pTarget->GetIconY() + locator_background_shift_y.GetInt() - locator_background_thickness_y.GetInt() / 2;
-    int nBackgroundWide = nWide + locator_background_thickness_x.GetInt();
-    int nBackgroundTall = nTall + locator_background_thickness_y.GetInt();
+//    int nPosX = pTarget->GetIconX() + locator_background_shift_x.GetInt() - locator_background_thickness_x.GetInt() / 2;
+//    int nPosY = pTarget->GetIconY() + locator_background_shift_y.GetInt() - locator_background_thickness_y.GetInt() / 2;
+//    int nBackgroundWide = nWide + locator_background_thickness_x.GetInt();
+//    int nBackgroundTall = nTall + locator_background_thickness_y.GetInt();
 
     nPointerX = clamp(nPointerX, -0.5f * ScreenWidth(), ScreenWidth() * 1.5f);
     nPointerY = clamp(nPointerY, -0.5f * ScreenHeight(), ScreenHeight() * 1.5f);
@@ -1799,7 +1799,7 @@ void CLocatorPanel::DrawDynamicIcon(CLocatorTarget *pTarget, bool bDrawCaption, 
         int nWide = pVguiTarget->GetWide();
         int nTall = pVguiTarget->GetTall();
 
-        const char *pchLookup = pTarget->GetVguiTargetLookup();
+       // const char *pchLookup = pTarget->GetVguiTargetLookup();
 
         /*if ( pchLookup[ 0 ] != '\0' )
         {
