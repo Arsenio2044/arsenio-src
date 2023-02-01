@@ -18,6 +18,9 @@
 #include "baseviewmodel_shared.h"
 #include "weapon_proficiency.h"
 #include "utlmap.h"
+//#ifdef GAME_DLL
+//#include "player.h"
+//#endif
 
 #if defined( CLIENT_DLL )
 #define CBaseCombatWeapon C_BaseCombatWeapon

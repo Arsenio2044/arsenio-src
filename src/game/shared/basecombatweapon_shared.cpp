@@ -1377,6 +1377,14 @@ bool CBaseCombatWeapon::ReloadOrSwitchWeapons( void )
 	Assert( pOwner );
 
 	m_bFireOnEmpty = false;
+//#ifdef GAME_DLL
+//	IGameEvent* pEvent = gameeventmanager->CreateEvent("instructor_reload");
+//	if (pEvent)
+//	{
+//		pEvent->SetInt("userid", GetUserID());
+//		gameeventmanager->FireEvent(pEvent);
+//	}
+//#endif
 
 	// If we don't have any ammo, switch to the next best weapon
 	if ( !HasAnyAmmo() && m_flNextPrimaryAttack < gpGlobals->curtime && m_flNextSecondaryAttack < gpGlobals->curtime )
