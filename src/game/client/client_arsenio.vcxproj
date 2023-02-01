@@ -836,7 +836,10 @@
     <ClInclude Include="hl2\hud_radar.h" />
     <ClInclude Include="hl2\hud_suitpower.h" />
     <ClInclude Include="..\..\game\shared\episodic\npc_advisor_shared.h" />
+    <ClInclude Include="c_baselesson.h" />
+    <ClInclude Include="c_gameinstructor.h" />
     <ClInclude Include="IVEngine2\VGUI\hsmapoverview.h" />
+    <ClInclude Include="hud_locator_target.h" />
     <ClInclude Include="IVEngine2\hud_radar_panel.h" />
     <ClInclude Include="..\..\game\client\ShaderEditor\ISEdit_ModelRender.h" />
     <ClInclude Include="..\..\game\client\ShaderEditor\IVShaderEditor.h" />
@@ -1388,7 +1391,10 @@
     <ClCompile Include="hl2\shieldproxy.cpp" />
     <ClCompile Include="..\..\game\shared\hl2\survival_gamerules.cpp" />
     <ClCompile Include="hl2\vgui_rootpanel_hl2.cpp" />
+    <ClCompile Include="c_baselesson.cpp" />
+    <ClCompile Include="c_gameinstructor.cpp" />
     <ClCompile Include="IVEngine2\VGUI\hsmapoverview.cpp" />
+    <ClCompile Include="hud_locator_target.cpp" />
     <ClCompile Include="IVEngine2\hud_radar_panel.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

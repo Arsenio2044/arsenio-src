@@ -85,6 +85,8 @@ $Project "Server - Arsenio"
 			$File	"arsenio\weapon_k189.cpp"
 			$File	"weapon_frag.h"	
 			$File	"hl1\hl1_npc_controller.cpp"
+			$File	"env_instructor_hint.cpp"
+
                         }
 
 			$Folder	"NPCS"

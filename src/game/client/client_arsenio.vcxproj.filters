@@ -1907,7 +1907,16 @@
     <ClInclude Include="..\..\game\shared\episodic\npc_advisor_shared.h">
       <Filter>Source Files\HL2 DLL</Filter>
     </ClInclude>
+    <ClInclude Include="c_baselesson.h">
+      <Filter>Source Files\IVEngine2</Filter>
+    </ClInclude>
+    <ClInclude Include="c_gameinstructor.h">
+      <Filter>Source Files\IVEngine2</Filter>
+    </ClInclude>
     <ClInclude Include="IVEngine2\VGUI\hsmapoverview.h">
+      <Filter>Source Files\IVEngine2</Filter>
+    </ClInclude>
+    <ClInclude Include="hud_locator_target.h">
       <Filter>Source Files\IVEngine2</Filter>
     </ClInclude>
     <ClInclude Include="IVEngine2\hud_radar_panel.h">
@@ -3280,7 +3289,16 @@
     <ClCompile Include="hl2\vgui_rootpanel_hl2.cpp">
       <Filter>Source Files\HL2 DLL</Filter>
     </ClCompile>
+    <ClCompile Include="c_baselesson.cpp">
+      <Filter>Source Files\IVEngine2</Filter>
+    </ClCompile>
+    <ClCompile Include="c_gameinstructor.cpp">
+      <Filter>Source Files\IVEngine2</Filter>
+    </ClCompile>
     <ClCompile Include="IVEngine2\VGUI\hsmapoverview.cpp">
+      <Filter>Source Files\IVEngine2</Filter>
+    </ClCompile>
+    <ClCompile Include="hud_locator_target.cpp">
       <Filter>Source Files\IVEngine2</Filter>
     </ClCompile>
     <ClCompile Include="IVEngine2\hud_radar_panel.cpp">

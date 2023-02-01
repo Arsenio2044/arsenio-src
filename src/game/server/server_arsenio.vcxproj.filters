@@ -3010,6 +3010,9 @@
     <ClCompile Include="arsenio\npc_synth_e.cpp">
       <Filter>Source Files\AR DLL\NPCS</Filter>
     </ClCompile>
+    <ClCompile Include="env_instructor_hint.cpp">
+      <Filter>Source Files\AR DLL\Weapons</Filter>
+    </ClCompile>
     <ClCompile Include="hl1\hl1_npc_controller.cpp">
       <Filter>Source Files\AR DLL\Weapons</Filter>
     </ClCompile>
