@@ -828,58 +828,7 @@ CON_COMMAND( give, "Give item to player.\n\tArguments: <item_name>" )
 		pPlayer->GiveNamedItem( STRING(iszItem) );
 	}
 }
-/*
-// Buyable items
-const char* g_ppszBuyableItems[] =
-{
-	"item_suit",
-	"armor",
-};
 
-ConVar buyablearmor("buyablearmor", "100", FCVAR_REPLICATED | FCVAR_SERVER_CAN_EXECUTE);
-//------------------------------------------------------------------------------
-//------------------------------------------------------------------------------
-CON_COMMAND(buy, "Buy's buyable items if the player is in the buy zone.")
-{
-	CBasePlayer* pPlayer = ToBasePlayer(UTIL_GetCommandClient());
-	if (pPlayer
-		&& (pPlayer->IsinShop() == true)
-		&& args.ArgC() >= 2)
-	{
-		char item_to_give[256];
-		Q_strncpy(item_to_give, args[1], sizeof(item_to_give));
-		Q_strlower(item_to_give);
-
-		int nHeads = ARRAYSIZE(g_ppszBuyableItems);
-		for (int i = 0; i < nHeads; i++) // Loop to find the item to buy.
-		{
-			if (g_ppszBuyableItems[i] == item_to_give) // If we find the item to buy...
-			{
-				// Dirty hack to avoid suit playing it's pickup sound
-				if (!Q_stricmp(item_to_give, "item_suit"))
-				{
-					pPlayer->EquipSuit(false);
-					return;
-				}
-
-				if (!Q_stricmp(item_to_give, "armor"))
-				{
-					pPlayer->IncrementArmorValue(100, buyablearmor.GetInt());
-					return;
-				}
-
-				string_t iszItem = AllocPooledString(item_to_give);	// Make a copy of the classname
-				pPlayer->GiveNamedItem(STRING(iszItem));
-				break; // Exit out of the 'find item to buy' loop.	
-			}
-			else
-			{
-				return;
-			}
-		}
-	}
-}
-*/
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
