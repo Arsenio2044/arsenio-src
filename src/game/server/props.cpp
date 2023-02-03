@@ -5730,6 +5730,21 @@ private:
 
 LINK_ENTITY_TO_CLASS( prop_physics_respawnable, CPhysicsPropRespawnable );
 
+//------------------------------------------------------------------------------
+// Gets info of entity your currently looking at
+//------------------------------------------------------------------------------
+void CC_Ent_Info_View(const CCommand& args)
+{
+	CBasePlayer* pPlayer = UTIL_GetCommandClient();
+	CBaseEntity* pEntity = FindPickerEntity(pPlayer);
+	if (!pEntity)
+		return;
+
+	Msg("Classname: %s\n" "Target Name: %s\n", pEntity->GetClassname(), pEntity->GetEntityName());
+}
+
+static ConCommand ent_info_view("ent_info_view", CC_Ent_Info_View, "Get info of entity your currently looking at", FCVAR_CHEAT);
+
 BEGIN_DATADESC( CPhysicsPropRespawnable )
 	DEFINE_THINKFUNC( Materialize ),
 	DEFINE_KEYFIELD( m_flRespawnTime, FIELD_FLOAT, "RespawnTime" ),

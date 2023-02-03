@@ -862,6 +862,16 @@ void CC_Player_SetModel( const CCommand &args )
 	{
 		static char szName[256];
 		Q_snprintf( szName, sizeof( szName ), "models/%s.mdl", args[1] );
+
+		// having it crash is annoying
+		int i = modelinfo->GetModelIndex(szName);
+		if (i == -1)
+		{
+			Msg("%i/%s - %s:  CC_Player_SetModel:  not precached: %s\n", pPlayer->entindex(),
+				STRING(pPlayer->GetEntityName()), pPlayer->GetClassname(), szName);
+			return;
+		}
+
 		pPlayer->SetModel( szName );
 		UTIL_SetSize(pPlayer, VEC_HULL_MIN, VEC_HULL_MAX);
 	}
