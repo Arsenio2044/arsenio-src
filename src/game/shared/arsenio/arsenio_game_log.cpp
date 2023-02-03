@@ -86,7 +86,7 @@ END_DATADESC()
 CHandle<CArsenioGameLogger> CArsenioGameLogger::pGameLoggerEnt;
 
 void ArsenioGameLog_CVarToggle( IConVar *var, const char *pOldString, float flOldValue );
-ConVar arsenio_game_log_on_autosave( "arsenio_game_log_on_autosave", "0", FCVAR_NONE, "Logs information to %mapname%_log_%number%.txt on each autosave", ArsenioGameLog_CVarToggle );
+ConVar arsenio_game_log_on_autosave( "arsenio_game_log_on_autosave", "1", FCVAR_NONE, "Logs information to %mapname%_log_%number%.txt on each autosave", ArsenioGameLog_CVarToggle );
 
 void ArsenioGameLog_Init()
 {
