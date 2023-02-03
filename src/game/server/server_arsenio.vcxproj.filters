@@ -2965,6 +2965,9 @@
     <ClCompile Include="world.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\game\shared\arsenio\arsenio_game_log.cpp">
+      <Filter>Source Files\AR DLL</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\game\shared\arsenio\gamemovement_mobility.cpp">
       <Filter>Source Files\AR DLL</Filter>
     </ClCompile>

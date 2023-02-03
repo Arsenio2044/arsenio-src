@@ -64,7 +64,7 @@
       <AdditionalOptions> /Gw</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\common;..\..\public;..\..\public\tier0;..\..\public\tier1;..\common</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_HAS_ITERATOR_DEBUGGING=0;_WIN32;_CONSOLE;_ALLOW_RUNTIME_LIBRARY_MISMATCH;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;_ALLOW_MSC_VER_MISMATCH;%(PreprocessorDefinitions);_EXTERNAL_DLL_EXT=.dll;VPCGAMECAPS=VALVE;PROJECTDIR=C:\Users\tuxx3\source\repos\IVEngine-2\src\utils\height2normal;_DLL_EXT=.dll;VPCGAME=valve;SOURCE1=1</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_HAS_ITERATOR_DEBUGGING=0;_WIN32;_CONSOLE;_ALLOW_RUNTIME_LIBRARY_MISMATCH;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;_ALLOW_MSC_VER_MISMATCH;%(PreprocessorDefinitions);_EXTERNAL_DLL_EXT=.dll;VPCGAMECAPS=VALVE;PROJECTDIR=C:\Users\tuxx3\source\repos\IVEngine-2\src\utils\height2normal;_DLL_EXT=.dll;SOURCE1=1;VPCGAME=valve</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>false</ExceptionHandling>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
@@ -144,7 +144,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <AdditionalIncludeDirectories>..\..\common;..\..\public;..\..\public\tier0;..\..\public\tier1;..\common</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_HAS_ITERATOR_DEBUGGING=0;_WIN32;_CONSOLE;_ALLOW_RUNTIME_LIBRARY_MISMATCH;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;_ALLOW_MSC_VER_MISMATCH;%(PreprocessorDefinitions);_EXTERNAL_DLL_EXT=.dll;VPCGAMECAPS=VALVE;PROJECTDIR=C:\Users\tuxx3\source\repos\IVEngine-2\src\utils\height2normal;_DLL_EXT=.dll;VPCGAME=valve;SOURCE1=1</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_HAS_ITERATOR_DEBUGGING=0;_WIN32;_CONSOLE;_ALLOW_RUNTIME_LIBRARY_MISMATCH;_ALLOW_ITERATOR_DEBUG_LEVEL_MISMATCH;_ALLOW_MSC_VER_MISMATCH;%(PreprocessorDefinitions);_EXTERNAL_DLL_EXT=.dll;VPCGAMECAPS=VALVE;PROJECTDIR=C:\Users\tuxx3\source\repos\IVEngine-2\src\utils\height2normal;_DLL_EXT=.dll;SOURCE1=1;VPCGAME=valve</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <ExceptionHandling>false</ExceptionHandling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>

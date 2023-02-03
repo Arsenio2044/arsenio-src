@@ -29,7 +29,7 @@ $Project "Client - Arsenio"
 		$File	"c_team_objectiveresource.cpp"
 		$File	"c_team_objectiveresource.h"
 		
-		$Folder	"ARSENIO DLL"
+		$Folder	"AR DLL"
 		{
 			$File	"c_vehicle_airboat.h"			
 			$File	"c_weapon_egar.h"
@@ -44,6 +44,8 @@ $Project "Client - Arsenio"
 			$File	"arsenio\c_weapon_stubs_arsenio.cpp"
 			$File	"arsenio\menu_background.cpp"
 			$File	"arsenio\menu_background.h"
+			$File	"$SRCDIR\game\shared\arsenio\arsenio_game_log.cpp"
+
 		}
 
 		$Folder	"IVEngine2"

@@ -1272,6 +1272,7 @@
     <ClCompile Include="..\..\game\shared\weapon_proficiency.cpp" />
     <ClCompile Include="weight_button.cpp" />
     <ClCompile Include="world.cpp" />
+    <ClCompile Include="..\..\game\shared\arsenio\arsenio_game_log.cpp" />
     <ClCompile Include="..\..\game\shared\arsenio\gamemovement_mobility.cpp" />
     <ClCompile Include="arsenio\item_exo.cpp" />
     <ClCompile Include="arsenio\npc_LeOS.cpp" />

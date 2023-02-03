@@ -25,8 +25,8 @@
     <Filter Include="Source Files">
       <UniqueIdentifier>{BA03E055-4FA2-FCE3-8A1C-D348547D379C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ARSENIO DLL">
-      <UniqueIdentifier>{66A8A06F-6E77-8B09-FAE5-992372E86065}</UniqueIdentifier>
+    <Filter Include="Source Files\AR DLL">
+      <UniqueIdentifier>{C1DBCE06-4C43-18EA-53C2-922691767DB9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\game_controls">
       <UniqueIdentifier>{1E7DB91A-DC0A-B17F-617D-4C4FB3FA7A3E}</UniqueIdentifier>
@@ -1839,16 +1839,16 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="c_vehicle_airboat.h">
-      <Filter>Source Files\ARSENIO DLL</Filter>
+      <Filter>Source Files\AR DLL</Filter>
     </ClInclude>
     <ClInclude Include="c_weapon_egar.h">
-      <Filter>Source Files\ARSENIO DLL</Filter>
+      <Filter>Source Files\AR DLL</Filter>
     </ClInclude>
     <ClInclude Include="arsenio\menu_background.h">
-      <Filter>Source Files\ARSENIO DLL</Filter>
+      <Filter>Source Files\AR DLL</Filter>
     </ClInclude>
     <ClInclude Include="..\..\game\shared\player_mobility_defs.h">
-      <Filter>Source Files\ARSENIO DLL</Filter>
+      <Filter>Source Files\AR DLL</Filter>
     </ClInclude>
     <ClInclude Include="game_controls\basemodel_panel.h">
       <Filter>Source Files\game_controls</Filter>
@@ -2989,32 +2989,35 @@
     <ClCompile Include="WorldDimsProxy.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\game\shared\arsenio\arsenio_game_log.cpp">
+      <Filter>Source Files\AR DLL</Filter>
+    </ClCompile>
     <ClCompile Include="c_weapon_egar.cpp">
-      <Filter>Source Files\ARSENIO DLL</Filter>
+      <Filter>Source Files\AR DLL</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\c_weapon_stubs_arsenio.cpp">
-      <Filter>Source Files\ARSENIO DLL</Filter>
+      <Filter>Source Files\AR DLL</Filter>
     </ClCompile>
     <ClCompile Include="..\..\game\shared\IVEngine2\gamemovement_duck.cpp">
-      <Filter>Source Files\ARSENIO DLL</Filter>
+      <Filter>Source Files\AR DLL</Filter>
     </ClCompile>
     <ClCompile Include="..\..\game\shared\arsenio\gamemovement_mobility.cpp">
-      <Filter>Source Files\ARSENIO DLL</Filter>
+      <Filter>Source Files\AR DLL</Filter>
     </ClCompile>
     <ClCompile Include="hud_abrockets.cpp">
-      <Filter>Source Files\ARSENIO DLL</Filter>
+      <Filter>Source Files\AR DLL</Filter>
     </ClCompile>
     <ClCompile Include="hl2\hud_frag.cpp">
-      <Filter>Source Files\ARSENIO DLL</Filter>
+      <Filter>Source Files\AR DLL</Filter>
     </ClCompile>
     <ClCompile Include="hl2\hud_fragcount.cpp">
-      <Filter>Source Files\ARSENIO DLL</Filter>
+      <Filter>Source Files\AR DLL</Filter>
     </ClCompile>
     <ClCompile Include="hud_speedo.cpp">
-      <Filter>Source Files\ARSENIO DLL</Filter>
+      <Filter>Source Files\AR DLL</Filter>
     </ClCompile>
     <ClCompile Include="arsenio\menu_background.cpp">
-      <Filter>Source Files\ARSENIO DLL</Filter>
+      <Filter>Source Files\AR DLL</Filter>
     </ClCompile>
     <ClCompile Include="game_controls\basemodel_panel.cpp">
       <Filter>Source Files\game_controls</Filter>
