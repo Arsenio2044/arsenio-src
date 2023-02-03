@@ -266,6 +266,11 @@ ServiceFabricBackup/
 *.ldf
 *.ndf
 
+# bitchass
+
+*.sln
+*.vcxproj
+
 # Business Intelligence projects
 *.rdl.data
 *.bim.layout
