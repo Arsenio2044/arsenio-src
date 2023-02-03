@@ -270,6 +270,8 @@ ServiceFabricBackup/
 
 *.sln
 *.vcxproj
+*.filters
+*.user
 
 # Business Intelligence projects
 *.rdl.data
