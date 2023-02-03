@@ -1,6 +1,6 @@
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
-// Purpose: Custom weapon stubs file for ARSENIO.
+// Purpose:  Weapon stubs file for ARSENIO.
 //
 //=============================================================================//
 
@@ -55,6 +55,7 @@ STUB_WEAPON_CLASS(weapon_MP99K, WeaponMP99K, C_BaseHLCombatWeapon); // Mp5K for 
 STUB_WEAPON_CLASS(weapon_BJ69, WeaponBJ69, C_HLSelectFireMachineGun); // nicknamed sex gun.
 STUB_WEAPON_CLASS(weapon_KLO99, WeaponKLO99, C_HLMachineGun); // High power LMG
 STUB_WEAPON_CLASS(weapon_overlordgun, WeaponOverlord, C_BaseHLCombatWeapon); // Used for final boss.
+STUB_WEAPON_CLASS(weapon_Kaliber, WeaponKaliber, C_BaseHLCombatWeapon); // Sniper rifle used by SHADOW.
 
 
 #endif
