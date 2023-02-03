@@ -61,6 +61,7 @@ $Project "Server - Arsenio"
 			$File	"$SRCDIR\game\shared\arsenio\gamemovement_mobility.cpp"
 			$File	"arsenio\item_exo.cpp"
 			$File	"arsenio\npc_LeOS.cpp"
+			$File	"$SRCDIR\game\shared\arsenio\arsenio_game_log.cpp"
 			
 			$Folder	"Weapons"
 			{
