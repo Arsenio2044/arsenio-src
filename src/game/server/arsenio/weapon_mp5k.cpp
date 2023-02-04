@@ -1,5 +1,5 @@
 //========= Copyright Glitch Software, All rights reserved. ============//
-//
+// Test commit using vs - glitchy
 // Purpose: The MP5K "Kurz" is a small automatic submachine gun used by the player and various npcs.
 // It is slow and has high recoil, but makes up for it in its accuracy and damage.
 //=============================================================================//
