@@ -1,0 +1,157 @@
+//============================================================================================================
+// "Basic" recipes
+// 
+// These recipes are mostly based off of mass alone.
+//============================================================================================================
+
+//============================================================================================================
+// Tiny Hulls
+//============================================================================================================
+response "SpawnBasicAlienCrows" 
+{
+	print "npc_aliencrow 1,3"
+}
+
+rule SpawnBasicAlienCrows
+{
+	criteria		BirdsAllowed HullTinyAllowed IsMass50
+	response		SpawnBasicAlienCrows
+}
+
+response "SpawnBasicHeadcrab" 
+{
+	print "npc_headcrab 2,3"
+}
+
+rule SpawnBasicHeadcrab
+{
+	criteria		HullTinyAllowed IsMass100
+	response		SpawnBasicHeadcrab
+}
+
+// Spawn several headcrabs under low space with high mass amounts
+response "SpawnBasicManyHeadcrabs" 
+{
+	print "npc_headcrab 3,5"
+}
+
+rule SpawnBasicManyHeadcrabs
+{
+	criteria		HullTinyAllowed HullHumanNotAllowed IsMass325
+	response		SpawnBasicManyHeadcrabs
+}
+
+//============================================================================================================
+// Wide Short Hulls
+//============================================================================================================
+response "SpawnBasicBabySquid"
+{
+	print "npc_bullsquid 2,3: IsBaby 1"
+}
+
+rule SpawnBasicBabySquid
+{
+	criteria		HullWideShortAllowed IsMass150
+	response		SpawnBasicBabySquid
+}
+
+response "SpawnBasicStukabat"
+{
+	// TODO - Should spawn 2,3 stukabats. Changing for 1 due to wonky collisions with stukas
+	print "npc_stukabat 1"
+}
+
+rule SpawnBasicStukabat
+{
+	criteria		HullWideShortAllowed IsMass425
+	response		SpawnBasicStukabat
+}
+
+response "SpawnBasicBullsquid"
+{
+	print "npc_bullsquid 1; npc_bullsquid 0,1: IsBaby 1"
+}
+
+rule SpawnBasicBullsquid
+{
+	criteria		HullWideShortAllowed IsMass500
+	response		SpawnBasicBullsquid
+}
+
+//============================================================================================================
+// Medium Hulls
+//============================================================================================================
+response "SpawnBasicAntlion"
+{
+	print "npc_antlion 2,3"
+	print "npc_antlion 2,3; npc_antlion_grub 1,3"
+}
+
+rule SpawnBasicAntlion
+{
+	criteria		HullMediumAllowed IsMass325
+	response		SpawnBasicAntlion
+}
+
+response "SpawnBasicPitDrone"
+{
+	print "npc_pitdrone 1,3"
+}
+
+rule SpawnBasicPitDrone
+{
+	criteria		HullMediumAllowed IsMass500
+	response		SpawnBasicPitDrone
+}
+
+//============================================================================================================
+// Human Hulls
+//============================================================================================================
+response "SpawnBasicZombigaunt"
+{
+	print "npc_zombigaunt 1,2"
+}
+
+rule SpawnBasicZombigaunt
+{
+	criteria		HullWideHumanAllowed IsMass1000
+	response		SpawnBasicZombigaunt
+}
+
+//============================================================================================================
+// Large Hulls
+//============================================================================================================
+response "SpawnBasicAntlionGuard"
+{
+	print "npc_antlionguard 1: allowbark 1 cavernbreed 1"
+}
+
+rule SpawnBasicAntlionGuard
+{
+	criteria		HullLargeAllowed IsMass1500
+	response		SpawnBasicAntlionGuard
+}
+
+response "SpawnBasicAntlionGuardTwofer"
+{
+	print "npc_antlionguard 2: allowbark 1 cavernbreed 1"
+}
+
+rule SpawnBasicAntlionGuardTwofer
+{
+	criteria		HullLargeAllowed IsMass3000
+	response		SpawnBasicAntlionGuardTwofer
+}
+
+
+
+//============================================================================================================
+// Race X spawns
+// Please disregard this for now, it's just for a test
+//============================================================================================================
+rule SpawnPitDroneBackup
+{
+	criteria		HullMediumAllowed
+	owner_classname "npc_pitdrone" required weight 999999
+	response		SpawnBasicPitDrone
+}

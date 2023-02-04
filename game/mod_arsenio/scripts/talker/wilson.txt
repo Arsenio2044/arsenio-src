@@ -1,0 +1,688 @@
+//============================================================================================================
+// WILSON (Will-E)
+// 
+// A Portal 2 character in a different world.
+// 
+// He's like the gnome from EP2, but he can talk and give you company.
+// He sometimes gives story tid-bits and serves as a cool bullet shield.
+// You can also break him.
+// 
+// Wilson's response system was created and written by Blixibon and CW3D.
+// Most of these talker files (in their current form) were written by Blixibon.
+// CW3D is Wilson's voice actor.
+// 
+//============================================================================================================
+
+//============================================================================================================
+// Wilson concepts
+//============================================================================================================
+criterion "ConceptWilsonTipped"	"Concept" "TLK_TIPPED"	required
+criterion "ConceptWilsonFidget"	"Concept" "TLK_FIDGET"	required
+criterion "ConceptFoundPlayer" "Concept" "TLK_FOUNDPLAYER" required
+criterion "ConceptRemindPlayer" "Concept" "TLK_REMIND_PLAYER" required
+criterion "ConceptAPCLowClearance" "Concept" "TLK_APC_LOW_CLEARANCE" required
+criterion "ConceptAPCEjected" "Concept" "TLK_APC_EJECTED" required
+criterion "ConceptWilsonGoodbye" "Concept" "TLK_GOODBYE" required
+
+criterion "ConceptWilsonBeastDanger"	"Concept" "TLK_BEAST_DANGER"	required
+criterion "ConceptWilsonBossFight"	"Concept" "TLK_BOSS_FIGHT"	required
+criterion "ConceptWitnessEat" "Concept" "TLK_WITNESS_EAT" required
+
+criterion "ConceptWilsonScanStart"	"Concept" "TLK_SCAN_START"	required
+criterion "ConceptWilsonScanEnd"	"Concept" "TLK_SCAN_END"	required
+
+//============================================================================================================
+// Wilson criteria
+//============================================================================================================
+criterion "IsWilson" "classname" "npc_wilson" required
+criterion "ShouldAlertPlayer" "alert_player" "1" required
+
+criterion "IsBeingHeld" "being_held" ">=0" required
+criterion "IsNotBeingHeld" "being_held" "-1" required
+criterion "BeenHeldMedium" "being_held" ">=20" required
+
+criterion "PlayerInVehicle" "player_in_vehicle" "prop*" required
+criterion "WilsonInVehicle" "in_vehicle" "prop*" required
+
+criterion "Is192OrLessFromPlayer" "distancetoplayer" "<=192" required
+criterion "Is384OrMoreFromPlayer" "distancetoplayer" ">=384" required
+
+criterion "IsNotMoving" "speed" "<=0.01" required
+criterion "IsPlayerSpeedingOff" "playerspeed_vehicle" ">=300" required
+
+criterion "HasntSeenPlayerIn10Minutes" "timesinceseenplayer" ">=600" required
+
+criterion "PhysicsAttackerIsPlayer" "physics_attacker" "player" required
+
+criterion "ResponsesAllowed_Tipped" "suppress_tip_react" "!=1" required weight 0
+criterion "ResponsesAllowed_Fidget" "suppress_fidget" "!=1" required weight 0
+
+criterion "PlayerNotHiding" "playerHiding" "!=1" required
+
+criterion "PlayerNotSpeaking" "player_speaking" "!=1" required weight 0
+
+criterion "WilsonDamaged" "wilson_damaged" "1" required
+criterion "WilsonNotDamaged" "wilson_damaged" "!=1" required
+
+//============================================================================================================
+// Wilson responses
+//============================================================================================================
+
+response "WilsonTipped"
+{
+	scene "scenes/npc/wilson/thrash01.vcd" respeakdelay 3
+}
+
+rule WilsonTipped
+{
+	criteria	IsWilson ConceptWilsonTipped ResponsesAllowed_Tipped IsNotBeastStealthMode WilsonNotDamaged
+	response	WilsonTipped
+}
+
+// If he was tipped THIS far up, then he's probably falling off of a cliff or something.
+response "WilsonTippedFarUp"
+{
+	scene "scenes/npc/wilson/thrash_long01.vcd" respeakdelay 3
+}
+
+rule WilsonTippedFarUp
+{
+	criteria	IsWilson ConceptWilsonTipped ResponsesAllowed_Tipped IsNotBeastStealthMode WilsonNotDamaged
+	distancetoground ">=1536" required weight 10
+	response	WilsonTippedFarUp
+}
+
+response "WilsonIdleFidget"
+{
+	scene "scenes/npc/wilson/idle_fidget01.vcd" stop_on_nonidle
+	scene "scenes/npc/wilson/idle_fidget02.vcd" stop_on_nonidle
+	scene "scenes/npc/wilson/idle_fidget03.vcd" stop_on_nonidle
+	scene "scenes/npc/wilson/idle_fidget04.vcd" stop_on_nonidle
+	scene "scenes/npc/wilson/idle_fidget05.vcd" stop_on_nonidle
+	scene "scenes/npc/wilson/idle_fidget06.vcd" stop_on_nonidle
+}
+
+rule WilsonIdleFidget
+{
+	criteria	IsWilson ConceptWilsonFidget Is192OrLessFromPlayer ResponsesAllowed_Fidget
+	response	WilsonIdleFidget
+}
+
+//============================================================================================================
+// Wilson idle
+//============================================================================================================
+
+criterion "HaventExpressedLoneliness" "expressed_loneliness" "!=1" required
+criterion "NotLeftBehindForMap" "left_behind_for_map" "!=1" required
+
+// Are you still there?
+//response "WilsonNotSeenPlayer"
+//{
+//	scene "scenes/npc/wilson/playerreturns01.vcd"
+//	scene "scenes/npc/wilson/playerreturns02.vcd"
+//	scene "scenes/npc/wilson/playerreturns03.vcd"
+//}
+//
+//rule WilsonNotSeenPlayer
+//{
+//	criteria	IsWilson ConceptDarkLostPlayer NoRecentSeenPlayerLong HaventExpressedLoneliness NotLeftBehindForMap
+//	
+//	// Don't express loneliness again for a while
+//	applyContext "expressed_loneliness:1:60"
+//	
+//	response	WilsonNotSeenPlayer
+//}
+
+// Oh, there you are.
+response "WilsonFoundPlayer"
+{
+	scene "scenes/npc/wilson/playerreturns01.vcd"
+	scene "scenes/npc/wilson/playerreturns02.vcd"
+	scene "scenes/npc/wilson/playerreturns03.vcd"
+}
+
+rule WilsonFoundPlayer
+{
+	criteria	IsWilson ConceptFoundPlayer IsNotBeastStealthMode NotLeftBehindForMap PlayerNotSpeaking
+	response	WilsonFoundPlayer
+}
+
+// TODO - These would be helpful to have
+// response "WilsonFoundPlayerAfter10Mins"
+// {
+// 	print "What took you so long?"
+// 	print "Don't forget to take me with you sometimes."
+// 	print "Did you go on an adventure without me?"
+// }
+// 
+// rule WilsonFoundPlayerAfter10Mins
+// {
+// 	criteria	IsWilson ConceptFoundPlayer IsNotBeastStealthMode NotLeftBehindForMap HasntSeenPlayerIn10Minutes PlayerNotSpeaking
+// 	response	WilsonFoundPlayerAfter10Mins
+// }
+
+//--------------------------------------------------------------------------------
+
+criterion "PayloadTransported" "transported" "1" required weight 5
+criterion "PayloadTransportedInterrupted" "transported" "2" required weight 5
+
+response "WilsonFoundPlayerAfterTransport"
+{
+	response "WilsonGenericHello"
+	response "WilsonGenericOhHello"
+	response "WilsonGenericOhHi"
+}
+
+rule WilsonFoundPlayerAfterTransport
+{
+	criteria	IsWilson ConceptFoundPlayer IsNotBeastStealthMode PayloadTransported
+	applyContext "transported:0:10"
+	response	WilsonFoundPlayerAfterTransport
+}
+
+
+// TODO - It would be helpful to have this one if possible
+// response "WilsonFoundPlayerAfterTransportInterrupted"
+// {
+// 	print "Err... I wasn't done talking..."
+// }
+// 
+// rule WilsonFoundPlayerAfterTransportInterrupted
+// {
+// 	criteria	IsWilson ConceptFoundPlayer IsNotBeastStealthMode PayloadTransportedInterrupted
+// 	applyContext "transported:0:10"
+// 	response	WilsonFoundPlayerAfterTransportInterrupted
+// }
+
+//--------------------------------------------------------------------------------
+
+// Don't forget!
+response "WilsonRemindXenade"
+{
+	scene "scenes/npc/wilson/reminder_xenade01.vcd" respeakdelay 300
+	scene "scenes/npc/wilson/reminder_xenade02.vcd" respeakdelay 300
+}
+
+rule WilsonRemindXenade
+{
+	criteria	IsWilson ConceptRemindPlayer PlayerNotSpeaking IsNotChapter3
+	subject "weapon_hopwire" required
+	response	WilsonRemindXenade
+}
+
+//response "WilsonRemindDisplacer"
+//{
+//	scene "scenes/npc/wilson/reminder_portalpistol01.vcd" respeakdelay 300
+//	scene "scenes/npc/wilson/reminder_portalpistol02.vcd" respeakdelay 300
+//}
+//
+//rule WilsonRemindDisplacer
+//{
+//	criteria	IsWilson ConceptRemindPlayer PlayerNotSpeaking IsNotChapter3
+//	subject "weapon_displacer_pistol" required
+//	response	WilsonRemindDisplacer
+//}
+
+//============================================================================================================
+// Player condition responses
+//============================================================================================================
+
+// Oh. He's dead. Well, that's...awkward...
+response "WilsonPlayerDead"
+{
+	scene "scenes/npc/wilson/playerdead01.vcd"
+	scene "scenes/npc/wilson/playerdead02.vcd"
+	scene "scenes/npc/wilson/playerdead03.vcd"
+}
+
+rule WilsonPlayerDead
+{
+	criteria	IsWilson ConceptPlayerDead
+	response	WilsonPlayerDead
+}
+
+// Display concern when Wilson's Best Friend 2.0 looks hurt.
+response "WilsonPlayerHurt"
+{
+	scene "scenes/npc/wilson/bchurt01.vcd" respeakdelay 200 //odds 25
+	scene "scenes/npc/wilson/bchurt02.vcd" respeakdelay 200 //odds 25
+	scene "scenes/npc/wilson/bchurt03.vcd" respeakdelay 200 //odds 25
+}
+
+rule WilsonPlayerHurt
+{
+	// DidntRemarkHurt is in player.txt
+	criteria	IsWilson ConceptTalkPlayerHurt DidntRemarkHurt PlayerNotSpeaking WilsonNotDamaged
+	playerhealthfrac "<=0.35" required
+	response	WilsonPlayerHurt
+}
+
+// Will-E was for whatever reason counting the player's bullets and Will-E, a pacifist, tells Bad Cop to reload his weapon of murder.
+response "WilsonPlayerReload"
+{
+	scene "scenes/npc/wilson/bcreload01.vcd" respeakdelay 45
+	scene "scenes/npc/wilson/bcreload02.vcd" respeakdelay 45
+	scene "scenes/npc/wilson/bcreload03.vcd" respeakdelay 45
+	scene "scenes/npc/wilson/bcreload04.vcd" respeakdelay 45 displaylast speakonce // Too sassy
+	scene "scenes/npc/wilson/bcreload05.vcd" respeakdelay 45 displaylast speakonce // Too sassy
+	scene "scenes/npc/wilson/bcreload06.vcd" respeakdelay 45
+	scene "scenes/npc/wilson/bcreload07.vcd" respeakdelay 45
+}
+
+rule WilsonPlayerReload
+{
+	criteria	IsWilson ConceptPlayerReload PlayerNotSpeaking WilsonNotDamaged
+	response	WilsonPlayerReload
+}
+
+//============================================================================================================
+// Damage responses
+//============================================================================================================
+
+response "WilsonTakeDamage"
+{
+	scene "scenes/npc/wilson/ow01.vcd" respeakdelay 5
+	scene "scenes/npc/wilson/ow02.vcd" respeakdelay 5
+	scene "scenes/npc/wilson/ow03.vcd" respeakdelay 5
+	scene "scenes/npc/wilson/ow04.vcd" respeakdelay 5
+	scene "scenes/npc/wilson/ow05.vcd" respeakdelay 5
+	scene "scenes/npc/wilson/ow06.vcd" respeakdelay 5
+	scene "scenes/npc/wilson/ow07.vcd" respeakdelay 5
+	scene "scenes/npc/wilson/ow08.vcd" respeakdelay 5
+}
+
+rule WilsonTakeDamage
+{
+	criteria	IsWilson ConceptTalkWound
+	response	WilsonTakeDamage
+}
+
+//--------------------------------------------------------------------------------
+
+response "WilsonTakeDamageRWing"
+{
+	scene "scenes/npc/wilson/ow_rwing01.vcd" respeakdelay 5
+	scene "scenes/npc/wilson/ow_rwing02.vcd" respeakdelay 5
+	scene "scenes/npc/wilson/ow_rwing03.vcd" respeakdelay 5
+	scene "scenes/npc/wilson/ow_rwing04.vcd" respeakdelay 5
+}
+
+rule WilsonTakeDamageRWing
+{
+	criteria	IsWilson ConceptTalkWound DamageTypeBullet HitgroupRightArm
+	response	WilsonTakeDamageRWing
+}
+
+response "WilsonTakeDamageLWing"
+{
+	scene "scenes/npc/wilson/ow_lwing01.vcd" respeakdelay 5
+	scene "scenes/npc/wilson/ow_lwing02.vcd" respeakdelay 5
+	scene "scenes/npc/wilson/ow_lwing03.vcd" respeakdelay 5
+	scene "scenes/npc/wilson/ow_lwing04.vcd" respeakdelay 5
+}
+
+rule WilsonTakeDamageLWing
+{
+	criteria	IsWilson ConceptTalkWound DamageTypeBullet HitgroupLeftArm
+	response	WilsonTakeDamageLWing
+}
+
+response "WilsonTakeDamageEye"
+{
+	scene "scenes/npc/wilson/ow_eye01.vcd" respeakdelay 5
+	scene "scenes/npc/wilson/ow_eye02.vcd" respeakdelay 5
+	scene "scenes/npc/wilson/ow_eye03.vcd" respeakdelay 5
+	scene "scenes/npc/wilson/ow_eye04.vcd" respeakdelay 5
+}
+
+rule WilsonTakeDamageEye
+{
+	criteria	IsWilson ConceptTalkWound DamageTypeBullet HitgroupHead
+	response	WilsonTakeDamageEye
+}
+
+//--------------------------------------------------------------------------------
+
+//response "WilsonTakeDamageFromPlayer"
+//{
+//	speak "BC_c33_5d" respeakdelay 5
+//}
+//
+//rule WilsonTakeDamageFromPlayer
+//{
+//	criteria	IsWilson ConceptTalkWound EnemyIsPlayer
+//	response	WilsonTakeDamageFromPlayer
+//}
+
+//============================================================================================================
+// "Enemy" responses
+//============================================================================================================
+
+// Will-E sees something while Bad Cop is away.
+response "WilsonEnemyAlert"
+{
+	scene "scenes/npc/wilson/bcnotnearby_seesomething1.vcd" respeakdelay 80
+	scene "scenes/npc/wilson/bcnotnearby_seesomething2.vcd" respeakdelay 80
+	scene "scenes/npc/wilson/bcnotnearby_seesomething3.vcd" respeakdelay 80
+	scene "scenes/npc/wilson/bcnotnearby_seesomething4.vcd" respeakdelay 80
+}
+
+rule WilsonEnemyAlert
+{
+	criteria	IsWilson ConceptStartCombat ShouldAlertPlayer PlayerAlive IsNotBeastStealthMode
+	response	WilsonEnemyAlert
+}
+
+// Will-E meets someone while Bad Cop is away.
+response "WilsonMeetRebel"
+{
+	scene "scenes/npc/wilson/bcnotnearby_seerebel1.vcd" respeakdelay 80
+	scene "scenes/npc/wilson/bcnotnearby_seerebel2.vcd" respeakdelay 80
+	scene "scenes/npc/wilson/bcnotnearby_seerebel3.vcd" respeakdelay 80
+	scene "scenes/npc/wilson/bcnotnearby_seerebel4.vcd" respeakdelay 80
+}
+
+rule WilsonMeetRebel
+{
+	criteria	IsWilson ConceptStartCombat ShouldAlertPlayer PlayerAlive EnemyIsRebel
+	response	WilsonMeetRebel
+}
+
+//--------------------------------------------------------------------------------
+
+// Will-E somehow killed something! Oh, the horror!
+response "WilsonEnemyDead"
+{
+	speak "BC_c33_5d" respeakdelay 5
+}
+
+rule WilsonEnemyDead
+{
+	criteria	IsWilson ConceptEnemyDead
+	response	WilsonEnemyDead
+}
+
+// Bad Cop made Will-E kill something! >:O
+response "WilsonEnemyDeadBecauseBC"
+{
+	scene "scenes/npc/wilson/playerdead01.vcd" respeakdelay 30
+}
+
+rule WilsonEnemyDeadBecauseBC
+{
+	criteria	IsWilson ConceptEnemyDead PhysicsAttackerIsPlayer
+	response	WilsonEnemyDeadBecauseBC
+}
+
+//============================================================================================================
+// Danger responses
+//============================================================================================================
+
+response "WilsonWatchOutBehind"
+{
+	scene "scenes/npc/wilson/watchout_behind1.vcd" respeakdelay 5
+	scene "scenes/npc/wilson/watchout_behind2.vcd" respeakdelay 5
+}
+
+rule WilsonWatchOutBehind
+{
+	criteria	IsWilson ConceptTalkWatchOut
+	dangerloc "behind" required
+	response	WilsonWatchOutBehind
+}
+
+response "WilsonWatchOutAbove"
+{
+	scene "scenes/npc/wilson/watchout_above1.vcd" respeakdelay 5
+	scene "scenes/npc/wilson/watchout_above2.vcd" respeakdelay 5
+}
+
+rule WilsonWatchOutAbove
+{
+	criteria	IsWilson ConceptTalkWatchOut
+	dangerloc "above" required
+	response	WilsonWatchOutAbove
+}
+
+response "WilsonWatchOutFar"
+{
+	scene "scenes/npc/wilson/watchout_distant1.vcd" respeakdelay 5
+	scene "scenes/npc/wilson/watchout_distant2.vcd" respeakdelay 5
+}
+
+rule WilsonWatchOutFar
+{
+	criteria	IsWilson ConceptTalkWatchOut
+	dangerloc "far" required
+	response	WilsonWatchOutFar
+}
+
+//--------------------------------------------------------------------------------
+
+response "WilsonAllyInBarnacle"
+{
+	response "WilsonWatchOutAbove" respeakdelay 30
+}
+
+rule WilsonAllyInBarnacle
+{
+	criteria	IsWilson ConceptAllyInBarnacle
+	response	WilsonAllyInBarnacle
+}
+
+//--------------------------------------------------------------------------------
+
+response "WilsonAPCLowClearance"
+{
+	scene "scenes/npc/wilson/apc_lowclearance01.vcd" respeakdelay 20
+	scene "scenes/npc/wilson/apc_lowclearance02.vcd" respeakdelay 20
+	scene "scenes/npc/wilson/apc_lowclearance03.vcd" respeakdelay 20
+}
+
+rule WilsonAPCLowClearance
+{
+	criteria	IsWilson ConceptAPCLowClearance
+	complete_crash "!=1" required // TODO: Better crash warnings?
+	response	WilsonAPCLowClearance
+}
+
+response "WilsonAPCEjected"
+{
+	scene "scenes/npc/wilson/thrash_big01.vcd" respeakdelay 3
+	scene "scenes/npc/wilson/thrash_big02.vcd" respeakdelay 3
+	speak "NPC_Wilson.PlayerLeaving_APC03" respeakdelay 3 displaylast
+	speak "NPC_Wilson.PlayerLeaving_APC04" respeakdelay 3 displaylast
+}
+
+rule WilsonAPCEjected
+{
+	criteria	IsWilson ConceptAPCEjected ResponsesAllowed_Tipped IsNotBeastStealthMode
+	applyContext "apc_ejected:1:10"
+	response	WilsonAPCEjected
+}
+
+response "WilsonUseAfterEjection"
+{
+	norepeat
+	scene "scenes/npc/wilson/apc_postejection01.vcd" respeakdelay 3
+	scene "scenes/npc/wilson/apc_postejection02.vcd" respeakdelay 3
+	scene "scenes/npc/wilson/apc_postejection03.vcd" respeakdelay 3
+}
+
+rule WilsonUseAfterEjection
+{
+	criteria	IsWilson ConceptTalkUse
+	apc_ejected "1" required
+	applyContext "apc_ejected:0:10"
+	response	WilsonUseAfterEjection
+}
+
+//--------------------------------------------------------------------------------
+
+response "WilsonAPCFarewell"
+{
+	scene "scenes/npc/wilson/apc_farewell01.vcd" respeakdelay 300
+	scene "scenes/npc/wilson/apc_farewell02.vcd" respeakdelay 300
+	scene "scenes/npc/wilson/apc_farewell03.vcd" respeakdelay 300
+}
+
+rule WilsonAPCFarewell
+{
+	criteria	IsWilson ConceptWilsonGoodbye IsNotMoving WilsonInVehicle PlayerNotSpeaking
+	response	WilsonAPCFarewell
+}
+
+response "WilsonAPCDitched"
+{
+	speak "NPC_Wilson.PlayerLeaving_APC01" respeakdelay 20
+	speak "NPC_Wilson.PlayerLeaving_APC02" respeakdelay 20
+	//speak "NPC_Wilson.PlayerLeaving_APC03" respeakdelay 20
+	//speak "NPC_Wilson.PlayerLeaving_APC04" respeakdelay 20
+}
+
+rule WilsonAPCDitched
+{
+	criteria	IsWilson ConceptWilsonGoodbye IsNotMoving PlayerInVehicle IsPlayerSpeedingOff
+	response	WilsonAPCDitched
+}
+
+//--------------------------------------------------------------------------------
+
+response "WilsonDanger"
+{
+	scene "scenes/npc/wilson/danger_generic01.vcd" respeakdelay 10
+	scene "scenes/npc/wilson/danger_generic02.vcd" respeakdelay 10
+}
+
+rule WilsonDanger
+{
+	criteria	IsWilson ConceptTalkDanger
+	response	WilsonDanger
+}
+
+response "WilsonGrenadeDanger"
+{
+	scene "scenes/npc/wilson/danger_grenade01.vcd" respeakdelay 10
+	scene "scenes/npc/wilson/danger_grenade02.vcd" respeakdelay 10
+	scene "scenes/npc/wilson/danger_grenade03.vcd" respeakdelay 10
+}
+
+rule WilsonGrenadeDanger
+{
+	criteria	IsWilson ConceptTalkDanger SoundIsGrenade
+	response	WilsonGrenadeDanger
+}
+
+response "WilsonLonelyDanger"
+{
+	scene "scenes/npc/wilson/danger_alone01.vcd" respeakdelay 10
+	scene "scenes/npc/wilson/danger_alone02.vcd" respeakdelay 10
+}
+
+rule WilsonLonelyDanger
+{
+	criteria	IsWilson ConceptTalkDanger
+	wilson_alone "1" required weight 2 // Overrides WilsonGrenadeDanger
+	response	WilsonLonelyDanger
+}
+
+//--------------------------------------------------------------------------------
+
+response "WilsonWitnessEat"
+{
+	// print "Well, that's disgusting." respeakdelay 10
+	// print "I haven't watched enough nature documentaries to handle this!" respeakdelay 10
+	// print "Well, you're definitely not on a diet." respeakdelay 10
+	scene "scenes/npc/wilson/bcresponse_enemydead5.vcd" respeakdelay 10 // This is making me really uncomfortable
+}
+
+rule WilsonWitnessEat
+{
+	criteria	IsWilson ConceptWitnessEat
+	response	WilsonWitnessEat
+}
+
+//--------------------------------------------------------------------------------
+// Triggered by the map via DispatchResponse
+//--------------------------------------------------------------------------------
+response "WilsonBeastDanger"
+{
+	scene "scenes/arbeit/wilson_nag01.vcd"
+	scene "scenes/arbeit/wilson_nag02.vcd"
+	scene "scenes/arbeit/wilson_nag03.vcd"
+	scene "scenes/arbeit/wilson_nag04.vcd"
+}
+
+rule "WilsonBeastDanger"
+{
+	criteria	IsWilson ConceptWilsonBeastDanger PlayerNotHiding
+	response	WilsonBeastDanger
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------
+// Map-Specific Responses
+//--------------------------------------------------------------------------------------------------------------------------------------------------
+// Wilson already uses nag01 when the Gonome is introduced, so use every nag *except* for that one
+response "WilsonBeastDanger_C3_1"
+{
+	scene "scenes/arbeit/wilson_nag02.vcd"
+	scene "scenes/arbeit/wilson_nag03.vcd"
+	scene "scenes/arbeit/wilson_nag04.vcd"
+}
+
+rule "WilsonBeastDanger_C3_1"
+{
+	criteria	IsWilson ConceptWilsonBeastDanger PlayerNotHiding
+	map "ez2_c3_1" required
+	response	WilsonBeastDanger_C3_1
+}
+
+// Boss fight responses
+response "WilsonBossFight_C3_3"
+{
+	scene "scenes/arbeit/wilson_bossfight_nag01.vcd"
+	scene "scenes/arbeit/wilson_bossfight_nag02.vcd"
+	scene "scenes/arbeit/wilson_bossfight_nag03.vcd"
+}
+
+rule "WilsonBossFight_C3_3"
+{
+	criteria	IsWilson ConceptWilsonBossFight
+	map "ez2_c3_3" required
+	response	WilsonBossFight_C3_3
+}
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------
+// 
+//--------------------------------------------------------------------------------------------------------------------------------------------------
+
+criterion "IsSupplyCloset" "supply_closet" "1" required
+criterion "NeverCommentedOnScanners" "commented_on_scanners" "<1" required
+
+response "WilsonPostC3ScanStart"
+{
+	scene "scenes/npc/wilson/closet_first.vcd"
+}
+
+rule WilsonPostC3ScanStart
+{
+	criteria	IsWilson ConceptWilsonScanStart IsNotChapter3 IsSupplyCloset NeverCommentedOnScanners
+	applyContext   "commented_on_scanners:1"
+	response	WilsonPostC3ScanStart 
+}
+
+rule WilsonPostC3ScanEnd
+{
+	criteria	IsWilson ConceptWilsonScanEnd IsNotChapter3 IsSupplyCloset NeverCommentedOnScanners
+	applyContext   "commented_on_scanners:1"
+	response	WilsonPostC3ScanStart 
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+#include "talker/wilson_player_interact.txt"
+#include "talker/wilson_conversation.txt"
+#include "talker/wilson_damaged.txt"
+#include "talker/wilson_chapter_5.txt"
+
+//------------------------------------------------------------------------------------------------------------

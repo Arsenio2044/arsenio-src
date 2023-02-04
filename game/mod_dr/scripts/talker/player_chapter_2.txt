@@ -1,0 +1,123 @@
+//============================================================================================================
+// Bad Cop Chapter 2
+// 
+// Bad Cop lines specific to Chapter 2.
+// This is #included from the main scripts.
+// 
+//============================================================================================================
+
+//============================================================================================================
+// Bad Cop criteria
+//============================================================================================================
+
+// Some responses shouldn't be said on the first map, only the maps after
+criterion "IsCh2NotFirstMap" "map" "!=ez2_c2_1" required weight 0
+
+//============================================================================================================
+// Bad Cop response groups
+//============================================================================================================
+
+response "BadCopTauntRebel_Chapter2"
+{
+	norepeat
+	speak "bc_ch2_taunt_1" respeakdelay 30
+	speak "bc_ch2_taunt_2" respeakdelay 30
+	//speak "bc_ch2_taunt_3" respeakdelay 30
+}
+
+rule BadCopTauntRebel_Chapter2
+{
+	criteria		IsBadCop IsChapter2 ConceptEnemyDead EnemyVisible EnemyIsRebel IsCh2NotFirstMap LastSpoke05OrMore
+	response		BadCopTauntRebel_Chapter2
+}
+
+response "BadCopManyRebels_Chapter2"
+{
+	norepeat
+	speak "bc_ch2_taunt_3" respeakdelay 30
+}
+
+rule BadCopManyRebels_Chapter2
+{
+	criteria		IsBadCop IsChapter2 ConceptManyEnemies EnemyVisible EnemyIsRebel JustStartedCombat HaventRemarkedDamageRecently IsCh2NotFirstMap LastSpoke05OrMore
+	//healthfrac ">0.7" required
+	matchonce
+	response		BadCopManyRebels_Chapter2
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopChapter2IdleFlavor"
+{
+	// TODO: Implement unique lines
+	norepeat
+	sequential
+	speak "Comment_c1_5" respeakdelay 100
+}
+
+rule BadCopChapter2IdleFlavor
+{
+	criteria		IsBadCop IsChapter2 ConceptTalkIdle IsCh2NotFirstMap
+	timesincecombat ">=45" required
+	response 		BadCopChapter2IdleFlavor
+}
+
+//============================================================================================================
+// ez2_c2_3 map specific responses for calling in manhacks
+//============================================================================================================
+
+criterion "WarehouseFight" "in_warehouse_fight" "1" required weight 100
+criterion "IsCh2Map3" "map" "ez2_c2_3" required weight 0
+
+response "BadCopCallManhacks"
+{
+	norepeat
+	scene "scenes/npc/badcop/call_viscerators.vcd"
+}
+
+rule BadCopSquadDeadCallManhacks
+{
+	criteria		IsBadCop ConceptTalkAllyKilled SpeechTargetInPlayerSquad WarehouseFight IsCh2Map3 HasOneOrNoSquadMates
+	response 		BadCopCallManhacks
+}
+
+rule BadCopTakeDamageCallManhacks
+{
+	criteria		IsBadCop ConceptTalkWound WarehouseFight IsCh2Map3
+	healthfrac "<0.5" required
+	response 		BadCopCallManhacks
+}
+
+rule BadCopMobbedCallManhacks
+{
+	criteria		IsBadCop ConceptMobbed EnemyVisible WarehouseFight IsCh2Map3
+	healthfrac "<0.5" required
+	response 		BadCopCallManhacks
+}
+
+rule BadCopAttackingCallManhacks
+{
+	criteria		IsBadCop ConceptTalkAttacking WarehouseFight IsCh2Map3 HasNoSquadMates
+	response 		BadCopCallManhacks
+}
+
+//============================================================================================================
+// ez2_c2_4 map specific taunt for first glowbie kill
+//============================================================================================================
+
+response "BadCopTauntFirstGlowbie"
+{
+	norepeat
+	scene "scenes/Chapter 2/ez2_c2_badcop_killglowbie.vcd"
+}
+
+rule BadCopTauntFirstGlowbie
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsZombie
+	required map ez2_c2_4
+	response		BadCopTauntFirstGlowbie
+}
+
+// 
+// NOTE: Remarkables are kept in "remarks_chapter_#.txt" now!!!
+// 

@@ -1,0 +1,32 @@
+//============================================================================================================
+// Bad Cop Chapter 0
+// 
+// Bad Cop lines specific to the prologue.
+// This is #included from the main scripts.
+// 
+//============================================================================================================.
+
+criterion "IsDreamCop" "classname" "player_dreamcop" required
+
+response "DreamCopTakeDamage"
+{
+	sentence "DREAM_BADCOP_PAIN" noscene
+}
+
+rule DreamCopTakeDamage
+{
+	criteria		IsDreamCop ConceptTalkWound NotInVehicle
+	response 		DreamCopTakeDamage
+}
+
+// He's dead.
+response "DreamCopDeath"
+{
+	sentence "DREAM_BADCOP_DIE" noscene
+}
+
+rule DreamCopDeath
+{
+	criteria		IsDreamCop ConceptTalkDeath
+	response 		DreamCopDeath
+}

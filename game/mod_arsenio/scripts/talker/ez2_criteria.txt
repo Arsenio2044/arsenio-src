@@ -1,0 +1,140 @@
+
+// 
+// Chapter Names
+// 
+criterion "IsChapter0" "map" "ez2_c0*" required weight 0
+criterion "IsChapter1" "map" "ez2_c1*" required weight 0
+criterion "IsChapter2" "map" "ez2_c2*" required weight 0
+criterion "IsChapter3" "map" "ez2_c3*" required weight 0
+criterion "IsChapter4" "map" "ez2_c4*" required weight 0
+criterion "IsChapter5" "map" "ez2_c5*" required weight 0
+criterion "IsChapter6" "map" "ez2_c6*" required weight 0
+
+criterion "IsNotChapter1" "map" "!=ez2_c1*" required weight 0
+criterion "IsNotChapter2" "map" "!=ez2_c2*" required weight 0
+criterion "IsNotChapter3" "map" "!=ez2_c3*" required weight 0
+criterion "IsNotChapter4" "map" "!=ez2_c4*" required weight 0
+criterion "IsNotChapter5" "map" "!=ez2_c5*" required weight 0
+criterion "IsNotChapter6" "map" "!=ez2_c6*" required weight 0
+
+criterion "IsChapter4Map4" "map" "ez2_c4_4" required weight 0
+criterion "IsChapter4Map5" "map" "ez2_c4_5" required weight 0
+criterion "IsChapter4Maps3" "map" "ez2_c4_3*" required weight 0
+criterion "IsChapter5Map3" "map" "ez2_c5_3" required weight 0
+
+criterion "IsNotChapter1Map1" "map" "!=ez2_c1_1" required weight 0
+criterion "IsNotChapter4Map1" "map" "!=ez2_c4_1" required weight 0
+
+// 
+// Global States
+// 
+criterion "IsNotBeastStealthMode" "beast_stealth_mode" "!=1" required weight 0
+
+// 
+// Enums
+// 
+enumeration "EZVariant"
+{
+	"DEFAULT"		"0"
+	"XEN"			"1"
+	"RAD"			"2"
+}
+
+enumeration "Hitgroup"
+{
+	"Head"			"1"
+	"Chest"			"2"
+	"Stomach"		"3"
+	"LeftArm"		"4"
+	"RightArm"		"5"
+	"LeftLeg"		"6"
+	"RightLeg"		"7"
+	"Gear"			"10"
+}
+
+criterion "HitgroupHead" "hitgroup" "[Hitgroup::Head]" required
+criterion "HitgroupLeftArm" "hitgroup" "[Hitgroup::LeftArm]" required
+criterion "HitgroupRightArm" "hitgroup" "[Hitgroup::RightArm]" required
+criterion "HitgroupAnyLeg" "hitgroup" ">5,<8" required
+criterion "HitgroupLeftLeg" "hitgroup" "[Hitgroup::LeftLeg]" required
+criterion "HitgroupRightLeg" "hitgroup" "[Hitgroup::RightLeg]" required
+criterion "HitgroupGear" "hitgroup" "[Hitgroup::Gear]" required
+criterion "HitgroupNotGear" "hitgroup" "!=[Hitgroup::Gear]" required
+
+// Complex concept-based responses used by Bad Cop, Wilson, and Combine soldiers
+criterion "ConceptTalkConceptAnswer" "Concept" "TLK_CONCEPT_ANSWER" required
+criterion "ConceptTalkUseScare" "Concept" "TLK_USE_SCARE" required
+
+// 
+// Criteria
+// 
+criterion "SpeechTargetBadCop" "speechtarget" "player" required
+criterion "SpeechTargetWilson" "speechtarget" "npc_wilson" required
+criterion "SpeechTargetSoldier" "speechtarget" "npc_combine_s" required
+criterion "SpeechTargetRollermine" "speechtarget" "npc_rollermine" required
+criterion "SpeechTargetHunter" "speechtarget" "npc_hunter" required
+criterion "SpeechTargetGunship" "speechtarget" "npc_combinegunship" required
+
+criterion "SoundIsGrenade" "sound_owner" "npc_grenade_frag" required // TODO: *grenade*
+criterion "SoundIsMissile" "sound_owner" "rpg_missile" required // TODO: *missile
+
+criterion "KillCombo4OrMore" "killcombo" ">=4" required
+
+criterion "IsOrderSurrender" "order_surrender" "1" required
+criterion "IsSurrendered" "surrendered" "1" required weight 5
+criterion "IsNotSurrendered" "surrendered" "!=1" required
+
+criterion "ConceptTalkBeg" "Concept" "TLK_BEG" required
+criterion "ConceptTalkFear" "Concept" "TLK_FEAR" required
+
+// 
+// Bad Cop & Wilson
+// 
+// The "Bad Cop & Wilson" level increases over time.
+// See vscripts/ez2/badcop_wilson_friendship.nut for more information.
+// 
+criterion "BadCopWilsonLevel_0" "bc_wilson_level" "<=0" required weight 1 // Bad Cop just met Wilson. The former is forced to tolerate the latter. (Chapter 3)
+criterion "BadCopWilsonLevel_1" "bc_wilson_level" ">=1" required weight 2 // Bad Cop voluntarily takes Wilson with him, but they still haven't bonded much. (Chapter 4)
+criterion "BadCopWilsonLevel_2" "bc_wilson_level" ">=2" required weight 3 // Bad Cop begins to feel more comfortable around Wilson. (Chapter 4a)
+criterion "BadCopWilsonLevel_3" "bc_wilson_level" ">=3" required weight 4 // Bad Cop begins to grow an attachment to Wilson. (Chapter 4a-Chapter 5)
+criterion "BadCopWilsonLevel_4" "bc_wilson_level" ">=4" required weight 5 // Alright, fine. Bad Cop likes Wilson. (Chapter 5-Chapter 6)
+
+criterion "BadCopWilsonLevel_1OrLess" "bc_wilson_level" "<=1" required
+criterion "BadCopWilsonLevel_Only1" "bc_wilson_level" "1" required
+criterion "BadCopWilsonLevel_Only2" "bc_wilson_level" "2" required
+
+// 
+// Prologue Cops
+// 
+criterion "IsCitCop" "voice" "citizen" "required"
+criterion "IsEliteCop" "voice" "leet" "required"
+criterion "Is1upD" "voice" "1upd" "required"
+criterion "IsCyonsia" "voice" "cyonsia" "required"
+criterion "IsBreadman" "voice" "breadman" "required"
+criterion "IsBlixibon" "voice" "blixibon" "required"
+criterion "IsHosekii" "voice" "hosekii" "required"
+criterion "IsRichter" "voice" "richter" "required"
+criterion "IsEmployee8" "voice" "employee8" "required"
+criterion "IsSpencer" "voice" "spencer" "required"
+criterion "IsKralich" "voice" "kralich" "required"
+criterion "IsLeadhead" "voice" "leadhead" "required"
+criterion "IsZach" "voice" "zach" "required"
+criterion "IsTiop" "voice" "tiop" "required"
+criterion "IsNiker107" "voice" "niker107" "required"
+
+// 
+// General Responses
+// (there's not really any other place for them)
+// 
+
+// Any NPC can use this general Use Scare response, from vorts to hostile soldiers
+response "UseScare"
+{
+	scene "scenes/npc/male01/ez2_terrifiedturn01.vcd"
+}
+
+rule UseScare
+{
+	criteria		ConceptTalkUseScare
+	response		UseScare   
+}

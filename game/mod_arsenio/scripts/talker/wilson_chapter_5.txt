@@ -1,0 +1,70 @@
+//============================================================================================================
+// Wilson Chapter 5
+// 
+// Special scene for Chapter 5 - Wilson panicking
+// 
+//============================================================================================================
+
+criterion "IsPanicMap" "map" "ez2_c5_*" required weight 5
+
+criterion "WilsonC5PanicAllowed" "c5_panic" "0" required // Means a "c5_panic" context must exist with a value of "0"
+criterion "WilsonC5Panicking" "c5_panic" "1" required
+criterion "WilsonC5PanicEnded" "c5_panic" "2" required
+
+response "WilsonPanicStart"
+{
+	scene "scenes/npc/wilson/c5_2_wilsonpanic.vcd" predelay "0.25" speakonce
+}
+
+rule WilsonAnswerBadCop_Mobbed_Chapter5
+{
+	criteria		IsWilson SpeechTargetBadCop ConceptTalkConceptAnswer WilsonC5PanicAllowed IsPanicMap TargetConceptMobbed
+	applyContext   "c5_panic:1"
+	response 		WilsonPanicStart
+	matchonce
+}
+
+rule WilsonDanger_Chapter5
+{
+	criteria	IsWilson ConceptTalkDanger WilsonC5PanicAllowed IsPanicMap
+	applyContext   "c5_panic:1"
+	response	WilsonPanicStart
+	matchonce
+}
+
+response "WilsonPanicEnd"
+{
+	scene "scenes/npc/wilson/c5_2_postfight.vcd" predelay "0.25,0.5" speakonce
+}
+
+// Special scene for Chapter 5 - Wilson calming down
+rule WilsonAnswerBadCop_LastEnemyDead_Chapter5
+{
+	criteria		IsWilson SpeechTargetBadCop ConceptTalkConceptAnswer WilsonC5Panicking IsPanicMap TargetConceptEnemyDead ContextOneorLessEnemy
+	applyContext   "c5_panic:2"
+	response 		WilsonPanicEnd
+	matchonce
+}
+
+rule WilsonPanicIdle_Chapter5
+{
+	criteria	IsWilson ConceptWilsonFidget WilsonC5Panicking Is192OrLessFromPlayer NoRecentCombatShort
+	applyContext   "c5_panic:2"
+	response 		WilsonPanicEnd
+}
+
+//--------------------------------------------------------------------------------
+
+// In the c5_2 hack lab, Bad Cop says "Ah, shit" when he sees the rollermines.
+// Since that uses TLK_MANY_ENEMIES, Wilson can respond to it with unfitting responses.
+// We can put unique dialogue here if needed, but for now, just make sure he doesn't use those responses.
+response "WilsonAnswerBadCop_ManyEnemies_C5HackLab"
+{
+}
+
+rule WilsonAnswerBadCop_ManyEnemies_C5HackLab
+{
+	criteria		IsWilson SpeechTargetBadCop ConceptTalkConceptAnswer TargetConceptManyEnemies
+	speechtarget_response "BC_C41_ASeq_2" required weight 10
+	response 		WilsonAnswerBadCop_ManyEnemies_C5HackLab
+}

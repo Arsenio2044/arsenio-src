@@ -1,0 +1,154 @@
+"BloodSeeker.Shot" 
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.3"
+	"soundlevel"	"SNDLVL_80db"
+
+	"rndwave" {
+		//"wave"			"ar\npc\bloodseeker\hurt1.wav"
+		//"wave"			"ar\npc\bloodseeker\almostdead.wav"
+		"wave"			"weapons/ar2/fire1.wav"
+	}
+}
+
+"BloodSeeker.Footstep" 
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"0.3"
+	"soundlevel"	"SNDLVL_80db"
+
+	"wave"			"ar\npc\bloodseeker\footstep.wav"
+}
+
+"BloodSeeker.BeamSound" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"1.0"
+	"CompatibilityAttenuation"	"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"wave"			"weapons/BulkCannon/lock.wav"
+}
+
+"BloodSeeker.Spawn" 
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"0.3"
+	"soundlevel"	"SNDLVL_80db"
+
+	"wave"			"ar\npc\bloodseeker\spawn.wav"
+	"wave"			"ar\npc\bloodseeker\spawn1.wav"
+}
+
+"BloodSeeker.Hurt" 
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.3"
+	"soundlevel"	"SNDLVL_80db"
+
+	"rndwave" {
+		"wave"			"ar\npc\bloodseeker\hurt1.wav"
+		"wave"			"ar\npc\bloodseeker\almostdead.wav"
+	}
+}
+
+"NPC_Hulk.FootstepLeft"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.7"
+	"pitch"		"100"
+
+	"soundlevel"	"SNDLVL_90db"
+
+	"rndwave"
+	{
+		"wave"	"npc/dog/dog_footstep1.wav"
+		"wave"	"npc/dog/dog_footstep2.wav"
+		"wave"	"npc/dog/dog_footstep3.wav"
+		"wave"	"npc/dog/dog_footstep4.wav"
+
+	}
+}
+
+"NPC_Hulk.FootstepRight"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"0.7"
+	"pitch"		"100"
+
+	"soundlevel"	"SNDLVL_90db"
+
+	"rndwave"
+	{
+		"wave"	"npc/dog/dog_footstep1.wav"
+		"wave"	"npc/dog/dog_footstep2.wav"
+		"wave"	"npc/dog/dog_footstep3.wav"
+		"wave"	"npc/dog/dog_footstep4.wav"
+
+	}
+}
+
+"NPC_Hulk.Charging"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.7"
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"			"weapons/cguard/charging.wav"
+}
+
+"NPC_Hulk.Fire"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"1.0"
+	"soundlevel"	"SNDLVL_GUNFIRE"
+
+	"wave"			"weapons/irifle/irifle_fire2.wav"
+}
+
+"Hulk.Talk"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.7"
+	"pitch"		"100"
+
+	"soundlevel"	"SNDLVL_90db"
+
+	"rndwave"
+	{
+		"wave"	"ar/npc/hulk/deathtoyouall.wav"
+		"wave"	"ar/npc/hulk/glorydeath.wav"
+		"wave"	"ar/npc/hulk/iwillfeedyou.wav"
+		"wave"	"ar/npc/hulk/thatallyougot.wav"
+	}
+}
+
+"Hulk.Die"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.7"
+	"pitch"		"100"
+
+	"soundlevel"	"SNDLVL_90db"
+
+	"rndwave"
+	{
+		"wave"	"ar/npc/hulk/Death1.wav"
+		"wave"	"ar/npc/hulk/Death2.wav"
+		"wave"	"ar/npc/hulk/Death3.wav"
+	}
+}
+
+"LeOS.Regen"
+{
+	"channel"		"CHAN_STATIC"
+//	"volume"		"0.7"
+//	"pitch"		"100"
+
+	"soundlevel"	"SNDLVL_90db"
+
+	"rndwave"
+	{
+		"wave"	"ar\npc\leos\regen.wav"
+	}
+}

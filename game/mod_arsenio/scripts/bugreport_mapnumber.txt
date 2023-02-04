@@ -1,0 +1,18 @@
+"mapnumber"
+{
+	"ep2_intro"		"1"
+	"ep2_outland_01"	"1"
+	"ep2_outland_02"	"2"
+	"ep2_outland_03"	"3"
+	"ep2_outland_04"	"4"
+	"ep2_outland_05"	"5"
+	"ep2_outland_06"	"6"
+	"ep2_outland_06a"	"6"
+	"ep2_outland_07"	"7"
+	"ep2_outland_08"	"8"
+	"ep2_outland_09"	"9"
+	"ep2_outland_10"	"10"
+	"ep2_outland_11"	"11"
+	"ep2_outland_12"	"12"
+	"ep2_outland_12a"	"13"
+}

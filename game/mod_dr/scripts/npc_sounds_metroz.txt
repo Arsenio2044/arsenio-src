@@ -1,0 +1,291 @@
+
+
+"Metroz.FootstepRight"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"0.95"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_65db"
+
+	"rndwave"
+	{
+		"wave"	"npc/metroz/foot1.wav"
+		"wave"	"npc/metroz/foot2.wav"
+		"wave"	"npc/metroz/foot3.wav"
+	}
+}
+
+"Metroz.FootstepLeft"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"0.95"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_65db"
+
+	"rndwave"
+	{
+		"wave"	"npc/metroz/foot1.wav"
+		"wave"	"npc/metroz/foot2.wav"
+		"wave"	"npc/metroz/foot3.wav"
+	}
+}
+
+"Metroz.ScuffRight"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"0.95"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_65db"
+
+	"rndwave"
+	{
+		"wave"	"npc/metroz/foot_slide1.wav"
+		"wave"	"npc/metroz/foot_slide2.wav"
+		"wave"	"npc/metroz/foot_slide3.wav"
+	}
+}
+
+"Metroz.ScuffLeft"
+{
+	"channel"		"CHAN_BODY"
+	"volume"		"0.95"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_65db"
+
+	"rndwave"
+	{
+		"wave"	"npc/metroz/foot_slide1.wav"
+		"wave"	"npc/metroz/foot_slide2.wav"
+		"wave"	"npc/metroz/foot_slide3.wav"
+	}
+}
+
+"Metroz.AttackHit"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.95"
+	"pitch"			"95, 105"
+
+	"soundlevel"	"SNDLVL_NORM"
+
+	"rndwave"
+	{
+		"wave"	"npc/metroz/claw_strike1.wav"
+		"wave"	"npc/metroz/claw_strike2.wav"
+		"wave"	"npc/metroz/claw_strike3.wav"
+	}
+}
+
+"Metroz.AttackMiss"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.95"
+	"pitch"			"95, 105"
+
+	"soundlevel"	"SNDLVL_NORM"
+
+	"rndwave"
+	{
+		"wave"	"npc/metroz/claw_miss1.wav"
+		"wave"	"npc/metroz/claw_miss2.wav"
+	}
+}
+
+"Metroz.Pain"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.95"
+	"pitch"			"95, 104"
+
+	"soundlevel"	"SNDLVL_NORM"
+
+	"rndwave"
+	{
+		"wave"	"npc/metroz/zombie_pain1.wav"
+		"wave"	"npc/metroz/zombie_pain2.wav"
+		"wave"	"npc/metroz/zombie_pain3.wav"
+		"wave"	"npc/metroz/zombie_pain4.wav"
+		"wave"	"npc/metroz/zombie_pain5.wav"
+		"wave"	"npc/metroz/zombie_pain6.wav"
+		"wave"	"npc/metroz/pain1.wav"
+		"wave"	"npc/metroz/pain2.wav"
+		"wave"	"npc/metroz/pain3.wav"
+		"wave"	"npc/metroz/pain4.wav"
+		"wave"	"npc/metroz/pain5.wav"
+		"wave"	"npc/metroz/pain6.wav"
+		"wave"	"npc/metroz/pain7.wav"
+		"wave"	"npc/metroz/pain8.wav"
+		"wave"	"npc/metroz/pain9.wav"
+		"wave"	"npc/metroz/pain10.wav"
+		"wave"	"npc/metroz/pain11.wav"
+		"wave"	"npc/metroz/pain12.wav"
+		"wave"	"npc/metroz/pain13.wav"
+		"wave"	"npc/metroz/pain14.wav"
+		"wave"	"npc/metroz/pain15.wav"
+		"wave"	"npc/metroz/pain16.wav"
+		"wave"	"npc/metroz/pain17.wav"
+		"wave"	"npc/metroz/pain18.wav"
+		"wave"	"npc/metroz/pain19.wav"
+		"wave"	"npc/metroz/pain20.wav"
+	}
+}
+
+"Metroz.Alert"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.95"
+	"pitch"			"95, 104"
+
+	"soundlevel"	"SNDLVL_NORM"
+
+	"rndwave"
+	{
+		"wave"	"npc/metroz/zombie_alert1.wav"
+		"wave"	"npc/metroz/zombie_alert2.wav"
+		"wave"	"npc/metroz/zombie_alert3.wav"
+	}
+}
+
+"Metroz.Idle"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.75"
+	"pitch"		"92, 105"
+
+	"soundlevel"	"SNDLVL_65db"
+
+	"rndwave"
+	{
+		"wave"	"npc/metroz/idle1.wav"
+		"wave"	"npc/metroz/zombie_voice_idle1.wav"
+		"wave"	"npc/metroz/idle2.wav"
+		"wave"	"npc/metroz/zombie_voice_idle2.wav"
+		"wave"	"npc/metroz/idle3.wav"
+		"wave"	"npc/metroz/zombie_voice_idle3.wav"
+		"wave"	"npc/metroz/idle4.wav"
+		"wave"	"npc/metroz/zombie_voice_idle4.wav"
+		"wave"	"npc/metroz/idle5.wav"
+		"wave"	"npc/metroz/zombie_voice_idle5.wav"
+		"wave"	"npc/metroz/idle6.wav"
+		"wave"	"npc/metroz/zombie_voice_idle6.wav"
+		"wave"	"npc/metroz/idle7.wav"
+		"wave"	"npc/metroz/zombie_voice_idle7.wav"
+		"wave"	"npc/metroz/idle8.wav"
+		"wave"	"npc/metroz/zombie_voice_idle8.wav"
+		"wave"	"npc/metroz/idle9.wav"
+		"wave"	"npc/metroz/zombie_voice_idle9.wav"
+		"wave"	"npc/metroz/idle10.wav"
+		"wave"	"npc/metroz/zombie_voice_idle10.wav"
+		"wave"	"npc/metroz/idle11.wav"
+		"wave"	"npc/metroz/zombie_voice_idle11.wav"
+		"wave"	"npc/metroz/idle12.wav"
+		"wave"	"npc/metroz/zombie_voice_idle12.wav"
+		"wave"	"npc/metroz/idle13.wav"
+		"wave"	"npc/metroz/zombie_voice_idle13.wav"
+		"wave"	"npc/metroz/idle14.wav"
+		"wave"	"npc/metroz/zombie_voice_idle14.wav"
+	}
+}
+
+"Metroz.Die"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.95"
+	"pitch"			"95, 105"
+
+	"soundlevel"	"SNDLVL_NORM"
+	"rndwave"
+	{
+		"wave"	"npc/metroz/zombie_die1.wav"
+		"wave"	"npc/metroz/zombie_die2.wav"
+		"wave"	"npc/metroz/zombie_die3.wav"
+		"wave"	"npc/metroz/die1.wav"
+		"wave"	"npc/metroz/die2.wav"
+		"wave"	"npc/metroz/die3.wav"
+		"wave"	"npc/metroz/die4.wav"
+		"wave"	"npc/metroz/die5.wav"
+		"wave"	"npc/metroz/die6.wav"
+		"wave"	"npc/metroz/die7.wav"
+		"wave"	"npc/metroz/die8.wav"
+		"wave"	"npc/metroz/die9.wav"
+		"wave"	"npc/metroz/die10.wav"
+		"wave"	"npc/metroz/die11.wav"
+		"wave"	"npc/metroz/die12.wav"
+		"wave"	"npc/metroz/die13.wav"
+	}
+}
+
+"Metroz.Attack"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.600"
+	"pitch"			"95, 105"
+
+	"soundlevel"	"SNDLVL_NORM"
+
+	"rndwave"
+	{
+		"wave"	"npc/metroz/zo_attack1.wav"
+		"wave"	"npc/metroz/zo_attack2.wav"
+		"wave"	"npc/metroz/attack1.wav"
+		"wave"	"npc/metroz/attack2.wav"
+		"wave"	"npc/metroz/attack3.wav"
+		"wave"	"npc/metroz/attack4.wav"
+		"wave"	"npc/metroz/attack5.wav"
+		"wave"	"npc/metroz/attack6.wav"
+		"wave"	"npc/metroz/attack7.wav"
+		"wave"	"npc/metroz/attack8.wav"
+	}
+}
+ 
+ "NPC_BaseMetroz.Moan1"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.95"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"			"npc/metroz/moan_loop1.wav"
+	"wave"			"npc/metroz/moans/moan_loop1.wav"
+}
+
+ "NPC_BaseMetroz.Moan2"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.95"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"			"npc/metroz/moan_loop2.wav"
+	"wave"			"npc/metroz/moans/moan_loop2.wav"
+}
+
+ "NPC_BaseMetroz.Moan3"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.95"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"			"npc/metroz/moan_loop3.wav"
+	"wave"			"npc/metroz/moans/moan_loop3.wav"
+}
+
+ "NPC_BaseMetroz.Moan4"
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.95"
+	"pitch"			"PITCH_NORM"
+
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"			"npc/metroz/moan_loop4.wav"
+	"wave"			"npc/metroz/moans/moan_loop4.wav"
+}

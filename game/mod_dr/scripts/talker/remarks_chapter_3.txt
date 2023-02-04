@@ -1,0 +1,105 @@
+//============================================================================================================
+// REMARKS CHAPTER 3
+// 
+// This is #included from the main scripts.
+// 
+//============================================================================================================
+
+//============================================================================================================
+// ez2_c3_3 map specific response for staring at takeout
+//============================================================================================================
+
+criterion "SubjectTakeout" "subject" "takeout" required
+
+response "BadCopCommentTakeout"
+{
+	sequential
+	norepeat
+	speak "BC_c33_7"
+}
+
+rule BadCopRemarkTakeout
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectTakeout IsSubjectNear100
+	response 		BadCopCommentTakeout
+}
+
+//============================================================================================================
+// ez2_c3_3 map specific response for looking at Clone Cop's bed
+//============================================================================================================
+
+criterion "SubjectCloneCopBed" "subject" "clonecopbed" required
+
+response "BadCopCommentStinks"
+{
+	sequential
+	norepeat
+	speak "BC_c33_8"
+}
+
+rule BadCopRemarkStinks
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectCloneCopBed IsSubjectNear100
+	response 		BadCopCommentStinks
+}
+
+//============================================================================================================
+// ez2_c3_3 map specific response for picking up 357 ammo
+//============================================================================================================
+criterion "SubjectAmmo" "subject" "ammo" required
+
+response "BadCopCommentAmmo_NoWilson"
+{
+	norepeat
+	scene "scenes/arbeit/c3_03_sheriff_nowilson.vcd"
+}
+
+response "BadCopCommentAmmo_Wilson"
+{
+	norepeat
+	scene "scenes/arbeit/c3_03_sheriff_wilson.vcd"
+}
+
+// This response is being commented out for now. This exchange between Bad Cop and Wilson is one that we have spoken about needing work.
+// rule BadCopRemarkAmmo_Wilson
+// {
+// 	criteria		IsBadCop ConceptTalkRemark SubjectAmmo PlayerNearWillE NeverRemarked
+// 	response		BadCopCommentAmmo_Wilson
+// }
+
+rule BadCopRemarkAmmo_NoWilson
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectAmmo NeverRemarked
+	response		BadCopCommentAmmo_NoWilson
+}
+
+//============================================================================================================
+// ez2_c3_3 map specific response - Xen grenade tutorial
+//============================================================================================================
+criterion "SubjectXenGrenadeVictims" "subject" "xengrenade_victims" required
+
+response "BadCopRemarkXenGrenadeVictims_Wilson"
+{
+	norepeat
+	scene "scenes/arbeit/c3_03_xentut_victims_wilson.vcd"
+}
+
+response "BadCopRemarkXenGrenadeVictims_NoWilson"
+{
+	norepeat
+	scene "scenes/arbeit/c3_03_xentut_victims_nowilson.vcd"
+}
+
+rule BadCopRemarkXenGrenadeVictims_Wilson
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectXenGrenadeVictims IsSubjectNear300 PlayerNearWillE
+	response		BadCopRemarkXenGrenadeVictims_Wilson
+}
+
+rule BadCopRemarkXenGrenadeVictims_NoWilson
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectXenGrenadeVictims IsSubjectNear300
+	response		BadCopRemarkXenGrenadeVictims_NoWilson
+}
+
+//------------------------------------------------------------------------------------------------------------

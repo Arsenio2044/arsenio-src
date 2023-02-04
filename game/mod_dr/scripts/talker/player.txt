@@ -1,0 +1,824 @@
+//============================================================================================================
+// BAD COP
+// 
+// The one who feels good about himself sometimes.
+// 
+// Once a bunch of ambient_generics using pre-release vocoder lines, Bad Cop has blossomed into
+// a NPC that dynamically reacts to the player's actions and events the player witnesses.
+// 
+// Bad Cop's response system was created and written by Blixibon, 1upD, Trivvy, and Breadman
+// in different ways and across different parts of development.
+// Trivvy is Bad Cop's voice actor.
+// 
+//============================================================================================================
+
+//============================================================================================================
+// Bad Cop concepts
+//============================================================================================================
+criterion "ConceptCommandSend"		"Concept" "TLK_COMMAND_SEND"	required				//Fired when the player issues a send squad command
+criterion "ConceptCommandRecall"	"Concept" "TLK_COMMAND_RECALL"	required			//Fired when the player issues a recall squad command
+criterion "ConceptCommandFollow"	"Concept" "TLK_COMMAND_ADD"		required				//Fired when the player issues a send squad command
+criterion "ConceptCommandStay"		"Concept" "TLK_COMMAND_REMOVE"	required			//Fired when the player issues a recall squad command
+
+criterion "ConceptLastEnemyDead"		"Concept" "TLK_LAST_ENEMY_DEAD"	required			// Fired when the last enemy is killed (done to bypass respeak delays from TLK_ENEMY_DEAD)
+criterion "ConceptWoundRemark"		"Concept" "TLK_WOUND_REMARK"	required			// Fired when Bad Cop could remark about his wounds
+criterion "ConceptThrowGrenade"		"Concept" "TLK_THROWGRENADE"	required			// Fired when the last enemy is killed (done to bypass respeak delays from TLK_ENEMY_DEAD)
+criterion "ConceptAllyKilledNPC"		"Concept" "TLK_ALLY_KILLED_NPC"	required			// Fired when one of Bad Cop's allies kills an NPC
+criterion "ConceptKilledAlly"		"Concept" "TLK_KILLED_ALLY"	required			// Fired when the player kills an ally (intention ambiguous)
+criterion "ConceptScannerFlash"		"Concept" "TLK_SCANNER_FLASH"	required			// Fired when the player is flashed by a scanner
+criterion "ConceptVehicleOverturned"		"Concept" "TLK_VEHICLE_OVERTURNED"	required			// Fired when the player's vehicle is overturned
+criterion "ConceptZombieScream"		"Concept" "TLK_ZOMBIE_SCREAM"	required			// Fired when a zombie screams at the player
+criterion "ConceptGameOver"		"Concept" "TLK_GAME_OVER"	required			// Fired when the game ends due to a failure condition
+
+criterion "ConceptComment"		"Concept" "TLK_COMMENT"	required			// LEGACY - replace with TLK_REMARK!
+
+//============================================================================================================
+// Bad Cop criteria
+//============================================================================================================
+criterion "IsBadCop" "classname" "player" required
+criterion "IsHallucinating" "hallucinate" "1" required
+criterion "PlayerNearWillE" "wilson_distance" "<512" required
+
+criterion "HasSquadMates" "squadmates" ">1" required
+criterion "HasNoSquadMates" "squadmates" "<1" required
+criterion "HasOneOrNoSquadMates" "squadmates" "<2" required
+criterion "HasMultipleOrNoSquadMates" "squadmates" "!=1" required
+criterion "SquadFollowing" "squad_mode" "0" required
+criterion "SquadAtGoal" "squad_mode" "1" required
+criterion "SquadInPVS" "squad_in_pvs" "1" required
+criterion "SquadNotInPVS" "squad_in_pvs" "!=1" required
+
+criterion "NotInVehicle" "in_vehicle" "0" required
+criterion "InVehicle" "in_vehicle" "prop*" required
+criterion "InAPC" "in_vehicle" "prop_vehicle_drivable_apc" required weight 3 // APC responses have priority
+
+criterion "InGodMode" "flags" "&16384" required
+criterion "IsNoclipping" "movetype" "8" required // TODO: 'movetype' is not yet implemented as a criterion
+
+criterion "EnemyIsJumpRebel" "citizentype" "6" required
+criterion "EnemyIsGonome" "enemy" "npc_zassassin" required
+criterion "EnemyIsNotClassHeadcrab" "enemyclass" "!=CLASS_HEADCRAB" required
+
+criterion "EnemyIsAnyZombie" "enemy" "npc_*zombie*" required
+criterion "EnemyIsAnyScanner" "enemy" "npc_*scanner" required
+
+criterion "EnemyIsXenian" "ezvariant" "[EZVariant::XEN]" required weight 1
+criterion "EnemyIsNotXenian" "ezvariant" "!=[EZVariant::XEN]" required weight 1
+
+criterion "EnemyIsNotNPC" "enemy_is_npc" "!=1" required
+criterion "EnemyIsNPC" "enemy_is_npc" "1" required
+
+// Enemy is human-sized (HULL_HUMAN or HULL_WIDE_HUMAN)
+criterion "EnemyIsHumanoid" "enemy_humanoid" "1" required
+criterion "EnemyIsNotHumanoid" "enemy_humanoid" "!=1" required
+
+criterion "EnemyVisible" "enemy_visible" "1" required
+criterion "EnemyAttackingMe" "enemy_attacking_me" "1" required
+criterion "EnemyNotAttackingMe" "enemy_attacking_me" "!=1" required
+criterion "EnemySeesMe" "enemy_sees_me" "1" required
+criterion "EnemyDoesNotSeeMe" "enemy_sees_me" "0" required
+
+// Use an enum if we expand this
+criterion "EnemyFearsMe" "enemy_relationship" "2" required
+criterion "EnemyLikesMe" "enemy_relationship" "3" required
+//criterion "EnemyNeutral" "enemy_relationship" "4" required
+
+criterion "NeutralToTarget" "relationship" "4" required
+
+criterion "EnemyRunning" "enemy_activity" "ACT_RUN*" required
+criterion "EnemyStartJump" "enemy_activity" "ACT_JUMP" required
+criterion "EnemyMidJump" "enemy_activity" "ACT_GLIDE" required
+criterion "EnemyLanding" "enemy_activity" "ACT_LAND" required
+
+criterion "EnemySpeaking" "enemy_is_speaking" "1" required
+criterion "EnemyOnFire" "enemy_on_fire" "1" required
+
+criterion "WilsonNotSpeaking" "wilson_speaking" "!=1" required weight 0
+
+// All of these intentionally have 0 weight
+criterion "EnemyDistance512OrMore" "distancetoenemy" ">=512" required weight 0
+criterion "EnemyDistance512OrLess" "distancetoenemy" "<=512" required weight 0
+criterion "EnemyDistance384OrMore" "distancetoenemy" ">=384" required weight 0
+criterion "EnemyDistance384OrLess" "distancetoenemy" "<=384" required weight 0
+criterion "EnemyDistance256OrMore" "distancetoenemy" ">=256" required weight 0
+criterion "EnemyDistance256OrLess" "distancetoenemy" "<=256" required weight 0
+criterion "EnemyDistance128OrMore" "distancetoenemy" ">=128" required weight 0
+criterion "EnemyDistance128OrLess" "distancetoenemy" "<=128" required weight 0
+criterion "EnemyDistance96OrMore" "distancetoenemy" ">=96" required weight 0
+criterion "EnemyDistance96OrLess" "distancetoenemy" "<=96" required weight 0
+criterion "EnemyDistance64OrMore" "distancetoenemy" ">=64" required weight 0
+criterion "EnemyDistance64OrLess" "distancetoenemy" "<=64" required weight 0
+
+criterion "JustStartedCombat" "combat_length" "<5.0" required
+
+criterion "FoughtTenOrMoreEnemies" "historic_enemies" ">=10" required
+
+criterion "WeaponIsPulsePistol" "weapon" "weapon_pulsepistol" required
+criterion "WeaponIs357" "weapon" "weapon_357" required
+criterion "WeaponIsAR2" "weapon" "weapon_ar2" required
+criterion "WeaponIsMP5K" "weapon" "weapon_smg2" required
+criterion "WeaponIsCrossbow" "weapon" "weapon_crossbow" required
+criterion "WeaponIsShotgun" "weapon" "weapon_shotgun" required
+criterion "WeaponIsFragGrenade" "weapon" "weapon_frag" required
+criterion "WeaponIsXenGrenade" "weapon" "weapon_hopwire" required // TODO: Will this classname change?
+criterion "WeaponIsEndGame" "weapon" "weapon_endgame" required
+criterion "WeaponIsPortalGun" "weapon" "weapon_displacer_pistol" required
+
+criterion "InflictorIsPhysics" "inflictor_is_physics" "1" required
+criterion "InflictorIsCrossbowBolt" "inflictor" "crossbow_bolt" required
+criterion "InflictorIsCombineBall" "inflictor" "prop_combine_ball" required
+criterion "InflictorIsRocket" "inflictor" "rpg_missile" required weight 2 // TODO: *missile
+
+criterion "DamageTypeGeneric" "damage_type" "&[DMGType::Generic]" required
+criterion "DamageTypeFall" "damage_type" "&[DMGType::Fall]" required
+criterion "DamageTypeShock" "damage_type" "&[DMGType::Shock]" required
+criterion "DamageTypeBurn" "damage_type" "&[DMGType::Burn]" required
+criterion "DamageTypeNotBurn" "damage_type" "!&[DMGType::Burn]" required
+criterion "DamageTypeBlunt" "damage_type" "&[DMGType::Crush]" required
+criterion "DamageTypeSlash" "damage_type" "&[DMGType::Slash]" required
+criterion "DamageTypeBullet" "damage_type" "&[DMGType::Bullet]" required
+criterion "DamageTypeNotBullet" "damage_type" "!&[DMGType::Bullet]" required
+criterion "DamageTypePreventPhysForce" "damage_type" "&[DMGType::PreventPhysicsForce]" required
+criterion "DamageTypeDissolve" "damage_type" "&[DMGType::Dissolve]" required
+criterion "DamageTypeNotDissolve" "damage_type" "!&[DMGType::Dissolve]" required
+criterion "DamageTypeBlast" "damage_type" "&[DMGType::Blast]" required
+criterion "DamageTypeNotBlast" "damage_type" "!&[DMGType::Blast]" required
+criterion "DamageTypeVehicle" "damage_type" "&[DMGType::Vehicle]" required
+criterion "DamageTypeBuckshot" "damage_type" "&[DMGType::Buckshot]" required
+criterion "DamageTypeNotBuckshot" "damage_type" "!&[DMGType::Buckshot]" required
+criterion "DamageTypeAirboat" "damage_type" "&[DMGType::Airboat]" required
+criterion "DamageTypeAcid" "damage_type" "&[DMGType::Acid]" required
+criterion "DamageTypeSonic" "damage_type" "&[DMGType::Sonic]" required
+criterion "DamageTypeClub" "damage_type" "&[DMGType::Club]" required
+
+// Passes if Bad Cop hasn't done any of those long damage remarks recently
+criterion "HaventRemarkedDamageRecently" "damage_remarked" "!=1" required
+
+criterion "SpeechTargetVisible" "speechtarget_visible" "1" required
+criterion "SpeechTargetHumanoid" "speechtarget_humanoid" "1" required
+criterion "SpeechTargetNotHumanoid" "speechtarget_humanoid" "0" required
+
+criterion "SpeechTargetInPlayerSquad" "speechtarget_inplayersquad" "1" required
+
+// Silent squad members are NPCs in the player's squad that follow orders, but are not tallied or recognized as squadmates.
+// This includes manhacks, rollermines, etc.
+criterion "SpeechTargetSilentPlayerSquad" "speechtarget_inplayersquad" "2" required
+
+// Includes both regular and silent squadmates.
+criterion "SpeechTargetInPlayerSquadOrSilent" "speechtarget_inplayersquad" ">=1" required
+
+// Worthless objects like crowbars
+criterion "SpeechTargetWorthless" "speechtargetname" "worthless" required
+
+// When did Bad Cop last speak?
+criterion "LastSpoke05OrMore" "last_spoke" ">=5" required weight 0
+criterion "LastSpoke10OrMore" "last_spoke" ">=10" required weight 0
+criterion "LastSpoke15OrMore" "last_spoke" ">=15" required weight 0
+criterion "LastSpoke20OrMore" "last_spoke" ">=20" required weight 0
+criterion "LastSpoke25OrMore" "last_spoke" ">=25" required weight 0
+criterion "LastSpoke30OrMore" "last_spoke" ">=30" required weight 0
+
+//============================================================================================================
+// Bad Cop response rules
+//============================================================================================================
+
+//============================================================================================================
+// Many enemies/mobbed
+//============================================================================================================
+response "BadCopManyEnemies"
+{
+	norepeat
+	speak "bc_manyenemies_1" odds 20 respeakdelay 500
+	speak "bc_manyenemies_2" odds 20 respeakdelay 500
+	speak "bc_manyenemies_3" odds 20 respeakdelay 500
+	speak "bc_taunt_gen_6" odds 20 respeakdelay 500
+}
+
+rule BadCopManyEnemies
+{
+	criteria		IsBadCop ConceptManyEnemies EnemyVisible JustStartedCombat HaventRemarkedDamageRecently
+	healthfrac ">0.7" required
+	response 		BadCopManyEnemies
+}
+
+// Noclipping
+// response "BadCopManyEnemiesNoclipping"
+// {
+// 	norepeat
+// 	print "Bow down to your noclipping master!" respeakdelay 500
+// }
+// 
+// rule BadCopManyEnemiesNoclipping
+// {
+// 	criteria		IsBadCop ConceptManyEnemies EnemyVisible JustStartedCombat HaventRemarkedDamageRecently IsNoclipping
+// 	response 		BadCopManyEnemiesNoclipping
+// }
+
+response "BadCopMobbed"
+{
+	norepeat
+	speak "bc_mobbedlowhealth_1"  respeakdelay 30
+	speak "bc_mobbedlowhealth_2"  respeakdelay 30
+	speak "bc_mobbedlowhealth_3"  respeakdelay 30
+	speak "Comment_c1_3a"  respeakdelay 30
+}
+
+rule BadCopMobbed
+{
+	criteria		IsBadCop ConceptMobbed EnemyVisible
+	healthfrac "<0.5" required
+	response 		BadCopMobbed
+}
+
+response "BadCopSeeGonome"
+{
+	norepeat
+	// TODO: Implement unique lines
+	speak "Comment_c1_3a"  respeakdelay 15
+}
+
+rule BadCopSeeGonome
+{
+	criteria		IsBadCop ConceptStartCombat EnemyVisible EnemyIsGonome EnemyDistance256OrLess
+	healthfrac	"<=0.3" required
+	response 		BadCopSeeGonome
+}
+
+//============================================================================================================
+// Bad Cop rules
+//============================================================================================================
+
+response "BadCopHearDanger"
+{
+	//speak "npc/metropolice/scream1.wav" respeakdelay 10
+	//speak "npc/metropolice/scream2.wav" respeakdelay 10
+	//speak "npc/metropolice/scream3.wav" respeakdelay 10
+	
+	speak "bc_danger_1" respeakdelay 15
+	speak "bc_danger_2" respeakdelay 15
+	speak "bc_danger_3" respeakdelay 15
+}
+
+rule BadCopHearGrenade
+{
+	criteria		IsBadCop ConceptTalkDanger SoundIsGrenade
+	response 		BadCopHearDanger
+}
+
+rule BadCopHearMissile
+{
+	criteria		IsBadCop ConceptTalkDanger SoundIsMissile
+	response 		BadCopHearDanger
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopHearDangerSquad"
+{
+	norepeat
+	//speak "npc/metropolice/scream1.wav" respeakdelay 10
+	//speak "npc/metropolice/scream2.wav" respeakdelay 10
+	//speak "npc/metropolice/scream3.wav" respeakdelay 10
+	
+	speak "bc_danger_squad_1" respeakdelay 30
+	speak "bc_danger_squad_2" respeakdelay 30
+}
+
+response "BadCopHearGrenade"
+{
+	norepeat
+	speak "bc_danger_grenade_1" respeakdelay 30
+	speak "bc_danger_grenade_2" respeakdelay 30
+}
+
+rule BadCopHearGrenadeSquad
+{
+	criteria		IsBadCop ConceptTalkDanger SoundIsGrenade SquadInPVS SquadFollowing
+	response 		BadCopHearGrenade
+	response 		BadCopHearDangerSquad
+}
+
+rule BadCopHearMissileSquad
+{
+	criteria		IsBadCop ConceptTalkDanger SoundIsMissile SquadInPVS SquadFollowing
+	response 		BadCopHearDangerSquad
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopHearDangerBig"
+{
+	norepeat
+	speak "bc_danger_4" respeakdelay 30
+}
+
+rule BadCopHearGrenadePeril
+{
+	criteria		IsBadCop ConceptTalkDanger SoundIsGrenade
+	healthfrac	"<=0.25" required
+	response 		BadCopHearDangerBig
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+rule BadCopHearSpooks
+{
+	criteria		IsBadCop ConceptDarkHearSound
+	response 		BadCopGenericBreatheIn
+}
+
+//============================================================================================================
+
+criterion "IsStealthChat" "stealth_chat" "1" required
+
+// Psst! It's your doom!
+response "BadCopUseRebelStealth"
+{
+	norepeat
+	speak "bc_interact_rebel_1" respeakdelay 5
+	speak "bc_interact_rebel_2" respeakdelay 5
+	speak "bc_interact_rebel_3" respeakdelay 5
+	speak "bc_interact_rebel_4" respeakdelay 5
+}
+
+rule BadCopUseRebelStealth
+{
+	criteria		IsBadCop ConceptTalkUse IsStealthChat EnemyVisible EnemyIsNotTurret
+	response		BadCopUseRebelStealth
+}
+
+// You should've watched your back, turret!
+response "BadCopUseTurretStealth"
+{
+	norepeat
+	speak "bc_interact_rebel_1" respeakdelay 5
+	speak "bc_interact_rebel_2" respeakdelay 5
+	speak "bc_taunt_stealth_1" respeakdelay 5
+}
+
+rule BadCopUseTurretStealth
+{
+	criteria		IsBadCop ConceptTalkUse IsStealthChat EnemyVisible EnemyIsTurret
+	
+	// Don't say again for a while
+	turret_used "!=1" required
+	applyContext "turret_used:1:45"
+	
+	response		BadCopUseTurretStealth
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Lines for Bad Cop ordering rebel surrender
+// Split into multiple responses to try to create as many as possible
+response "BadCopUseRebelOrderSurrender_1"
+{
+	speak "bc_surrender_1" respeakdelay 3
+	scene "scenes/npc/badcop/surrender_now_1_1.vcd" respeakdelay 3
+	scene "scenes/npc/badcop/surrender_now_1_2.vcd" respeakdelay 3
+}
+
+response "BadCopUseRebelOrderSurrender_2"
+{
+	speak "bc_surrender_2" respeakdelay 3
+	speak "bc_surrender_2a" respeakdelay 3
+	speak "bc_surrender_2b" respeakdelay 3
+	scene "scenes/npc/badcop/surrender_now_2_1.vcd" respeakdelay 3
+	scene "scenes/npc/badcop/surrender_now_2_2.vcd" respeakdelay 3
+}
+
+response "BadCopUseRebelOrderSurrender_3"
+{
+	speak "bc_surrender_3" respeakdelay 3
+	speak "bc_surrender_3a" respeakdelay 3
+	scene "scenes/npc/badcop/surrender_now_3_1.vcd" respeakdelay 3
+	scene "scenes/npc/badcop/surrender_now_3_2.vcd" respeakdelay 3
+}
+
+response "BadCopUseRebelOrderSurrender_4"
+{
+	speak "bc_surrender_4" respeakdelay 3
+	scene "scenes/npc/badcop/surrender_now_4_1.vcd" respeakdelay 3
+	scene "scenes/npc/badcop/surrender_now_4_2.vcd" respeakdelay 3
+}
+
+response "BadCopUseRebelOrderSurrender_Other"
+{
+	speak "bc_surrender_5" respeakdelay 3
+	speak "bc_surrender_6" respeakdelay 3
+	speak "bc_surrender_7" respeakdelay 3
+	speak "bc_surrender_8" respeakdelay 3
+}
+
+response "BadCopUseRebelOrderSurrender"
+{
+	// NOTE: This is NOT a norepeat response!
+	response "BadCopUseRebelOrderSurrender_1"
+	response "BadCopUseRebelOrderSurrender_2"
+	response "BadCopUseRebelOrderSurrender_3"
+	response "BadCopUseRebelOrderSurrender_4"
+	response "BadCopUseRebelOrderSurrender_Other"
+	
+}
+rule BadCopUseRebelOrderSurrender
+{
+	criteria		IsBadCop ConceptTalkUse IsOrderSurrender EnemyVisible EnemyIsNotTurret
+	response		BadCopUseRebelOrderSurrender
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Make sure we haven't remarked our hurt-ness already
+criterion "DidntRemarkHurt" "hurt_remark" "!=1" required
+
+response "BadCopHealthLow"
+{
+	norepeat
+	//speak "BadCop/ez_pt_vocal_feelingshit.wav" respeakdelay 500 odds 10
+	speak "bc_lowhealth_1" respeakdelay 300 //odds 25
+	speak "bc_lowhealth_2" respeakdelay 300 //odds 25
+	speak "bc_generic_ugh2" respeakdelay 300 //odds 25
+}
+
+rule BadCopHealthLow
+{
+	criteria		IsBadCop ConceptTalkPlayerHurt DidntRemarkHurt WilsonNotSpeaking LastSpoke20OrMore
+	healthfrac "<0.2" required
+	response 		BadCopHealthLow
+}
+
+response "BadCopHealthLowWithSquad"
+{
+	norepeat
+	speak "bc_lowhealth_squad_1" respeakdelay 300 //odds 25
+	// bc_lowhealth_squad_2 has been moved into its own response so that it can be chapter specific
+	speak "bc_lowhealth_squad_3" respeakdelay 300 //odds 25
+	speak "bc_lowhealth_squad_4" respeakdelay 300 //odds 25
+}
+
+rule BadCopHealthLowWithSquad
+{
+	criteria		IsBadCop ConceptTalkPlayerHurt DidntRemarkHurt SquadFollowing WilsonNotSpeaking LastSpoke20OrMore
+    // Add extra weight to this critera to match BadCopHealthLowTheyHaveMedicsChapter2 and BadCopHealthLowTheyHaveMedicsChapter5
+	healthfrac "<0.3" required weight 2
+	response 		BadCopHealthLowWithSquad
+}
+
+response "BadCopHealthLowTheyHaveMedics"
+{
+	norepeat
+	speak "bc_lowhealth_squad_2" respeakdelay 300 //odds 25
+}
+
+rule BadCopHealthLowTheyHaveMedicsChapter2
+{
+	criteria		IsBadCop ConceptTalkPlayerHurt DidntRemarkHurt SquadFollowing LastSpoke20OrMore WilsonNotSpeaking IsChapter2
+	healthfrac "<0.3" required
+	response 		BadCopHealthLowTheyHaveMedics
+}
+
+rule BadCopHealthLowTheyHaveMedicsChapter5
+{
+	criteria		IsBadCop ConceptTalkPlayerHurt DidntRemarkHurt SquadFollowing LastSpoke20OrMore WilsonNotSpeaking IsChapter5
+	healthfrac "<0.3" required
+	response 		BadCopHealthLowTheyHaveMedics
+}
+
+//============================================================================================================
+// Misc. responses
+//============================================================================================================
+
+response "BadCopCommentPulsePistol_Chapter3_Wilson"
+{
+	norepeat
+	scene "scenes/npc/badcop/pickup_pulsepistol_wilson.vcd"
+}
+
+rule BadCopPickupPulsePistol_Chapter3_Wilson
+{
+	criteria		IsBadCop ConceptNewWeapon WeaponIsPulsePistol PlayerNearWillE
+	required map ez2_c3_3
+	response		BadCopCommentPulsePistol_Chapter3_Wilson
+}
+
+response "BadCopCommentPulsePistol_Chapter3_NoWilson"
+{
+	norepeat
+	speak "BC_c33_4a"
+}
+
+rule BadCopPickupPulsePistol_Chapter3_NoWilson
+{
+	criteria		IsBadCop ConceptNewWeapon WeaponIsPulsePistol
+	required map ez2_c3_3
+	response		BadCopCommentPulsePistol_Chapter3_NoWilson
+}
+
+response "BadCopComment357Unloaded"
+{
+	norepeat
+	scene "scenes/npc/badcop/pickup_357_unloaded.vcd"
+}
+
+rule BadCopPickup357Unloaded
+{
+	// After a conversation about using scenes where scenes shouldn't be used, 
+	// this is handled by a choreographed scene in ez2_c3_3. However, this rule
+	// is still nice for custom maps that might want to replicate that scene.
+	//
+	// Bonus points if both the animation and the response check if the gun is
+	// actually unloaded first	
+	criteria		IsBadCop ConceptNewWeapon WeaponIs357
+	// TODO Replace this map criteria with a criteria to check if the weapon is unloaded - need to do the same thing in the animation!
+	required map ez2_c3_3
+	response		BadCopComment357Unloaded
+}
+
+
+response "BadCopCommentAR2"
+{
+	norepeat
+	speak "Comment_c1_13"
+}
+
+rule BadCopPickupAR2
+{
+	criteria		IsBadCop ConceptNewWeapon WeaponIsAR2
+	response		BadCopCommentAR2
+}
+
+response "BadCopCommentMP5K"
+{
+	norepeat
+	speak "bc_pickup_mp5k"
+}
+
+rule BadCopCommentMP5K
+{
+	criteria		IsBadCop ConceptNewWeapon WeaponIsMP5K	
+	response		BadCopCommentMP5K
+}
+
+response "BadCopCommentCrossbow"
+{
+	norepeat
+	speak "BC_C43_5"
+}
+
+rule BadCopCommentCrossbow
+{
+	criteria		IsBadCop ConceptNewWeapon WeaponIsCrossbow
+	response		BadCopCommentCrossbow
+}
+
+response "BadCopCommentPortalGun_Wilson"
+{
+	norepeat
+	scene "scenes/npc/badcop/pickup_displacer_pistol_wilson.vcd"
+}
+
+response "BadCopCommentPortalGun_NoWilson"
+{
+	norepeat
+	scene "scenes/npc/badcop/pickup_displacer_pistol_wilson.vcd"
+}
+
+rule BadCopPickupPortalGun_Wilson
+{
+	criteria		IsBadCop ConceptNewWeapon WeaponIsPortalGun PlayerNearWillE
+	response		BadCopCommentPortalGun_Wilson
+}
+
+rule BadCopPickupPortalGun_NoWilson
+{
+	criteria		IsBadCop ConceptNewWeapon WeaponIsPortalGun
+	response		BadCopCommentPortalGun_NoWilson
+}
+
+response "BadCopCommentEndGame"
+{
+	norepeat
+	scene "scenes/npc/badcop/pickup_endgame.vcd"
+}
+
+rule BadCopPickupEndGame
+{
+	criteria		IsBadCop ConceptNewWeapon WeaponIsEndGame
+	response		BadCopCommentEndGame
+}
+
+// Bad Cop refuses to pick up crowbars.
+// Any interactable object named "worthless" will trigger him to say
+// "Worthless!"
+response "BadCopUseWorthless"
+{
+    norepeat // Could add more variations on this idea if any other "worthless" objects are added to the game
+	speak "bc_taunt_gen_1" respeakdelay 5
+}
+
+rule BadCopUseWorthless
+{
+	criteria		IsBadCop ConceptTalkUse SpeechTargetWorthless
+	response		BadCopUseWorthless
+}
+
+
+//------------------------------------------------------------------------------------------------------------
+
+// Enemy caught on fire
+response "BadCopEnemyIgnited"
+{
+	norepeat
+	speak "bc_taunt_fire_1" respeakdelay 15 odds 50
+	speak "bc_taunt_fire_5" respeakdelay 15 odds 50
+}
+
+rule BadCopEnemyIgnited
+{
+	criteria		IsBadCop ConceptEnemyBurning EnemyVisible EnemyIsNotClassHeadcrab LastSpoke05OrMore
+	response		BadCopEnemyIgnited
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// UNDONE: Bad Cop announces reloading while his squad is following
+//response "BadCopReload"
+//{
+//	// TODO: Implement unique lines
+//	speak "Comment_c1_13" odds 20 respeakdelay 200
+//}
+//
+//rule BadCopReload
+//{
+//	criteria		IsBadCop ConceptHideAndReload EnemyVisible ContextMoreThanOneEnemies SquadInPVS SquadFollowing
+//	response 		BadCopReload
+//}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Bad Cop gets cocky with grenades sometimes
+response "BadCopThrowGrenade"
+{
+	norepeat
+	speak "bc_thrownade_1" respeakdelay 100 //odds 50
+	speak "bc_thrownade_2" respeakdelay 100 //odds 50
+	speak "bc_thrownade_4" respeakdelay 100 //odds 50
+}
+
+rule BadCopThrowGrenade
+{
+	criteria		IsBadCop ConceptThrowGrenade ContextMoreThanOneEnemies LastSpoke05OrMore
+	response 		BadCopThrowGrenade
+}
+
+response "BadCopThrowFrag"
+{
+	norepeat
+	speak "bc_throwfrag_1" respeakdelay 100 //odds 50
+}
+
+rule BadCopThrowFrag
+{
+	criteria		IsBadCop ConceptThrowGrenade ContextMoreThanOneEnemies WeaponIsFragGrenade LastSpoke05OrMore
+	response 		BadCopThrowFrag
+	response 		BadCopThrowGrenade
+}
+
+response "BadCopThrowXenGrenade"
+{
+	norepeat
+	speak "bc_throwxenade_1" respeakdelay 100 //odds 75
+	speak "bc_thrownade_3" respeakdelay 100 //odds 75
+	speak "bc_taunt_gen_5" respeakdelay 100 //odds 75
+}
+
+rule BadCopThrowXenGrenade
+{
+	criteria		IsBadCop ConceptThrowGrenade ContextMoreThanOneEnemies WeaponIsXenGrenade LastSpoke05OrMore
+	response 		BadCopThrowXenGrenade
+	response 		BadCopThrowGrenade
+}
+
+response "BadCopThrowFirstXenGrenade"
+{
+	norepeat
+	speak "bc_throwxenade_first" respeakdelay 100
+}
+
+rule BadCopThrowFirstXenGrenade
+{
+	criteria		IsBadCop ConceptThrowGrenade WeaponIsXenGrenade LastSpoke05OrMore
+	num_enemies ">=1" required weight 5 // Makes this heavier
+	response 		BadCopThrowFirstXenGrenade
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// The APC can be like some kind of Combine tortoise sometimes
+response "BadCopOverturnVehicle"
+{
+	norepeat
+	speak "bc_apc_flipped" respeakdelay 20 displayfirst
+	response "BadCopGenericShit" respeakdelay 20 // For when Bad Cop flips the APC a second time
+}
+
+rule BadCopOverturnVehicle
+{
+	criteria		IsBadCop ConceptVehicleOverturned
+	response 		BadCopOverturnVehicle
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Some zombies are horrified at Bad Cop's presence and will call for their BIG_DADDY
+response "BadCopZombieScream"
+{
+	norepeat
+	response "BadCopGenericShit" respeakdelay 20
+	response "BadCopGenericOhShit" respeakdelay 20
+	response "BadCopGenericWellShit" respeakdelay 20
+}
+
+rule BadCopZombieScream
+{
+	criteria		IsBadCop ConceptZombieScream LastSpoke10OrMore
+	response 		BadCopZombieScream
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopLowHealthHeal"
+{
+	norepeat
+	speak "bc_lowhealthrecovery1" respeakdelay 15
+	speak "bc_lowhealthrecovery2" respeakdelay 15
+	speak "bc_lowhealthrecovery3" respeakdelay 15
+	speak "bc_lowhealthrecovery4" respeakdelay 15
+}
+
+rule BadCopLowHealthHeal
+{
+	criteria		IsBadCop ConceptTalkHeal WilsonNotSpeaking
+	health "<=30" required
+	damage ">=10" required
+	response 		BadCopLowHealthHeal
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopGameOver"
+{
+	norepeat
+	speak "bc_generic_goddammit1" predelay "0.25,0.5" respeakdelay 15
+	speak "bc_generic_goddammit2" predelay "0.25,0.5" respeakdelay 15
+	speak "bc_generic_goddammit3" predelay "0.25,0.5" respeakdelay 15
+}
+
+rule BadCopGameOver
+{
+	criteria		IsBadCop ConceptGameOver
+	response 		BadCopGameOver
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+//response "BadCopHBThoughtsGroup"
+//{
+//	speak "hb_thought_1" respeakdelay 10
+//	speak "hb_thought_2" respeakdelay 10
+//	speak "hb_thought_3" respeakdelay 10
+//	speak "hb_thought_4" respeakdelay 10
+//	speak "hb_thought_5" respeakdelay 10
+//	speak "hb_thought_6" respeakdelay 10
+//	speak "hb_thought_7" respeakdelay 10
+//}
+//
+//response "BadCopHallucinateGroup"
+//{
+//	speak "hallucinate_whispers" respeakdelay 10
+//	speak "ghost_rebel_hey_you_1" respeakdelay 10
+//	speak "ghost_rebel_hey_you_2" respeakdelay 10
+//	speak "ghost_rebel_hey_you_5" respeakdelay 10
+//}
+//
+//rule BadCopHallucinate
+//{
+//	criteria		IsBadCop IsHallucinating ConceptTalkIdle
+//	response 		BadCopHBThoughtsGroup
+//}
+
+//------------------------------------------------------------------------------------------------------------
+
+#include "talker/player_enemy_dead.txt"
+#include "talker/player_damage_react.txt"
+#include "talker/player_ally_interact.txt"
+#include "talker/player_commandermode.txt"
+
+#include "talker/player_chapter_0.txt"
+#include "talker/player_chapter_1.txt"
+#include "talker/player_chapter_2.txt"
+#include "talker/player_chapter_3.txt"
+#include "talker/player_chapter_4.txt"
+#include "talker/player_chapter_5.txt"
+
+//------------------------------------------------------------------------------------------------------------

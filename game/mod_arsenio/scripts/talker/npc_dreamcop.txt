@@ -1,0 +1,953 @@
+//============================================================================================================
+// Pre-end cops in the Entropy : Zero 2 prologue.
+// 
+// See npc_crookedcop.txt for the ones plotting against Bad Cop.
+//============================================================================================================
+criterion "IsDreamCop" "classname" "npc_dreamcop" "required"
+
+// Use this context for metrocops which should not harass Bad Cop
+criterion "RespectsBC" "respects_bc" "1" "required"
+criterion "DoesNotRespectBC" "respects_bc" "!=1" "required"
+
+criterion "IsBusy" "busy" "1" "required" weight 5
+criterion "IsNotBusy" "busy" "!=1" "required"
+
+criterion "HarassedBC" "harassed_bc" "1" "required"
+criterion "HasNotHarassedBC" "harassed_bc" "!=1" "required"
+
+criterion "WithinIdleDistance" "distancetoplayer" ">=128,<=768" "required"
+criterion "WithinCloseIdleDistance" "distancetoplayer" ">=128,<=256" "required" weight 2
+
+//============================================================================================================
+// npc_metropolice basic sounds
+//============================================================================================================
+rule DreamCopPain
+{
+	criteria		IsDreamCop ConceptTalkCopPain PainSoundsAllowed
+	response		CopPain
+}
+
+rule DreamCopDie
+{
+	criteria		IsDreamCop ConceptTalkCopDie DeathSoundsAllowed
+	response		CopDie
+}
+
+//============================================================================================================
+// npc_metropolice speech
+//============================================================================================================
+response "DreamCopGoAlert"
+{
+	sentence "METROPOLICE_GO_ALERT" noscene
+}
+
+rule DreamCopGoAlert
+{
+	criteria		IsDreamCop ConceptTalkCopGoAlert
+	response		DreamCopGoAlert
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+
+//============================================================================================================
+// Citizen Cop speech [Default]
+//============================================================================================================
+
+response "DreamCop_Citizen_Question"
+{
+	norepeat
+	speak "citcop_C0_remarks01"
+	speak "citcop_C0_remarks07"
+	speak "citcop_C0_remarks18"
+	speak "citcop_C0_vanswer14"
+	speak "citcop_C0_vquestion02"
+}
+
+rule DreamCop_Citizen_Question
+{
+	criteria		IsDreamCop IsCitCop ConceptTalkCopQuestion WithinIdleDistance
+	response		DreamCop_Citizen_Question
+}
+
+response "DreamCop_Citizen_Answer"
+{
+	norepeat
+	speak "citcop_C0_answer03"
+	speak "citcop_C0_answer10"
+	speak "citcop_C0_vanswer01"
+	speak "citcop_C0_vanswer08"
+}
+
+rule DreamCop_Citizen_Answer
+{
+	criteria		IsDreamCop IsCitCop ConceptTalkCopAnswer WithinIdleDistance
+	response		DreamCop_Citizen_Answer
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "DreamCop_Citizen_Harass"
+{
+	norepeat
+	speak "citcop_C0_vquestion01"
+	speak "citcop_C0_vquestion04"
+}
+
+rule DreamCop_Citizen_HarassIdle
+{
+	criteria		IsDreamCop IsCitCop ConceptTalkCopHarass DoesNotRespectBC HasNotHarassedBC //IsNotBusy
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Citizen_Harass
+}
+
+rule DreamCop_Citizen_Use
+{
+	criteria		IsDreamCop IsCitCop ConceptTalkUse DoesNotRespectBC HasNotHarassedBC //IsNotBusy
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Citizen_Harass
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "DreamCop_Citizen_Busy"
+{
+	norepeat
+	speak "citcop_C0_busy02"
+}
+
+rule DreamCop_Citizen_Busy_Use
+{
+	criteria		IsDreamCop IsCitCop ConceptTalkUse IsBusy
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Citizen_Busy
+}
+
+//============================================================================================================
+// Elite Cop speech
+//============================================================================================================
+
+response "DreamCop_Leet_Idle"
+{
+	norepeat
+	scene "scenes/dreamscape/dscape_leet_idle_cremationservices.vcd"
+	//scene "scenes/dreamscape/dscape_cop_idle_button_1.vcd"
+	scene "scenes/dreamscape/dscape_cop_idle_posture_1.vcd"
+}
+
+rule DreamCop_Leet_Question
+{
+	criteria		IsDreamCop IsEliteCop ConceptTalkCopQuestion
+	response		DreamCop_Leet_Idle
+}
+
+rule DreamCop_Leet_Answer
+{
+	criteria		IsDreamCop IsEliteCop ConceptTalkCopAnswer
+	response		DreamCop_Leet_Idle
+}
+
+//============================================================================================================
+// Cop 2 (1upD) speech
+//============================================================================================================
+
+response "DreamCop_1upD_Question"
+{
+	norepeat
+	speak "cop2_C0_mystomachiskillingme"
+	speak "cop2_C0_betterthings"
+	speak "cop2_C0_kids"
+}
+
+rule DreamCop_1upD_Question
+{
+	criteria		IsDreamCop Is1upD ConceptTalkCopQuestion WithinIdleDistance
+	response		DreamCop_1upD_Question
+}
+
+response "DreamCop_1upD_Answer"
+{
+	norepeat
+	speak "cop2_C0_paycut"
+	speak "cop2_C0_ridiculous"
+	speak "cop2_C0_stopwhining"
+	
+	speak "cop2_C0_quityourbellyaching"
+	speak "cop2_C0_theresyourproblem"
+}
+
+rule DreamCop_1upD_Answer
+{
+	criteria		IsDreamCop Is1upD ConceptTalkCopAnswer WithinIdleDistance
+	response		DreamCop_1upD_Answer
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "DreamCop_1upD_Harass"
+{
+	norepeat
+	scene "scenes/dreamscape/dscape_cop2_dontwanttotalkagain.vcd"
+	scene "scenes/dreamscape/dscape_cop2_getagrip36.vcd"
+	scene "scenes/dreamscape/dscape_cop2_lookbad.vcd"
+	scene "scenes/dreamscape/dscape_cop2_ratmeout.vcd"
+	scene "scenes/dreamscape/dscape_cop2_savesome.vcd"
+	scene "scenes/dreamscape/dscape_cop2_tooloyal.vcd"
+	scene "scenes/dreamscape/dscape_cop2_whatareyoulookingat.vcd"
+	scene "scenes/dreamscape/dscape_cop2_yourelatedumbass.vcd"
+}
+
+rule DreamCop_1upD_HarassIdle
+{
+	criteria		IsDreamCop Is1upD ConceptTalkCopHarass DoesNotRespectBC HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_1upD_Harass
+}
+
+rule DreamCop_1upD_Use
+{
+	criteria		IsDreamCop Is1upD ConceptTalkUse DoesNotRespectBC HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_1upD_Harass
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "DreamCop_1upD_RespectfulHarass"
+{
+	norepeat
+	scene "scenes/dreamscape/dscape_cop2_loosecannon.vcd"
+}
+
+//rule DreamCop_1upD_RespectfulHarass
+//{
+//	criteria		IsDreamCop Is1upD ConceptTalkLook RespectsBC
+//	//applyContext "harassed_bc:1:10"
+//	response		DreamCop_1upD_RespectfulHarass
+//}
+
+rule DreamCop_1upD_RespectUse
+{
+	criteria		IsDreamCop Is1upD ConceptTalkUse RespectsBC
+	//applyContext "harassed_bc:1:10"
+	response		DreamCop_1upD_RespectfulHarass
+}
+
+//------------------------------------------------------------------------------------------------------------
+// When the player isn't in sight and we've harrassed them before, start saying unflattering things about Bad Cop
+//response "DreamCop_1upD_BacktalkGeneric"
+//{
+//	norepeat
+//	speak "cop2_C0_36givesmethecreeps"
+//	speak "cop2_C0_realsickof36"
+//}
+//
+//response "DreamCop_1upD_BacktalkUnderBreath"
+//{
+//	norepeat
+//	speak "cop2_C0_36kissassquiet"
+//	speak "cop2_C0_suckup"
+//}
+//
+//rule DreamCop_1upD_BacktalkQuestion
+//{
+//	criteria		IsDreamCop Is1upD ConceptTalkCopQuestion HarassedBC
+//	applyContext "harrass_ques:1:10"
+//	applyContextToWorld
+//	response		DreamCop_1upD_BacktalkGeneric
+//}
+//
+//rule DreamCop_1upD_BacktalkAnswer
+//{
+//	criteria		IsDreamCop Is1upD ConceptTalkCopAnswer DoesNotRespectBC
+//	harrass_ques "1" required
+//	response		DreamCop_1upD_BacktalkGeneric
+//	response		DreamCop_1upD_BacktalkUnderBreath
+//}
+
+//============================================================================================================
+// Cop 4 (Blixibon) speech
+//============================================================================================================
+
+response "DreamCop_Blixibon_Question"
+{
+	norepeat
+	speak "cop4_C0_morecolor"
+	speak "cop4_C0_anotherday"
+	speak "cop4_C0_memoryreplacement"
+}
+
+rule DreamCop_Blixibon_Question
+{
+	criteria		IsDreamCop IsBlixibon ConceptTalkCopQuestion WithinIdleDistance
+	response		DreamCop_Blixibon_Question
+}
+
+response "DreamCop_Blixibon_Answer"
+{
+	norepeat
+	speak "cop4_C0_whateveryousay"
+	//speak "cop4_C0_saythattooloud"
+	//speak "cop4_C0_figures"
+	speak "cop4_C0_mattersintheend"
+	speak "cop4_C0_youproblem"
+	scene "scenes/dreamscape/dscape_cop4_cough.vcd"
+}
+
+rule DreamCop_Blixibon_Answer
+{
+	criteria		IsDreamCop IsBlixibon ConceptTalkCopAnswer WithinIdleDistance
+	response		DreamCop_Blixibon_Answer
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "DreamCop_Blixibon_Harass"
+{
+	norepeat
+	scene "scenes/dreamscape/dscape_cop4_appreciatehardwork36.vcd" displayfirst
+	scene "scenes/dreamscape/dscape_cop4_problems36.vcd"
+	scene "scenes/dreamscape/dscape_cop4_hardtorelax.vcd"
+	scene "scenes/dreamscape/dscape_cop4_assholetoeveryone.vcd"
+	scene "scenes/dreamscape/dscape_cop4_notnormal.vcd"
+	scene "scenes/dreamscape/dscape_cop4_nothingtosay.vcd" displaylast
+}
+
+rule DreamCop_Blixibon_HarassIdle
+{
+	criteria		IsDreamCop IsBlixibon ConceptTalkCopHarass DoesNotRespectBC HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Blixibon_Harass
+}
+
+rule DreamCop_Blixibon_Use
+{
+	criteria		IsDreamCop IsBlixibon ConceptTalkUse DoesNotRespectBC //HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Blixibon_Harass
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// E:Z1 anniversary easter egg
+response "DreamCop_Blixibon_Harass_Birthday"
+{
+	norepeat
+	sequential
+	scene "scenes/dreamscape/dscape_cop4_happybirthday.vcd"
+}
+
+rule DreamCop_Blixibon_Harass_Birthday
+{
+	criteria		IsDreamCop IsBlixibon ConceptTalkUse DoesNotRespectBC //HasNotHarassedBC
+	birthday "1" required weight 5
+	response		DreamCop_Blixibon_Harass_Birthday
+}
+
+//============================================================================================================
+// Cop 5 (Hosekii) speech
+//============================================================================================================
+
+response "DreamCop_Hosekii_Answer"
+{
+	norepeat
+	speak "cop5_C0_hm"
+}
+
+rule DreamCop_Hosekii_Answer
+{
+	criteria		IsDreamCop IsHosekii ConceptTalkCopAnswer WithinIdleDistance
+	response		DreamCop_Hosekii_Answer
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "DreamCop_Hosekii_Harass"
+{
+	norepeat
+	sequential
+	scene "scenes/dreamscape/dscape_cop5_gottenthatperkyet.vcd"
+	scene "scenes/dreamscape/dscape_cop5_brainscrub.vcd"
+	scene "scenes/dreamscape/dscape_cop5_suckup.vcd"
+}
+
+rule DreamCop_Hosekii_HarassIdle
+{
+	criteria		IsDreamCop IsHosekii ConceptTalkCopHarass DoesNotRespectBC HasNotHarassedBC
+	applyContext "harassed_bc:1"
+	response		DreamCop_Hosekii_Harass
+}
+
+rule DreamCop_Hosekii_Use
+{
+	criteria		IsDreamCop IsHosekii ConceptTalkUse DoesNotRespectBC //HasNotHarassedBC
+	applyContext "harassed_bc:1"
+	response		DreamCop_Hosekii_Harass
+}
+
+//============================================================================================================
+// Cop 6 (Richter) speech
+//============================================================================================================
+
+response "DreamCop_Richter_Question"
+{
+	norepeat
+	speak "cop6_C0_realitytv"
+	speak "cop6_C0_hats"
+	speak "cop6_C0_needadrink"
+	speak "cop6_C0_looneybin"
+	speak "cop6_C0_scrambledegg"
+}
+
+rule DreamCop_Richter_Question
+{
+	criteria		IsDreamCop IsRichter ConceptTalkCopQuestion WithinIdleDistance
+	response		DreamCop_Richter_Question
+}
+
+response "DreamCop_Richter_Answer"
+{
+	norepeat
+	speak "cop6_C0_todowithme"
+	speak "cop6_C0_screwloose"
+	speak "cop6_C0_wouldntgothatfar"
+	speak "cop6_C0_notthinkthatway"
+}
+
+rule DreamCop_Richter_Answer
+{
+	criteria		IsDreamCop IsRichter ConceptTalkCopAnswer WithinIdleDistance
+	response		DreamCop_Richter_Answer
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "DreamCop_Richter_Harass"
+{
+	norepeat
+	scene "scenes/dreamscape/dscape_cop6_notfriendspal.vcd"
+	scene "scenes/dreamscape/dscape_cop6_toocloseforcomfort.vcd"
+	scene "scenes/dreamscape/dscape_cop6_bigstuff.vcd"
+	scene "scenes/dreamscape/dscape_cop6_kingsuckup.vcd" displayfirst
+}
+
+rule DreamCop_Richter_HarassIdle
+{
+	criteria		IsDreamCop IsRichter ConceptTalkCopHarass DoesNotRespectBC HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Richter_Harass
+}
+
+rule DreamCop_Richter_Use
+{
+	criteria		IsDreamCop IsRichter ConceptTalkUse DoesNotRespectBC //HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Richter_Harass
+}
+
+//============================================================================================================
+// Cop 7 (Employee8) speech
+//============================================================================================================
+
+response "DreamCop_Employee8_Question"
+{
+	norepeat
+	speak "cop7_C0_lastweek"
+	speak "cop7_C0_jugglers"
+	speak "cop7_C0_perk"
+	speak "cop7_C0_vests"
+	speak "cop7_C0_freespeech"
+}
+
+rule DreamCop_Employee8_Question
+{
+	criteria		IsDreamCop IsEmployee8 ConceptTalkCopQuestion WithinIdleDistance
+	response		DreamCop_Employee8_Question
+}
+
+response "DreamCop_Employee8_Answer"
+{
+	norepeat
+	speak "cop7_C0_copythat"
+	speak "cop7_C0_dontrememberasking"
+	speak "cop7_C0_niceforyou"
+	speak "cop7_C0_dontremembercaring" displaylast
+	speak "cop7_C0_memoryrefresh"
+}
+
+rule DreamCop_Employee8_Answer
+{
+	criteria		IsDreamCop IsEmployee8 ConceptTalkCopAnswer WithinIdleDistance
+	response		DreamCop_Employee8_Answer
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "DreamCop_Employee8_Harass"
+{
+	norepeat
+	sequential
+	scene "scenes/dreamscape/dscape_cop7_movealong3650.vcd"
+	scene "scenes/dreamscape/dscape_cop7_dontgetonnerves.vcd"
+	scene "scenes/dreamscape/dscape_cop7_noonerespectsyou.vcd"
+	scene "scenes/dreamscape/dscape_cop7_firstwarningmoveaway.vcd"
+	scene "scenes/dreamscape/dscape_cop7_isaidmove.vcd"
+}
+
+rule DreamCop_Employee8_HarassIdle
+{
+	criteria		IsDreamCop IsEmployee8 ConceptTalkCopHarass DoesNotRespectBC HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Employee8_Harass
+}
+
+rule DreamCop_Employee8_Use
+{
+	criteria		IsDreamCop IsEmployee8 ConceptTalkUse DoesNotRespectBC //HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Employee8_Harass
+}
+
+//============================================================================================================
+// Cop 8 (Spencer) speech
+//============================================================================================================
+
+response "DreamCop_Spencer_Question"
+{
+	norepeat
+	speak "cop8_C0_nobaggage"
+	speak "cop8_C0_weirderthings"
+	speak "cop8_C0_relocateus"
+	speak "cop8_C0_hatedthiscity"
+	speak "cop8_C0_quarters" displaylast
+}
+
+rule DreamCop_Spencer_Question
+{
+	criteria		IsDreamCop IsSpencer ConceptTalkCopQuestion WithinIdleDistance
+	response		DreamCop_Spencer_Question
+}
+
+response "DreamCop_Spencer_Question_Long"
+{
+	norepeat
+	scene "scenes/dreamscape/dscape_cop8_listentomusic.vcd"
+	scene "scenes/dreamscape/dscape_cop8_timeoff.vcd"
+}
+
+rule DreamCop_Spencer_Question_Long
+{
+	criteria		IsDreamCop IsSpencer ConceptTalkCopQuestion WithinCloseIdleDistance
+	response		DreamCop_Spencer_Question_Long
+}
+
+response "DreamCop_Spencer_Answer"
+{
+	norepeat
+	speak "cop8_C0_agreed"
+	speak "cop8_C0_yeah"
+	speak "cop8_C0_fullstomach"
+	speak "cop8_C0_sniff" displaylast
+}
+
+rule DreamCop_Spencer_Answer
+{
+	criteria		IsDreamCop IsSpencer ConceptTalkCopAnswer WithinIdleDistance
+	response		DreamCop_Spencer_Answer
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "DreamCop_Spencer_Harass"
+{
+	norepeat
+	sequential
+	scene "scenes/dreamscape/dscape_cop8_teacherspet.vcd"
+	scene "scenes/dreamscape/dscape_cop8_brownnosingpet.vcd"
+	scene "scenes/dreamscape/dscape_cop8_anyoneevertoldyou.vcd"
+	scene "scenes/dreamscape/dscape_cop8_nottalking.vcd"
+	scene "scenes/dreamscape/dscape_cop8_leavemeout.vcd"
+	scene "scenes/dreamscape/dscape_cop8_leavemealone.vcd"
+}
+
+rule DreamCop_Spencer_HarassIdle
+{
+	criteria		IsDreamCop IsSpencer ConceptTalkCopHarass DoesNotRespectBC HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Spencer_Harass
+}
+
+rule DreamCop_Spencer_Use
+{
+	criteria		IsDreamCop IsSpencer ConceptTalkUse DoesNotRespectBC //HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Spencer_Harass
+}
+
+//============================================================================================================
+// Cop 9 (Kralich) speech
+//============================================================================================================
+
+response "DreamCop_Kralich_Question"
+{
+	norepeat
+	speak "cop9_C0_malcompliance"
+	speak "cop9_C0_amongus"
+}
+
+rule DreamCop_Kralich_Question
+{
+	criteria		IsDreamCop IsKralich ConceptTalkCopQuestion WithinIdleDistance
+	response		DreamCop_Kralich_Question
+}
+
+response "DreamCop_Kralich_Answer"
+{
+	norepeat
+	speak "cop9_C0_backinschool"
+	speak "cop9_C0_learningrules"
+}
+
+rule DreamCop_Kralich_Answer
+{
+	criteria		IsDreamCop IsKralich ConceptTalkCopAnswer WithinIdleDistance
+	response		DreamCop_Kralich_Answer
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "DreamCop_Kralich_Harass"
+{
+	norepeat
+	sequential
+	scene "scenes/dreamscape/dscape_cop9_reckless.vcd"
+	scene "scenes/dreamscape/dscape_cop9_workwithyou.vcd"
+	scene "scenes/dreamscape/dscape_cop9_literacy.vcd"
+	scene "scenes/dreamscape/dscape_cop9_bother.vcd"
+}
+
+rule DreamCop_Kralich_HarassIdle
+{
+	criteria		IsDreamCop IsKralich ConceptTalkCopHarass DoesNotRespectBC HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Kralich_Harass
+}
+
+rule DreamCop_Kralich_Use
+{
+	criteria		IsDreamCop IsKralich ConceptTalkUse DoesNotRespectBC //HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Kralich_Harass
+}
+
+//============================================================================================================
+// Cop 10 (Leadhead) speech
+//============================================================================================================
+
+// Used for a scene in the map
+criterion "IsPostDrama" "post_drama" "1" required
+
+response "DreamCop_Leadhead_Question"
+{
+	norepeat
+	scene "scenes/dreamscape/dscape_cop10_eyesopen.vcd"
+	speak "cop10_C0_laundryday"
+}
+
+rule DreamCop_Leadhead_Question
+{
+	criteria		IsDreamCop IsLeadhead ConceptTalkCopQuestion WithinIdleDistance
+	response		DreamCop_Leadhead_Question
+}
+
+response "DreamCop_Leadhead_Answer"
+{
+	norepeat
+	speak "cop10_C0_coolinhere"
+}
+
+rule DreamCop_Leadhead_Answer
+{
+	criteria		IsDreamCop IsLeadhead ConceptTalkCopAnswer WithinIdleDistance
+	response		DreamCop_Leadhead_Answer
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+criterion "ZachAnswersExhausted" "zach_no_answers" "1" required
+
+response "DreamCop_LeadheadZach_Idle"
+{
+	norepeat
+	scene "scenes/dreamscape/dscape_copcouple_calhoun.vcd"
+}
+
+rule DreamCop_LeadheadZach_Idle
+{
+	criteria		IsDreamCop IsLeadhead ConceptTalkCopQuestion WithinIdleDistance ZachAnswersExhausted
+	response		DreamCop_LeadheadZach_Idle
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "DreamCop_Leadhead_Harass"
+{
+	norepeat
+	sequential
+	scene "scenes/dreamscape/dscape_cop10_feelingguilty.vcd"
+	scene "scenes/dreamscape/dscape_cop10_suit.vcd"
+	scene "scenes/dreamscape/dscape_cop10_talkingtochief.vcd"
+	scene "scenes/dreamscape/dscape_cop10_outofmyface.vcd"
+}
+
+rule DreamCop_Leadhead_HarassIdle
+{
+	criteria		IsDreamCop IsLeadhead ConceptTalkCopHarass DoesNotRespectBC HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Leadhead_Harass
+}
+
+rule DreamCop_Leadhead_Use
+{
+	criteria		IsDreamCop IsLeadhead ConceptTalkUse DoesNotRespectBC //HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Leadhead_Harass
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "DreamCop_Leadhead_PostDrama_Harass"
+{
+	norepeat
+	sequential
+	scene "scenes/dreamscape/dscape_cop10_moodforthis.vcd"
+	scene "scenes/dreamscape/dscape_cop10_earsoff.vcd" // NOTE: This scene gags future responses
+}
+
+rule DreamCop_Leadhead_PostDrama_HarassIdle
+{
+	criteria		IsDreamCop IsLeadhead ConceptTalkCopHarass IsPostDrama DoesNotRespectBC HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Leadhead_PostDrama_Harass
+}
+
+rule DreamCop_Leadhead_PostDrama_Use
+{
+	criteria		IsDreamCop IsLeadhead ConceptTalkUse IsPostDrama DoesNotRespectBC //HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Leadhead_PostDrama_Harass
+}
+
+//============================================================================================================
+// Cop 11 (Zach) speech
+//============================================================================================================
+
+response "DreamCop_Zach_Answer"
+{
+	norepeat
+	speak "cop11_C0_tellingme"
+}
+
+rule DreamCop_Zach_Answer
+{
+	criteria		IsDreamCop IsZach ConceptTalkCopAnswer WithinIdleDistance
+	applyContext "zach_no_answers:1"
+	applyContextToWorld
+	response		DreamCop_Zach_Answer
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "DreamCop_Zach_PostDrama_Question"
+{
+	norepeat
+	speak "cop11_C0_forthebest"
+	speak "cop11_C0_killusboth"
+	speak "cop11_C0_smoothly"
+}
+
+rule DreamCop_Zach_PostDrama_Question
+{
+	criteria		IsDreamCop IsZach ConceptTalkCopQuestion IsPostDrama WithinIdleDistance
+	response		DreamCop_Zach_PostDrama_Question
+}
+
+response "DreamCop_Zach_PostDrama_Answer"
+{
+	norepeat
+	speak "cop11_C0_somewheretobe"
+}
+
+rule DreamCop_Zach_PostDrama_Answer
+{
+	criteria		IsDreamCop IsZach ConceptTalkCopAnswer IsPostDrama WithinIdleDistance
+	response		DreamCop_Zach_PostDrama_Answer
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "DreamCop_Zach_Harass"
+{
+	norepeat
+	sequential
+	scene "scenes/dreamscape/dscape_cop11_ifitisnt36.vcd"
+	scene "scenes/dreamscape/dscape_cop11_lowcharge.vcd"
+	scene "scenes/dreamscape/dscape_cop11_backoff36.vcd"
+	scene "scenes/dreamscape/dscape_cop11_lasttime.vcd"
+}
+
+rule DreamCop_Zach_HarassIdle
+{
+	criteria		IsDreamCop IsZach ConceptTalkCopHarass DoesNotRespectBC HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Zach_Harass
+}
+
+rule DreamCop_Zach_Use
+{
+	criteria		IsDreamCop IsZach ConceptTalkUse DoesNotRespectBC //HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Zach_Harass
+}
+
+//============================================================================================================
+// Cop 12 (Tiop) speech
+//============================================================================================================
+
+response "DreamCop_Tiop_Question"
+{
+	norepeat
+	speak "cop12_C0_smoking"
+	speak "cop12_C0_sober"
+	speak "cop12_C0_21owesme"
+	speak "cop12_C0_cards"
+	scene "scenes/dreamscape/dscape_cop12_kneecaps.vcd"
+}
+
+rule DreamCop_Tiop_Question
+{
+	criteria		IsDreamCop IsTiop ConceptTalkCopQuestion WithinIdleDistance
+	response		DreamCop_Tiop_Question
+}
+
+response "DreamCop_Tiop_Answer"
+{
+	norepeat
+	speak "cop12_C0_oweittoyou"
+	scene "scenes/dreamscape/dscape_cop12_gonnadothat.vcd"
+	speak "cop12_C0_shotgun"
+}
+
+rule DreamCop_Tiop_Answer
+{
+	criteria		IsDreamCop IsTiop ConceptTalkCopAnswer WithinIdleDistance
+	response		DreamCop_Tiop_Answer
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "DreamCop_Tiop_Harass"
+{
+	norepeat
+	sequential
+	scene "scenes/dreamscape/dscape_cop12_payup.vcd"
+	scene "scenes/dreamscape/dscape_cop12_memoryjog.vcd"
+	scene "scenes/dreamscape/dscape_cop12_nobodylikesyou.vcd"
+	scene "scenes/dreamscape/dscape_cop12_mybrother.vcd"
+}
+
+rule DreamCop_Tiop_HarassIdle
+{
+	criteria		IsDreamCop IsTiop ConceptTalkCopHarass DoesNotRespectBC HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Tiop_Harass
+}
+
+rule DreamCop_Tiop_Use
+{
+	criteria		IsDreamCop IsTiop ConceptTalkUse DoesNotRespectBC //HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Tiop_Harass
+}
+
+//============================================================================================================
+// Cop 13 (Niker107) speech
+//============================================================================================================
+
+response "DreamCop_Niker107_Question"
+{
+	norepeat
+	speak "cop13_C0_ridiculousmasks"
+	scene "scenes/dreamscape/dscape_cop13_rations.vcd"
+	scene "scenes/dreamscape/dscape_cop13_district6shift.vcd"
+	speak "cop13_C0_biosignals"
+	//scene "scenes/dreamscape/dscape_cop13_107shift.vcd"
+	speak "cop13_C0_whydoesbreencare"
+	//scene "scenes/dreamscape/dscape_cop13_647ereading.vcd"
+}
+
+rule DreamCop_Niker107_Question
+{
+	criteria		IsDreamCop IsNiker107 ConceptTalkCopQuestion WithinIdleDistance
+	response		DreamCop_Niker107_Question
+}
+
+response "DreamCop_Niker107_Question_Long"
+{
+	norepeat
+	scene "scenes/dreamscape/dscape_cop13_foodhole.vcd"
+	scene "scenes/dreamscape/dscape_cop13_airfilter.vcd"
+	scene "scenes/dreamscape/dscape_cop13_district6killer.vcd"
+}
+
+rule DreamCop_Niker107_Question_Long
+{
+	criteria		IsDreamCop IsNiker107 ConceptTalkCopQuestion WithinCloseIdleDistance
+	response		DreamCop_Niker107_Question_Long
+}
+
+response "DreamCop_Niker107_Answer"
+{
+	norepeat
+	speak "cop13_C0_negativity"
+	speak "cop13_C0_hustle"
+	scene "scenes/dreamscape/dscape_cop13_youandmeboth.vcd"
+	scene "scenes/dreamscape/dscape_cop13_rathernotbehere.vcd"
+	speak "cop13_C0_transfertocity34"
+	speak "cop13_C0_morewherethatcamefrom"
+	speak "cop13_C0_keeptalkinglikethat"
+	speak "cop13_C0_seeyouwithoutamask"
+}
+
+rule DreamCop_Niker107_Answer
+{
+	criteria		IsDreamCop IsNiker107 ConceptTalkCopAnswer WithinIdleDistance
+	response		DreamCop_Niker107_Answer
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "DreamCop_Niker107_Harass"
+{
+	norepeat
+	scene "scenes/dreamscape/dscape_cop13_district6accomplice.vcd" displayfirst
+	scene "scenes/dreamscape/dscape_cop13_busy.vcd" displaylast
+	scene "scenes/dreamscape/dscape_cop13_walkingwithgun.vcd"
+	scene "scenes/dreamscape/dscape_cop13_nightmares.vcd"
+	scene "scenes/dreamscape/dscape_cop13_movingprecincts.vcd"
+	scene "scenes/dreamscape/dscape_cop13_business.vcd" displaylast
+	scene "scenes/dreamscape/dscape_cop13_firingrange.vcd"
+}
+
+rule DreamCop_Niker107_HarassIdle
+{
+	criteria		IsDreamCop IsNiker107 ConceptTalkCopHarass DoesNotRespectBC HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Niker107_Harass
+}
+
+rule DreamCop_Niker107_Use
+{
+	criteria		IsDreamCop IsNiker107 ConceptTalkUse DoesNotRespectBC //HasNotHarassedBC
+	applyContext "harassed_bc:1:10"
+	response		DreamCop_Niker107_Harass
+}

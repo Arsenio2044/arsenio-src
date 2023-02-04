@@ -1,0 +1,58 @@
+//============================================================================================================
+// Snipers now operate all speech on the Response System.
+// 
+// They come with the following criteria:
+// 
+// "sniperspeak" -- The sniperspeak convar, which is disabled by default. You could override this with response contexts.
+// "playerally" -- Whether this sniper is an ally of the player.
+// 
+//============================================================================================================
+//============================================================================================================
+// npc_sniper concepts and criteria
+//============================================================================================================
+// Concepts
+criterion "ConceptTalkSniperDie" "Concept" "TLK_DEATH" required
+criterion "ConceptTalkSniperTargetDestroyed" "Concept" "TLK_ENEMY_DEAD" required
+criterion "ConceptTalkSniperDanger" "Concept" "TLK_DANGER" required
+
+// Other criteria
+criterion "IsSniper" "classname" "npc_sniper" required
+
+criterion "IsSniperSpeakAllowed" "sniperspeak" ">0" required
+criterion "IsNotPlayerAlly" "playerally" "<1" required
+
+//============================================================================================================
+// npc_sniper basic sounds
+//============================================================================================================
+response "SniperDie"
+{
+	speak "NPC_Sniper.Die" noscene
+}
+
+rule SniperDie
+{
+	criteria		IsSniper ConceptTalkSniperDie DeathSoundsAllowed
+	response		SniperDie
+}
+
+response "SniperTargetDestroyed"
+{
+	speak "NPC_Sniper.TargetDestroyed" noscene
+}
+
+rule SniperTargetDestroyed
+{
+	criteria		IsSniper ConceptTalkSniperTargetDestroyed IsSniperSpeakAllowed
+	response		SniperTargetDestroyed
+}
+
+response "SniperDanger"
+{
+	speak "NPC_Sniper.HearDanger" noscene
+}
+
+rule SniperDanger
+{
+	criteria		IsSniper ConceptTalkSniperDanger IsNotPlayerAlly
+	response		SniperDanger
+}

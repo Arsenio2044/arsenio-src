@@ -1,0 +1,23 @@
+"weapon_Gauss.Draw" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/gauss/gauss_draw.wav"
+}
+
+"weapon_Gauss.Fidget_spin" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/gauss/gauss_fidgetspin.wav"
+}
+
+"weapon_Gauss.Holster" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/gauss/gauss_putaway.wav"
+}

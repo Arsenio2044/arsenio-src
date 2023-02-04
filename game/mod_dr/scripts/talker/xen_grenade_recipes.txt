@@ -1,0 +1,70 @@
+//============================================================================================================
+// Xen grenade criteria
+//============================================================================================================
+criterion "IsMassNot0" "mass" "!=0" required weight 1.0
+criterion "IsMass25" "mass" ">=25" required weight 0.25
+criterion "IsMass50" "mass" ">=50" required weight 0.5
+criterion "IsMass100" "mass" ">=100" required weight 1.0
+criterion "IsMass150" "mass" ">=150" required weight 1.5
+criterion "IsMass200" "mass" ">=200" required weight 2.0
+criterion "IsMass250" "mass" ">=250" required weight 2.5
+criterion "IsMass325" "mass" ">=325" required weight 3.25
+criterion "IsMass425" "mass" ">=425" required weight 4.25
+criterion "IsMass500" "mass" ">=500" required weight 5.0
+criterion "IsMass800" "mass" ">=800" required weight 8.0
+criterion "IsMass1000" "mass" ">=1000" required weight 10.0
+criterion "IsMass1500" "mass" ">=1500" required weight 15.0
+criterion "IsMass2000" "mass" ">=2000" required weight 20.0
+criterion "IsMass3000" "mass" ">=3000" required weight 30.0
+
+enumeration "Hull"
+{
+	"LARGE"				"128"
+	"MEDIUM"			"32"
+	"WIDE_SHORT"		"16"
+	"WIDE_HUMAN"		"4"
+	"HUMAN"				"1"
+	"TINY"				"8"
+}
+
+criterion "HullLargeAllowed" "available_hulls" "&[Hull::LARGE]" required weight 10
+criterion "HullMediumAllowed" "available_hulls" "&[Hull::MEDIUM]" required
+criterion "HullWideShortAllowed" "available_hulls" "&[Hull::WIDE_SHORT]" required
+criterion "HullWideHumanAllowed" "available_hulls" "&[Hull::WIDE_HUMAN]" required
+criterion "HullHumanAllowed" "available_hulls" "&[Hull::HUMAN]" required
+criterion "HullTinyAllowed" "available_hulls" "&[Hull::TINY]" required weight 0
+
+criterion "HullLargeNotAllowed" "available_hulls" "!&[Hull::LARGE]" required
+criterion "HullMediumNotAllowed" "available_hulls" "!&[Hull::MEDIUM]" required
+criterion "HullWideShortNotAllowed" "available_hulls" "!&[Hull::WIDE_SHORT]" required
+criterion "HullWideHumanNotAllowed" "available_hulls" "!&[Hull::WIDE_HUMAN]" required
+criterion "HullHumanNotAllowed" "available_hulls" "!&[Hull::HUMAN]" required
+criterion "HullTinyNotAllowed" "available_hulls" "!&[Hull::TINY]" required
+
+criterion "BirdsAllowed" "available_flyto" "1" required weight 0
+
+criterion "BestClassCitizen" "best_class" "npc_citizen" required weight 1
+criterion "BestClassSoldier" "best_class" "npc_combine_s" required weight 1
+criterion "BestClassZombie" "best_class" "npc_*zombi*" required weight 1
+criterion "BestClassHeadcrab" "best_class" "npc_headcrab*" required weight 1
+criterion "BestClassAntlion" "best_class" "npc_antlion" required weight 1
+criterion "BestClassVortigaunt" "best_class" "npc_vortigaunt" required weight 1
+criterion "BestClassBullsquid" "best_class" "npc_bullsquid" required weight 1
+criterion "BestClassStukabat" "best_class" "npc_stukabat" required weight 1
+criterion "BestClassPitDrone" "best_class" "npc_pitdrone" required weight 1
+criterion "BestClassAlienCrow" "best_class" "npc_aliencrow" required weight 1
+criterion "BestClassCrow" "best_class" "npc_crow" required weight 1
+criterion "BestClassPigeon" "best_class" "npc_pigeon" required weight 1
+criterion "BestClassSeagull" "best_class" "npc_seagull" required weight 1
+criterion "BestClassCombineMine" "best_class" "combine_mine" required weight 1
+
+criterion "NoNPCs" "num_npcs" "0" required weight 5
+
+criterion "SuckedAPC" "sucked_apc" "1" required weight 1
+
+//============================================================================================================
+#include "talker/xen_grenade_recipes_basic.txt"
+#include "talker/xen_grenade_recipes_classbased.txt"
+#include "talker/xen_grenade_recipes_props.txt"
+#include "talker/xen_grenade_recipes_special.txt"
+//============================================================================================================

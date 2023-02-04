@@ -1,0 +1,253 @@
+//============================================================================================================
+// COUNTER STRIKE SOURCE VOICELINES
+// 
+// Responses for generic soldiers using radio and bot voice lines from CSS
+// 
+//============================================================================================================
+
+criterion "IsSoldier" "classname" "npc_soldier" "required"
+
+response "SoldierStartCombat"
+{
+	speak "Radio.EnemySpotted"
+	speak "bot.engaging_enemies"
+	speak "bot.i_see_our_target"
+	speak "bot.in_combat"
+	speak "bot.in_combat2"
+}
+
+rule SoldierStartCombat
+{
+	criteria    IsSoldier ConceptStartCombat
+	response    SoldierStartCombat
+}
+
+response "SoldierAttackingAngrySquad"
+{
+	speak "bot.attacking"
+	speak "bot.attacking_enemies"	
+}
+
+rule SoldierAttackingAngrySquad
+{
+	criteria		IsSoldier ConceptTalkAttacking HasSquadmates
+	response		SoldierAttackingAngrySquad   
+}
+
+
+response "SoldierBeg"
+{
+	speak "bot.hold_your_fire"
+	speak "bot.aw_hell"
+	speak "bot.cut_it_out"
+	speak "bot.help"
+	speak "bot.i_could_use_some_help_over_here"
+	speak "bot.i_could_use_some_help"
+	speak "bot.noo"
+	speak "bot.aah"
+	speak "bot.stop_it"
+}
+
+rule SoldierBeg
+{
+	criteria		IsSoldier ConceptTalkBeg
+	response		SoldierBeg   
+}
+
+// Mobbed
+response "SoldierMobbed"
+{
+	speak "bot.a_bunch_of_them"
+	speak "bot.aw_hell"
+}
+	
+rule SoldierMobbed
+{
+	criteria 	IsSoldier ConceptMobbed
+	response	SoldierMobbed
+}
+
+// Question
+response "SoldierQuestion"
+{
+	speak "bot.all_clear_here"
+	speak "bot.all_quiet"
+	speak "bot.alright_lets_do_this"
+	speak "bot.anyone_see_anything"
+	speak "bot.anyone_see_them"
+	speak "bot.area_clear"
+	speak "bot.area_secure"
+	speak "bot.clear"
+	speak "bot.clear2"
+	speak "bot.clear3"
+	speak "bot.clear4"
+	speak "bot.i_got_nothing"
+	speak "bot.im_going_to_camp"
+	speak "bot.im_going_to_wait_here"
+	speak "bot.nothing_happening_over_here"
+	speak "bot.nothing_moving_over_here"
+	speak "bot.nothing_here"
+	speak "bot.report_in_team"
+}
+
+rule SoldierQuestion
+{
+	criteria		IsSoldier ConceptTalkQuestion NotInPanic 
+	response 		SoldierQuestion
+}
+
+// Answer
+response "SoldierAnswer"
+{
+	speak "bot.affirmative" 
+	speak "bot.ahh_negative" 
+	speak "bot.alright" 
+	speak "bot.alright2" 
+	speak "bot.negative" 
+	speak "bot.negative2" 
+	speak "bot.nice2" 
+	speak "bot.no_thanks" 
+	speak "bot.ok" 
+	speak "bot.ok2" 
+	speak "bot.roger" 
+	speak "bot.roger_that" 
+	speak "bot.thats_right"
+}
+
+rule SoldierAnswer
+{
+	criteria		IsSoldier ConceptTalkAnswer NotInPanic
+	response		SoldierAnswer
+}
+
+// Kill
+response "SoldierEnemyDead"
+{
+	speak "bot.and_thats_how_its_done"
+	speak "bot.do_not_mess_with_me"
+	speak "bot.dropped_him"
+	speak "bot.enemy_down"
+	speak "bot.enemy_down2"
+	speak "bot.got_him"
+	speak "bot.hes_dead"
+	speak "bot.hes_done"
+	speak "bot.hes_down"
+	speak "bot.i_am_dangerous"
+	speak "bot.i_got_more_where_that_came_from"
+	speak "bot.killed_him"
+	speak "bot.ruined_his_day"
+	speak "bot.took_him_down"
+	speak "bot.took_him_out"
+	speak "bot.took_him_out2"
+	speak "bot.who_wants_some_more"
+}
+
+rule SoldierEnemyDead
+{
+	criteria		IsSoldier ConceptEnemyDead 
+	response		SoldierEnemyDead
+}
+
+rule SoldierEnemyDead
+{
+	criteria		IsSoldier ConceptEnemyDead 
+	response		SoldierEnemyDead
+}
+
+// Ally dead
+response "SoldierAllyDead"
+{
+	speak "bot.oh_my_god"
+	speak "bot.oh_no_sad"
+}
+
+rule SoldierAllyDead
+{
+	criteria 		IsSoldier ConceptTalkAllyKilled
+	applyContext "allykilled:1:120"
+	applyContextToSquad
+	response		SoldierAllyDead
+}
+
+
+// Ally kill
+response "SoldierAllyKill"
+{
+	speak "bot.good_job_team"
+	speak "bot.good_one"
+	speak "bot.good_one_sir"
+	speak "bot.good_one_sir2"
+	speak "bot.good_shot"
+	speak "bot.good_shot2"
+	speak "bot.nice_shot"
+	speak "bot.nice_shot2"
+	speak "bot.nice_work_team"
+}
+
+// Reloading
+response "SoldierCoverMe"
+{
+	speak "Radio.CoverMe"
+	speak "bot.cover_me"
+	speak "bot.cover_me2"
+}
+
+rule SoldierHideAndReload
+{
+	criteria		IsSoldier ConceptHideAndReload
+	response		SoldierCoverMe
+}
+
+rule SoldierHeal
+{
+	criteria		IsSoldier ConceptTalkHeal IsNotSurrendered
+	response		SoldierCoverMe
+}
+
+response "SoldierWound"
+{
+    speak "bot.taking_fire_need_assistance2"
+	speak "Radio.NeedBackup"
+	speak "bot.im_in_trouble"
+	speak "bot.ouch"
+	speak "bot.ow"
+	response "SoldierCoverMe"
+}
+
+rule SoldierWound
+{
+	criteria	IsSoldier  ConceptTalkWound
+	response SoldierWound
+}
+
+response "SoldierGrenade"
+{
+    speak "Radio.FireInTheHole"
+}
+
+rule SoldierGrenade
+{
+	criteria	IsSoldier  ConceptTalkThrowGrenade
+	response SoldierGrenade
+}
+
+// Alert
+response "SoldierAlert"
+{
+	speak "bot.hang_on_i_heard_something"
+	speak "bot.i_hear_something"
+	speak "bot.i_hear_them"
+	speak "bot.i_heard_something_over_there"
+	speak "bot.i_heard_them"
+}
+
+// Lost Enemy
+response "SoldierLostEnemy"
+{
+	speak "bot.he_got_away"
+	speak "bot.he_got_away2"
+	speak "bot.i_lost_him"
+	speak "bot.come_out_and_fight_like_a_man"
+	speak "bot.come_out_wherever_you_are"
+	speak "bot.come_to_papa"
+}

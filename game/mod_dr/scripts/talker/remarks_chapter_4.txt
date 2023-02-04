@@ -1,0 +1,339 @@
+//============================================================================================================
+// REMARKS CHAPTER 4
+// 
+// This is #included from the main scripts.
+// 
+//============================================================================================================
+
+//============================================================================================================
+// ez2_c4_1 remarkables
+//============================================================================================================
+criterion "SubjectRecordingSurface" "subject" "recording_surface" required
+
+response "BadCopRemarkRecordingSurface"
+{
+	norepeat
+	scene "scenes/arbeit/c4_01_badcop_remark_recording_surface.vcd"
+}
+
+
+rule BadCopRemarkRecordingSurface
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectRecordingSurface
+	response 		BadCopRemarkRecordingSurface
+}
+
+//============================================================================================================
+// ez2_c4_2 for Bad Cop and Wilson talking about the journey
+//============================================================================================================
+
+criterion "SubjectLongRoad" "subject" "long_road" required
+
+response "BadCopRemarkLongRoadNoAPC"
+{
+	norepeat
+	scene "scenes\npc\wilson\c4_2_donthaveapc.vcd"
+}
+
+rule BadCopRemarkLongRoadNoAPC
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectLongRoad IsSubjectNear1000 PlayerNearWillE NotInVehicle NeverRemarked
+	in_vehicle "0" required
+	response		BadCopRemarkLongRoadNoAPC
+}
+
+response "BadCopRemarkLongRoadHaveAPC"
+{
+	norepeat
+	scene "scenes\npc\wilson\c4_2_haveapc.vcd"
+}
+
+rule BadCopRemarkLongRoadHaveAPC
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectLongRoad IsSubjectNear1000 PlayerNearWillE NeverRemarked
+	// InVehicle and NotInVehicle criteria not working! TODO - needs to be fixed
+	in_vehicle "prop_vehicle_drivable_apc" required
+	response		BadCopRemarkLongRoadHaveAPC
+}
+
+//============================================================================================================
+// ez2_c4_2b remarkables
+//============================================================================================================
+
+criterion "SubjectZoneSign" "subject" "zonesign" required
+
+response "BadCopRemarkZoneSign"
+{
+    sequential
+    norepeat
+    scene "scenes/arcticwastes/c4_2b_zone_sign.vcd"
+}
+
+rule BadCopRemarkZoneSign
+{
+    criteria		IsBadCop ConceptTalkRemark SubjectZoneSign IsSubjectNear200
+	matchonce
+    response		BadCopRemarkZoneSign
+}
+
+// Wilson can respond to the zone warning
+response "WilsonZoneWarn"
+{
+    sequential
+    norepeat
+    scene "scenes/arcticwastes/c4_2b_zone_wilsonwarn.vcd"
+}
+
+rule WilsonZoneWarn_Response
+{
+	criteria		IsWilson SpeechTargetBadCop ConceptTalkConceptAnswer TargetConceptRemark
+	speechtarget_rule "BadCopRemarkZoneSign" required
+	matchonce
+	response		WilsonZoneWarn
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+criterion "SubjectTimeMirage" "subject" "time_mirage*" required
+criterion "SubjectTimeMirageZombies" "subject" "time_mirage_zombies" required
+criterion "SubjectTimeMirageHardlyWorking" "subject" "time_mirage_hardlyworking*" required weight 2
+criterion "SubjectTimeMirageSuperFuture" "subject" "time_mirage_superfuture" required weight 2
+criterion "SubjectSuspiciousWhiteboard" "subject" "suspicious_whiteboard" required
+
+response "BadCopRemarkTimeMirage"
+{
+	sequential
+	norepeat
+	scene "scenes/arcticwastes/c4_2b_hallu_comment.vcd" // "Something's seriously wrong with this place..."
+}
+
+// The "Hardly working" mirages are generally more tame
+response "BadCopRemarkTimeMirageHardlyWorking"
+{
+	sequential
+	norepeat
+	response "BadCopGenericHmm" respeakdelay 5 // "Hmm..."
+	response "BadCopRemarkHardlyWorking" respeakdelay 5 // "Working hard, or hardly working?" (don't repeat if already said in c2_3)
+}
+
+rule BadCopRemarkTimeMirage
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectTimeMirage IsSubjectNear500
+	matchonce
+	response		BadCopRemarkTimeMirage
+}
+
+rule BadCopRemarkTimeMirageZombies
+{
+	// By using the same response seen in player_chapter_4.txt, this response can either play
+	// when players kill a zombie near the time hazards or when players encounter the zombie hallucination.
+	criteria		IsBadCop ConceptTalkRemark SubjectTimeMirageZombies IsSubjectNear200
+	matchonce
+	response		BadCopChapter4AnomalyZombies
+}
+
+rule BadCopRemarkTimeMirageHardlyWorking
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectTimeMirageHardlyWorking IsSubjectNear500
+	//matchonce
+	response		BadCopRemarkTimeMirageHardlyWorking
+}
+
+response "BadCopRemarkTimeMirageSuperFuture"
+{
+	sequential
+	norepeat
+	speak "bc_generic_whatthehell1" respeakdelay 5 // "What the hell?"
+}
+
+rule BadCopRemarkTimeMirageSuperFuture
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectTimeMirageSuperFuture IsSubjectNear500
+	matchonce
+	response		BadCopRemarkTimeMirageSuperFuture
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopRemarkSuspiciousWhiteboard"
+{
+	sequential
+	norepeat
+	speak "BC_C5_suspicious" respeakdelay 5 // "Well, this looks suspicious." (unused Chapter 5 line)
+}
+
+rule BadCopRemarkSuspiciousWhiteboard
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectSuspiciousWhiteboard IsSubjectNear100
+	matchonce
+	response		BadCopRemarkSuspiciousWhiteboard
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "WilsonRemarkTimeMirage"
+{
+	sequential
+	norepeat
+	speak "will_generic_omg1" // "Oh my god."
+}
+
+rule WilsonRemarkTimeMirage
+{
+	criteria		IsWilson ConceptTalkRemark SubjectTimeMirage IsSubjectNear500
+	response		WilsonRemarkTimeMirage
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// // Wilson can respond to both remarks
+// response "WilsonSlickLooking"
+// {
+//     sequential
+//     norepeat
+//     print "Yeah. Why is it so slick-looking?"
+// }
+// 
+// rule WilsonTimeMirage_Response
+// {
+// 	criteria		IsWilson SpeechTargetBadCop ConceptTalkConceptAnswer TargetConceptRemark
+// 	speechtarget_rule "BadCopRemarkTimeMirage" required
+// 	matchonce
+// 	response		WilsonSlickLooking
+// }
+// 
+// response "WilsonTimeTravelers"
+// {
+//     sequential
+//     norepeat
+//     print "Er... Maybe they're time travelers."
+// }
+// 
+// rule WilsonAnomalyZombies_Response
+// {
+// 	criteria		IsWilson SpeechTargetBadCop ConceptTalkConceptAnswer //TargetConceptRemark
+// 	speechtarget_response "BC_C42b_zombiescomingfrom" required
+// 	matchonce
+// 	response		WilsonTimeTravelers
+// }
+
+//============================================================================================================
+// ez2_c4_3 remarkable for staring at a shackled vortigaunt
+//============================================================================================================
+
+criterion "SubjectShackles" "subject" "shackles" required
+
+response "BadCopCommentshackles"
+{
+    sequential
+    norepeat
+    speak "BC_C43_7"
+}
+
+rule BadCopRemarkShackles
+{
+    criteria        IsBadCop ConceptTalkRemark SubjectShackles IsSubjectNear200
+    response         BadCopCommentShackles
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+//============================================================================================================
+// ez2_c4_3 remarkable for staring at the time wall
+//============================================================================================================
+
+criterion "SubjectTimeWall" "subject" "timewall" required
+
+response "BadCopCommentTimeWall"
+{
+    sequential
+    norepeat
+    scene "scenes/chapter 4/c4_3_see_timewall_1.vcd" respeakdelay 5
+    scene "scenes/chapter 4/c4_3_see_timewall_2.vcd"
+}
+
+rule BadCopRemarkTimeWall
+{
+    criteria        IsBadCop ConceptTalkRemark SubjectTimeWall IsSubjectNear200
+    response         BadCopCommentTimeWall
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+//============================================================================================================
+// ez2_c4_4 remarkable for staring at the rebel sign
+//============================================================================================================
+
+criterion "SubjectShortcutSign" "subject" "shortcutsign" required
+
+response "BadCopCommentShortcutSign"
+{
+    sequential
+    norepeat
+    scene "scenes/chapter 4/c4_4_shortcut.vcd"
+}
+
+rule BadCopRemarkShortcutSign
+{
+    criteria        IsBadCop ConceptTalkRemark SubjectShortcutSign IsSubjectNear100
+    response         BadCopCommentShortcutSign
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+//============================================================================================================
+// ez2_c4_4 remarkable for staring at the mine gate before entering the cabin
+//============================================================================================================
+
+criterion "SubjectMines" "subject" "mines" required
+
+response "BadCopCommentMines"
+{
+    sequential
+    norepeat
+    scene "scenes/chapter 4/c4_4_cabinfirst.vcd"
+}
+
+rule BadCopRemarkMines
+{
+    criteria        IsBadCop ConceptTalkRemark SubjectMines IsSubjectNear100
+    response         BadCopCommentMines
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+//============================================================================================================
+// ez2_c4_5 remarkable for grenades Wilson comments on
+//============================================================================================================
+
+criterion "SubjectXenGrenadeTestSite" "subject" "xengrenade_testsite" required
+
+response "BadCopRemarkXenGrenadeTestSite_Wilson"
+{
+	norepeat
+	scene "scenes\npc\wilson\c4_5_xennades.vcd"
+}
+
+rule BadCopRemarkXenGrenadeTestSite_Wilson
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectXenGrenadeTestSite IsSubjectNear300 PlayerNearWillE
+	response		BadCopRemarkXenGrenadeTestSite_Wilson
+}
+
+//============================================================================================================
+// ez2_c4_5 remarkable for the exit of the caves
+//============================================================================================================
+
+criterion "SubjectLeavingXentarium" "subject" "leaving_xentarium" required
+
+response "BadCopRemarkLeavingXentarium_Wilson"
+{
+	norepeat
+	scene "scenes\npc\wilson\c4_5_exitcaves.vcd"
+}
+
+rule BadCopRemarkLeavingXentarium_Wilson
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectLeavingXentarium IsSubjectNear300 PlayerNearWillE
+	response		BadCopRemarkLeavingXentarium_Wilson
+}

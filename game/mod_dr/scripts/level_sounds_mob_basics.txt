@@ -1,0 +1,128 @@
+
+
+"Mobility.mob_basics_welcome"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/basics_welcome.mp3"
+}
+
+"Mobility.mob_basics_duckunder"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/basics_duckunder.mp3"
+}
+
+"Mobility.mob_basics_suit_dj"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/basics_suit_dj.mp3"
+}
+
+"Mobility.mob_climb"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/basics_climb.mp3"
+}
+
+"Mobility.mob_crystals"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/mob_basics_crystals.mp3"
+}
+
+
+"Mobility.mob_basics_jumptoplat"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/basics_jumptoplat.mp3"
+}
+
+"Mobility.mob_basics_pit"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/basics_pit.mp3"
+}
+
+"Mobility.mob_basics_med"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/basics_med.mp3"
+}
+
+"Mobility.mob_slide"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/basics_slide.mp3"
+}
+
+"Mobility.mob_basics_slidedoor"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/basics_slidedoor.mp3"
+}
+
+"Mobility.mob_wallrun"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/basics_wallrun.mp3"
+}
+
+"Mobility.mob_wallrun2"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/basics_wallrun_details.mp3"
+}
+
+"Mobility.mob_basics_slidehop"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/basics_slidehop.mp3"
+}
+
+"Mobility.mob_practice"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/basics_practice.mp3"
+}

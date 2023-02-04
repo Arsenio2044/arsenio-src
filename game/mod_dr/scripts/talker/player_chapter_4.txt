@@ -1,0 +1,240 @@
+//============================================================================================================
+// Bad Cop Chapter 4
+// 
+// Bad Cop lines specific to Chapter 4.
+// This is #included from the main scripts.
+// 
+//============================================================================================================
+
+//============================================================================================================
+// Bad Cop criteria
+//============================================================================================================
+
+// Some responses should only be said on the first map or should never be said on the first map
+// 0 or -1 weight balances the weight with the original responses
+criterion "IsCh4FirstMap" "map" "ez2_c4_1" required weight 0
+criterion "IsCh4NotFirstMap" "map" "!=ez2_c4_1" required weight -1
+criterion "IsCh4Xentarium" "map" "ez2_c4_5b" required weight 0
+criterion "NagXentariumSpawns" "nag" "xentarium_spawns" required weight 0
+criterion "DidNotRecentlyNagXentarium" "recently_nagged_xentarium" "!=1" required weight 0
+criterion "NaggedXentarium" "nagged_xentarium" "1" required weight 0
+
+//============================================================================================================
+// Bad Cop response groups
+//============================================================================================================
+
+response "BadCopChapter4TauntAPC"
+{
+	norepeat
+	speak "bc_apc_kill_gun1" respeakdelay 15
+}
+
+rule BadCopChapter4TauntAPC
+{
+	criteria		IsBadCop IsChapter4 ConceptEnemyDead EnemyIsNPC DamageTypeAirboat InAPC
+	matchonce
+	response		BadCopChapter4TauntAPC
+}
+
+response "BadCopChapter4DamageInAPC"
+{
+	norepeat
+	speak "bc_react_apc_damage_3" respeakdelay 15
+}
+
+rule BadCopChapter4DamageInAPC
+{
+	// Uses IsFirstMap instead of IsChapter4
+	criteria		IsBadCop IsCh4FirstMap ConceptWoundRemark InVehicle EnemyVisible HaventRemarkedDamageRecently
+	matchonce
+	response		BadCopChapter4DamageInAPC
+}
+
+response "BadCopChapter4DamageWhiplash"
+{
+	norepeat
+	speak "bc_react_apc_crash_3" respeakdelay 15
+}
+
+rule BadCopChapter4DamageWhiplash
+{
+	criteria		IsBadCop IsChapter4 ConceptWoundRemark InVehicle DamageTypeVehicle HaventRemarkedDamageRecently
+	matchonce
+	response		BadCopChapter4DamageWhiplash
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+//response "BadCopChapter4IdleFlavor"
+//{
+//	// TODO: Implement unique lines
+//	norepeat
+//	sequential
+//	speak "Comment_c1_5" respeakdelay 100
+//}
+
+//rule BadCopChapter4IdleFlavor
+//{
+//	criteria		IsBadCop IsChapter4 ConceptTalkIdle NotInVehicle IsCh4NotFirstMap
+//	timesincecombat ">=45" required
+//	response 		BadCopChapter4IdleFlavor
+//}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopChapter4AnomalyZombies"
+{
+	norepeat
+	speak "BC_C42b_zombiescomingfrom" respeakdelay 15
+}
+
+rule BadCopChapter4AnomalyZombies
+{
+	// This rule's weight needs to be kept at 4 to be consistent with regular taunts
+	criteria		IsBadCop IsChapter4 ConceptEnemyDead EnemyIsNPC
+	enemy_anomaly_zombie "1" required
+	matchonce
+	response		BadCopChapter4AnomalyZombies
+}
+
+//------------------------------------------------------------------------------------------------------------
+// Xen Healing Pool Responses
+//
+// Quick note about ConceptTalkHeal
+// You can use the criteria damage ">=1" to make it so that the responses only play if health was actually given
+// 
+// If you don't use that, the lines will play regardless.
+// Some healing pool lines might be better always and some might be better only if health is given.
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopXenHealInitial"
+{
+	norepeat
+	speak "bc_react_xenpool_1" respeakdelay 1
+	speak "bc_react_xenpool_2" respeakdelay 5
+}
+
+rule BadCopXenHealInitial
+{
+	criteria		IsBadCop ConceptTalkHeal
+	damage_type "&[DMGType::NerveGas]" required weight 10
+	response 		BadCopXenHealInitial
+}
+
+response "BadCopXenHeal"
+{
+	norepeat
+	sequential
+	speak "bc_react_xenpool_3" respeakdelay 45
+	speak "bc_react_xenpool_4" respeakdelay 45
+	speak "bc_react_xenpool_5" respeakdelay 45
+	speak "bc_react_xenpool_6" respeakdelay 45
+	speak "bc_react_xenpool_7" respeakdelay 45
+}
+
+// TODO - Bad Cop comments on xen pools immediately upon taking damage. There is a 'time since combat' context. Perhaps we need a 'time since damage' context to limit this response until after a certain time has passed.
+rule BadCopXenHeal
+{
+	criteria		IsBadCop ConceptTalkHeal
+	damage_type "&[DMGType::NerveGas]" required
+	damage ">=1" required
+	response 		BadCopXenHeal
+}
+
+//------------------------------------------------------------------------------------------------------------
+// Nag lines to remind players to keep moving in the Xentarium
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopXentariumIdleNag"
+{
+	norepeat
+	sequential
+	
+	// Commented out "I need to get through this somehow" as it could be misconstrued to mean Bad Cop needs to go "through" something, literally
+	// speak "BC_C4_4_throughthis" respeakdelay 30 //  I need to get through this somehow.
+
+	// Commented out this one as Xen grenades can close portals - maybe make it a xen grenade-less response?
+	// speak "BC_ez2_c4_badcop_xentarium_nag_2" respeakdelay 30 // I don't know how to close those portals. Better keep moving.
+
+	speak "BC_ez2_c4_badcop_xentarium_nag_4" respeakdelay 30 // I better not hang around. They'll keep coming.
+	speak "BC_ez2_c4_badcop_ch4_xentarium_nopoint" respeakdelay 30 // No point hangin' around here!
+}
+
+response "BadCopXentariumKillNag"
+{
+	norepeat
+	sequential
+	speak "BC_ez2_c4_badcop_xentarium_nag_1" respeakdelay 30 // These things aren't gonna stop coming. I gotta move.
+	speak "BC_ez2_c4_badcop_xentarium_nag_5" respeakdelay 30 // I kill one and two more replace it. I gotta move.
+	speak "BC_ez2_c4_badcop_xentarium_nag_2" respeakdelay 30 // I can't stop these things from coming. Gotta keep moving.
+}
+
+response "BadCopXentariumReloadNag"
+{
+	norepeat
+	speak "BC_ez2_c4_badcop_ch4_xentarium_timeandammo" respeakdelay 30 // I'm wasting time and ammo. Better keep moving!
+}
+
+
+rule BadCopXentariumIdleNag
+{
+	criteria		IsBadCop ConceptTalkIdle NagXentariumSpawns DidNotRecentlyNagXentarium
+	
+	// Don't comment on this stuff for a while
+	applyContext "recently_nagged_xentarium:1:60"
+	applyContext "nagged_xentarium:1"
+
+	response 		BadCopXentariumIdleNag
+}
+
+// TLK_ATTACKING is used like TLK_IDLE in Bad Cop's response code if the player's state is COMBAT
+rule BadCopXentariumAttackingNag
+{
+	criteria		IsBadCop ConceptTalkAttacking NagXentariumSpawns LastSpoke10OrMore DidNotRecentlyNagXentarium
+
+	// Don't comment on this stuff for a while
+	applyContext "recently_nagged_xentarium:1:60"
+	applyContext "nagged_xentarium:1"
+
+	response 		BadCopXentariumIdleNag
+}
+
+// Bad Cop will reflect on the timely nature of the Xentarium while reloading his weapons
+rule BadCopHideReloadNag
+{
+	criteria		IsBadCop ConceptHideAndReload NagXentariumSpawns LastSpoke10OrMore DidNotRecentlyNagXentarium NaggedXentarium
+
+	// Don't comment on this stuff for a while
+	applyContext "recently_nagged_xentarium:1:60"
+	applyContext "nagged_xentarium:1"
+
+	response 		BadCopXentariumReloadNag
+}
+
+rule BadCopXentariumTauntBullsquidNag
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsBullsquid LastSpoke15OrMore NagXentariumSpawns DidNotRecentlyNagXentarium
+
+	// Don't comment on this stuff for a while
+	applyContext "recently_nagged_xentarium:1:60"
+	applyContext "nagged_xentarium:1"
+
+	response		BadCopXentariumKillNag
+}
+
+rule BadCopXentariumTauntPitDroneNag
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsPitDrone LastSpoke15OrMore NagXentariumSpawns DidNotRecentlyNagXentarium
+
+	// Don't comment on this stuff for a while
+	applyContext "recently_nagged_xentarium:1:60"
+	applyContext "nagged_xentarium:1"
+
+	response		BadCopXentariumKillNag
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// 
+// NOTE: Remarkables are kept in "remarks_chapter_#.txt" now!!!
+// 

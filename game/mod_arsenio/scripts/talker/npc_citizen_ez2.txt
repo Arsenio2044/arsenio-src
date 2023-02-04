@@ -1,0 +1,426 @@
+//============================================================================================================
+// CITIZEN E:Z2
+// 
+// Special citizen responses which add onto our own changes in npc_citizen.txt.
+// 
+//============================================================================================================
+//============================================================================================================
+// npc_citizen concepts and criteria
+//============================================================================================================
+// Concepts
+criterion "ConceptTalkSurrender" "Concept" "TLK_SURRENDER" required
+criterion "ConceptTalkMelee" "Concept" "TLK_MELEE" required
+criterion "ConceptTalkThrowGrenade" "Concept" "TLK_THROWGRENADE" required
+
+// Other criteria
+criterion "InSquad" "insquad" "1" required
+criterion "HasSquadmates" "squadmates" ">1" required
+
+criterion "WillpowerVeryLow" "willpower" "-2" required
+criterion "WillpowerLow" "willpower" "<=-1" required
+criterion "WillpowerNormal" "willpower" "0" required
+criterion "WillpowerHigh" "willpower" ">=1" required
+
+criterion "WillpowerNotHigh" "willpower" "<1" required
+criterion "WillpowerNotLow" "willpower" ">-1" required
+
+//============================================================================================================
+// npc_citizen speech
+//============================================================================================================
+
+response "CitizenSeeBadCop"
+{
+	scene "scenes/npc/$gender01/combine01.vcd"
+	scene "scenes/npc/$gender01/combine02.vcd"
+	// Add more citizen responses to the player here
+}
+
+rule CitizenStartCombatPlayer
+{
+	criteria    IsCitizen ConceptStartCombat EnemyIsPlayer
+	response    CitizenSeeBadCop
+}
+
+// Response for Bad Cop and multiple enemies
+// Assuming here the other enemies are Bad Cop's squad.
+// What if there are other hostiles that aren't Combine?
+response "CitizenSeeMultipleCombine"
+{
+	scene "scenes/episode_1/npc/$gender01/cit_alert_soldier04.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_alert_soldier05.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_alert_soldier07.vcd" weight 0.25
+}
+
+rule CitizenStartCombatPlayerMultipleEnemies
+{
+	criteria    IsCitizen ConceptStartCombat EnemyIsPlayer ContextMoreThanOneEnemies
+	response    CitizenSeeMultipleCombine
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "CitizenPlayerDead"
+{
+	scene "scenes/episode_1/npc/$gender01/cit_kill01.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_kill04.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_kill05.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_kill06.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_kill07.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_kill08.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_kill09.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_kill10.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_kill11.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_kill12.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_kill13.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_kill14.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_kill15.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_kill17.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_kill19.vcd"
+	scene "scenes/npc/$gender01/likethat.vcd"
+	scene "scenes/npc/$gender01/finally.vcd"
+}
+
+rule CitizenPlayerDead
+{
+	criteria		IsCitizen ConceptEnemyDead EnemyIsPlayer
+	response		CitizenPlayerDead
+}
+
+// Commenting out low willpower kill lines - citizens should always express contempt upon killing Bad Cop
+// response "CitizenPlayerDeadLowWillpower"
+// {
+// 	scene "scenes/episode_1/npc/$gender01/cit_evac_thanks03.vcd" // "That was a close one!"
+// 	scene "scenes/episode_1/npc/$gender01/cit_evac_thanks04.vcd" // "I thought we'd never make it!"
+// 	scene "scenes/episode_1/npc/$gender01/cit_evac_thanks05.vcd" // "It was touch and go for a minute there!"
+// 	
+// 	response CitizenPlayerDead weight 1
+// }
+// 
+// rule CitizenPlayerDeadLowWillpower
+// {
+// 	criteria		IsCitizen ConceptEnemyDead EnemyIsPlayer WillpowerNotHigh WillpowerLow
+// 	response		CitizenPlayerDeadLowWillpower
+// }
+
+// Some citizens think the HEV zombies are Gordon Freeman.
+response "CitizenHEVDead"
+{
+	scene "scenes/npc/$gender01/gordead_ques04.vcd"
+	scene "scenes/npc/$gender01/gordead_ques05.vcd"
+	scene "scenes/npc/$gender01/gordead_ques08.vcd"
+	scene "scenes/npc/$gender01/gordead_ques12.vcd"
+	scene "scenes/npc/$gender01/gordead_ans16.vcd"
+	scene "scenes/npc/$gender01/gordead_ans17.vcd"
+}
+
+rule CitizenHEVDead
+{
+	criteria		IsCitizen ConceptEnemyDead EnemyIsHEVZombie
+	response		CitizenHEVDead
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "CitizenMeleeEnemy"
+{
+	scene "scenes/episode_1/npc/$gender01/cit_alert_head03.vcd" respeakdelay 30
+	scene "scenes/episode_1/npc/$gender01/cit_alert_head04.vcd" respeakdelay 30
+}
+
+rule CitizenMeleeEnemy
+{
+	criteria		IsCitizen ConceptTalkMelee WillpowerNotHigh
+	response		CitizenMeleeEnemy
+}
+
+response "CitizenThrowGrenade"
+{
+	scene "scenes/episode_1/npc/$gender01/cit_kill13.vcd" respeakdelay 30 // Eat it!
+	scene "scenes/episode_1/npc/$gender01/cit_kill14.vcd" respeakdelay 30 // Die!
+	scene "scenes/npc/$gender01/squad_affirm06.vcd" respeakdelay 30 // Here goes nothing.
+	scene "scenes/npc/$gender01/takecover02.vcd" respeakdelay 30 // Take cover!
+}
+
+rule CitizenThrowGrenade
+{
+	criteria		IsCitizen ConceptTalkThrowGrenade
+	response		CitizenThrowGrenade
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "CitizenAttackingAngry"
+{
+	scene "scenes/episode_1/npc/$gender01/cit_kill10.vcd" respeakdelay 30 // Take that!
+	scene "scenes/episode_1/npc/$gender01/cit_kill13.vcd" respeakdelay 30 // Eat it!
+	scene "scenes/episode_1/npc/$gender01/cit_kill14.vcd" respeakdelay 30 // Die!
+	scene "scenes/episode_1/npc/$gender01/cit_kill17.vcd" respeakdelay 30 // Rot in hell!
+	scene "scenes/npc/$gender01/gethellout.vcd" respeakdelay 30 // Get the hell out of here!
+
+	// These lines sound a little bit crazy. Maybe rebel brute only?
+	scene "scenes/episode_1/npc/$gender01/cit_kill11.vcd" respeakdelay 30 // Yeah!
+	scene "scenes/episode_1/npc/$gender01/cit_kill12.vcd" respeakdelay 30 // Yeah
+	scene "scenes/episode_1/npc/$gender01/cit_kill20.vcd" respeakdelay 30 // Maniacal laughter
+}
+
+rule CitizenAttackingAngry
+{
+	criteria		IsCitizen ConceptTalkAttacking WillpowerHigh
+	response		CitizenAttackingAngry   
+}
+
+response "CitizenAttackingAngrySquad"
+{
+	// These lines should only play if the citizen has living squadmates
+	scene "scenes/episode_1/npc/$gender01/cit_alert_zombie06.vcd" respeakdelay 20 // Shoot 'em!
+	scene "scenes/episode_1/npc/$gender01/cit_getaboard01.vcd" respeakdelay 20 // Come on, people!
+	scene "scenes/npc/$gender01/incoming02.vcd" respeakdelay 20
+	scene "scenes/npc/$gender01/overthere01.vcd" respeakdelay 20
+	scene "scenes/npc/$gender01/overthere02.vcd" respeakdelay 20
+}
+
+rule CitizenAttackingAngrySquad
+{
+	criteria		IsCitizen ConceptTalkAttacking WillpowerHigh HasSquadmates
+	response		CitizenAttackingAngrySquad   
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "CitizenAttackingAfraid"
+{
+	// TODO - These aren't right. They should be closer to the "angry" lines. Contemplating cutting this resposne and having all attack lines use the above
+	scene "scenes/episode_1/npc/$gender01/cit_alert_antlions06.vcd" respeakdelay 30 // HELP!
+	scene "coast/odessa/$gender01/nlo_cubdeath01.vcd" respeakdelay 30	// No! NO!
+	scene "coast/odessa/$gender01/nlo_cubdeath02.vcd" respeakdelay 30	// No! NO!
+	scene "scenes/episode_1/npc/$gender01/cit_buddykilled07.vcd"	// Oh shit!
+}
+
+// rule CitizenAttackingAfraid
+// {
+// 	criteria		IsCitizen ConceptTalkAttacking WillpowerLow
+// 	response		CitizenAttackingAfraid   
+// }
+
+response "CitizenAttackingAfraidSquad"
+{
+	// These lines should only play if the citizen has living squadmates
+	scene "scenes/episode_1/npc/$gender01/cit_alert_antlions06.vcd" respeakdelay 20 // HELP!
+	scene "scenes/episode_1/npc/$gender01/cit_runforit.vcd" respeakdelay 20 // Run for it!
+	scene "scenes/episode_1/npc/$gender01/cit_evac_defendus06.vcd" respeakdelay 20 // We gotta get outta here!
+	scene "scenes/npc/$gender01/strider_run.vcd" respeakdelay 20 // RUN!!
+	speak "npc_citizen.runforyourlife01" respeakdelay 20 // No corresponding scene
+	speak "npc_citizen.runforyourlife02" respeakdelay 20 // No corresponding scene
+}
+
+// rule CitizenAttackingAfraidSquad
+// {
+// 	criteria		IsCitizen ConceptTalkAttacking WillpowerLow HasSquadmates
+// 	response		CitizenAttackingAfraidSquad   
+// }
+
+
+//------------------------------------------------------------------------------------------------------------
+
+response "CitizenSurrender"
+{
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty10.vcd" // "Let's just give up now!" - How did I miss this one? It's perfect
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty05.vcd"	// We'll never make it at this rate!
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty09.vcd"	// It's hopeless!
+	// Moved to "beg"
+	// scene "scenes/episode_1/npc/$gender01/cit_buddykilled10.vcd"	// I think we made a terrible mistake!
+	scene "scenes/episode_1/npc/$gender01/cit_buddykilled11.vcd"	// We're all gonna die!
+	scene "scenes/trainyard/$gender01/cit_window_use03.vcd"	// It was just a matter of time..
+	
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty02.vcd" // They're dying all around me!
+}
+
+rule CitizenSurrendering
+{
+	criteria		IsCitizen ConceptTalkSurrender
+	response		CitizenSurrender   
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Experimnenting with this one - no code in the build yet
+
+response "CitizenBeg"
+{
+	scene "scenes/episode_1/npc/$gender01/cit_buddykilled02.vcd" respeakdelay 10 // Oh god, I'm next, I just know it!
+	// scene "scenes/episode_1/npc/$gender01/cit_buddykilled03.vcd"	// No...
+	// scene "scenes/npc/$gender01/no01.vcd"	// No...NO!
+	// scene "scenes/npc/$gender01/no02.vcd"	// NO!!!!!
+	// scene "scenes/streetwar/tunnel/$gender01/c17_06_helpme01.vcd"	// HELP!!!
+	// scene "scenes/streetwar/tunnel/$gender01/c17_06_helpme01.vcd"	// HELP!!!
+	// scene "scenes/episode_1/npc/$gender01/cit_evac_casualty08.vcd"	// Heeellllpp!!!
+	
+	// Maybe this one?
+	scene "scenes/episode_1/npc/$gender01\cit_alert_soldier01.vcd" respeakdelay 10 // "We're all just targets to them now..."
+
+	// Not sure if this one should be "Surrender" instead of "Beg"
+	scene "scenes/episode_1/npc/$gender01\cit_evac_enemies02.vcd" // "They're everywhere!"
+		
+	// Moved from "surrender"
+	scene "scenes/episode_1/npc/$gender01/cit_buddykilled10.vcd"  respeakdelay 10	// I think we made a terrible mistake!
+}
+
+rule CitizenBeg
+{
+	criteria		IsCitizen ConceptTalkBeg
+	response		CitizenBeg   
+}
+
+//------------------------------------------------------------------------------------------------------------
+// The same as Citizen Danger, but with the Fear concept so it doesn't override other responses
+
+rule CitizenFear
+{
+	criteria		IsCitizen ConceptTalkFear
+	response		CitizenDanger
+}
+
+//============================================================================================================
+
+response "CitizenUseScare"
+{
+	scene "scenes/npc/$gender01/ez2_terrifiedturn01.vcd"
+}
+
+rule CitizenUseScare
+{
+	criteria		IsCitizen ConceptTalkUseScare
+	response		CitizenUseScare   
+}
+
+response "CitizenSeeBadCopVeryClose"
+{
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty08.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty11.vcd"
+	scene "scenes/npc/$gender01/gethellout.vcd"
+}
+
+rule CitizenStartCombatPlayerVeryClose
+{
+	criteria    IsCitizen ConceptStartCombat EnemyIsPlayer EnemyIsClose
+	response    CitizenSeeBadCopVeryClose
+}
+
+//============================================================================================================
+
+response "CitizenVortKilled"
+{
+
+	scene "scenes/episode_1/npc/$gender01/cit_buddykilled01.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_buddykilled03.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_buddykilled04.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_buddykilled05.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_buddykilled06.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_buddykilled07.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_buddykilled09.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_buddykilled10.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_buddykilled11.vcd"
+	scene "scenes/npc/$gender01/gordead_ans04.vcd" 
+	scene "scenes/npc/$gender01/gordead_ans05.vcd" 
+	scene "scenes/npc/$gender01/gordead_ques07.vcd" 
+	scene "scenes/npc/$gender01/gordead_ques11.vcd" 
+	scene "scenes/npc/$gender01/ohno.vcd"
+	scene "scenes/npc/$gender01/goodgod.vcd"
+	scene "scenes/npc/$gender01/startle01.vcd"
+	scene "scenes/npc/$gender01/startle02.vcd"
+	scene "scenes/npc/$gender01/no01.vcd"
+	scene "scenes/npc/$gender01/no02.vcd"
+}
+
+rule CitizenVortKilled
+{
+	criteria 		IsCitizen ConceptTalkAllyKilled IsSpeechTargetAVort
+	applyContext "allykilled:1:120"
+	applyContextToWorld
+	response		CitizenVortKilled
+}
+
+response "CitizenAllyKilledSuccessive"
+{
+
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty02.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty03.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty05.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty08.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty09.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty10.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_evac_casualty11.vcd"
+	scene "scenes/npc/$gender01/question25.vcd"
+}
+
+rule CitizenAllyKilledSuccessive
+{
+	criteria 		IsCitizen ConceptTalkAllyKilled WillpowerLow
+	allykilled "1" required
+	applyContext "allykilled:1:120"
+	applyContextToWorld
+	response		CitizenAllyKilledSuccessive
+}
+
+//============================================================================================================
+
+// Citizens might respond to Bad Cop's disrespectful taunting
+response "CitizenHearBadCop"
+{
+	scene "scenes/npc/$gender01/gordead_ans04.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_alert_antlions09.vcd"
+	scene "scenes/episode_1/npc/$gender01/cit_alert_head05.vcd"
+	//scene "scenes/episode_1/npc/$gender01/cit_alert_zombie07.vcd"
+	//scene "scenes/episode_1/npc/$gender01/cit_alert_zombie08.vcd"
+	//scene "scenes/episode_1/npc/$gender01/cit_buddykilled12.vcd"
+}
+
+rule CitizenBadCopTauntResponse
+{
+	criteria		IsCitizen ConceptTalkConceptAnswer WillpowerNotLow SpeechTargetBadCop
+	speechtarget_concept "TLK*ENEMY_DEAD" required
+	response		CitizenHearBadCop   
+}
+
+rule CitizenBadCopManyEnemiesResponse
+{
+	criteria		IsCitizen ConceptTalkConceptAnswer WillpowerNotLow SpeechTargetBadCop
+	speechtarget_concept "TLK_MANY_ENEMIES" required
+	response		CitizenHearBadCop   
+}
+
+// Citizens might respond to some of Will-E's concepts
+response "CitizenWilsonResponse"
+{
+	scene "scenes/npc/$gender01/answer17.vcd"
+	scene "scenes/npc/$gender01/answer20.vcd"
+	scene "scenes/npc/$gender01/answer24.vcd"
+	scene "scenes/npc/$gender01/answer26.vcd"
+	scene "scenes/npc/$gender01/answer36.vcd"
+	scene "scenes/npc/$gender01/answer37.vcd"
+	scene "scenes/npc/$gender01/answer39.vcd"
+	scene "scenes/npc/$gender01/gordead_ans03.vcd"
+}
+
+rule CitizenWilsonResponse
+{
+	criteria		IsCitizen ConceptTalkConceptAnswer WillpowerNotLow SpeechTargetWilson
+	response		CitizenWilsonResponse   
+}
+
+//============================================================================================================
+
+
+response "CitizenSmell" 
+
+{
+	scene "scenes/npc/$gender01/smell01.vcd" respeakdelay 60
+	//scene "scenes/npc/$gender01/question14.vcd" respeakdelay 60
+	//scene "scenes/npc/$gender01/question27.vcd" respeakdelay 60
+}
+
+rule CitizenTlkSmell
+{
+	criteria		IsCitizen ConceptTalkSmell SmellNear
+	response		CitizenSmell
+}

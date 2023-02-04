@@ -1,0 +1,200 @@
+//============================================================================================================
+// Clone Cop records various messages regarding his story in EZ2. The player can find these on radios during chapter 3. 
+// 
+//============================================================================================================
+
+criterion "ConceptRadioBox"	"Concept" "TLK_RECORDINGBOX"	required
+
+// response "CloneCop_RadioBox"
+// {
+// 	sequential
+// 	norepeat
+// 	scene "scenes\Chapter 3\cc_radiobox_1.vcd"
+// 	scene "scenes\Chapter 3\cc_radiobox_2.vcd"
+// 	scene "scenes\Chapter 3\cc_radiobox_3.vcd"
+// 	scene "scenes\Chapter 3\cc_radiobox_4.vcd"
+// 	scene "scenes\Chapter 3\cc_radiobox_5.vcd"
+// 	scene "scenes\Chapter 3\cc_radiobox_6.vcd"
+// 	scene "scenes\Chapter 3\cc_radiobox_7.vcd"
+// 	scene "scenes\Chapter 3\cc_radiobox_8.vcd"
+// 	scene "scenes\Chapter 3\cc_radiobox_9.vcd"
+// 	scene "scenes\Chapter 3\cc_radiobox_10.vcd"
+// 	scene "scenes\Chapter 3\cc_radiobox_11.vcd"
+// 	scene "scenes\Chapter 3\cc_radiobox_12.vcd"
+// 	scene "scenes\Chapter 3\cc_radiobox_13.vcd"
+// }
+// 
+// rule CloneCop_RadioBox
+// {
+// 	criteria		ConceptRadioBox
+// 	response 		CloneCop_RadioBox
+// }
+
+response "CloneCop_RadioBox_ccradio_01_failure"
+{
+        scene "scenes\Chapter 3\cc_radiobox_1.vcd" then !player TLK_RECORDINGBOX box:1 3
+}
+rule CloneCop_RadioBox_ccradio_01_failure
+{
+        criteria                ConceptRadioBox
+        subject "ccradio_01_failure" required
+        response                CloneCop_RadioBox_ccradio_01_failure
+}
+
+
+response "CloneCop_RadioBox_ccradio_02_blizzard"
+{
+        scene "scenes\Chapter 3\cc_radiobox_2.vcd" then !player TLK_RECORDINGBOX box:2 0
+}
+rule CloneCop_RadioBox_ccradio_02_blizzard
+{
+        criteria                ConceptRadioBox
+        subject "ccradio_02_blizzard" required
+        response                CloneCop_RadioBox_ccradio_02_blizzard
+}
+
+
+response "CloneCop_RadioBox_ccradio_03_rebels"
+{
+        scene "scenes\Chapter 3\cc_radiobox_3.vcd" //then !player TLK_RECORDINGBOX box:3 0 // This is in the c3_2 den, where it's weird for Wilson to hear you
+}
+rule CloneCop_RadioBox_ccradio_03_rebels
+{
+        criteria                ConceptRadioBox
+        subject "ccradio_03_rebels" required
+        response                CloneCop_RadioBox_ccradio_03_rebels
+}
+
+
+response "CloneCop_RadioBox_ccradio_04_defective"
+{
+        scene "scenes\Chapter 3\cc_radiobox_4.vcd" then !player TLK_RECORDINGBOX box:4 5
+}
+rule CloneCop_RadioBox_ccradio_04_defective
+{
+        criteria                ConceptRadioBox
+        subject "ccradio_04_defective" required
+        response                CloneCop_RadioBox_ccradio_04_defective
+}
+
+
+response "CloneCop_RadioBox_ccradio_05_transponder"
+{
+        scene "scenes\Chapter 3\cc_radiobox_5.vcd" then !player TLK_RECORDINGBOX box:5 1.5
+}
+rule CloneCop_RadioBox_ccradio_05_transponder
+{
+        criteria                ConceptRadioBox
+        subject "ccradio_05_transponder" required
+        response                CloneCop_RadioBox_ccradio_05_transponder
+}
+
+
+response "CloneCop_RadioBox_ccradio_06_gonome"
+{
+        scene "scenes\Chapter 3\cc_radiobox_6.vcd" //then !player TLK_RECORDINGBOX box:6 1 // This is when the gonome gets alerted, so don't comment
+}
+rule CloneCop_RadioBox_ccradio_06_gonome
+{
+        criteria                ConceptRadioBox
+        subject "ccradio_06_gonome" required
+        response                CloneCop_RadioBox_ccradio_06_gonome
+}
+
+
+response "CloneCop_RadioBox_ccradio_07_project"
+{
+        scene "scenes\Chapter 3\cc_radiobox_7.vcd" then !player TLK_RECORDINGBOX box:7 1
+}
+rule CloneCop_RadioBox_ccradio_07_project
+{
+        criteria                ConceptRadioBox
+        subject "ccradio_07_project" required
+        response                CloneCop_RadioBox_ccradio_07_project
+}
+
+
+response "CloneCop_RadioBox_ccradio_08_uprising"
+{
+        scene "scenes\Chapter 3\cc_radiobox_8.vcd" then !player TLK_RECORDINGBOX box:8 0.5
+}
+rule CloneCop_RadioBox_ccradio_08_uprising
+{
+        criteria                ConceptRadioBox
+        subject "ccradio_08_uprising" required
+        response                CloneCop_RadioBox_ccradio_08_uprising
+}
+
+
+response "CloneCop_RadioBox_ccradio_09_clone"
+{
+        scene "scenes\Chapter 3\cc_radiobox_9.vcd" then !player TLK_RECORDINGBOX box:9 1
+}
+rule CloneCop_RadioBox_ccradio_09_clone
+{
+        criteria                ConceptRadioBox
+        subject "ccradio_09_clone" required
+        response                CloneCop_RadioBox_ccradio_09_clone
+}
+
+
+response "CloneCop_RadioBox_ccradio_10_deceived"
+{
+        scene "scenes\Chapter 3\cc_radiobox_10.vcd" then !player TLK_RECORDINGBOX box:10 1
+}
+rule CloneCop_RadioBox_ccradio_10_deceived
+{
+        criteria                ConceptRadioBox
+        subject "ccradio_10_deceived" required
+        response                CloneCop_RadioBox_ccradio_10_deceived
+}
+
+
+response "CloneCop_RadioBox_ccradio_11_judith"
+{
+        scene "scenes\Chapter 3\cc_radiobox_11.vcd" then !player TLK_RECORDINGBOX box:11 7
+}
+rule CloneCop_RadioBox_ccradio_11_judith
+{
+        criteria                ConceptRadioBox
+        subject "ccradio_11_judith" required
+        response                CloneCop_RadioBox_ccradio_11_judith
+}
+
+
+response "CloneCop_RadioBox_ccradio_12_documents"
+{
+        scene "scenes\Chapter 3\cc_radiobox_12.vcd" then !player TLK_RECORDINGBOX box:12 2.5
+}
+rule CloneCop_RadioBox_ccradio_12_documents
+{
+        criteria                ConceptRadioBox
+        subject "ccradio_12_documents" required
+        response                CloneCop_RadioBox_ccradio_12_documents
+}
+
+
+response "CloneCop_RadioBox_ccradio_13_plan"
+{
+        scene "scenes\Chapter 3\cc_radiobox_13_repeat.vcd"
+}
+rule CloneCop_RadioBox_ccradio_13_plan
+{
+        criteria                ConceptRadioBox
+        subject "ccradio_13_plan" required
+        response                CloneCop_RadioBox_ccradio_13_plan
+}
+
+//============================================================================================================
+
+response "BadCopRadioBoxResponse"
+{
+	norepeat
+	scene "scenes\Chapter 3\cc_radiobox_comment_anymore.vcd"
+}
+
+rule BadCopRadioBoxResponse
+{
+	criteria		IsBadCop ConceptRadioBox PlayerNearWillE
+	response 		BadCopRadioBoxResponse
+}

@@ -1,0 +1,107 @@
+// Shotgun
+
+WeaponData
+{
+	// Weapon data is loaded by both the Game and Client DLLs.
+	"printname"			"AUTO REVOLVING SHOTGUN"
+	"viewmodel"			"models/weapons/v_bulkcannon.mdl"
+	"playermodel"			"models/weapons/w_bulkcannon.mdl"
+	"anim_prefix"			"shotgun"
+	"bucket"				"3"
+	"bucket_position"			"10"
+	"bucket_360"			"1"
+	"bucket_position_360"		"1"
+
+	"clip_size"				"7"
+	"primary_ammo"			"Buckshot"
+	"secondary_ammo"			"None"
+
+	"weight"				"4"
+	"rumble"				"5"
+	"item_flags"			"0"
+
+	IronSight
+	{
+		"forward"		"-5"
+		"right"		"-0.5"
+		"up"		"1.3"
+		"roll"		"-5"
+		"pitch"		"-1.6"
+		"yaw"		"2"
+		"fov"		"-15"
+		"time"		"0.18"
+		"crosshair"	"1"
+                		"trueironsights" "0" 
+		// if true - when ironsighted : stops walking animation, less weapon turning lag, no hitmarkers.
+	}
+
+	// Sounds for the weapon. There is a max of 16 sounds per category (i.e. max 16 "single_shot" sounds)
+	SoundData
+	{
+
+		"empty"			"Weapon_Shotgun.Empty"
+		"reload"			"Weapon_BulkCannon.insertshell"
+
+		"single_shot"		"Weapon_BulkCannon.fire"
+		"DOUBLE_shot"		"Weapon_BulkCannon.fire"
+
+		// NPC WEAPON SOUNDS
+		"reload_npc"		"Weapon_BulkCannon.insertshell"
+		"single_shot_npc"		"Weapon_BulkCannon.NPC_fire"
+	}
+
+	// Weapon Sprite data is loaded by the Client DLL.
+	TextureData
+	{
+		"weapon"
+		{
+			"file"		"VGUI/wepIcon/bulk"
+			"x"		"0"
+			"y"		"0"
+			"height"		"64"
+			"width"		"128"
+		}
+		"weapon_s"
+		{
+			"file"		"VGUI/wepIcon/bulk"
+			"x"		"0"
+			"y"		"0"
+			"height"		"64"
+			"width"		"128"
+		}	
+		"weapon_small"
+		{
+			"file"		"VGUI/wepIcon/bulk"
+			"x"		"0"
+			"y"		"0"
+			"height"		"64"
+			"width"		"128"
+		}
+		"ammo"
+		{
+				"font"		"WeaponIconsSmall"
+				"character"	"s"
+		}
+		"crosshair"
+		{
+				"font"		"HL2MModCrosshairs"
+				"character"	"2"
+		}
+		"zoom"
+		{
+				"font"		"HL2MModCrosshairs"
+				"character"	"7"
+		}
+
+		"autoaim"
+		{
+				"font"		"HL2MModCrosshairs"
+				"character"	"7"
+		}
+		"zoom_autoaim"
+		{
+				"font"		"HL2MModCrosshairs"
+				"character"	"7"
+		}
+	}
+}

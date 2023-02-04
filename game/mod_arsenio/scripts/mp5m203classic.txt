@@ -1,0 +1,122 @@
+"weapon_mp5m203c.Empty"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"			"weapons/mp5m203c/empty.wav"
+}
+
+"weapon_mp5m203c.Double"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"			"weapons/mp5m203c/double.wav"
+}
+
+"weapon_mp5m203c.Draw"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"			"weapons/mp5m203c/draw.wav"
+}
+
+"weapon_mp5m203c.Eject"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"			"weapons/mp5m203c/eject.wav"
+}
+
+"weapon_mp5m203c.Insert"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"			"weapons/mp5m203c/insert.wav"
+}
+
+"weapon_mp5m203c.Lock"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"			"weapons/mp5m203c/lock.wav"
+}
+
+"weapon_mp5m203c.Strum"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"			"weapons/mp5m203c/strum.wav"
+}
+
+"weapon_mp5m203c.TiltLeft"
+{
+	"channel"		"CHAN_STATIC"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"			"weapons/mp5m203c/tilt_left.wav"
+}
+
+"weapon_mp5m203c.TiltRest"
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"			"weapons/mp5m203c/tilt_rest.wav"
+}
+
+"weapon_mp5m203c.TiltRight"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"			"weapons/mp5m203c/tilt_right.wav"
+}
+
+"weapon_mp5m203c.SlideClose"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"VOL_NORM"
+	"pitch"			"120"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"			"weapons/shotgun/slide_close.wav"
+}
+
+"weapon_mp5m203c.Reload_NPC"
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"			"weapons/mp5m203c/reload_npc.wav"
+}
+
+"weapon_mp5m203c.Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_GUNFIRE"
+	"pitch"		"98,105"
+	"rndwave"
+	{
+		"wave"		"weapons/mp5m203c/single1.wav"
+		"wave"		"weapons/mp5m203c/single2.wav"
+	}
+}
+
+"weapon_mp5m203c.Single_NPC"
+{
+	"channel"		"CHAN_WEAPON"
+	"pitch"		"95,100"
+	"volume"		"1.0"
+	"soundlevel"	"SNDLVL_GUNFIRE"
+	"rndwave"
+	{
+		"wave"		"^weapons/mp5m203c/single_npc1.wav"
+		"wave"		"^weapons/mp5m203c/single_npc2.wav"
+	}
+}

@@ -1,0 +1,45 @@
+
+
+// Base script
+#include "talker/response_criteria.txt"
+#include "talker/mapbase_hl2_criteria.txt"
+#include "talker/ez2_criteria.txt"
+
+// Dynamic interactions
+#include "talker/dynamic_interactions.txt"
+
+// New NPC implementations
+#include "talker/npc_combine_s.txt"
+#include "talker/npc_metropolice.txt"
+#include "talker/npc_sniper.txt"
+#include "talker/npc_zombie.txt"
+
+//#include "talker/response_k_lab.txt"
+//#include "talker/response_eli_lab.txt"
+#include "talker/npc_vortigaunt.txt"
+#include "talker/npc_vortigaunt02.txt"
+#include "talker/npc_citizen.txt"
+//#include "talker/npc_citizen_episodic.txt"
+//#include "talker/npc_citizen_scenes.txt"
+//#include "talker/npc_grigori.txt"
+#include "talker/npc_barney.txt"
+#include "talker/npc_alyx.txt"
+//#include "talker/npc_alyx_episodic.txt"
+//#include "talker/npc_alyx_episodic_scenes.txt"
+//#include "talker/npc_barney_episodic.txt"
+//#include "talker/nags_Alyx.txt"
+//#include "talker/npc_alyx_vehicle.txt"
+
+// E:Z2
+#include "talker/ez2_generic_responses.txt"
+#include "talker/player.txt"
+#include "talker/wilson.txt"
+#include "talker/clone.txt"
+
+#include "talker/arbeit_turret.txt"
+#include "talker/npc_zombigaunt.txt"
+
+#include "talker/remarks.txt"
+#include "talker/npc_dreamcop.txt"
+#include "talker/npc_crookedcop.txt"
+// #include "talker/npc_soldier.txt"

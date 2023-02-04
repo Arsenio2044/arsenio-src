@@ -1,0 +1,32 @@
+criterion "IsCCChaseConcept" "concept" "CCChaseComments" "required"
+
+//***=======================================================================================
+//***
+//*** E:Z2 Chapter 5 Nags
+//*** 
+//***=======================================================================================
+
+//=======================================================================================
+// CC chase (these aren't really nags as much as they're panicked comments)
+//=======================================================================================
+
+response "CCChase_Comment"
+{
+	norepeat
+	
+	// CC
+	scene "scenes/arbeit3/ccchase_cc_getbackhere.vcd" displayfirst
+	scene "scenes/arbeit3/ccchase_cc_noescape.vcd"
+	scene "scenes/arbeit3/ccchase_cc_holdit.vcd"
+	
+	// BC
+	scene "scenes/arbeit3/ccchase_whynoelevators.vcd"
+	scene "scenes/arbeit3/ccchase_gogogo.vcd"
+}
+
+rule CCChase_Comment
+{
+	criteria		IsCCChaseConcept
+	response		CCChase_Comment
+}
+

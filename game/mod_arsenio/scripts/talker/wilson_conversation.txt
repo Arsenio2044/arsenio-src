@@ -1,0 +1,69 @@
+//============================================================================================================
+// Wilson-Bad Cop Character Building Conversations
+// 
+// For now, I am testing the implementation of these responses.
+// This implementation might change entirely! I want to see how it should work.
+//
+// Breadman has written these lines to serve as banter between the two throughout their adventure.
+// It should build the bond between them and serve to better explore Bad Cop's past.
+//
+// For now I am sticking response rules to the wall and seeing what sticks.
+// 
+//============================================================================================================
+
+criterion "NoRecentWilsonSmallTalk" "no_wilson_convo" "!=1" required
+criterion "NotC5Panic" "c5_panic" "!=1" required // TODO: Use the global context in the map to suppress this
+
+// Naive implementation: Just a single response group with all the responses in it. What could go wrong?
+response "WilsonConversation"
+{
+	sequential
+	norepeat
+	scene "scenes/npc/wilson/idle_convo01a.vcd"
+	scene "scenes/npc/wilson/idle_convo01b.vcd"
+	scene "scenes/npc/wilson/idle_convo02a.vcd"
+	scene "scenes/npc/wilson/idle_convo02b.vcd"
+	scene "scenes/npc/wilson/idle_convo03.vcd"
+	scene "scenes/npc/wilson/idle_convo04a.vcd"
+	scene "scenes/npc/wilson/idle_convo04b.vcd"
+	scene "scenes/npc/wilson/idle_convo05a.vcd"
+	scene "scenes/npc/wilson/idle_convo05b.vcd"
+	scene "scenes/npc/wilson/idle_convo05c.vcd"
+	scene "scenes/npc/wilson/idle_convo05d.vcd"
+	scene "scenes/npc/wilson/idle_convo05e.vcd"
+	scene "scenes/npc/wilson/idle_convo05f.vcd"
+	scene "scenes/npc/wilson/idle_convo05g.vcd"
+	scene "scenes/npc/wilson/idle_convo05h.vcd"
+	scene "scenes/npc/wilson/idle_convo06.vcd"
+	scene "scenes/npc/wilson/idle_convo07.vcd"
+}
+
+
+rule WilsonConversationIdle
+{
+	criteria		IsBadCop ConceptTalkIdle PlayerNearWillE IsNotChapter3 IsNotChapter4Map1 NoRecentWilsonSmallTalk LastSpoke05OrMore NoRecentCombatShort IsNotChapter6 WilsonNotSpeaking NotC5Panic
+	applyContext "no_wilson_convo:1:120"
+	response 		WilsonConversation
+}
+
+rule WilsonConversationUse
+{
+	criteria		IsBadCop ConceptTalkUse SpeechTargetWilson PlayerNearWillE IsNotChapter3 IsNotChapter4Map1 NoRecentWilsonSmallTalk LastSpoke05OrMore NoRecentCombatShort IsNotChapter6 WilsonNotSpeaking NotC5Panic
+    // This rule triggers a lot more often. Consider longer delay?
+	applyContext "no_wilson_convo:1:120"
+	response 		WilsonConversation
+}
+
+rule WilsonConversationStare
+{
+	criteria		IsBadCop ConceptTalkStare SpeechTargetWilson PlayerNearWillE IsNotChapter3 IsNotChapter4Map1 NoRecentWilsonSmallTalk LastSpoke05OrMore NoRecentCombatShort IsNotChapter6 WilsonNotSpeaking NotC5Panic
+	applyContext "no_wilson_convo:1:120"
+	response 		WilsonConversation
+}
+
+//rule WilsonConversationScan
+//{
+//	criteria		IsWilson ConceptWilsonScanStart IsNotChapter3 IsNotChapter4Map1 IsNotChapter6 NoRecentWilsonSmallTalk NoRecentCombatShort
+//	commented_on_scanners "1" required
+//	response 		WilsonConversation
+//}

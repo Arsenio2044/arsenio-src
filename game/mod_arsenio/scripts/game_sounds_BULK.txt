@@ -1,0 +1,223 @@
+//Bulk
+
+"Weapon_BulkCannon.NPC_fire"
+{
+	"channel"			"CHAN_WEAPON"
+	"volume"			"1"
+	"pitch"			"92,108"
+
+	"wave"			"^weapons/BulkCannon/bulk_fireNPC.wav"
+}
+
+"Weapon_BulkCannon.fire"
+{
+	"channel"			"CHAN_WEAPON"
+	"volume"			"1"
+	"pitch"			"92,108"
+
+	"rndwave" {
+		"wave"			"weapons/BulkCannon/bulk_fire1.wav"
+		"wave"			"weapons/BulkCannon/bulk_fire2.wav"
+		"wave"			"weapons/BulkCannon/bulk_fire3.wav"
+		"wave"			"weapons/BulkCannon/bulk_fire4.wav"
+		"wave"			"weapons/BulkCannon/bulk_fire5.wav"
+		"wave"			"weapons/BulkCannon/bulk_fire6.wav"
+	}
+}
+
+"Weapon_BulkCannon.Draw"
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"1.0"
+	"CompatibilityAttenuation"	"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"wave"			"weapons/BulkCannon/draw.wav"
+}
+
+"Weapon_BulkCannon.Shellout" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"1.0"
+	"CompatibilityAttenuation"	"1.0"
+	"pitch"			"92,106"
+
+	"rndwave" {
+		"wave"			"weapons/BulkCannon/shellout.wav"
+		"wave"			"weapons/BulkCannon/shellout2.wav"
+		"wave"			"weapons/BulkCannon/shellout3.wav"
+		"wave"			"weapons/BulkCannon/shellout4.wav"
+	}
+}
+
+"Weapon_BulkCannon.insertshell" 
+{
+	"channel"		"CHAN_VOICE"
+	"volume"		"0.7,1"
+	"CompatibilityAttenuation"	"1.0"
+	"pitch"			"92,108"
+
+	"rndwave" {
+		"wave"			"weapons/BulkCannon/insertshell.wav"
+		"wave"			"weapons/BulkCannon/insertshell2.wav"
+		"wave"			"weapons/BulkCannon/insertshell3.wav"
+		"wave"			"weapons/BulkCannon/insertshell4.wav"
+	}
+}
+
+"Weapon_BulkCannon.LidClose" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"1.0"
+	"CompatibilityAttenuation"	"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"wave"			"weapons/BulkCannon/closelid.wav"
+}
+
+"Weapon_BulkCannon.LidLock" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"1.0"
+	"CompatibilityAttenuation"	"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"wave"			"weapons/BulkCannon/lock.wav"
+}
+
+"Weapon_BulkCannon.LidOpen" 
+{
+	"channel"			"CHAN_STATIC"
+	"volume"			"1.0"
+	"CompatibilityAttenuation"	"1.0"
+	"pitch"			"PITCH_NORM"
+
+	"wave"			"weapons/BulkCannon/openlid.wav"
+}
+
+"Weapon_BulkCannon.rotate" 
+{
+	"channel"			"CHAN_STATIC"
+	"volume"			"0.05,0.2"
+	"CompatibilityAttenuation"	"1.0"
+	"pitch"			"90,102"
+
+	"wave"			"weapons/BulkCannon/rotate.wav"
+}
+
+"Weapon_PRO.Empty"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.7"
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"			"weapons/pro/ar2_empty.wav"
+}
+
+"Weapon_PRO.Reload"
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"0.7"
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"			"weapons/pro/ar2_reload.wav"
+}
+
+"Weapon_PRO.Reload_Rotate"
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"0.9"
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"			"weapons/pro/ar2_reload_rotate.wav"
+} 
+
+"Weapon_PRO.Reload_Push"
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"0.9"
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"			"weapons/pro/ar2_reload_push.wav"
+}
+"Weapon_PRO.Single"
+{
+	"channel"	"CHAN_WEAPON"
+	"volume"	"0.8"
+	"soundlevel"	"SNDLVL_GUNFIRE"
+	"pitch"		"85,95"
+
+	"rndwave"
+	{
+		"wave"	"weapons/pro/fire1.wav"
+	}
+}
+
+"Weapon_PRO.Special1"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.7"
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"				"weapons/sniper/sniper_zoomin.wav"
+}
+
+"Weapon_PRO.Special2"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.7"
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"			"weapons/sniper/sniper_zoomout.wav"
+}
+
+"Weapon_PRO.Double"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.7"
+	"soundlevel"	"SNDLVL_GUNFIRE"
+
+	"wave"			"weapons/pro/ar2_altfire.wav"
+}
+
+"Weapon_PRO.NPC_Reload"
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"0.7"
+	"soundlevel"	"SNDLVL_NORM"
+
+	"wave"			"weapons/pro/npc_ar2_reload.wav"
+}
+
+"Weapon_PRO.NPC_Double"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.7"
+	"soundlevel"	"SNDLVL_GUNFIRE"
+
+	"wave"			"weapons/pro/npc_ar2_altfire.wav"
+}
+
+"Weapon_PRO.NPC_Single"
+{
+	"channel"		"CHAN_WEAPON"
+	"volume"		"0.7"
+	"soundlevel"	"SNDLVL_GUNFIRE"
+	"pitch"			"95,105"
+
+//	"wave"			"^weapons/pro/npc_ar2_fire1.wav"
+	"wave"			"^weapons/ar1/ar1_dist1.wav"
+
+}
+
+"Interface.Music"
+{
+	"channel"		"CHAN_AUTO"
+	"volume"		"1.0"
+	"pitch"			"100"
+	"soundlevel"	"SNDLVL_NONE"
+	"rndwave"
+	{
+		"wave"		"music/menumusic.wav"
+	}
+}

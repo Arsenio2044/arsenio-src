@@ -1,0 +1,79 @@
+"weapon_m4.Draw" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/M4/draw.wav"
+}
+
+"weapon_m4.Holster" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/M4/putaway.wav"
+}
+
+"weapon_m4.Safety" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/M4/m4_boltcatch.wav"
+}
+
+"weapon_m4.Boltpull" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/M4/m4_boltpull.wav"
+}
+
+"weapon_m4.Cliptap" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/M4/m4_magtap.wav"
+}
+
+"weapon_m4.Clipout" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/M4/m4_magout.wav"
+}
+
+"weapon_m4.Clipin" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/M4/m4_magin.wav"
+}
+
+"weapon_m4.m203_open" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/M4/m203_open.wav"
+}
+
+"weapon_m4.m203_in" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/M4/m203_insert.wav"
+}
+
+"weapon_m4.m203_close" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/M4/m203_close.wav"
+}

@@ -1,0 +1,224 @@
+"Mobility.mob_speedrun_intro"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/mob_speedrun_intro.mp3"
+}
+
+"Mobility.mob_speedrun_stayorgo"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/mob_speedrun_stayorgo.mp3"
+}
+
+"Mobility.mob_speedrun_save"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/mob_speedrun_save.mp3"
+}
+
+"Mobility.mob_speedrun_fail"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"rndwave"
+	{
+	    "wave"	"*@VO/mob_speedrun_tryagain1.mp3"
+		"wave"	"*@VO/mob_speedrun_tryagain2.mp3"
+		"wave"	"*@VO/mob_speedrun_onemore1.mp3"
+		"wave"	"*@VO/mob_speedrun_onemore2.mp3"
+		"wave"	"*@VO/mob_speedrun_maybenext.mp3"
+		"wave"	"*@VO/mob_speedrun_faster.mp3"
+		"wave"	"*@VO/mob_speedrun_hadago.mp3"
+		"wave"	"*@VO/mob_speedrun_notdifficult.mp3"
+	}
+}
+
+"Mobility.mob_speedrun_pass"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"rndwave"
+	{
+	    "wave"	"*@VO/mob_speedrun_welldone.mp3"
+		"wave"	"*@VO/mob_speedrun_nicework.mp3"
+		"wave"	"*@VO/mob_speedrun_gettinggood.mp3"
+		"wave"	"*@VO/mob_speedrun_exceed.mp3"
+		"wave"	"*@VO/mob_speedrun_antlion.mp3"
+	}
+}
+
+"Mobility.mob_speedrun_ace"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"rndwave"
+	{
+	    "wave"	"*@VO/mob_speedrun_awesome.mp3"
+		"wave"	"*@VO/mob_speedrun_good.mp3"
+		"wave"	"*@VO/mob_speedrun_excellent.mp3"
+		"wave"	"*@VO/mob_speedrun_surprise.mp3"
+		"wave"	"*@VO/mob_speedrun_wow.mp3"
+		"wave"	"*@VO/mob_speedrun_gettinggood.mp3"
+		"wave"	"*@VO/mob_speedrun_nicework.mp3"
+	}
+}
+
+
+"Mobility.mob_adv_drops"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/mob_adv_drops.mp3"
+}
+
+"Mobility.mob_adv_eetg"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/mob_adv_eetg.mp3"
+}
+
+"Mobility.mob_adv_tele"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/mob_adv_tele.mp3"
+}
+
+"Mobility.mob_adv_humint"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/mob_adv_humint.mp3"
+}
+
+"Mobility.mob_adv_rat"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/mob_adv_rat.mp3"
+}
+
+"Mobility.mob_arena_goodluck"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/mob_arena_goodluck.mp3"
+}
+
+"Mobility.mob_arena_s1"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/mob_arena_s1.mp3"
+}
+
+"Mobility.mob_arena_s2"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/mob_arena_s2.mp3"
+}
+
+"Mobility.mob_arena_s3"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/mob_arena_s3.mp3"
+}
+
+"Mobility.mob_arena_start"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/mob_arena_start.mp3"
+}
+
+"Mobility.mob_arena_go"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/mob_arena_go.mp3"
+}
+
+"Mobility.mob_arena_giggle"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/mob_arena_giggle.mp3"
+}
+
+"Mobility.mob_esc_guess"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/mob_esc_guess.mp3"
+}
+
+"Mobility.mob_esc_callback"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/mob_esc_callback.mp3"
+}
+
+"Mobility.mob_esc_loadup"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/mob_esc_loadup.mp3"
+}
+
+"Mobility.mob_esc_end"
+{
+	"channel"	"CHAN_BODY"
+	"volume"	"1.0"
+    "soundlevel"	"0"
+    "pitch"     "100"
+	"wave"	"*@VO/mob_esc_end.mp3"
+}

@@ -1,0 +1,53 @@
+//============================================================================================================
+// CITIZEN E:Z2 MAPS
+// 
+// Special citizen responses for E:Z2's story
+// 
+//============================================================================================================
+//============================================================================================================
+// npc_citizen concepts and criteria
+//============================================================================================================
+
+// Override existing responses
+criterion "IsJailed" "map" "ez2_c0*" required weight 5
+
+//============================================================================================================
+// Chapter 0
+//============================================================================================================
+
+response "JailCitizenBlank"
+{
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "JailCitizenHarass"
+{
+	norepeat
+	scene "scenes/npc/$gender01/vquestion01.vcd" delay 1
+}
+
+rule JailCitizenUse
+{
+	criteria		IsCitizen IsJailed ConceptTalkUse
+	response		JailCitizenHarass
+}
+
+rule JailCitizenStare
+{
+	criteria		IsCitizen IsJailed ConceptTalkStare IsGordonCriminal NPCIdle NotInPanic
+	response		JailCitizenHarass
+}
+
+response "JailCitizenIdle"
+{
+	norepeat
+	scene "scenes/npc/$gender01/vanswer14.vcd" delay 1
+	scene "scenes/npc/$gender01/vquestion02.vcd" delay 1
+}
+
+rule JailCitizenHello
+{
+	criteria		IsCitizen IsJailed ConceptTalkHello PlayerNear SeePlayer NotInPanic
+	response		JailCitizenIdle
+}

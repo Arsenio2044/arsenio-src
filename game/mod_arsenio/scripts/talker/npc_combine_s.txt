@@ -1,0 +1,454 @@
+//============================================================================================================
+// Combine soldiers now operate all speech on the Response System.
+// 
+// They come with the following criteria:
+// 
+// "elite" -- Boolean value based on if we are flagged as a Combine Elite.
+// "numgrenades" -- How many grenades we have.
+// 
+//============================================================================================================
+//============================================================================================================
+// npc_combine_s concepts and criteria
+//============================================================================================================
+// Concepts
+criterion "ConceptTalkCmbAnnounce" "Concept" "TLK_ANNOUNCE" required
+criterion "ConceptTalkCmbThrowGrenade" "Concept" "TLK_THROWGRENADE" required
+criterion "ConceptTalkCmbPlayerHit" "Concept" "TLK_PLAYERHIT" required
+criterion "ConceptTalkCmbAssault" "Concept" "TLK_ASSAULT" required
+criterion "ConceptTalkCmbEnemy" "Concept" "TLK_STARTCOMBAT" required
+criterion "ConceptTalkCmbKillEnemy" "Concept" "TLK_ENEMY_DEAD" required
+criterion "ConceptTalkCmbDanger" "Concept" "TLK_DANGER" required
+criterion "ConceptTalkCmbKick" "Concept" "TLK_KICK" required
+criterion "ConceptTalkCmbFlank" "Concept" "TLK_FLANK" required
+criterion "ConceptTalkCmbPain" "Concept" "TLK_WOUND" required
+criterion "ConceptTalkCmbLostEnemy" "Concept" "TLK_LOSTENEMY" required
+criterion "ConceptTalkCmbRefindEnemy" "Concept" "TLK_REFINDENEMY" required
+criterion "ConceptTalkCmbGoAlert" "Concept" "TLK_GOALERT" required
+criterion "ConceptTalkCmbManDown" "Concept" "TLK_ALLY_KILLED" required
+criterion "ConceptTalkCmbDie" "Concept" "TLK_DEATH" required
+criterion "ConceptTalkCmbQuestion" "Concept" "TLK_QUESTION" required
+criterion "ConceptTalkCmbAnswer" "Concept" "TLK_ANSWER" required
+
+// Other criteria
+criterion "IsElite" "elite" "1" "required"
+
+criterion "HasGrenades" "numgrenades" ">0" "required"
+criterion "HasNoGrenades" "numgrenades" "<1" "required"
+
+criterion "IsCombineQuestion0" "combinequestion" "<1" "required"
+criterion "IsCombineQuestion1" "combinequestion" "1" "required"
+criterion "IsCombineQuestion2" "combinequestion" "2" "required"
+
+criterion "IsNotDissolving" "flags" "~&268435456" "required"
+//criterion "IsNotDissolving" "damagetype" "~&[DMGType::Dissolve]" "required"
+
+criterion "IsLastOfSquad" "squadmates" "<2" required
+
+//============================================================================================================
+// npc_combine_s basic sounds
+//============================================================================================================
+response "CombinePain"
+{
+	sentence "COMBINE_PAIN" noscene
+}
+
+rule CombinePain
+{
+	criteria		IsCombineS ConceptTalkCmbPain PainSoundsAllowed
+	response		CombinePain
+}
+
+response "CombineDie"
+{
+	sentence "COMBINE_DIE" noscene
+}
+
+rule CombineDie
+{
+	criteria		IsCombineS ConceptTalkCmbDie IsNotDissolving DeathSoundsAllowed
+	response		CombineDie
+}
+
+response "CombineKick"
+{
+	sentence "COMBINE_KICK" noscene
+}
+
+rule CombineKick
+{
+	criteria		IsCombineS ConceptTalkCmbKick
+	response		CombineKick
+}
+
+//============================================================================================================
+// npc_combine_s speech
+//============================================================================================================
+response "CombineAnnounce"
+{
+	sentence "COMBINE_ANNOUNCE" noscene
+}
+
+rule CombineAnnounce
+{
+	criteria		IsCombineS ConceptTalkCmbAnnounce IsInASquad
+	response		CombineAnnounce
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CombineAssault"
+{
+	sentence "COMBINE_ASSAULT" noscene
+}
+
+rule CombineAssault
+{
+	criteria		IsCombineS ConceptTalkCmbAssault IsInASquad
+	response		CombineAssault
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CombineFlank"
+{
+	sentence "COMBINE_FLANK" noscene
+}
+
+rule CombineFlank
+{
+	criteria		IsCombineS ConceptTalkCmbFlank IsInASquad
+	response		CombineFlank
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CombineGoAlert"
+{
+	sentence "COMBINE_GO_ALERT" noscene
+}
+
+rule CombineGoAlert
+{
+	criteria		IsCombineS ConceptTalkCmbGoAlert IsInASquad
+	response		CombineGoAlert
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CombineLostLong"
+{
+	sentence "COMBINE_LOST_LONG" noscene
+}
+
+rule CombineLostLong
+{
+	criteria		IsCombineS ConceptTalkCmbLostEnemy IsInASquad
+	lastseenenemy >10 required
+	response		CombineLostLong
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CombineLostShort"
+{
+	sentence "COMBINE_LOST_SHORT" noscene
+}
+
+rule CombineLostShort
+{
+	criteria		IsCombineS ConceptTalkCmbLostEnemy IsInASquad
+	lastseenenemy <=10 required
+	response		CombineLostShort
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CombineManDown"
+{
+	sentence "COMBINE_MAN_DOWN" noscene
+}
+
+rule CombineManDown
+{
+	criteria		IsCombineS ConceptTalkCmbManDown
+	response		CombineManDown
+}
+
+response "CombineLastOfSquad"
+{
+	sentence "COMBINE_LAST_OF_SQUAD" noscene
+}
+
+rule CombineLastOfSquad
+{
+	criteria		IsCombineS ConceptTalkCmbManDown IsLastOfSquad
+	response		CombineLastOfSquad
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CombineRefindEnemy"
+{
+	sentence "COMBINE_REFIND_ENEMY" noscene
+}
+
+rule CombineRefindEnemy
+{
+	criteria		IsCombineS ConceptTalkCmbRefindEnemy IsInASquad
+	response		CombineRefindEnemy
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CombineThrowGrenade"
+{
+	sentence "COMBINE_THROW_GRENADE" noscene
+}
+
+rule CombineThrowGrenade
+{
+	criteria		IsCombineS ConceptTalkCmbThrowGrenade IsInASquad
+	altfire !=1 required
+	response		CombineThrowGrenade
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CombineGrenadeDanger"
+{
+	sentence "COMBINE_GREN" noscene
+}
+
+rule CombineGrenadeDanger
+{
+	criteria		IsCombineS ConceptTalkCmbDanger
+	grenade 1 required
+	response		CombineGrenadeDanger
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CombineDanger"
+{
+	sentence "COMBINE_DANGER" noscene
+}
+
+rule CombineDanger
+{
+	criteria		IsCombineS ConceptTalkCmbDanger
+	response		CombineDanger
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CombinePlayerHit"
+{
+	sentence "COMBINE_PLAYERHIT" noscene
+}
+
+rule CombinePlayerHit
+{
+	criteria		IsCombineS ConceptTalkCmbPlayerHit IsInASquad
+	response		CombinePlayerHit
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CombineAlertGeneric"
+{
+	sentence "COMBINE_MONST" noscene
+}
+
+rule CombineAlertGeneric
+{
+	criteria		IsCombineS ConceptTalkCmbEnemy IsInASquad
+	response		CombineAlertGeneric
+}
+
+response "CombineAlertPlayer"
+{
+	sentence "COMBINE_ALERT" noscene
+}
+
+rule CombineAlertPlayer
+{
+	criteria		IsCombineS ConceptTalkCmbEnemy IsInASquad EnemyIsClassPlayer
+	response		CombineAlertPlayer
+}
+
+response "CombineAlertBugs"
+{
+	sentence "COMBINE_MONST_BUGS" noscene
+}
+
+rule CombineAlertBugs
+{
+	criteria		IsCombineS ConceptTalkCmbEnemy IsInASquad EnemyIsClassAntlion
+	response		CombineAlertBugs
+}
+
+response "CombineAlertCitizens"
+{
+	sentence "COMBINE_MONST_CITIZENS" noscene
+}
+
+rule CombineAlertCitizenPassive
+{
+	criteria		IsCombineS ConceptTalkCmbEnemy IsInASquad EnemyIsClassCitizenPassive
+	response		CombineAlertCitizens
+}
+
+rule CombineAlertCitizenRebel
+{
+	criteria		IsCombineS ConceptTalkCmbEnemy IsInASquad EnemyIsClassCitizenRebel
+	response		CombineAlertCitizens
+}
+
+rule CombineAlertVortigaunt
+{
+	criteria		IsCombineS ConceptTalkCmbEnemy IsInASquad EnemyIsClassVortigaunt
+	response		CombineAlertCitizens
+}
+
+rule CombineAlertPlayerAlly
+{
+	criteria		IsCombineS ConceptTalkCmbEnemy IsInASquad EnemyIsClassPlayerAlly
+	response		CombineAlertCitizens
+}
+
+response "CombineAlertCharacter"
+{
+	sentence "COMBINE_MONST_CHARACTER" noscene
+}
+
+rule CombineAlertCharacter
+{
+	criteria		IsCombineS ConceptTalkCmbEnemy IsInASquad EnemyIsClassPlayerAllyVital
+	response		CombineAlertCharacter
+}
+
+response "CombineAlertZombies"
+{
+	sentence "COMBINE_MONST_ZOMBIES" noscene
+}
+
+rule CombineAlertZombies
+{
+	criteria		IsCombineS ConceptTalkCmbEnemy IsInASquad EnemyIsClassZombie
+	response		CombineAlertZombies
+}
+
+response "CombineAlertParasites"
+{
+	sentence "COMBINE_MONST_PARASITES" noscene
+}
+
+rule CombineAlertHeadcrab
+{
+	criteria		IsCombineS ConceptTalkCmbEnemy IsInASquad EnemyIsClassHeadcrab
+	response		CombineAlertParasites
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CombineKillGeneric"
+{
+	sentence "COMBINE_KILL_MONST" noscene
+}
+
+rule CombineKillGeneric
+{
+	criteria		IsCombineS ConceptTalkCmbKillEnemy IsInASquad
+	response		CombineKillGeneric
+}
+
+response "CombineKillPlayer"
+{
+	sentence "COMBINE_PLAYER_DEAD" noscene
+}
+
+rule CombineKillPlayer
+{
+	criteria		IsCombineS ConceptTalkCmbKillEnemy EnemyIsClassPlayer //IsInASquad
+	response		CombineKillPlayer
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CombineCover"
+{
+	sentence "COMBINE_COVER" noscene
+}
+
+rule CombineCover
+{
+	criteria		IsCombineS ConceptTalkCmbPain IsHealth<25Percent
+
+	// Don't announce heavy pain again
+	applycontext "spoken_heavypain:1"
+	spoken_heavypain !=1 required weight 5
+
+	response		CombineCover
+}
+
+response "CombineTaunt"
+{
+	sentence "COMBINE_TAUNT" noscene
+}
+
+rule CombineTaunt
+{
+	criteria		IsCombineS ConceptTalkCmbPain IsHealth>90Percent
+
+	// Don't announce light pain again
+	applycontext "spoken_lightpain:1"
+	spoken_lightpain !=1 required weight 5
+
+	response		CombineTaunt
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CombineIdle"
+{
+	sentence "COMBINE_IDLE" noscene
+}
+
+rule CombineIdle
+{
+	criteria		IsCombineS ConceptTalkCmbQuestion IsCombineQuestion0
+	response		CombineIdle
+}
+
+response "CombineQuestion"
+{
+	sentence "COMBINE_QUEST" noscene
+}
+
+rule CombineQuestion
+{
+	criteria		IsCombineS ConceptTalkCmbQuestion IsCombineQuestion2
+	response		CombineQuestion
+}
+
+response "CombineCheck"
+{
+	sentence "COMBINE_CHECK" noscene
+}
+
+rule CombineCheck
+{
+	criteria		IsCombineS ConceptTalkCmbQuestion IsCombineQuestion1
+	response		CombineCheck
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CombineAnswer"
+{
+	sentence "COMBINE_ANSWER" noscene
+}
+
+rule CombineAnswer
+{
+	criteria		IsCombineS ConceptTalkCmbAnswer IsCombineQuestion2
+	response		CombineAnswer
+}
+
+response "CombineClear"
+{
+	sentence "COMBINE_CLEAR" noscene
+}
+
+rule CombineClear
+{
+	criteria		IsCombineS ConceptTalkCmbAnswer IsCombineQuestion1
+	response		CombineClear
+}
+
+#include "talker/npc_combine_s_ez2.txt"
+#include "talker/npc_combine_s_ez2_maps.txt"

@@ -1,0 +1,245 @@
+//============================================================================================================
+// COMBINE SOLDIER E:Z2
+// 
+// Special soldier responses which add onto Mapbase's talker file.
+// 
+//============================================================================================================
+//============================================================================================================
+// npc_combine_s concepts and criteria
+//============================================================================================================
+// Concepts
+criterion "ConceptTalkCmbStartFollow" "Concept" "TLK_STARTFOLLOW" required
+criterion "ConceptTalkCmbStopFollow" "Concept" "TLK_STOPFOLLOW" required
+
+// Other criteria
+criterion "InPlayerSquad" "squad" "player_squad" required
+
+//============================================================================================================
+// npc_combine_s speech
+//============================================================================================================
+
+response "CombineJoinPlayerSquad"
+{
+	sentence "COMBINE_EZ2_FOLLOWING" noscene
+}
+
+rule CombineJoinPlayerSquad
+{
+	criteria		IsCombineS ConceptTalkCmbStartFollow
+	response		CombineJoinPlayerSquad
+}
+
+response "CombineLeavePlayerSquad"
+{
+	sentence "COMBINE_EZ2_STOPFOLLOWING" noscene
+}
+
+rule CombineLeavePlayerSquad
+{
+	criteria		IsCombineS ConceptTalkCmbStopFollow
+	response		CombineLeavePlayerSquad
+}
+
+//============================================================================================================
+
+response "CombineIdleInPlayerSquad"
+{
+	sentence "COMBINE_IDLE_IN_PLAYER_SQUAD" noscene
+}
+
+rule CombineIdleInPlayerSquad
+{
+	criteria		IsCombineS ConceptTalkCmbQuestion InPlayerSquad IsCombineQuestion0 PlayerAlive
+	response		CombineIdleInPlayerSquad
+	response		CombineIdle
+}
+
+response "CombineManhackDown"
+{
+	sentence "COMBINE_MANHACK_DOWN" noscene
+}
+
+rule CombineManhackDown
+{
+	criteria		IsCombineS ConceptTalkCmbManDown
+	my_manhack "1" required weight 5
+	response		CombineManhackDown
+}
+
+//============================================================================================================
+
+// Experimental idle shifting which make the soldiers' idle animation slightly less boring.
+// (Not finished)
+response "CombineIdleShift"
+{
+	scene "scenes/npc/combine_soldier/idle_look01.vcd" stop_on_nonidle
+	scene "scenes/npc/combine_soldier/idle_look02.vcd" stop_on_nonidle
+	scene "scenes/npc/combine_soldier/idle_look03.vcd" stop_on_nonidle
+}
+
+rule CombineIdleShift
+{
+	criteria		IsCombineS ConceptTalkLook
+	response		CombineIdleShift
+}
+
+//============================================================================================================
+
+// Use hand signals for a few concepts.
+
+// There is something behind Bad Cop.
+response "CombineWatchOutBehind"
+{
+	scene "scenes/npc/combine_soldier/signal_forward.vcd"
+}
+
+rule CombineWatchOutBehind
+{
+	criteria		IsCombineS ConceptTalkWatchOut
+	dangerloc "behind" required
+	response		CombineWatchOutBehind
+}
+
+//============================================================================================================
+
+response "CombineAlertBigZombie"
+{
+	sentence "COMBINE_MONST_ZOMBIE_BIG" noscene
+}
+
+rule CombineAlertBigZombie
+{
+	criteria		IsCombineS ConceptTalkCmbEnemy IsInASquad
+	enemy "npc_zassassin" required weight 2 // Override CLASS_ZOMBIE response
+	response		CombineAlertBigZombie
+}
+
+response "CombineAlertNemesis"
+{
+	sentence "COMBINE_MONST_NEMESIS" noscene
+}
+
+rule CombineAlertNemesis
+{
+	criteria		IsCombineS ConceptTalkCmbEnemy IsInASquad
+	enemyclass "CLASS_COMBINE_NEMESIS" required
+	response		CombineAlertNemesis
+}
+
+// Let's use Metrocop lines for "rogue viscerators"!
+response "CombineAlertManhack"
+{
+	sentence "COMBINE_MONST_MANHACK" noscene
+}
+
+rule CombineAlertManhack
+{
+	criteria		IsCombineS ConceptTalkCmbEnemy IsInASquad
+	enemy "npc_manhack" required weight 3 // Override CLASS_PLAYER_ALLY response
+	response		CombineAlertManhack
+}
+
+// Soldiers should say something unique if they see Mossman.
+// Granted, usually they'll probably be marked friendly to her - but maybe just in case?
+response "CombineAlertMossman"
+{
+	sentence "COMBINE_MONST_MOSSMAN0" noscene
+}
+
+rule CombineAlertMossman
+{
+	criteria		IsCombineS ConceptTalkCmbEnemy IsInASquad
+	enemy "npc_mossman" required weight 3
+	response		CombineAlertMossman
+}
+
+
+//============================================================================================================
+
+response "CombineMobbed"
+{
+	sentence "COMBINE_MOBBED" noscene
+}
+
+rule CombineMobbed
+{
+	criteria		IsCombineS ConceptMobbed IsInASquad
+	response		CombineMobbed
+}
+
+//============================================================================================================
+// Responding to Bad Cop-related stuff
+//============================================================================================================
+response "CombineAnswerBadCop"
+{
+	sentence "COMBINE_ANSWER_PLAYER" predelay "0.25,0.5"
+}
+
+rule CombineAnswerBadCop_PlayerHurt
+{
+	criteria		IsCombineS ConceptTalkConceptAnswer
+	speechtarget_concept "TLK_PLHURT" required
+	response		CombineAnswerBadCop
+}
+
+rule CombineAnswerBadCop_Stare
+{
+	criteria		IsCombineS ConceptTalkConceptAnswer
+	speechtarget_concept "TLK_STARE" required
+	response		CombineAnswerBadCop
+}
+
+// Bad Cop is unstoppable
+response "CombinePlayerKillCombo"
+{
+	sentence "COMBINE_PLAYER_KILLCOMBO" noscene
+}
+
+rule CombinePlayerKillCombo
+{
+	criteria		IsCombineS ConceptTalkConceptAnswer SpeechTargetBadCop KillCombo4OrMore
+	speechtarget_concept "TLK_ENEMY_DEAD" required
+	response		CombinePlayerKillCombo
+}
+
+//============================================================================================================
+
+// Bad Cop is down! We lost Bad Cop!
+response "CombinePlayerDown"
+{
+	sentence "COMBINE_PLAYER_DOWN" noscene
+}
+
+rule CombinePlayerDown
+{
+	criteria		IsCombineS ConceptPlayerDead SpeechTargetBadCop
+	response		CombinePlayerDown
+}
+
+// Acknowledge the fact Bad Cop is dead
+response "CombinePlayerDownQuestion"
+{
+	sentence "COMBINE_PLAYER_DOWN_QUEST" noscene
+}
+
+rule CombinePlayerDownQuestion
+{
+	criteria		IsCombineS ConceptTalkCmbQuestion IsCombineQuestion2 PlayerDead
+	matchonce
+	response		CombinePlayerDownQuestion
+}
+
+//============================================================================================================
+
+response "CombineRebelOrderSurrender"
+{
+	sentence "COMBINE_FREEZE" noscene
+	
+}
+rule CombineRebelOrderSurrender
+{
+	criteria		IsCombineS ConceptTalkUse IsOrderSurrender
+	response		CombineRebelOrderSurrender
+}
+
+//============================================================================================================

@@ -1,0 +1,58 @@
+//============================================================================================================
+// REMARKS CHAPTER 6
+// 
+// This is #included from the main scripts.
+// 
+//============================================================================================================
+
+//============================================================================================================
+// ez2_c6_1 remarkables
+//============================================================================================================
+
+criterion "SubjectEnteringEntropicControl" "subject" "entering_entropic_control" required
+
+response "BadCopRemarkEnteringEntropicControl_Wilson"
+{
+	norepeat
+	scene "scenes/npc/wilson/c6_1_uploadfacility.vcd"
+}
+
+rule BadCopRemarkEnteringEntropicControl_Wilson
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectEnteringEntropicControl PlayerNearWillE IsSubjectNear250
+	response 		BadCopRemarkEnteringEntropicControl_Wilson
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+criterion "SubjectEntropicControlPanic" "subject" "entropic_control_panic" required
+
+response "BadCopRemarkEntropicControlPanic_Wilson"
+{
+	norepeat
+	scene "scenes/npc/wilson/c6_1_panik.vcd"
+}
+
+rule BadCopRemarkEntropicControlPanic_Wilson
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectEntropicControlPanic PlayerNearWillE IsSubjectNear250
+	response 		BadCopRemarkEntropicControlPanic_Wilson
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+criterion "SubjectEntropicControlSwitch" "subject" "entropic_control_switch" required
+
+response "BadCopRemarkEntropicControlSwitch_Wilson"
+{
+	norepeat
+	scene "scenes/npc/wilson/c6_1_hitswitch.vcd"
+}
+
+rule BadCopRemarkEntropicControlSwitch_Wilson
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectEntropicControlSwitch PlayerNearWillE IsSubjectNear250
+	response 		BadCopRemarkEntropicControlSwitch_Wilson
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------

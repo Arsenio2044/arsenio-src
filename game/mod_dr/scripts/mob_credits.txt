@@ -1,0 +1,90 @@
+//Rob: This file contains only outro credits for mobility
+"mob_credits.txt"
+{
+
+"CreditsParams"
+{
+	"logo" "HALF-LIFE'"
+	
+	"fadeintime"	"2.5"
+	"fadeouttime"	"1"
+	"fadeholdtime"	"1.0"
+	"nextfadetime"	"1.0"
+	"pausebetweenwaves" "1.0"
+	"logotime" "1.0"
+	"posx"	"96"
+	"posy"	"360"
+
+	"color" "255 255 255 128"
+
+//Outro Parameters
+	"scrolltime" "68"
+	"separation"  "10"
+}
+
+//========================================================
+//These are the names used in the outro (mob_escape)
+//========================================================
+"OutroCreditsNames"
+{
+	"MOBILITY MOD FOR HALF-LIFE 2"   "CreditsOutroText"
+	"by Rob Cruickshank"    "CreditsOutroText"
+	"@MobilityMod4HL2"    "CreditsOutroText"
+	" "   "CreditsOutroText"
+	
+	"VOICE"   "CreditsOutroText"
+	"Wendy Eggins" "CreditsOutroText"
+	" "    "CreditsOutroText"
+	
+	"TESTERS/BRAVE VOLUNTEERS"    "CreditsOutroText"
+	"Ash Blair"    "CreditsOutroText"
+	"Peter Cameron"    "CreditsOutroText"
+	"Brendan Simpson"    "CreditsOutroText"
+	"Josh Forrest"    "CreditsOutroText"
+	"Tim Fooks"  "CreditsOutroText"
+	"Sam Boss-Walker"  "CreditsOutroText"
+	" "    "CreditsOutroText"
+	
+	"THANKS"    "CreditsOutroText"
+	"Everyone at Valve for making great games and mod tools."    "CreditsOutroText"
+	" "    "CreditsOutroText"
+	"The modding community for making helpful guides and resources."  "CreditsOutroText"
+	" "    "CreditsOutroText"
+	"Jennifer Scheurle for a GDC talk that gave me some good ideas."  "CreditsOutroText"
+	" "    "CreditsOutroText"
+	"Everyone at Respawn for making Titanfall, the main inspiration for this mod."   "CreditsOutroText"
+	"Seriously, buy and play Titanfall 2 if you haven't already."    "CreditsOutroText"
+	" "    "CreditsOutroText"
+	"Friends and family for nodding politely" "CreditsOutroText"
+	"when I talk about the mod."    "CreditsOutroText"
+	" "    "CreditsOutroText"
+	" "    "CreditsOutroText"
+
+	"That was just Chapter Zero."    "CreditsOutroText"
+
+	"You can play through all of Half-Life 2"    "CreditsOutroText"
+	"with enhanced Mobility."    "CreditsOutroText"
+	" "    "CreditsOutroText"
+	"The crowbar does extra damage"    "CreditsOutroText"
+	"based on your speed."    "CreditsOutroText"
+	" "   "CreditsOutroText"
+	"The pistol does double damage."    "CreditsOutroText"
+	" "   "CreditsOutroText"
+	"The .357 Magnum shoots through anything that isn't too thick."    "CreditsOutroText"
+	" "     "CreditsOutroText"
+	"Some ammo limits are increased."    "CreditsOutroText"
+	" "    "CreditsOutroText"
+	"There are lots of new console variables that control movement,"   "CreditsOutroText"
+	"gameplay, and some cheat modes."    "CreditsOutroText"
+	"See the file 'mobility.cfg' in the mod's cfg folder."   "CreditsOutroText"
+	" "    "CreditsOutroText"
+	"You'll want to try the exploding bullets cheat."    "CreditsOutroText"
+	" "    "CreditsOutroText"
+	"Thanks for playing, and have fun."    "CreditsOutroText"
+	" "    "CreditsOutroText"
+
+}
+
+
+
+}

@@ -1,0 +1,36 @@
+"weapon_SPAS.Draw"
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/SPAS/spas_draw.wav"
+}
+
+"weapon_SPAS.Holster"
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/SPAS/spas_putaway.wav"
+}
+
+"weapon_SPAS.Pump"
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/SPAS/pump.wav"
+}
+
+"weapon_SPAS.Insert"
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"rndwave"
+	{
+		"wave"		"weapons/SPAS/insertshell.wav"
+		"wave"		"weapons/SPAS/insertshell2.wav"
+		"wave"		"weapons/SPAS/insertshell3.wav"
+	}
+}

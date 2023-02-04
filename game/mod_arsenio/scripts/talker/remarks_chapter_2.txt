@@ -1,0 +1,363 @@
+//============================================================================================================
+// REMARKS CHAPTER 2
+// 
+// This is #included from the main scripts.
+// 
+//============================================================================================================
+
+//============================================================================================================
+// ez2_c2_3 Recording Boxes
+//============================================================================================================
+criterion "SubjectRecordingOffice" "subject" "recording_office" required
+criterion "SubjectRecordingSupplyRoom" "subject" "recording_supplyroom" required
+criterion "SubjectRecordingCafeteria" "subject" "recording_cafeteria" required
+criterion "SubjectRecordingConference" "subject" "recording_conference" required
+criterion "SubjectRecordingServer" "subject" "recording_server" required
+criterion "SubjectRecordingMossman" "subject" "recording_mossman" required
+
+// Generic response for recording boxes - use if the specific lines have already been used
+response "BadCopCommentInterest"
+{
+	norepeat
+	sequential
+	// Add a line here for a generic interest line
+	scene "scenes/npc/badcop/remark_generic_whatthehellisgoingon_01.vcd" respeakdelay 15
+	scene "scenes/npc/badcop/remark_generic_interest_01.vcd" respeakdelay 15
+	scene "scenes/npc/badcop/remark_generic_interest_02.vcd" respeakdelay 15
+	scene "scenes/npc/badcop/remark_generic_interest_03.vcd" respeakdelay 15
+}
+
+// Remark about another Combine elite that could be used in c2_3 or c2_4 depending on how the player interacts with the environment
+response "BadCopGenericRemarkCombineElite"
+{
+	norepeat
+	scene "scenes/chapter 2/ez2_c2_badcop_seegraffiti.vcd"
+}
+
+rule BadCopRemarkRecordingOffice
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectRecordingOffice IsSubjectNear200 NeverRemarked
+	response 		BadCopCommentInterest
+}
+
+response "BadCopCommentRecordingSupplyRoomGroup"
+{
+	norepeat
+	sequential
+	response "BadCopGenericRemarkCombineElite"
+	response "BadCopCommentInterest"
+}
+
+rule BadCopRemarkRecordingSupplyRoom
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectRecordingSupplyRoom IsSubjectNear200 NeverRemarked
+	response 		BadCopCommentRecordingSupplyRoomGroup
+}
+
+response "BadCopCommentRecordingCafeteriaGroup"
+{
+	norepeat
+	sequential
+	response "BadCopGenericRemarkCombineElite"
+	response "BadCopCommentInterest"
+}
+
+rule BadCopRemarkRecordingCafeteria
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectRecordingCafeteria IsSubjectNear200 NeverRemarked
+	response 		BadCopCommentRecordingCafeteriaGroup
+}
+
+response "BadCopCommentRecordingConferenceGroup"
+{
+	norepeat
+	sequential
+	response "BadCopGenericRemarkCombineElite"
+	response "BadCopCommentInterest"
+}
+
+rule BadCopRemarkRecordingConference
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectRecordingConference IsSubjectNear200 NeverRemarked
+	response 		BadCopCommentRecordingConferenceGroup
+}
+
+response "BadCopCommentRecordingServerGroup"
+{
+	norepeat
+	sequential
+	response "BadCopGenericRemarkCombineElite"
+	response "BadCopCommentInterest"
+}
+
+rule BadCopRemarkRecordingServer
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectRecordingServer IsSubjectNear200 NeverRemarked
+	response 		BadCopCommentRecordingServerGroup
+}
+
+response "BadCopCommentRecordingMossman"
+{
+	norepeat
+	sequential
+	scene "scenes/arbeit/c2_03_bc_remark_mossman.vcd" respeakdelay 15
+}
+
+rule BadCopRemarkRecordingMossman
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectRecordingMossman IsSubjectNear200 NeverRemarked
+	response 		BadCopCommentRecordingMossman
+}
+
+//============================================================================================================
+// ez2_c2_3 Poker Chips
+//============================================================================================================
+criterion "SubjectRebelPoker" "subject" "rebel_poker_game" required
+
+response "BadCopRemarkPokerGame"
+{
+	norepeat
+	// "Surprised these idiots can play Poker."
+	scene "scenes/npc/badcop/remark_rebelpokergame_first.vcd" respeakdelay 15
+}
+
+response "BadCopRemarkHardlyWorking"
+{
+	norepeat
+	
+	// "Working hard, or hardly working?"
+	scene "scenes/npc/badcop/remark_rebelpokergame_hardlyworking.vcd" respeakdelay 15
+}
+
+response "BadCopRemarkPokerGameWithSquad"
+{
+	norepeat
+	sequential
+	// Do you guys play Poker?
+    // I'd kick your asses at Poker.
+	scene "scenes/npc/badcop/remark_rebelpokergame_squad1.vcd" respeakdelay 15
+	scene "scenes/npc/badcop/remark_rebelpokergame_squad2.vcd" respeakdelay 15
+	scene "scenes/npc/badcop/remark_rebelpokergame_squad3.vcd" respeakdelay 15
+}
+
+rule BadCopRemarkRebelPokerFirst
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectRebelPoker IsSubjectNear150 NeverRemarked
+	episodic "1" required weight 2 // Bogus criteria so weight is higher
+	response 		BadCopRemarkPokerGame
+}
+
+rule BadCopRemarkRebelPokerWorkingHard
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectRebelPoker IsSubjectNear150
+	response 		BadCopRemarkHardlyWorking
+}
+
+rule BadCopRemarkRebelPokerWithSquad
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectRebelPoker IsSubjectNear150 HasSquadMates
+	response 		BadCopRemarkPokerGameWithSquad
+}
+
+//============================================================================================================
+// ez2_c2_3 Lone Wolf
+//============================================================================================================
+criterion "SubjectTrappedLoneWolf" "subject" "trapped_lone_wolf" required
+
+response "BadCopRemarkTrappedLoneWolf"
+{
+	norepeat
+	sequential
+	scene "scenes/arbeit/c2_03_bc_lonewolf_intro.vcd" respeakdelay 5
+}
+
+rule BadCopRemarkTrappedLoneWolf
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectTrappedLoneWolf IsSubjectNear200
+	response 		BadCopRemarkTrappedLoneWolf
+}
+
+//============================================================================================================
+// ez2_c2_4 response for staring at the Borealis materials
+//============================================================================================================
+
+criterion "SubjectBorealis" "subject" "borealis" required
+
+response "BadCopCommentBorealis"
+{
+	norepeat
+	sequential
+	scene "scenes/chapter 2/ez2_c2_badcop_borealis_1.vcd" respeakdelay 5 // Weird tech. What's all this doing here? (Placeholder line in scene)
+	scene "scenes/chapter 2/ez2_c2_badcop_borealis_2.vcd" respeakdelay 5 // Rebels must be using this place. (Placeholder line in scene)
+}
+
+rule BadCopRemarkBorealis
+{
+	// Not necessarily map specific!
+	criteria		IsBadCop ConceptTalkRemark SubjectBorealis IsSubjectNear200
+	response 		BadCopCommentBorealis
+}
+
+//============================================================================================================
+// ez2_c2_4 response for the stasis device room
+//============================================================================================================
+
+criterion "SubjectStasis" "subject" "stasis" required
+
+// TODO!
+// response "BadCopCommentStasis"
+// {
+// 	norepeat
+// 	sequential
+// }
+// 
+// 
+// rule BadCopRemarkStasisDevice
+// {
+// 	// Not necessarily map specific!
+// 	criteria		IsBadCop ConceptTalkRemark SubjectStasis IsSubjectNear100
+// 	response 		BadCopCommentStasis
+// }
+
+//============================================================================================================
+// ez2_c2_4 response for finding gore left behind by the Beast
+//============================================================================================================
+
+criterion "CommentBeast" "comment" "beast" required // LEGACY
+criterion "SubjectBeast" "subject" "beast" required
+
+response "BadCopCommentBeastGore"
+{
+	norepeat
+	scene "scenes/chapter 2/ez2_c2_findbeastgore.vcd"
+}
+
+rule BadCopCommentBeastGore
+{
+	// LEGACY
+	criteria		IsBadCop ConceptComment CommentBeast
+	map ez2_c2_4 required
+	response 		BadCopCommentBeastGore
+}
+
+rule BadCopRemarkBeastGore
+{
+	// Not necessarily map specific!
+	criteria		IsBadCop ConceptTalkRemark SubjectBeast IsSubjectNear200
+	response 		BadCopCommentBeastGore
+}
+
+//============================================================================================================
+// ez2_c2_4 response for finding the vent the Beast escaped into
+//============================================================================================================
+
+criterion "CommentBeastVent" "comment" "beastvent" required // LEGACY
+criterion "SubjectBeastVent" "subject" "beastvent" required
+
+response "BadCopCommentBeastVent"
+{
+	norepeat
+	scene "scenes/chapter 2/ez2_c2_badcop_seevent.vcd"
+}
+
+rule BadCopCommentBeastVent
+{
+	// LEGACY
+	criteria		IsBadCop ConceptComment CommentBeastVent
+	map ez2_c2_4 required
+	response 		BadCopCommentBeastVent
+}
+
+rule BadCopRemarkBeastVent
+{
+	// Not necessarily map specific!
+	criteria		IsBadCop ConceptTalkRemark SubjectBeastVent IsSubjectNear500
+	response 		BadCopCommentBeastVent
+}
+
+//============================================================================================================
+// ez2_c2_4 response for finding the vent the Beast escaped into
+//============================================================================================================
+criterion "SubjectZombine" "subject" "zombine" required
+
+response "BadCopCommentZombine"
+{
+	norepeat
+	scene "scenes/chapter 2/ez2_c2_badcop_seezombine.vcd"
+	
+	// TODO - Add a nag telling players to go to the comms room
+	// TODO TODO - Maybe make that its own idle response?
+	// scene "scenes/chapter 2/ez2_c2_comms_room_1.vcd"
+}
+
+rule BadCopRemarkZombine
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectZombine IsSubjectNear200
+	response 		BadCopCommentZombine
+}
+
+//============================================================================================================
+// Response for finding the Bring Your Daughter To Work Day poster
+// Used in Chapter 5 as well
+//============================================================================================================
+criterion "SubjectDaughter" "subject" "daughter" required
+
+response "BadCopCommentDaughter"
+{
+	norepeat
+	scene "scenes/chapter 2/ez2_c2_daughter.vcd"
+}
+
+rule BadCopRemarkDaughter
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectDaughter IsSubjectNear100
+	response 		BadCopCommentDaughter
+}
+
+//============================================================================================================
+// ez2_c2_4 response for finding the Combine Elite graffiti
+//============================================================================================================
+criterion "SubjectCombineEliteGraffiti" "subject" "combine_elite_graffiti" required
+
+rule BadCopRemarkCombineEliteGraffiti
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectCombineEliteGraffiti IsSubjectNear150 NeverRemarked
+	response 		BadCopGenericRemarkCombineElite
+}
+
+//============================================================================================================
+// ez2_c2_4 response for staring at the frozen rebel
+//============================================================================================================
+criterion "SpeechTargetIsFrozenRebel" "speechtargetname" "frozen_body" required
+
+response "BadCopStareFrozenRebel"
+{
+	norepeat
+	speak "bc_taunt_reb_4" respeakdelay 10
+}
+
+rule BadCopStareFrozenRebel
+{
+	criteria		IsBadCop ConceptTalkStare SpeechTargetIsFrozenRebel
+	response 		BadCopStareFrozenRebel
+}
+
+//============================================================================================================
+// ez2_c2_3 response for door Clone Cop locks
+//============================================================================================================
+
+criterion "SubjectLockedWarehouseDoor" "subject" "locked_warehouse_door" required
+
+response "BadCopCommentFrustration"
+{
+	scene "scenes/npc/badcop/remark_generic_frustration_01.vcd" respeakdelay 15
+	scene "scenes/npc/badcop/remark_generic_frustration_02.vcd" respeakdelay 15
+	scene "scenes/npc/badcop/remark_generic_frustration_03.vcd" respeakdelay 15
+	scene "scenes/npc/badcop/remark_generic_frustration_04.vcd" respeakdelay 15
+}
+
+rule BadCopRemarkLockedWarehouseDoor
+{
+	criteria IsBadCop ConceptTalkRemark SubjectLockedWarehouseDoor IsSubjectNear200 NeverRemarked
+	response BadCopCommentFrustration
+}

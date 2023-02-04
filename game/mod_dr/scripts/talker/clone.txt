@@ -1,0 +1,264 @@
+//============================================================================================================
+// 
+// Clone Cop
+// 
+//============================================================================================================
+
+//============================================================================================================
+// Clone criteria
+//============================================================================================================
+criterion "IsCloneCop" "classname" "npc_clonecop" required
+
+//============================================================================================================
+// npc_combine_s basic sounds
+//============================================================================================================
+response "CloneCopPain"
+{
+	speak "CC_pain1" respeakdelay 5
+	speak "CC_pain2" respeakdelay 5
+	speak "CC_pain3" respeakdelay 5
+	speak "CC_pain4" respeakdelay 5
+	speak "CC_pain5" respeakdelay 5
+}
+
+rule CloneCopPain
+{
+	criteria		IsCloneCop ConceptTalkCmbPain PainSoundsAllowed
+	response		CloneCopPain
+}
+
+response "CloneCopDie"
+{
+	//speak "CC_C6_1_OnFire"
+}
+
+rule CloneCopDie
+{
+	criteria		IsCloneCop ConceptTalkCmbDie DeathSoundsAllowed
+	response		CloneCopDie
+}
+
+response "CloneCopKick"
+{
+}
+
+rule CloneCopKick
+{
+	criteria		IsCloneCop ConceptTalkCmbKick
+	response		CloneCopKick
+}
+
+//============================================================================================================
+// npc_combine_s speech
+//============================================================================================================
+response "CloneCopAnnounce"
+{
+}
+
+rule CloneCopAnnounce
+{
+	criteria		IsCloneCop ConceptTalkCmbAnnounce IsInASquad
+	response		CloneCopAnnounce
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CloneCopAssault"
+{
+}
+
+rule CloneCopAssault
+{
+	criteria		IsCloneCop ConceptTalkCmbAssault IsInASquad
+	response		CloneCopAssault
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CloneCopFlank"
+{
+}
+
+rule CloneCopFlank
+{
+	criteria		IsCloneCop ConceptTalkCmbFlank IsInASquad
+	response		CloneCopFlank
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CloneCopGoAlert"
+{
+}
+
+rule CloneCopGoAlert
+{
+	criteria		IsCloneCop ConceptTalkCmbGoAlert IsInASquad
+	response		CloneCopGoAlert
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CloneCopLostLong"
+{
+}
+
+rule CloneCopLostLong
+{
+	criteria		IsCloneCop ConceptTalkCmbLostEnemy IsInASquad
+	lastseenenemy >10 required
+	response		CloneCopLostLong
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CloneCopLostShort"
+{
+}
+
+rule CloneCopLostShort
+{
+	criteria		IsCloneCop ConceptTalkCmbLostEnemy IsInASquad
+	lastseenenemy <=10 required
+	response		CloneCopLostShort
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CloneCopManDown"
+{
+}
+
+rule CloneCopManDown
+{
+	criteria		IsCloneCop ConceptTalkCmbManDown
+	response		CloneCopManDown
+}
+
+response "CloneCopLastOfSquad"
+{
+}
+
+rule CloneCopLastOfSquad
+{
+	criteria		IsCloneCop ConceptTalkCmbManDown IsLastOfSquad
+	response		CloneCopLastOfSquad
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CloneCopRefindEnemy"
+{
+}
+
+rule CloneCopRefindEnemy
+{
+	criteria		IsCloneCop ConceptTalkCmbRefindEnemy IsInASquad
+	response		CloneCopRefindEnemy
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CloneCopThrowGrenade"
+{
+}
+
+rule CloneCopThrowGrenade
+{
+	criteria		IsCloneCop ConceptTalkCmbThrowGrenade IsInASquad
+	altfire !=1 required
+	response		CloneCopThrowGrenade
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CloneCopGrenadeDanger"
+{
+	response "CloneCopGenericShit"
+}
+
+rule CloneCopGrenadeDanger
+{
+	criteria		IsCloneCop ConceptTalkCmbDanger
+	grenade 1 required
+	response		CloneCopGrenadeDanger
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CloneCopDanger"
+{
+	response "CloneCopGenericShit"
+}
+
+rule CloneCopDanger
+{
+	criteria		IsCloneCop ConceptTalkCmbDanger
+	response		CloneCopDanger
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CloneCopPlayerHit"
+{
+}
+
+rule CloneCopPlayerHit
+{
+	criteria		IsCloneCop ConceptTalkCmbPlayerHit IsInASquad
+	response		CloneCopPlayerHit
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CloneCopAlertGeneric"
+{
+}
+
+rule CloneCopAlertGeneric
+{
+	criteria		IsCloneCop ConceptTalkCmbEnemy IsInASquad
+	response		CloneCopAlertGeneric
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CloneCopKillGeneric"
+{
+	// TODO: Make sure these work well with Chapter 5 scenes
+	//speak "CC_C2_4_gotcha" respeakdelay 30 // Gotcha!
+	//speak "ESeq2_32" respeakdelay 30 // Bite me.
+	//speak "CC_C4_4_stayouttaway" respeakdelay 30 // Stay outta my way.
+	//speak "CC_C5_rg_weredonehere" respeakdelay 30 // We're done here.
+}
+
+rule CloneCopKillGeneric
+{
+	criteria		IsCloneCop ConceptTalkCmbKillEnemy
+	response		CloneCopKillGeneric
+}
+
+response "CloneCopKillPlayer"
+{
+	//response "CloneCopKillGeneric" respeakdelay 30 weight 4
+	//speak "CC_C2_4_hastobe" respeakdelay 30 // This is the way it has to be.
+	//speak "CC_C2_4_justanotherclone" respeakdelay 30 // You're just another clone.
+	//speak "CC_C2_4_puttinganend" respeakdelay 30 // I'm putting an end to this.
+	//speak "CC_C4_4_hint" respeakdelay 30 // Take that as a hint.
+}
+
+rule CloneCopKillPlayer
+{
+	criteria		IsCloneCop ConceptTalkCmbKillEnemy EnemyIsClassPlayer //IsInASquad
+	response		CloneCopKillPlayer
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CloneCopIdle"
+{
+}
+
+rule CloneCopIdle
+{
+	criteria		IsCloneCop ConceptTalkCmbQuestion
+	response		CloneCopIdle
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CloneCopOrderSurrender"
+{
+	speak "CC_C4_4_stayouttaway" respeakdelay 30 // Stay outta my way.
+}
+
+rule CloneCopOrderSurrender
+{
+	criteria		IsCloneCop ConceptTalkUse IsOrderSurrender
+	response		CloneCopOrderSurrender
+}

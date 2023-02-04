@@ -1,0 +1,15 @@
+"weapon.crowbar_draw" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/crowbar/crowbar_draw.wav"
+}
+
+"weapon.crowbar_holster" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/crowbar/crowbar_putaway.wav"
+}

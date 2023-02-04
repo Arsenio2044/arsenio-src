@@ -1,0 +1,210 @@
+//============================================================================================================
+// Special recipes
+//
+// These recipes are based on specific, miscellaneous conditions.
+//============================================================================================================
+
+//============================================================================================================
+// Map Conditions
+//============================================================================================================
+
+// Spawn specific recipes during the Xen grenade introduction in Chapter 3
+response "SpawnTutorialStuff"
+{
+	sequential
+	print "item_battery 1,2; item_healthkit 1,2; npc_antlion 1"
+	print "item_battery 0,1; item_healthvial 1,2; npc_antlion 2"
+	print "item_battery 1,2; item_healthkit 1,2; npc_bullsquid 1"
+	print "item_battery 0,1; item_healthvial 1,2; npc_antlion 2"
+
+	// Give players a reward for using it this many times in c3_3
+	print "item_battery 4; npc_hevzombie 1"
+}
+
+rule SpawnTutorialStuff
+{
+	criteria		IsMassNot0
+	map "ez2_c3_3" required weight 999
+	response		SpawnTutorialStuff
+}
+
+// Spawn headcrabs for when players pick up Xen grenades in the demo and use them on props only
+response "SpawnDemoHeadcrabs"
+{
+	norepeat
+	print "npc_headcrab 2; item_healthkit 1"
+}
+
+rule SpawnDemoHeadcrabs
+{
+	criteria		HullTinyAllowed NoNPCs IsMassNot0
+	ez2_demo "1" required weight 999
+	matchonce
+	response		SpawnDemoHeadcrabs
+}
+
+//============================================================================================================
+// Carnage
+//============================================================================================================
+response "SpawnBigCarnage"
+{
+	print "npc_zombie 1,2; npc_headcrab 0,1; npc_bullsquid 0,2: IsBaby 1; npc_stukabat 0,1; npc_antlion 1,2"
+}
+
+rule SpawnBigCarnage
+{
+	criteria		HullHumanAllowed IsMass1500
+	response		SpawnBigCarnage
+}
+
+response "SpawnShowdown"
+{
+	print "npc_antlionguard 1: allowbark 1 cavernbreed 1; npc_zassassin 1"
+}
+
+rule SpawnShowdown
+{
+	criteria		HullLargeAllowed IsMass2000
+	response		SpawnShowdown
+}
+
+//============================================================================================================
+// Contexts
+//============================================================================================================
+
+// CUT: Spawn the player's lost APC
+//response "SpawnLostAPC"
+//{
+//	print "prop_vehicle_drivable_apc"
+//}
+//
+//rule SpawnLostAPC
+//{
+//	criteria		HullLargeAllowed SuckedAPC IsMass1500
+//	applyContext "sucked_apc:0:10"
+//	applyContextToWorld // TODO: APPLY TO PLAYER, NOT WORLD
+//	response		SpawnLostAPC
+//}
+
+//============================================================================================================
+// Other
+//============================================================================================================
+
+// Spawn that old lost soul NPC 1upD made a long time ago for unrelated projects
+response "SpawnLostSoul"
+{
+	print "npc_lost_soul 2,3"
+}
+
+rule SpawnLostSoul
+{
+	criteria		HullTinyAllowed
+	best_model "skeleton*" required weight 100
+	response		SpawnLostSoul
+}
+
+//============================================================================================================
+// ez2_c4_5b
+// HACKHACK - Don't allow big creatures in c4_5b
+// TODO - Improve this with a better solution to not spawn bosses in the tunnels
+//============================================================================================================
+rule SpawnXentariumBig
+{
+	criteria		HullTinyAllowed IsMass1500
+	map ez2_c4_5b required weight 100
+	response		SpawnRandomSuppliesLarge
+}
+
+//============================================================================================================
+// c5_3 battle
+//============================================================================================================
+
+criterion "IsCascadeVortex" "name" "cascade_vortex" required weight 1000
+
+criterion "CascadePhaseOne" "phase" "1" required
+criterion "CascadePhaseTwo" "phase" "2" required
+criterion "CascadePhaseThree" "phase" "3" required
+
+response "SpawnCascadeNPCPhaseOne"
+{
+	//norepeat
+	sequential
+	print "npc_headcrab 2; npc_zombie 2"
+	print "npc_bullsquid 2; npc_bullsquid 1,2: IsBaby 1"
+	print "npc_hevzombie 2; npc_headcrab 3"
+	print "npc_pitdrone 3"
+	// TODO - Should spawn 3 stukabats. Changing for 1 due to wonky collisions with stukas
+	print "npc_stukabat 1"
+
+	// Phase end
+	print "logic_relay 1: OnSpawn cascade_vortex,AddContext,phase:2,0,1 OnSpawn !self,Kill,,0.01,1; item_healthkit 2" // OnSpawn cascade_spawn_timer,Disable,,0,1 // Supplies are also dropped here
+}
+
+rule SpawnCascadeNPCPhaseOne
+{
+	criteria		IsCascadeVortex CascadePhaseOne
+	response		SpawnCascadeNPCPhaseOne
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "SpawnCascadeNPCPhaseTwo"
+{
+	//norepeat
+	sequential
+	print "npc_zombigaunt 2; npc_headcrab 1"
+	print "npc_antlion 4"
+	print "npc_zassassin 1; npc_headcrab 1"
+	print "npc_bullsquid 1; npc_pitdrone 2"
+	print "npc_aliencrow 3"
+
+	// Phase end
+	print "logic_relay 1: OnSpawn cascade_vortex,AddContext,phase:3,0,1 OnSpawn !self,Kill,,0.01,1; item_healthkit 3; item_battery 2" // OnSpawn cascade_spawn_timer,Disable,,0,1 // Supplies are also dropped here
+}
+
+rule SpawnCascadeNPCPhaseTwo
+{
+	criteria		IsCascadeVortex CascadePhaseTwo
+	response		SpawnCascadeNPCPhaseTwo
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "SpawnCascadeNPCPhaseThree"
+{
+	//norepeat
+	sequential
+	print "npc_antlion 5"
+	print "npc_pitdrone 1; npc_stukabat 1; npc_zombie 1"
+	print "npc_antlionguard 1: targetname cascade_guard allowbark 1 cavernbreed 1"
+
+	// Phase end
+	print "logic_relay 1: OnSpawn cascade_end,Trigger,,0,1 OnSpawn !self,Kill,,0.01,1" // OnSpawn cascade_spawn_timer,Disable,,0,1
+}
+
+rule SpawnCascadeNPCPhaseThree
+{
+	criteria		IsCascadeVortex CascadePhaseThree
+	response		SpawnCascadeNPCPhaseThree
+}
+
+//============================================================================================================
+// c6_3 - Advisors vs antlion guards aren't very fun, so add a recipe to supercede it
+//============================================================================================================
+
+response "SpawnVsAdvisor"
+{
+	// print "npc_headcrab 2; npc_zombie 3"
+	// print "npc_hevzombie 2; npc_headcrab 3"
+	// print "npc_zombigaunt 2; npc_headcrab 1"
+	// Vortigaunts vs advisors is awesome. Let's do it exclusively.
+	print "npc_vortigaunt 3: vscripts ez2_c6/truce_vort.nut"
+}
+
+rule SpawnVsAdvisor
+{
+	criteria		HullLargeAllowed IsMass1000
+	// The 'weight 30' is so this recipe can compete with Mass3000 recipes
+	map ez2_c6_3 required weight 30
+	response		SpawnVsAdvisor
+}

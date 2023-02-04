@@ -1,0 +1,307 @@
+//============================================================================================================
+// GENERIC E:Z2 RESPONSES
+// By Blixibon
+// 
+// Sets of random generic responses for E:Z2's main characters.
+// 
+// This file provides response groups, but feel free to use individual responses instead if it's easier to
+// manage or suits the context better.
+// 
+// If you are using the groups, there are two major things to keep in mind:
+// 
+//   1. Every response is capable of repeating once all of the lines in a group have been played. If this is not
+//      desired, nest the response in another response which doesn't repeat.
+// 
+//   2. The Response System does not allow nested responses to receive parameters from a parent response.
+//      Some concepts specifically require parameters like delays, so in order to suit them, most of these
+//      response groups use their own parameters based on what they're likely to be used for. For example,
+//      Bad Cop's "Yep" and "Nope" responses have predelays in case they're answering another character,
+//      as the player answering code purposefully avoids a built-in delay.
+// 
+//============================================================================================================
+
+//============================================================================================================
+// BAD COP
+//============================================================================================================
+
+// Bad Cop draws a light breath. No subtitles.
+response "BadCopGenericBreatheIn"
+{
+	speak "bc_generic_breathein1" respeakdelay 5
+	speak "bc_generic_breathein2" respeakdelay 5
+	speak "bc_generic_breathein3" respeakdelay 5
+	speak "bc_generic_breathein4" respeakdelay 5
+	speak "bc_generic_breathein5" respeakdelay 5
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopGenericChuckle"
+{
+	speak "bc_generic_chuckle1" respeakdelay 5 predelay "0.25,0.5"
+	speak "bc_generic_chuckle2" respeakdelay 5 predelay "0.25,0.5"
+	speak "bc_generic_chuckle3" respeakdelay 5 predelay "0.25,0.5"
+	speak "bc_generic_chuckle4" respeakdelay 5 predelay "0.25,0.5"
+	speak "bc_generic_chuckle5" respeakdelay 5 predelay "0.25,0.5"
+	speak "bc_generic_chuckle6" respeakdelay 5 predelay "0.25,0.5"
+	speak "bc_generic_chuckle7" respeakdelay 5 predelay "0.25,0.5"
+	speak "bc_generic_chuckle8" respeakdelay 5 predelay "0.25,0.5"
+}
+
+response "BadCopGenericHmm"
+{
+	speak "bc_generic_hmm1" respeakdelay 5 predelay "0.25,0.5"
+	speak "bc_generic_hmm2" respeakdelay 5 predelay "0.25,0.5"
+	speak "bc_generic_hmm3" respeakdelay 5 predelay "0.25,0.5"
+	speak "bc_generic_hmm4" respeakdelay 5 predelay "0.25,0.5"
+	speak "bc_generic_hmm5" respeakdelay 5 predelay "0.25,0.5"
+	speak "bc_generic_hmm6" respeakdelay 5 predelay "0.25,0.5"
+	speak "bc_generic_hmm7" respeakdelay 5 predelay "0.25,0.5"
+	speak "bc_generic_hmm8" respeakdelay 5 predelay "0.25,0.5"
+}
+
+response "BadCopGenericUhh"
+{
+	speak "bc_generic_uhh1" respeakdelay 10
+	speak "bc_generic_uhh2" respeakdelay 10
+}
+
+response "BadCopGenericUgh"
+{
+	speak "bc_generic_ugh1" respeakdelay 10
+	speak "bc_generic_ugh2" respeakdelay 10
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopGenericYep"
+{
+	speak "bc_generic_yep1" respeakdelay 10 predelay "0.25,0.5"
+	speak "bc_generic_yep2" respeakdelay 10 predelay "0.25,0.5"
+	speak "bc_generic_yep3" respeakdelay 10 predelay "0.25,0.5"
+	speak "bc_generic_yep4" respeakdelay 10 predelay "0.25,0.5"
+}
+
+response "BadCopGenericNope"
+{
+	speak "bc_generic_nope1" respeakdelay 10 predelay "0.25,0.5"
+	speak "bc_generic_nope2" respeakdelay 10 predelay "0.25,0.5"
+	speak "bc_generic_nope3" respeakdelay 10 predelay "0.25,0.5"
+	speak "bc_generic_nope4" respeakdelay 10 predelay "0.25,0.5"
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Bad Cop lets out a surprised/frightened sound. These are subtitled as "Whoa!", but they're not exactly "whoa".
+response "BadCopGenericJolted"
+{
+	speak "bc_generic_jolted1" respeakdelay 10
+	speak "bc_generic_jolted2" respeakdelay 10
+	speak "bc_generic_jolted3" respeakdelay 10
+	speak "bc_generic_jolted4" respeakdelay 10
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopGenericShit"
+{
+	speak "bc_generic_shit1" respeakdelay 10 predelay "0.25,0.5"
+	speak "bc_generic_shit2" respeakdelay 10 predelay "0.25,0.5"
+	speak "bc_generic_shit3" respeakdelay 10 predelay "0.25,0.5"
+}
+
+// "SHIT SHIT SHIT SHIT SHIIIIT!!"
+response "BadCopGenericShitRepeat"
+{
+	speak "bc_generic_shit_repeat1" respeakdelay 10
+	speak "bc_generic_shit_repeat2" respeakdelay 10
+	speak "bc_generic_shit_repeat3" respeakdelay 10
+	speak "bc_generic_shit_repeat4" respeakdelay 10
+}
+
+// "Shiiiiiiiiit!!!"
+response "BadCopGenericShitYell"
+{
+	speak "bc_generic_shit_yell1" respeakdelay 10
+	speak "bc_generic_shit_yell2" respeakdelay 10
+	speak "bc_generic_shit_yell3" respeakdelay 10
+}
+
+response "BadCopGenericOhShit"
+{
+	speak "bc_generic_ohshit1" respeakdelay 10 predelay "0.25,0.5"
+	speak "bc_generic_ohshit2" respeakdelay 10 predelay "0.25,0.5"
+	speak "bc_generic_ohshit3" respeakdelay 10 predelay "0.25,0.5"
+	speak "bc_generic_ohshit4" respeakdelay 10 predelay "0.25,0.5"
+	speak "bc_generic_ohshit5" respeakdelay 10 predelay "0.25,0.5"
+}
+
+response "BadCopGenericWellShit"
+{
+	speak "bc_generic_wellshit1" respeakdelay 10 predelay "0.25,0.5"
+	speak "bc_generic_wellshit2" respeakdelay 10 predelay "0.25,0.5"
+	speak "bc_generic_wellshit3" respeakdelay 10 predelay "0.25,0.5"
+	speak "bc_generic_wellshit4" respeakdelay 10 predelay "0.25,0.5"
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopGenericWhatIsThatThing"
+{
+	speak "bc_generic_whatisthatthing1" respeakdelay 5
+	speak "bc_generic_whatisthatthing2" respeakdelay 5
+	speak "bc_generic_whatisthatthing3" respeakdelay 5
+	speak "bc_generic_whatisthatthing4" respeakdelay 5
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Said loudly
+response "BadCopGenericWhatsHappening"
+{
+	speak "bc_generic_whatshappening1" respeakdelay 5
+	speak "bc_generic_whatshappening2" respeakdelay 5
+	speak "bc_generic_whatshappening3" respeakdelay 5
+	speak "bc_generic_whatshappening4" respeakdelay 5
+}
+
+// Said not loudly
+response "BadCopGenericWhatsHappening_Mild"
+{
+	speak "bc_generic_whatshappening5" respeakdelay 5
+	speak "bc_generic_whatshappening6" respeakdelay 5
+	speak "bc_generic_whatshappening7" respeakdelay 5
+}
+
+response "BadCopGenericWhatsThis"
+{
+	speak "bc_generic_whatsthis1" respeakdelay 5
+	speak "bc_generic_whatsthis2" respeakdelay 5
+	speak "bc_generic_whatsthis3" respeakdelay 5
+	speak "bc_generic_whatsthis4" respeakdelay 5
+	speak "bc_generic_whatsthis5" respeakdelay 5
+}
+
+// Said loudly
+response "BadCopGenericWhatTheHellIsThis"
+{
+	speak "bc_generic_whatthehellisthis_loud1" respeakdelay 5
+	speak "bc_generic_whatthehellisthis_loud2" respeakdelay 5
+	speak "bc_generic_whatthehellisthis_loud3" respeakdelay 5
+	speak "bc_generic_whatthehellisthis_loud4" respeakdelay 5
+}
+
+// Said only kind of loudly
+response "BadCopGenericWhatTheHellIsThis_Med"
+{
+	speak "bc_generic_whatthehellisthis_med1" respeakdelay 5
+	speak "bc_generic_whatthehellisthis_med2" respeakdelay 5
+	speak "bc_generic_whatthehellisthis_med3" respeakdelay 5
+	speak "bc_generic_whatthehellisthis_med4" respeakdelay 5
+}
+
+response "BadCopGenericWhatWasThat"
+{
+	speak "bc_generic_whatwasthat1" respeakdelay 5
+	speak "bc_generic_whatwasthat2" respeakdelay 5
+	speak "bc_generic_whatwasthat3" respeakdelay 5
+	//speak "bc_generic_whatwasthat4" respeakdelay 5
+	//speak "bc_generic_whatwasthat5" respeakdelay 5
+}
+
+response "BadCopGenericWhatTheHellWasThat"
+{
+	//speak "bc_generic_whatthehellwasthat1" respeakdelay 5
+	speak "bc_generic_whatthehellwasthat2" respeakdelay 5
+	speak "bc_generic_whatthehellwasthat3" respeakdelay 5
+	speak "bc_generic_whatthehellwasthat4" respeakdelay 5
+	speak "bc_generic_whatthehellwasthat5" respeakdelay 5
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Note that the lines below were recorded for when Bad Cop catches a glimpse of Clone Cop on fire in c6_1,
+// so Bad Cop sounds particularly horrified. Use these sparingly.
+
+response "BadCopGenericWTH"
+{
+	speak "bc_generic_whatthehell1" respeakdelay 5
+	speak "bc_generic_whatthehell2" respeakdelay 5
+	speak "bc_generic_whatthehell3" respeakdelay 5
+}
+
+response "BadCopGenericWTF"
+{
+	speak "bc_generic_wtf1" respeakdelay 5
+	speak "bc_generic_wtf2" respeakdelay 5
+	speak "bc_generic_wtf3" respeakdelay 5
+}
+
+//============================================================================================================
+// WILSON
+//============================================================================================================
+
+response "WilsonGenericHello"
+{
+	speak "will_generic_hello1" respeakdelay 10
+	speak "will_generic_hello2" respeakdelay 10
+	speak "will_generic_hello3" respeakdelay 10
+}
+
+response "WilsonGenericOhHello"
+{
+	speak "will_generic_ohhello1" respeakdelay 10
+	speak "will_generic_ohhello2" respeakdelay 10
+	speak "will_generic_ohhello3" respeakdelay 10
+}
+
+response "WilsonGenericOhHi"
+{
+	speak "will_generic_ohhi1" respeakdelay 10
+	speak "will_generic_ohhi2" respeakdelay 10
+	speak "will_generic_ohhi3" respeakdelay 10
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "WilsonGenericItsFine"
+{
+	scene "scenes/npc/wilson/generic_itsfine1.vcd" respeakdelay 10 predelay "0.1,0.25"
+	scene "scenes/npc/wilson/generic_itsfine2.vcd" respeakdelay 10 predelay "0.1,0.25"
+	scene "scenes/npc/wilson/generic_itsfine3.vcd" respeakdelay 10 predelay "0.1,0.25"
+	scene "scenes/npc/wilson/generic_itsfine4.vcd" respeakdelay 10 predelay "0.1,0.25"
+	scene "scenes/npc/wilson/generic_itsfine5.vcd" respeakdelay 10 predelay "0.1,0.25"
+	scene "scenes/npc/wilson/generic_itsfine6.vcd" respeakdelay 10 predelay "0.1,0.25"
+	scene "scenes/npc/wilson/generic_itsfine7.vcd" respeakdelay 10 predelay "0.1,0.25"
+}
+
+//============================================================================================================
+// CLONE COP
+//============================================================================================================
+
+response "CloneCopGenericLaugh"
+{
+	speak "cc_generic_laugh1" respeakdelay 10
+	speak "cc_generic_laugh2" respeakdelay 10
+	speak "cc_generic_laugh3" respeakdelay 10
+}
+
+response "CloneCopGenericShit"
+{
+	speak "cc_generic_shit1" respeakdelay 10
+	speak "cc_generic_shit2" respeakdelay 10
+	speak "cc_generic_shit3" respeakdelay 10
+}
+
+//============================================================================================================
+//============================================================================================================
+
+// HACKHACK: Apparently, the Response System gets stuck in an infinite loop if the last command is a response.
+// This can (and will be) be fixed in-code, but for now, this dummy rule will be used so that the new code isn't required by users.
+rule GenericDummyRule
+{
+	criteria		ConceptNewWeapon KillCombo4OrMore SpeechTargetGunship
+	response		BadCopGenericUhh
+}
+
+//------------------------------------------------------------------------------------------------------------

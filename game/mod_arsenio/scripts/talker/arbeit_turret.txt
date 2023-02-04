@@ -1,0 +1,234 @@
+//============================================================================================================
+// 
+//============================================================================================================
+criterion "IsArbeitTurret" "classname" "npc_arbeit_turret_floor" required
+
+criterion "IsBeastTurret" "classname" "npc_beast_turret_floor" required
+
+criterion "ConceptTurretSearch" "Concept" "TLK_SEARCHING" required
+criterion "ConceptTurretAutoSearch" "Concept" "TLK_AUTOSEARCH" required
+criterion "ConceptTurretActive" "Concept" "TLK_ACTIVE" required
+criterion "ConceptTurretSuppress" "Concept" "TLK_SUPPRESS" required
+criterion "ConceptTurretDeploy" "Concept" "TLK_DEPLOY" required
+criterion "ConceptTurretRetire" "Concept" "TLK_RETIRE" required
+criterion "ConceptTurretTipped" "Concept" "TLK_TIPPED" required
+criterion "ConceptTurretDisabled" "Concept" "TLK_DISABLED" required
+criterion "ConceptTurretPickup" "Concept" "TLK_PICKUP" required
+
+criterion "AttackerNotPlayer" "attacker_classname" "!=player" required
+
+
+//======================================================
+// 
+//======================================================
+response "ArbeitTurretSearch"
+{
+	//speak "NPC_FloorTurret.TalkSearch" noscene
+	speak "NPC_FloorTurret.TalkSearch01" noscene
+	speak "NPC_FloorTurret.TalkSearch02" noscene
+	//speak "NPC_FloorTurret.TalkSearch03" noscene
+	speak "NPC_FloorTurret.TalkSearch04" noscene
+}
+
+rule "ArbeitTurretSearch"
+{
+	criteria		IsArbeitTurret ConceptTurretSearch
+	response		ArbeitTurretSearch
+}
+
+//======================================================
+// 
+//======================================================
+response "ArbeitTurretAutoSearch"
+{
+	//speak "NPC_FloorTurret.TalkAutosearch" noscene
+	speak "NPC_FloorTurret.TalkAutosearch01" noscene
+	speak "NPC_FloorTurret.TalkAutosearch02" noscene
+	speak "NPC_FloorTurret.TalkAutosearch03" noscene // Was unused in Portal
+	speak "NPC_FloorTurret.TalkAutosearch04" noscene
+	speak "NPC_FloorTurret.TalkAutosearch05" noscene
+	speak "NPC_FloorTurret.TalkAutosearch06" noscene
+}
+
+rule "ArbeitTurretAutoSearch"
+{
+	criteria		IsArbeitTurret ConceptTurretAutoSearch
+	response		ArbeitTurretAutoSearch
+}
+
+//======================================================
+// 
+//======================================================
+response "ArbeitTurretActive"
+{
+	//speak "NPC_FloorTurret.TalkActive" noscene
+	speak "NPC_FloorTurret.TalkActive01" noscene
+	speak "NPC_FloorTurret.TalkActive02" noscene
+	//speak "NPC_FloorTurret.TalkActive03" noscene
+	speak "NPC_FloorTurret.TalkActive04" noscene
+	speak "NPC_FloorTurret.TalkActive05" noscene
+	speak "NPC_FloorTurret.TalkActive06" noscene
+	speak "NPC_FloorTurret.TalkActive07" noscene
+	speak "NPC_FloorTurret.TalkActive08" noscene
+}
+
+rule "ArbeitTurretActive"
+{
+	criteria		IsArbeitTurret ConceptTurretActive
+	response		ArbeitTurretActive
+}
+
+//======================================================
+// Unused?
+//======================================================
+response "ArbeitTurretSuppress"
+{
+	speak "NPC_FloorTurret.TalkSupress" noscene
+}
+
+rule "ArbeitTurretSuppress"
+{
+	criteria		IsArbeitTurret ConceptTurretSuppress
+	response		ArbeitTurretSuppress
+}
+
+//======================================================
+// 
+//======================================================
+response "ArbeitTurretDeploy"
+{
+	//speak "NPC_FloorTurret.TalkDeploy" noscene
+	speak "NPC_FloorTurret.TalkDeploy01" noscene
+	speak "NPC_FloorTurret.TalkDeploy02" noscene
+	speak "NPC_FloorTurret.TalkDeploy03" noscene // Was unused in Portal
+	speak "NPC_FloorTurret.TalkDeploy04" noscene
+	speak "NPC_FloorTurret.TalkDeploy05" noscene
+	speak "NPC_FloorTurret.TalkDeploy06" noscene
+}
+
+rule "ArbeitTurretDeploy"
+{
+	criteria		IsArbeitTurret ConceptTurretDeploy
+	response		ArbeitTurretDeploy
+}
+
+//======================================================
+// 
+//======================================================
+response "ArbeitTurretRetire"
+{
+	//speak "NPC_FloorTurret.TalkRetire" noscene
+	speak "NPC_FloorTurret.TalkRetire01" noscene
+	speak "NPC_FloorTurret.TalkRetire02" noscene
+	//speak "NPC_FloorTurret.TalkRetire03" noscene
+	speak "NPC_FloorTurret.TalkRetire04" noscene
+	speak "NPC_FloorTurret.TalkRetire05" noscene
+	speak "NPC_FloorTurret.TalkRetire06" noscene
+	speak "NPC_FloorTurret.TalkRetire07" noscene
+}
+
+rule "ArbeitTurretRetire"
+{
+	criteria		IsArbeitTurret ConceptTurretRetire
+	response		ArbeitTurretRetire
+}
+
+//======================================================
+// 
+//======================================================
+response "ArbeitTurretTipped"
+{
+	//speak "NPC_FloorTurret.TalkTipped" noscene
+	speak "NPC_FloorTurret.TalkTipped01" noscene
+	//speak "NPC_FloorTurret.TalkTipped02" noscene // Was used in Portal
+	speak "NPC_FloorTurret.TalkTipped03" noscene // Was unused in Portal
+	speak "NPC_FloorTurret.TalkTipped04" noscene
+	speak "NPC_FloorTurret.TalkTipped05" noscene
+	speak "NPC_FloorTurret.TalkTipped06" noscene
+}
+
+rule "ArbeitTurretTipped"
+{
+	criteria		IsArbeitTurret ConceptTurretTipped
+	response		ArbeitTurretTipped
+}
+
+//======================================================
+// 
+//======================================================
+response "ArbeitTurretDisabled"
+{
+	//speak "NPC_FloorTurret.TalkDisabled" noscene
+	//speak "NPC_FloorTurret.TalkDisabled01" noscene
+	speak "NPC_FloorTurret.TalkDisabled02" noscene
+	//speak "NPC_FloorTurret.TalkDisabled03" noscene
+	speak "NPC_FloorTurret.TalkDisabled04" noscene
+	speak "NPC_FloorTurret.TalkDisabled05" noscene
+	speak "NPC_FloorTurret.TalkDisabled06" noscene
+	speak "NPC_FloorTurret.TalkDisabled07" noscene
+	speak "NPC_FloorTurret.TalkDisabled08" noscene
+}
+
+rule "ArbeitTurretDisabled"
+{
+	criteria		IsArbeitTurret ConceptTurretDisabled
+	response		ArbeitTurretDisabled
+}
+
+//======================================================
+// 
+//======================================================
+response "ArbeitTurretPickup"
+{
+	//speak "NPC_FloorTurret.TalkPickup" noscene
+	speak "NPC_FloorTurret.TalkPickup01" noscene
+	//speak "NPC_FloorTurret.TalkPickup02" noscene
+	speak "NPC_FloorTurret.TalkPickup03" noscene
+	//speak "NPC_FloorTurret.TalkPickup04" noscene
+	//speak "NPC_FloorTurret.TalkPickup05" noscene
+	speak "NPC_FloorTurret.TalkPickup06" noscene
+	speak "NPC_FloorTurret.TalkPickup07" noscene
+	speak "NPC_FloorTurret.TalkPickup08" noscene
+	speak "NPC_FloorTurret.TalkPickup09" noscene
+	speak "NPC_FloorTurret.TalkPickup10" noscene
+}
+
+rule "ArbeitTurretPickup"
+{
+	criteria		IsArbeitTurret ConceptTurretPickup
+	response		ArbeitTurretPickup
+}
+
+//======================================================
+// 
+//======================================================
+response "BeastTurretDeploy"
+{
+	speak "ez2_c3_beastturret_1" noscene
+	speak "ez2_c3_beastturret_2" noscene
+	speak "ez2_c3_beastturret_3" noscene
+	speak "ez2_c3_beastturret_4" noscene
+	speak "ez2_c3_beastturret_5" noscene
+}
+
+rule "BeastTurretDeploy"
+{
+	criteria		IsBeastTurret ConceptTurretDeploy
+	response		BeastTurretDeploy
+}
+
+//======================================================
+// 
+//======================================================
+response "HumanProtectorDeploy"
+{
+	norepeat
+	speak "ez2_c5_protectthehumans" noscene
+}
+
+rule "HumanProtectorDeploy"
+{
+	criteria		IsArbeitTurret ConceptTurretDeploy
+	name "humanprotector" required
+	response		HumanProtectorDeploy
+}

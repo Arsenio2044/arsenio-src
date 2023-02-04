@@ -1,0 +1,101 @@
+//============================================================================================================
+// Zombigaunt criteria
+//============================================================================================================
+criterion "IsZombigaunt" "classname" "npc_zombigaunt" required
+
+criterion "ConceptTalkVortCharge" "concept" "TLK_VORT_CHARGE" required
+
+
+//============================================================================================================
+// Zombigaunt
+//============================================================================================================
+
+response "ZombigauntCombatStart"
+{
+	// Replace "NPC_Strider.Alert" with your zombigaunt soundscript
+	speak "Zombigaunt.Alert"
+}
+
+rule ZombigauntCombatStart
+{
+	criteria		IsZombigaunt ConceptStartCombat
+	response		ZombigauntCombatStart
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "ZombigauntPain" 
+{
+	// Put zombigaunt soundscript here with a "speak" response
+	speak "Zombigaunt.Pain"
+}
+
+rule ZombigauntPain
+{
+	criteria		IsZombigaunt VortigauntPain
+	response		ZombigauntPain
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "ZombigauntDie"
+{
+	// Put zombigaunt soundscript here with a "speak" response
+	speak "Zombigaunt.Die" noscene
+}
+
+rule ZombigauntDie
+{
+	criteria		IsZombigaunt VortigauntDie
+	response		ZombigauntDie
+}
+
+//============================================================================================================
+// Zombigaunt Misc speech
+//============================================================================================================
+response "ZombigauntCharge" 
+{
+	scene "scenes/npc/zombigaunt/charge01.vcd" defaultdelay
+	scene "scenes/npc/zombigaunt/charge02.vcd" defaultdelay
+	scene "scenes/npc/zombigaunt/charge03.vcd" defaultdelay
+}
+
+
+rule ZombigauntCharge
+{
+	criteria		IsZombigaunt ConceptTalkVortCharge
+	response		ZombigauntCharge
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "ZombigauntIdle" 
+{
+	speak "Zombigaunt.Idle" weight 2
+	scene "scenes/npc/zombigaunt/idle_gesturing01.vcd" defaultdelay
+	scene "scenes/npc/zombigaunt/idle_gesturing02.vcd" defaultdelay
+}
+
+rule ZombigauntTlkIdle
+{
+	criteria		IsZombigaunt ConceptTalkIdle
+	response		ZombigauntIdle
+}
+
+
+//============================================================================================================
+// Zombigaunt Ally Killed
+//============================================================================================================
+
+// TODO - This response doesn't work yet - it needs some code changes to function properly
+
+response "ZombigauntAllyKilled"
+{
+	speak "NPC_ShadowWalker.FoundEnemy"
+}
+
+rule ZombigauntAllyKilled
+{
+	criteria 		IsZombigaunt ConceptTalkAllyKilled
+	response		ZombigauntAllyKilled
+}

@@ -1,0 +1,188 @@
+//============================================================================================================
+// COMBINE SOLDIER E:Z2 MAPS
+// 
+// Special soldier responses for E:Z2's story
+// 
+//============================================================================================================
+//============================================================================================================
+// npc_combine_s concepts and criteria
+//============================================================================================================
+
+//============================================================================================================
+// Chapter 2
+//============================================================================================================
+
+criterion "EnemyIsBeast" "enemy" "npc_zassassin" required
+
+response "CombineAlertBeast"
+{
+	// scene "scenes/arbeit/c2_04_soldier_seebeast.vcd" // This is a choreographed scene now
+	sentence "COMBINE_MONST_BEAST" noscene
+}
+
+rule CombineAlertBeast
+{
+	criteria		IsCombineS ConceptTalkCmbEnemy EnemyIsBeast
+	map "ez2_c2_4" required weight 5
+	//beast_fear "1" required weight 5
+	response		CombineAlertBeast
+}
+
+response "CombineDieRadio"
+{
+	speak "NPC_Combine.Everywhere_Die" noscene
+}
+
+rule CombineDieRadio
+{
+	criteria		IsCombineS ConceptTalkCmbDie
+	radio "1" required
+	response		CombineDieRadio
+}
+
+//============================================================================================================
+// Chapter 5
+//============================================================================================================
+
+response "CombineIdleCollectingEvidence"
+{
+	sentence "COMBINE_EVIDENCE_COLLECT" noscene
+}
+
+rule CombineIdleCollectingEvidence
+{
+	criteria		IsCombineS ConceptTalkCmbQuestion
+	collecting_evidence "1" required weight 5
+	response		CombineIdleCollectingEvidence
+}
+
+rule CombineAnswerCollectingEvidence
+{
+	criteria		IsCombineS ConceptTalkCmbAnswer
+	collecting_evidence "1" required weight 5
+	response		NullResponse
+}
+
+//------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
+
+// Soldier Policing Responses after Judith is apprehended
+criterion "ConceptTalkCopMoveAlong" "Concept" "TLK_MOVE_ALONG" required
+
+// // Harass concept unused for now, "move along" is the one triggered
+// response "SoldierMPHarass"
+// {
+// 	sentence "METROPOLICE_IDLE_HARASS_PLAYER" noscene
+// }
+// 
+// rule SoldierMPHarass
+// {
+// 	criteria		IsCombineS ConceptTalkCopHarass
+// 	response		CopHarass
+// }
+
+response "SoldierMPMoveAlongA"
+{
+	sentence "COMBINE_EZ2_MOVE_ALONG_A" noscene respeakdelay 10
+}
+
+rule SoldierMPMoveAlongA
+{
+	criteria		IsCombineS ConceptTalkCopMoveAlong
+	numwarnings <1
+	response		SoldierMPMoveAlongA
+}
+
+response "SoldierMPMoveAlongB"
+{
+	sentence "COMBINE_EZ2_MOVE_ALONG_B" noscene respeakdelay 10
+}
+
+rule SoldierMPMoveAlongB
+{
+	criteria		IsCombineS ConceptTalkCopMoveAlong
+	numwarnings 2
+	response		SoldierMPMoveAlongB
+}
+
+response "SoldierMPMoveAlongC"
+{
+	sentence "COMBINE_EZ2_MOVE_ALONG_C" noscene respeakdelay 10
+}
+
+rule SoldierMPMoveAlongC
+{
+	criteria		IsCombineS ConceptTalkCopMoveAlong
+	numwarnings >2
+	response		SoldierMPMoveAlongC
+}
+
+//------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
+
+// Lead behavior
+//    ConceptLeadStart -------------------- Spoken once when the NPC first starts to lead the player
+//    ConceptLeadWaitOver" ---------------- Spoken when the player arrives at an NPC waiting to lead the player
+//    ConceptLeadAttractPlayer ------------ Nag spoken by a NPC waiting to lead the player, trying to attract the player
+//    ConceptLeadCatchup ------------------ Spoken by the NPC when the player's lagging behind
+//    ConceptLeadComingBack --------------- Spoken when the NPC comes back to find a lost player
+//    ConceptLeadRetrieve ----------------- Spoken when the NPC has come back to the player, and is now resuming the lead
+//    ConceptLeadArrival ------------------ Spoken when the leading NPC reaches the target point
+//    ConceptLeadSuccess ------------------ Spoken when the player and the leading NPC have both reached the target point
+//    ConceptLeadMissingWeapon ------------ Spoken when the NPC refuses to lead the player because he's missing a weapon
+//    ConceptLeadIdle --------------------- Spoken when a leading NPC is idling
+
+response "CombineLeadStart"
+{
+	scene "scenes/npc/combine_soldier/lead_start1.vcd"
+}
+
+rule CombineLeadStart
+{
+	criteria		IsCombineS ConceptLeadStart
+	response		CombineLeadStart
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CombineLeadAttractPlayer"
+{
+	scene "scenes/npc/combine_soldier/lead_attract1.vcd"
+	scene "scenes/npc/combine_soldier/lead_attract2.vcd"
+	
+	// The soldiers are getting sick of Bad Cop's shit
+	scene "scenes/npc/combine_soldier/lead_bored1.vcd" displaylast
+	scene "scenes/npc/combine_soldier/lead_bored2.vcd" displaylast
+}
+
+rule CombineLeadAttractPlayer
+{
+	criteria		IsCombineS ConceptLeadAttractPlayer
+	response		CombineLeadAttractPlayer
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CombineLeadRetrieve"
+{
+	scene "scenes/npc/combine_soldier/lead_retrieve1.vcd"
+	scene "scenes/npc/combine_soldier/lead_retrieve2.vcd"
+}
+
+rule CombineLeadRetrieve
+{
+	criteria		IsCombineS ConceptLeadRetrieve
+	response		CombineLeadRetrieve
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CombineLeadSuccess"
+{
+	scene "scenes/npc/combine_soldier/lead_success1.vcd"
+}
+
+rule CombineLeadSuccess
+{
+	criteria		IsCombineS ConceptLeadSuccess
+	response		CombineLeadSuccess
+}
+
+//============================================================================================================

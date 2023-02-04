@@ -1,0 +1,76 @@
+//============================================================================================================
+// Bad Cop Chapter 5
+// 
+// Bad Cop lines specific to Chapter 5.
+// This is #included from the main scripts.
+// 
+//============================================================================================================
+
+//============================================================================================================
+// Bad Cop criteria
+//============================================================================================================
+
+//============================================================================================================
+// Bad Cop response groups
+//============================================================================================================
+
+response "BadCopChapter5_HackLabEnemies"
+{
+	norepeat
+	speak "BC_C41_ASeq_2" respeakdelay 15
+}
+
+rule BadCopChapter5_HackLabEnemies
+{
+	criteria		IsBadCop IsChapter5 ConceptManyEnemies EnemyVisible
+	hacklab "1" required weight 5
+	response		BadCopChapter5_HackLabEnemies
+}
+
+response "BadCopChapter5_Flashed"
+{
+	norepeat
+	speak "BC_C5_doilooklike" respeakdelay 15
+}
+
+rule BadCopChapter5_Flashed
+{
+	criteria		IsBadCop IsChapter5 ConceptScannerFlash
+	episodic "1" required weight 1 // Bogus criteria so weight is higher
+	applyContext "flashed:1:15"
+	response		BadCopChapter5_Flashed
+}
+
+response "BadCopChapter5_BusyActors"
+{
+	norepeat
+	scene "scenes/arbeit2/excavation_actingbusy.vcd"
+}
+
+rule BadCopChapter5_BusyActors
+{
+	criteria		IsBadCop IsChapter5 ConceptTalkUse
+	speechtargetname "evidencegathering1_investigators" required weight 5
+	response		BadCopChapter5_BusyActors
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopTauntMossman"
+{
+	norepeat
+	scene "scenes/arbeit3/bc_murders_mossman.vcd"
+}
+
+rule BadCopTauntMossman
+{
+	criteria		IsBadCop IsChapter5 ConceptEnemyDead
+	enemy "npc_mossman" required weight 10
+	response		BadCopTauntMossman
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// 
+// NOTE: Remarkables are kept in "remarks_chapter_#.txt" now!!!
+// 

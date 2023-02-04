@@ -1,0 +1,986 @@
+//============================================================================================================
+// Bad Cop Enemy Dead
+// 
+// An entire file just for taunting!? Sssssuck!
+// 
+//------------------------------------------------------------------------------------------------------------
+// 
+// Notes:
+// 
+// - TLK_LAST_ENEMY_DEAD is used for special responses that are best done with Bad Cop's last known enemy.
+//   This was mostly created in order to bypass respeak delays from regular TLK_ENEMY_DEAD without having to resort to
+//   tons of response contexts and corresponding criterion.
+//   If no TLK_LAST_ENEMY_DEAD response is found, Bad Cop uses TLK_ENEMY_DEAD instead.
+//   
+// - EnemyIsNPC is redundant under TLK_ENEMY_DEAD/TLK_LAST_ENEMY_DEAD, but we use it here to balance out rule weight.
+//   For example, if the player kills a rebel, Bad Cop needs to have an equal chance of saying BadCopTauntRebel or BadCopTauntGeneric.
+//   If BadCopTauntRebel had the same criteria as BadCopTauntGeneric, the EnemyIsRebel criterion would make BadCopTauntRebel weigh more,
+//   therefore playing much more often and perhaps even exclusively.
+//   
+// - The acceptable weight of standard responses is 4. Unique responses that take priority over them should be higher.
+//   If a unique response should always be random alongside regular standard responses, it should be kept at 4.
+//   
+// - 
+// 
+//============================================================================================================
+
+//============================================================================================================
+// Bad Cop criteria
+//============================================================================================================
+
+//============================================================================================================
+// Bad Cop response groups
+//============================================================================================================
+
+//============================================================================================================
+// Class-Specific Taunts
+// 
+// Bad Cop loves killing certain idiots!
+//============================================================================================================
+response "BadCopTauntGeneric"
+{
+	norepeat
+	speak "bc_taunt_gen_1" respeakdelay 30
+	speak "bc_taunt_gen_2" respeakdelay 30
+	// speak "bc_taunt_gen_3" respeakdelay 30 // Too generic
+	//speak "bc_taunt_gen_4" respeakdelay 30 // Only for tanky enemies
+	// speak "bc_taunt_gen_5" respeakdelay 30 // Only for Xen grenades
+	//speak "bc_taunt_gen_6" respeakdelay 30
+	//speak "bc_taunt_gen_7" respeakdelay 30
+	//speak "bc_taunt_gen_8" respeakdelay 30
+}
+
+
+//------------------------------------------------------------------------------------------------------------
+response "BadCopTauntAntlion"
+{
+	norepeat
+	speak "bc_taunt_ant_1" respeakdelay 30
+	speak "bc_taunt_ant_2" respeakdelay 30 displaylast // Try to avoid this F-bomb until players in Chapter 1 are more familiar with Bad Cop's dialogue
+	speak "bc_taunt_ant_3" respeakdelay 30
+	//speak "bc_taunt_ant_4" respeakdelay 30
+}
+
+rule BadCopTauntAntlion
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsAntLion LastSpoke15OrMore
+	response		BadCopTauntAntlion
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "BadCopTauntRebel"
+{
+	norepeat
+	// speak "bc_taunt_reb_1" respeakdelay 30 // Too edgy
+	// speak "bc_taunt_reb_2" respeakdelay 30 // Moved to bullet revenge
+	// speak "bc_taunt_reb_3" respeakdelay 30 displaylast // Judged to be too edgy for Bad Cop and no longer thought to reflect his character (he's a sociopath, not a sadist)
+	speak "bc_taunt_reb_4" respeakdelay 30
+	speak "bc_taunt_reb_5" respeakdelay 30
+}
+
+rule BadCopTauntRebel
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsRebel LastSpoke30OrMore
+	response		BadCopTauntRebel
+}
+
+response "BadCopTauntJumpRebel"
+{
+	norepeat
+	speak "bc_taunt_jumperkill_1" respeakdelay 30
+	speak "bc_taunt_jumperkill_2" respeakdelay 30
+	speak "bc_taunt_jumperkill_3" respeakdelay 30
+	speak "bc_taunt_jumperkill_4" respeakdelay 30
+	
+	response "BadCopTauntRebel" displaylast
+}
+
+rule BadCopTauntJumpRebel
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsRebel EnemyIsJumpRebel LastSpoke15OrMore
+	response		BadCopTauntJumpRebel
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "BadCopTauntVort"
+{
+	norepeat
+	speak "bc_taunt_vort_1" respeakdelay 30
+	speak "bc_taunt_vort_2" respeakdelay 30
+	speak "bc_taunt_vort_3" respeakdelay 30
+}
+
+rule BadCopTauntVort
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsVort LastSpoke15OrMore
+	response		BadCopTauntVort
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "BadCopTauntZombie"
+{
+	norepeat
+	speak "bc_taunt_zom_1" respeakdelay 30
+	speak "bc_taunt_zom_2" respeakdelay 30
+	speak "bc_taunt_zom_3" respeakdelay 30
+}
+
+rule BadCopTauntZombie
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsZombie LastSpoke15OrMore
+	response		BadCopTauntZombie
+}
+
+response "BadCopTauntFastZombie"
+{
+	norepeat
+	speak "bc_taunt_fastzom_1" respeakdelay 30
+	speak "bc_taunt_fastzom_2" respeakdelay 30
+	speak "bc_taunt_fastzom_3" respeakdelay 30
+}
+
+rule BadCopTauntFastZombie
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsFastZombie LastSpoke15OrMore
+	response		BadCopTauntFastZombie
+}
+
+// response "BadCopTauntPoisonZombie"
+// {
+// 	norepeat
+// 	speak "bc_taunt_poisonzom_1" respeakdelay 30 // Low brow
+// 	speak "bc_taunt_poisonzom_2" respeakdelay 30 // Doesn't really make sense
+// }
+// 
+// rule BadCopTauntPoisonZombie
+// {
+// 	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsPoisonZombie
+// 	response		BadCopTauntPoisonZombie
+// }
+
+response "BadCopTauntZombine"
+{
+	norepeat
+	speak "bc_taunt_zombine_1" respeakdelay 30
+	speak "bc_taunt_zombine_2" respeakdelay 30
+	speak "bc_taunt_zombine_3" respeakdelay 30
+}
+
+//rule BadCopTauntZombine
+//{
+//	// TODO - Remove "Enemy is not Xenian" if the HEV zombie gets split into its own class
+//	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsZombine LastSpoke15OrMore EnemyIsNotXenian
+//	response		BadCopTauntZombine
+//}
+
+response "BadCopTauntZombigaunt"
+{
+	norepeat
+	speak "bc_taunt_vort_3" respeakdelay 30
+}
+
+rule BadCopTauntZombigaunt
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsZombigaunt LastSpoke15OrMore
+	response		BadCopTauntZombigaunt
+}
+
+response "BadCopTauntHEVZombie"
+{
+	norepeat
+	speak "bc_taunt_hev_1" respeakdelay 30
+}
+
+rule BadCopTauntHEVZombie
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsHEVZombie LastSpoke05OrMore
+	response		BadCopTauntHEVZombie
+}
+
+// TODO - Remove this once HEV zombies are implemented as npc_hevzombie
+rule BadCopTauntHEVZombieOld
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsZombine EnemyIsXenian LastSpoke15OrMore
+	response		BadCopTauntHEVZombie
+}
+
+response "BadCopTauntLostSoul"
+{
+	norepeat
+	speak "bc_ripandtear" respeakdelay 30
+}
+
+rule BadCopTauntLostSoul
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible
+	enemy "npc_lost_soul" required weight 10
+	response		BadCopTauntLostSoul
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "BadCopTauntHeadcrab"
+{
+	norepeat
+	norepeat
+	//speak "bc_taunt_headcrab_1" respeakdelay 30
+	//speak "bc_taunt_headcrab_2" respeakdelay 30
+	speak "bc_taunt_ant_3" respeakdelay 30
+}
+
+rule BadCopTauntHeadcrab
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsClassHeadcrab LastSpoke15OrMore
+	response		BadCopTauntHeadcrab
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "BadCopTauntBullsquid"
+{
+	norepeat
+	scene "scenes/npc/badcop/taunt_dirtysquids.vcd" respeakdelay 30
+	// TODO: Implement unique lines
+	speak "bc_taunt_gen_4" respeakdelay 30
+}
+
+rule BadCopTauntBullsquid
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsBullsquid LastSpoke15OrMore
+	response		BadCopTauntBullsquid
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Xen alien from Xen grenade
+response "BadCopTauntXenAlien"
+{
+	norepeat
+	speak "bc_taunt_xenspawn_1" respeakdelay 30
+	speak "bc_taunt_xenspawn_2" respeakdelay 30
+	speak "bc_taunt_xenspawn_3" respeakdelay 30
+	speak "bc_taunt_ant_4" respeakdelay 30
+}
+
+rule BadCopTauntXenAlien
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsXenian LastSpoke15OrMore
+	response		BadCopTauntXenAlien
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "BadCopKilledAlly"
+{
+	norepeat
+	speak "bc_killedally_0" //respeakdelay 10
+	speak "bc_killedally_1" //respeakdelay 10
+}
+
+rule BadCopKilledAlly
+{
+	criteria		IsBadCop ConceptKilledAlly EnemyVisible EnemyIsNPC //EnemyLikesMe
+	response		BadCopKilledAlly
+}
+
+response "BadCopKilledSoldierAlly"
+{
+	norepeat
+	speak "bc_killedally_2" //respeakdelay 10
+	speak "bc_killedally_3" //respeakdelay 10
+	speak "bc_killedally_4" //respeakdelay 10
+}
+
+rule BadCopKilledSoldierAlly
+{
+	criteria		IsBadCop ConceptKilledAlly EnemyVisible EnemyIsCombine //EnemyLikesMe
+	response		BadCopKilledSoldierAlly
+}
+
+//============================================================================================================
+// Inflictor-Specific Taunts
+// 
+// Bad Cop loves killing idiots with certain weapons or damage types!
+//============================================================================================================
+
+// Used explosive damage
+response "BadCopTauntExplosive"
+{
+	norepeat
+	speak "bc_apc_kill_rocket1" respeakdelay 10
+	speak "bc_apc_kill_rocket2" respeakdelay 10
+}
+
+rule BadCopTauntExplosive
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC DamageTypeBlast DamageTypeNotBurn LastSpoke15OrMore
+	inflictor "!=*missile" required weight 0 // Can't be a missile
+	response		BadCopTauntExplosive
+}
+
+response "BadCopTauntRocket"
+{
+	norepeat
+	response "BadCopTauntExplosive"
+	speak "bc_apc_kill_rocket3" respeakdelay 30
+	speak "bc_apc_kill_rocket4" respeakdelay 30
+	speak "bc_apc_kill_rocket5" respeakdelay 30
+}
+
+rule BadCopTauntRocket
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyIsNPC LastSpoke15OrMore
+	inflictor "rpg_missile" required weight 3 // This has light criteria, so we need to balance this out with BadCopTauntExplosive
+	response		BadCopTauntRocket
+}
+
+rule BadCopTauntAPCRocket
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyIsNPC LastSpoke15OrMore
+	inflictor "apc_missile" required weight 3 // This has light criteria, so we need to balance this out with BadCopTauntExplosive
+	response		BadCopTauntRocket
+}
+
+//------------------------------------------------------------------------------------------------------------
+// APC lines (enemy doesn't need to be visible)
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopTauntAPCGun"
+{
+	norepeat
+	// This will be specific to ez2_c4_1, will probably apply to both types of damage too
+	//speak "bc_apc_kill_gun1" respeakdelay 30
+	
+	speak "bc_apc_kill_gun2" respeakdelay 30
+	speak "bc_apc_kill_gun3" respeakdelay 30
+	speak "bc_apc_kill_gun4" respeakdelay 30
+	speak "bc_apc_kill_gun5" respeakdelay 30
+}
+
+rule BadCopTauntAPCGun
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyIsNPC DamageTypeAirboat InAPC LastSpoke15OrMore
+	response		BadCopTauntAPCGun
+}
+
+response "BadCopTauntAPCHit"
+{
+	norepeat
+	// speak "bc_apc_roadkill1" respeakdelay 10 // TODO Make this alien specific
+	speak "bc_apc_roadkill2" respeakdelay 10
+	speak "bc_apc_roadkill3" respeakdelay 10
+	speak "bc_apc_roadkill4" respeakdelay 10
+	speak "bc_apc_roadkill5" respeakdelay 10
+}
+
+rule BadCopTauntAPCHit
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyIsNPC DamageTypeVehicle InAPC LastSpoke15OrMore
+	response		BadCopTauntAPCHit
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// response "BadCopTauntCrossbow"
+// {
+// 	norepeat
+// 	// TODO: Implement unique lines
+// 	speak "bc_apc_kill_gun2" respeakdelay 10
+// 	speak "bc_apc_kill_gun3" respeakdelay 10
+// 	speak "bc_apc_kill_gun4" respeakdelay 10
+// 	speak "bc_apc_kill_gun5" respeakdelay 10
+// }
+// 
+// rule BadCopTauntCrossbow
+// {
+// 	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC InflictorIsCrossbowBolt EnemyDistance128OrMore
+// 	response		BadCopTauntCrossbow
+// }
+
+response "BadCopTauntRebelCrossbow"
+{
+	norepeat
+	// speak "bc_taunt_rebcrossbow_1" respeakdelay 10 // Terrible joke, removed
+	speak "bc_taunt_rebcrossbow_2" respeakdelay 10
+	speak "bc_taunt_rebcrossbow_3" respeakdelay 10
+	// response "BadCopTauntCrossbow" respeakdelay 10
+}
+
+rule BadCopTauntRebelCrossbow
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC EnemyIsRebel  InflictorIsCrossbowBolt EnemyDistance128OrMore LastSpoke15OrMore
+	response		BadCopTauntRebelCrossbow
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+criterion "HaventHeadshotted" "recentheadshot" "!=1" required weight -1
+
+// Headshot!
+// In order to be impressive, the headshot must be:
+// > 256 or more units away from the player
+// > 35 damage or more (so it's not a SMG or something)
+response "BadCopTauntHeadshot"
+{
+	norepeat
+	speak "bc_taunt_headshot_1" respeakdelay 30
+	speak "bc_taunt_headshot_2" respeakdelay 30
+	speak "bc_taunt_headshot_3" respeakdelay 30 displaylast
+}
+
+rule BadCopTauntHeadshot
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible HitgroupHead DamageTypeBullet EnemyDistance256OrMore HaventHeadshotted LastSpoke15OrMore
+	damage	">=35" required
+	
+	// Don't comment on headshots for a bit
+	applyContext "recentheadshot:1:50"
+	
+	response		BadCopTauntHeadshot
+}
+
+//------------------------------------------------------------------------------------------------------------
+// These two response / rule pairs were formerly called "BadCopTauntCloseRangeShotgun" but are now split based
+// on human vs nonhuman enemies.
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopTauntBuckshotMouthwash"
+{
+	norepeat
+	speak "bc_taunt_shotgunkill_3" respeakdelay 10
+}
+
+rule BadCopTauntBuckshotMouthwash
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC DamageTypeBuckshot EnemyDistance96OrLess EnemyIsHumanoid HitgroupHead
+	damage ">=150" required weight 0 // Adjust this value after rebalance
+	response		BadCopTauntBuckshotMouthwash
+	matchonce
+}
+
+response "BadCopTauntMutilated"
+{
+	norepeat
+	// speak "bc_taunt_shotgunkill_1" respeakdelay 10 // WAY TOO EDGY
+	speak "bc_taunt_shotgunkill_2" respeakdelay 10 // This line should apply to non-humans only
+}
+
+rule BadCopTauntMutilated
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC DamageTypeBuckshot EnemyDistance96OrLess EnemyIsNotHumanoid
+	damage ">=150" required weight 0 // Adjust this value after rebalance
+	response		BadCopTauntMutilated
+	matchonce
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Killed a headcrab with too much
+response "BadCopTauntHeadcrabOverkill"
+{
+	norepeat
+	speak "bc_taunt_headcrab_special_1" respeakdelay 2
+	speak "bc_taunt_headcrab_special_2" respeakdelay 2
+	
+	speak "bc_taunt_gen_2" respeakdelay 2.5 weight 0.5
+}
+
+rule BadCopTauntHeadcrabOverkill
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsClassHeadcrab EnemyDistance256OrLess LastSpoke15OrMore
+	damage ">50" required
+	response		BadCopTauntHeadcrabOverkill
+}
+
+// When Bad Cop kicks an enemy with more damage than usual (e.g. babs)
+rule BadCopTauntOverkick
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC DamageTypeClub LastSpoke15OrMore
+	damage ">50" required
+	response		BadCopTauntHeadcrabOverkill
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Really killed that rebel
+response "BadCopTauntRebelOverkill"
+{
+	norepeat
+	speak "bc_taunt_rebeloverkill_1" respeakdelay 10
+	speak "bc_taunt_rebeloverkill_2" respeakdelay 10
+	// speak "bc_taunt_rebeloverkill_3" respeakdelay 10 displaylast // Doesn't really make sense
+}
+
+rule BadCopTauntRebelOverkill
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsRebel EnemyDistance256OrLess LastSpoke15OrMore
+	damage ">200" required // Adjust this value after rebalance
+	response		BadCopTauntRebelOverkill
+}
+
+rule BadCopTauntRebelCombineBall
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsRebel InflictorIsCombineBall EnemyDistance512OrLess LastSpoke15OrMore
+	response		BadCopTauntRebelOverkill
+}
+
+//============================================================================================================
+// Enemy Condition Taunts
+// 
+// Bad Cop loves killing idiots when they're doing something funny!
+//============================================================================================================
+
+// Don't taunt common unique conditions too often.
+criterion "HaventTauntedCondition" "taunted_enemy_condition" "!=1" required weight -1
+
+// Enemy was speaking with RS before (usually rebels)
+response "BadCopTauntSpeaking"
+{
+	norepeat
+	speak "bc_taunt_generic_speaking" respeakdelay 30
+	// speak "bc_taunt_generic_speaking_2" respeakdelay 30 // Too edgy
+	speak "BW_2_4" respeakdelay 30
+}
+
+rule BadCopTauntSpeaking
+{
+	criteria		IsBadCop ConceptLastEnemyDead EnemyVisible EnemySpeaking EnemyDistance256OrLess HaventTauntedCondition LastSpoke15OrMore
+	
+	// Don't comment on this stuff for a while
+	applyContext "taunted_enemy_condition:1:100"
+	
+	response		BadCopTauntSpeaking
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Enemy was afraid of Bad Cop (low willpower)
+response "BadCopTauntAfraid"
+{
+	norepeat
+	speak "bc_taunt_hiding_1" respeakdelay 30
+	speak "bc_taunt_hiding_2" respeakdelay 30
+	speak "bc_taunt_hiding_3" respeakdelay 30
+	
+	speak "bc_taunt_gen_8" respeakdelay 30 displaylast
+}
+
+rule BadCopTauntAfraid
+{
+	criteria		IsBadCop ConceptLastEnemyDead EnemyVisible EnemyRunning EnemyFearsMe EnemyDistance256OrLess HaventTauntedCondition LastSpoke15OrMore
+	
+	// Don't comment on this stuff for a while
+	applyContext "taunted_enemy_condition:1:100"
+	
+	response		BadCopTauntAfraid
+}
+
+// Enemy was "neutral", not attacking
+// What makes a man turn neutral? Lust for gold? Power? Or were you just born with a heart full of neutrality?
+// response "BadCopTauntNeutral"
+// {
+// 	norepeat
+// 	// speak "bc_taunt_gen_7" respeakdelay 30 // Too edgy - Bad Cop doesn't love killing defenseless wildlife
+// 	// speak "bc_taunt_gen_8" respeakdelay 30 // Too edgy
+// }
+// 
+// rule BadCopTauntNeutral
+// {
+// 	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC NeutralToTarget EnemyDistance256OrLess //EnemyNeutral
+// 	response		BadCopTauntNeutral
+// }
+
+// Enemy was an unarmed citizen
+// rule BadCopTauntUnarmedCitizen
+// {
+// 	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsRebel EnemyDistance128OrLess //EnemyNeutral
+// 	enemy_activity "ACT_*_PANICKED" required weight 0
+// 	response		BadCopTauntNeutral
+// }
+
+//------------------------------------------------------------------------------------------------------------
+
+// Enemy was on fire
+// response "BadCopTauntOnFire"
+// {
+// 	// Why were lines 1 and 5 removed? They seem a lot better than 2 and 3, which stayed
+// 	norepeat
+// 	//speak "bc_taunt_fire_1" respeakdelay 30 // Moved
+// 	// speak "bc_taunt_fire_2" respeakdelay 30 // Too edgy
+// 	// speak "bc_taunt_fire_3" respeakdelay 30 // Too edgy
+// 	//speak "bc_taunt_fire_4" respeakdelay 30 // ???
+// 	//speak "bc_taunt_fire_5" respeakdelay 30 // Moved
+// }
+// 
+// rule BadCopTauntOnFire
+// {
+// 	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyOnFire DamageTypeNotBlast EnemyIsNotClassHeadcrab
+// 	response		BadCopTauntOnFire
+// }
+
+// Enemy was a zombie on fire (unique lines)
+// response "BadCopTauntZombieOnFire"
+// {
+// 	norepeat
+// 	speak "bc_taunt_zombie_fire_1" respeakdelay 30 // Too meta, not clever, terrible meme
+// 	speak "bc_taunt_zombie_fire_2" respeakdelay 30 // Doesn't make sense
+// }
+
+// rule BadCopTauntZombieOnFire
+// {
+// 	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyOnFire DamageTypeNotBlast EnemyIsZombie
+// 	// response		BadCopTauntZombieOnFire
+// 	response		BadCopTauntOnFire
+// }
+
+//------------------------------------------------------------------------------------------------------------
+
+// Sneak attack!
+response "BadCopTauntStealth"
+{
+	norepeat
+	//speak "Comment_c2_1a" respeakdelay 30
+	speak "bc_taunt_stealth_1" respeakdelay 30
+}
+
+rule BadCopTauntStealth
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyNotAttackingMe EnemyDoesNotSeeMe
+	response		BadCopTauntStealth
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// I wanted interruption taunts to be moderated with a context, but I think it's fine so far.
+// Maybe re-activate this if it gets too annoying/plays too often.
+//criterion "HaventTauntedInterrupt" "taunted_enemy_interruption" "!=1" required weight -1
+//applyContext "taunted_enemy_interruption:1:30"
+
+// Enemy was in the middle of doing something
+response "BadCopTauntInterruptAction"
+{
+	norepeat
+	speak "bc_taunt_interrupt_1" respeakdelay 10
+	speak "bc_taunt_interrupt_2" respeakdelay 10
+	speak "bc_taunt_interrupt_3" respeakdelay 10
+}
+
+rule BadCopTauntInterruptPickup
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC LastSpoke05OrMore
+	enemy_activity "ACT_PICKUP*" required weight 2
+	applyContext "taunted_enemy_condition:1:10" // Don't do the condition stuff for a bit
+	response		BadCopTauntInterruptAction
+}
+
+rule BadCopTauntInterruptHeal
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC LastSpoke05OrMore
+	enemy_activity "ACT_CIT_HEAL" required weight 2
+	applyContext "taunted_enemy_condition:1:10" // Don't do the condition stuff for a bit
+	response		BadCopTauntInterruptAction
+}
+
+rule BadCopTauntInterruptAntBurrow
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC LastSpoke05OrMore
+	enemy_activity "ACT_ANTLION_BURROW*" required weight 2
+	applyContext "taunted_enemy_condition:1:10" // Don't do the condition stuff for a bit
+	response		BadCopTauntInterruptAction
+}
+
+rule BadCopTauntInterruptCrabBurrow
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC LastSpoke05OrMore
+	enemy_activity "ACT_HEADCRAB_BURROW*" required weight 2
+	applyContext "taunted_enemy_condition:1:10" // Don't do the condition stuff for a bit
+	response		BadCopTauntInterruptAction
+}
+
+rule BadCopTauntInterruptVortDispel
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC LastSpoke05OrMore
+	enemy_activity "ACT_VORTIGAUNT_DISPEL" required weight 2
+	applyContext "taunted_enemy_condition:1:10" // Don't do the condition stuff for a bit
+	response		BadCopTauntInterruptAction
+}
+
+rule BadCopTauntInterruptRPGAim
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC EnemyDistance512OrLess LastSpoke05OrMore
+	enemy_activity "ACT_IDLE_ANGRY_RPG" required weight 1 // Slightly less weight so other responses can play
+	applyContext "taunted_enemy_condition:1:10" // Don't do the condition stuff for a bit
+	response		BadCopTauntInterruptAction
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopTauntJumping"
+{
+	norepeat
+	speak "bc_taunt_jumping_1" respeakdelay 10
+	speak "bc_taunt_jumping_2" respeakdelay 10
+	speak "bc_taunt_jumping_3" respeakdelay 10
+	speak "bc_apc_roadkill2" respeakdelay 10
+	
+	// Do an interrupt response eventually
+	response "BadCopTauntInterruptAction" respeakdelay 10 displaylast
+}
+
+rule BadCopTauntStartJump
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC EnemyStartJump LastSpoke15OrMore
+	applyContext "taunted_enemy_condition:1:10" // Don't do the condition stuff for a bit
+	response		BadCopTauntJumping
+}
+
+rule BadCopTauntMidJump
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC EnemyMidJump LastSpoke05OrMore
+	applyContext "taunted_enemy_condition:1:10" // Don't do the condition stuff for a bit
+	response		BadCopTauntJumping
+}
+
+rule BadCopTauntLand
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC EnemyLanding LastSpoke15OrMore
+	applyContext "taunted_enemy_condition:1:10" // Don't do the condition stuff for a bit
+	response		BadCopTauntJumping
+}
+
+// Antlions use a special activity for their non-nav jumping behavior
+rule BadCopTauntAntlionJump
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC LastSpoke15OrMore
+	enemy_activity "ACT_ANTLION_JUMP_START" required
+	applyContext "taunted_enemy_condition:1:10" // Don't do the condition stuff for a bit
+	response		BadCopTauntJumping
+}
+
+// Jump rebels can "misfire" and fly upwards on death, in which case Bad Cop should use a different response
+rule BadCopTauntJumpRebelMisfire
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsRebel EnemyIsJumpRebel HitgroupGear LastSpoke05OrMore
+	response		BadCopTauntJumping
+}
+
+//============================================================================================================
+// Player State Taunts
+// 
+// Bad Cop loves killing idiots when he's in a certain state!
+//============================================================================================================
+
+// -2 weight discounts the weight of HasSquadMates and SquadFollowing,
+// which makes sure the rule weighs as much as a response that doesn't involve the squad.
+criterion "HaventTauntedWithSquad" "squad_taunted" "!=1" required weight -2
+
+response "BadCopTauntWithSquadGeneric"
+{
+	norepeat
+	speak "bc_taunt_generic_squad_1" respeakdelay 30
+	speak "bc_taunt_generic_squad_2" respeakdelay 30
+}
+
+rule BadCopTauntWithSquadGeneric
+{
+	// Only play these lines when the squad is following
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC HasSquadMates SquadFollowing HaventTauntedWithSquad LastSpoke05OrMore
+	
+	// Don't taunt with squad again for a while
+	applyContext "squad_taunted:1:45"
+	
+	response		BadCopTauntWithSquadGeneric
+}
+
+//------------------------------------------------------------------------------------------------------------
+criterion "EnemyRevenge" "enemy_revenge" "1" required
+criterion "RevengeDamageTypeBullet" "lasttaken_damagetype" "&[DMGType::Bullet]" required
+criterion "RevengeDamageTypeBuckshot" "lasttaken_damagetype" "&[DMGType::Buckshot]" required
+criterion "RevengeDamageTypeSlash" "lasttaken_damagetype" "&[DMGType::Slash]" required
+criterion "RevengeDamageTypeAcid" "lasttaken_damagetype" "&[DMGType::Acid]" required
+criterion "RevengeDamage15OrMore" "lasttaken_damage" ">=15" required
+
+// Bad Cop's Revenge!
+response "BadCopRevenge"
+{
+	norepeat
+	speak "bc_revenge_1" respeakdelay 30
+	speak "bc_revenge_2" respeakdelay 30
+	speak "bc_revenge_2a" respeakdelay 30 displaylast
+	speak "bc_revenge_3" respeakdelay 30
+	speak "bc_revenge_3a" respeakdelay 30 displaylast
+}
+
+rule BadCopRevenge
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC EnemyRevenge HaventRemarkedDamageRecently RevengeDamage15OrMore LastSpoke10OrMore
+	
+	// Don't do revenge again for some time
+	applyContext "enemy_revenge:0:45"
+	
+	response		BadCopRevenge
+}
+
+// Bad Cop gets revenge on someone for shooting at him
+response "BadCopRevengeBullet"
+{
+	norepeat
+	speak "bc_taunt_reb_2" respeakdelay 30
+	speak "bc_revenge_bullet_1" respeakdelay 30
+}
+
+rule BadCopRevengeBullet
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC EnemyRevenge HaventRemarkedDamageRecently RevengeDamage15OrMore RevengeDamageTypeBullet NotInVehicle LastSpoke10OrMore
+	
+	// Don't do revenge again for a while
+	applyContext "enemy_revenge:0:60"
+	
+	response		BadCopRevengeBullet
+	response		BadCopRevenge
+}
+
+rule BadCopRevengeBuckshot
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC EnemyRevenge HaventRemarkedDamageRecently RevengeDamage15OrMore RevengeDamageTypeBuckshot NotInVehicle LastSpoke10OrMore
+	
+	// Don't do revenge again for a while
+	applyContext "enemy_revenge:0:60"
+	
+	response		BadCopRevengeBullet
+	response		BadCopRevenge
+}
+
+// Bad Cop gets revenge on someone for slashing him
+response "BadCopRevengeSlash"
+{
+	norepeat
+	// speak "bc_revenge_slash_1" respeakdelay 30 // Low brow
+	speak "bc_revenge_slash_2" respeakdelay 30
+	speak "bc_revenge_slash_3" respeakdelay 30
+}
+
+rule BadCopRevengeSlash
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC EnemyRevenge HaventRemarkedDamageRecently RevengeDamage15OrMore RevengeDamageTypeSlash NotInVehicle LastSpoke10OrMore
+	
+	// Don't do revenge again for a bit
+	applyContext "enemy_revenge:0:30"
+	
+	response		BadCopRevengeSlash
+	response		BadCopRevenge
+}
+
+// Bad Cop gets revenge on someone for hitting him with acid
+response "BadCopRevengeAcid"
+{
+	norepeat
+	// speak "bc_revenge_spit_1" respeakdelay 30 // Sounds like a dirty joke, unintentional. Removed.
+	speak "bc_revenge_spit_2" respeakdelay 30
+}
+
+rule BadCopRevengeAcid
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC EnemyRevenge HaventRemarkedDamageRecently RevengeDamageTypeAcid LastSpoke10OrMore
+	
+	// Don't do revenge again for some time
+	applyContext "enemy_revenge:0:60"
+	
+	response		BadCopRevengeAcid
+}
+
+// Bad Cop gets revenge on a headcrab in particular
+response "BadCopRevengeHeadcrab"
+{
+	norepeat
+	speak "bc_taunt_headcrab_1" respeakdelay 30
+	speak "bc_taunt_headcrab_2" respeakdelay 30
+}
+
+rule BadCopRevengeHeadcrab
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsClassHeadcrab EnemyRevenge HaventRemarkedDamageRecently RevengeDamageTypeSlash LastSpoke10OrMore
+	response		BadCopRevengeHeadcrab
+}
+
+// Bad Cop killed a scanner after being flashed by one
+rule BadCopKilledScannerRevenge
+{
+	criteria		IsBadCop ConceptKilledAlly EnemyVisible EnemyIsAnyScanner //EnemyLikesMe
+	flashed "1" required
+	response		BadCopRevenge
+}
+
+//------------------------------------------------------------------------------------------------------------
+criterion "Lost50HealthInEncounter" "prev_health_diff" "<=-50" required
+
+// Bad Cop won...but at what cost?
+response "BadCopEndEncounterLowHealth"
+{
+	norepeat
+	speak "BC_C43_4" respeakdelay 60 odds 50
+	
+	//speak "bc_taunt_lessthanfifty_1" respeakdelay 60 odds 50
+	//speak "bc_taunt_lessthanfifty_2" respeakdelay 60 odds 50
+}
+
+rule BadCopEndEncounterLowHealth
+{
+	criteria		IsBadCop ConceptLastEnemyDead EnemyVisible Lost50HealthInEncounter HasOneOrNoSquadMates InCombatShort
+	
+	// Don't do hurt idle
+	applyContext "hurt_remark:1:100"
+	
+	response		BadCopEndEncounterLowHealth
+}
+
+// Bad Cop just killed the last known enemy in a long fight.
+response "BadCopEndEncounterLong"
+{
+	norepeat
+	speak "bc_taunt_lessthanfifty_1" respeakdelay 60 odds 50
+	speak "bc_taunt_lessthanfifty_2" respeakdelay 60 odds 50
+}
+
+rule BadCopEndEncounterLong
+{
+	criteria		IsBadCop ConceptLastEnemyDead EnemyVisible EnemyIsNPC InCombatLong FoughtTenOrMoreEnemies
+	
+	// Don't do hurt idle
+	applyContext "hurt_remark:1:100"
+	
+	response		BadCopEndEncounterLong
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// The player is in god mode. Scare cheaters and developers.
+response "BadCopKillInGod"
+{
+	norepeat
+	norepeat
+	speak "bc_taunt_godmode_1" respeakdelay 30
+}
+
+rule BadCopKillInGod
+{
+	criteria		IsBadCop ConceptEnemyDead EnemyVisible EnemyIsNPC InGodMode
+	matchonce
+	response		BadCopKillInGod
+}
+
+//------------------------------------------------------------------------------------------------------------
+// Boss death scene in c3_3!
+//------------------------------------------------------------------------------------------------------------
+
+//response "BadCopTauntGlownome"
+//{
+//	norepeat
+//	scene "scenes/arbeit/c3_03_bossdead.vcd"
+//}
+//
+//rule BadCopTauntGlownome
+//{
+//	criteria		IsBadCop ConceptEnemyDead EnemyIsGonome
+//	map "ez2_c3_3" required
+//	response		BadCopTauntGlownome
+//}
+
+//------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,47 @@
+"Weapon.RPG_Draw" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/NewMp5/draw.wav"
+}
+
+"Weapon.RPG_Holster" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/rpg/rpg_putaway.wav"
+}
+
+"Weapon.RPG_Load" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/rpg/RPG_rocket_load.wav"
+}
+
+"Weapon.RPG_Get_rocket" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/rpg/rpg_get_rocket.wav"
+}
+
+"Weapon.RPG_rotate" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/rpg/RPG_rocket_rotate.wav"
+}
+
+"Weapon.RPG_screen_open" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/rpg/RPG_screen_open.wav"
+}

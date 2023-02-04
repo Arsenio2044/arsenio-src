@@ -1,0 +1,14 @@
+//============================================================================================================
+// Wilson Damaged
+//============================================================================================================
+
+response "WilsonDamagedIdleFidget"
+{
+	// TODO?
+}
+
+rule WilsonDamagedIdleFidget
+{
+	criteria	IsWilson ConceptWilsonFidget Is192OrLessFromPlayer ResponsesAllowed_Fidget WilsonDamaged
+	response	WilsonDamagedIdleFidget
+}

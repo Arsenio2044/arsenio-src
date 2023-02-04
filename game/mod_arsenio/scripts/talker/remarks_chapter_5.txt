@@ -1,0 +1,201 @@
+//============================================================================================================
+// REMARKS CHAPTER 5
+// 
+// This is #included from the main scripts.
+// 
+//============================================================================================================
+
+//============================================================================================================
+// ez2_c5_2 remarkables
+//============================================================================================================
+
+criterion "SubjectHackLabHackedAny" "subject" "hacklab_hacked*" required
+criterion "SubjectHackLabHackedArbeitTurret" "subject" "hacklab_hacked_turret_arbeit" required
+
+response "BadCopCommentHackLab"
+{
+	norepeat
+	sequential
+	
+	// Placeholder; change if needed
+	//print "Hm... They've been busy in here."
+}
+
+rule BadCopCommentHackLab
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectHackLabHackedAny IsSubjectNear50
+	response 		BadCopCommentHackLab
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+criterion "SubjectSideAreaHackedArbeitTurret" "subject" "sidearea_hacked_arbeit_turret" required
+
+response "WilsonCommentHackedArbeitTurret"
+{
+	norepeat
+	sequential
+	
+	// Placeholder; change if needed
+	//scene "scenes/npc/wilson/c5_2_hackedturrets.vcd"
+}
+
+rule WilsonCommentHackLabArbeitTurret
+{
+	criteria		IsWilson ConceptTalkRemark SubjectHackLabHackedArbeitTurret IsSubjectNear100
+	response 		WilsonCommentHackedArbeitTurret
+}
+
+rule WilsonCommentSideAreaHackedArbeitTurret
+{
+	criteria		IsWilson ConceptTalkRemark SubjectSideAreaHackedArbeitTurret IsSubjectNear100
+	response 		WilsonCommentHackedArbeitTurret
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+criterion "SubjectPayloadTransport" "subject" "payload_transport" required
+
+response "BadCopCommentPayloadTransport"
+{
+	norepeat
+	sequential
+	response "BadCopGenericWhatsThis"
+}
+
+rule BadCopCommentPayloadTransport
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectPayloadTransport IsSubjectNear200
+	response 		BadCopCommentPayloadTransport
+}
+
+//============================================================================================================
+// ez2_c5_2a remarkables
+//============================================================================================================
+
+criterion "SubjectResearchCamp" "subject" "research_camp_remarkable" required
+
+response "BadCopCommentResearchCamp"
+{
+	norepeat
+	sequential
+	scene "scenes/arbeit2/excavation_remarkable_research.vcd"
+}
+
+rule BadCopCommentResearchCamp
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectResearchCamp IsSubjectNear250
+	response 		BadCopCommentResearchCamp
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+criterion "SubjectMannedGun" "subject" "manned_gun_remarkable" required
+
+response "BadCopCommentMannedGun"
+{
+	norepeat
+	sequential
+	scene "scenes/arbeit3/chase_oldnemesis.vcd"
+}
+
+rule BadCopCommentMannedGun
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectMannedGun IsSubjectNear700
+	response 		BadCopCommentMannedGun
+}
+
+//============================================================================================================
+// ez2_c5_3 remarkables
+//============================================================================================================
+
+criterion "SubjectTurretDate" "subject" "turret_date_remarkable" required
+
+response "BadCopCommentTurretDate"
+{
+	norepeat
+	sequential
+	speak "BW_C3_3_errr"
+}
+
+rule BadCopCommentTurretDate
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectTurretDate IsSubjectNear100
+	response 		BadCopCommentTurretDate
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+criterion "SubjectMossroomMossman" "subject" "mossroom_mossman_remarkable" required
+
+response "BadCopCommentMossmanFound"
+{
+	norepeat
+	sequential
+	scene "scenes/arbeit3/mossroom_see_mossman.vcd"
+}
+
+rule BadCopCommentMossmanFound
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectMossroomMossman IsSubjectNear250
+	response 		BadCopCommentMossmanFound
+}
+
+//============================================================================================================
+// ez2_c5_1 remarkable for reaching Arbeit 2
+//============================================================================================================
+
+criterion "SubjectArbeit2" "subject" "arbeit_2" required
+
+response "BadCopRemarkMadeIt"
+{
+	norepeat
+	scene "scenes\npc\wilson\c5_1_madeit.vcd"
+}
+
+rule BadCopRemarkMadeIt
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectArbeit2 PlayerNearWillE
+	response		BadCopRemarkMadeIt
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+//============================================================================================================
+// ez2_c5_2a remarkable for entering this map
+//============================================================================================================
+
+criterion "SubjectEnteringc52a" "subject" "entering_c52a" required
+
+response "BadCopRemarkEnteringc52a_Wilson"
+{
+	norepeat
+	scene "scenes/npc/wilson/c5_2a_clearance.vcd"
+}
+
+rule BadCopRemarkEnteringc52a_Wilson
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectEnteringc52a PlayerNearWillE IsSubjectNear250
+	response 		BadCopRemarkEnteringc52a_Wilson
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------
+//============================================================================================================
+// ez2_c5_3 remarkable for arrival at external
+//============================================================================================================
+
+criterion "SubjectCommsFacilityExternal" "subject" "CommsFacility_External" required
+
+response "BadCopRemarkCommsFacilityExternal_Wilson"
+{
+	norepeat
+	scene "scenes/npc/wilson/c5_3_arrival.vcd"
+}
+
+rule BadCopRemarkCommsFacilityExternal_Wilson
+{
+	criteria		IsBadCop ConceptTalkRemark SubjectCommsFacilityExternal PlayerNearWillE IsSubjectNear250
+	response 		BadCopRemarkCommsFacilityExternal_Wilson
+}
+
+//-------------------------------------------------------------------------------------------------------------------------------------------------------------

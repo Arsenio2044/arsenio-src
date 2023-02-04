@@ -1,0 +1,262 @@
+//============================================================================================================
+// SURRENDERED CITIZEN E:Z2
+// 
+// Citizen responses used specifically for surrender behavior.
+// 
+//============================================================================================================
+//============================================================================================================
+// npc_citizen concepts and criteria
+//============================================================================================================
+// Concepts
+criterion "ConceptTalkSurrenderStart" "Concept" "TLK_SURRENDER_BEHAVIOR_START" required
+criterion "ConceptTalkSurrenderStartle" "Concept" "TLK_SURRENDER_BEHAVIOR_STARTLE" required
+
+// Other criteria
+criterion "IsNotSurrenderedStanding" "activity" "!=ACT_IDLE" required
+
+//============================================================================================================
+// Surrender behavior concepts
+//============================================================================================================
+
+response "CitizenSurrenderedInitial"
+{
+	scene "scenes/npc/$gender01/ok01.vcd"
+	scene "scenes/npc/$gender01/ok02.vcd"
+}
+
+rule CitizenSurrenderedInitial
+{
+	criteria    IsCitizen ConceptTalkSurrenderStart
+	response    CitizenSurrenderedInitial
+}
+
+response "CitizenSurrenderedStartle"
+{
+	scene "scenes/npc/$gender01/startle01.vcd"
+	scene "scenes/npc/$gender01/startle02.vcd"
+}
+
+rule CitizenSurrenderedStartle
+{
+	criteria    IsCitizen ConceptTalkSurrenderStartle
+	response    CitizenSurrenderedStartle
+}
+
+//============================================================================================================
+// npc_citizen misc. response overrides
+//============================================================================================================
+
+// Citizens might use the beg concept if there's a non-Combine enemy in sight while they're surrendered.
+// (i.e. something which could attack them)
+response "CitizenSurrenderedBeg"
+{
+	scene "scenes/episode_1/npc/$gender01/cit_evac_defendus06.vcd" respeakdelay 10 // We gotta get outta here!
+	scene "scenes/episode_1/npc/$gender01/cit_evac_enemies01.vcd" respeakdelay 10 // They're coming!
+	scene "scenes/episode_1/npc/$gender01/cit_alert_antlions18.vcd" respeakdelay 10 // Damn these things!
+	scene "scenes/episode_1/npc/$gender01/cit_alert_rollers02.vcd" respeakdelay 10 // Don't let them near you!
+	scene "scenes/episode_1/npc/$gender01/cit_alert_rollers03.vcd" respeakdelay 10 // Keep away from those things!
+}
+
+rule CitizenSurrenderedBeg
+{
+	criteria		IsCitizen ConceptTalkBeg IsSurrendered
+	response		CitizenSurrenderedBeg   
+}
+
+response "CitizenSurrenderedBegOneEnemy"
+{
+	scene "scenes/episode_1/npc/$gender01/cit_alert_gunship02.vcd" respeakdelay 10 // It's coming for us!
+	scene "scenes/episode_1/npc/$gender01/cit_alert_gunship07.vcd" respeakdelay 10 // That thing's gonna chew us up! 
+	scene "scenes/episode_1/npc/$gender01/cit_alert_head04.vcd" respeakdelay 10 // Get it away from me!
+}
+
+rule CitizenSurrenderedBegOneEnemy
+{
+	criteria		IsCitizen ConceptTalkBeg IsSurrendered
+	num_enemies "<=1" required
+	response		CitizenSurrenderedBegOneEnemy
+}
+
+//============================================================================================================
+// Citizen heal/ammo speech
+//============================================================================================================
+response "CitizenSurrenderedHeal"
+{
+	norepeat
+	//scene "scenes/npc/$gender01/gordead_ans14.vcd" //odds 50
+	scene "scenes/npc/$gender01/answer11.vcd" //odds 50
+	scene "scenes/npc/$gender01/vanswer13.vcd" //odds 50
+	//scene "scenes/npc/$gender01/vanswer14.vcd" //odds 50
+	scene "scenes/npc/$gender01/vquestion01.vcd" //odds 50
+	scene "scenes/npc/$gender01/vquestion03.vcd" //odds 50
+	//scene "scenes/episode_1/npc/$gender01/cit_alert_soldier07.vcd" //odds 50
+	scene "scenes/episode_1/npc/$gender01/cit_remarks02.vcd" //odds 50
+}
+
+rule CitizenSurrenderedHeal
+{
+	criteria		IsCitizen ConceptTalkHeal IsSurrendered
+	
+	// This is meant to help differentiate between medics healing the player and medics healing other surrendered citizens.
+	distancetoplayer "<=96" required
+	
+	response		CitizenSurrenderedHeal
+}
+
+rule CitizenSurrenderedGiveAmmo
+{
+	criteria		IsCitizen ConceptTalkGiveAmmo IsSurrendered
+	response		CitizenSurrenderedHeal
+}
+
+//============================================================================================================
+// Citizen Questions & Responses speech
+//============================================================================================================
+
+response "CitizenSurrenderedQuestion"
+{
+	//scene "scenes/npc/$gender01/question01.vcd" respeakdelay 60
+	scene "scenes/npc/$gender01/question11.vcd" respeakdelay 60
+	scene "scenes/npc/$gender01/question12.vcd" respeakdelay 60
+	scene "scenes/npc/$gender01/question19.vcd" respeakdelay 60
+	//scene "scenes/npc/$gender01/question20.vcd" respeakdelay 60 
+	scene "scenes/npc/$gender01/question21.vcd" respeakdelay 60
+	scene "scenes/npc/$gender01/question25.vcd" respeakdelay 60
+	scene "scenes/npc/$gender01/question26.vcd" respeakdelay 60
+	scene "scenes/npc/$gender01/question27.vcd" respeakdelay 60
+	//scene "scenes/npc/$gender01/question30.vcd" respeakdelay 60
+	scene "scenes/npc/$gender01/vquestion02.vcd" respeakdelay 60
+	scene "scenes/npc/$gender01/gordead_ans01.vcd" respeakdelay 60
+	scene "scenes/npc/$gender01/gordead_ans02.vcd" respeakdelay 60
+	//scene "scenes/npc/$gender01/gordead_ans14.vcd" respeakdelay 60
+	scene "scenes/npc/$gender01/gordead_ans15.vcd" respeakdelay 60
+	scene "scenes/npc/$gender01/gordead_ques10.vcd" respeakdelay 60
+	scene "scenes/npc/$gender01/gordead_ques12.vcd" respeakdelay 60
+	scene "scenes/npc/$gender01/gordead_ques16.vcd" respeakdelay 60
+	scene "scenes/npc/$gender01/doingsomething.vcd" respeakdelay 60
+	scene "scenes/npc/$gender01/getgoingsoon.vcd" respeakdelay 60
+	scene "scenes/episode_1/npc/$gender01/cit_alert_soldier02.vcd" respeakdelay 60
+	scene "scenes/episode_1/npc/$gender01/cit_alert_soldier03.vcd" respeakdelay 60
+	scene "scenes/episode_1/npc/$gender01/cit_remarks05.vcd" respeakdelay 60
+	scene "scenes/episode_1/npc/$gender01/cit_remarks07.vcd" respeakdelay 60
+	scene "scenes/episode_1/npc/$gender01/cit_remarks09.vcd" respeakdelay 60
+	scene "scenes/episode_1/npc/$gender01/cit_remarks18.vcd" respeakdelay 60
+	scene "scenes/episode_1/npc/$gender01/cit_remarks20.vcd" respeakdelay 60
+}
+
+rule CitizenSurrenderedQuestion
+{
+	criteria		IsCitizen ConceptTalkQuestion IsSurrendered 
+	response 		CitizenSurrenderedQuestion
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CitizenSurrenderedAnswer"
+{
+	//scene "scenes/npc/$gender01/answer04.vcd" predelay 0.5,1
+	scene "scenes/npc/$gender01/answer05.vcd" predelay 0.5,1
+	scene "scenes/npc/$gender01/answer09.vcd" predelay 0.5,1
+	scene "scenes/npc/$gender01/answer10.vcd" predelay 0.5,1
+	//scene "scenes/npc/$gender01/answer11.vcd" predelay 0.5,1
+	//scene "scenes/npc/$gender01/answer12.vcd" predelay 0.5,1
+	scene "scenes/npc/$gender01/answer29.vcd" predelay 0.5,1
+	scene "scenes/npc/$gender01/answer30.vcd" predelay 0.5,1
+	scene "scenes/npc/$gender01/answer31.vcd" predelay 0.5,1
+	scene "scenes/npc/$gender01/answer33.vcd" predelay 0.5,1
+	//scene "scenes/npc/$gender01/answer34.vcd" predelay 0.5,1
+	//scene "scenes/npc/$gender01/answer36.vcd" predelay 0.5,1
+	//scene "scenes/npc/$gender01/answer40.vcd" predelay 0.5,1
+	speak "ep1_citizen.cit_tellmeaboutit" predelay 0.5,1 //scene "scenes/episode_1/npc/$gender01/cit_alert_soldier07.vcd" respeakdelay 25
+}
+
+rule CitizenSurrenderedAnswer
+{
+	criteria		IsCitizen ConceptTalkAnswer IsSurrendered
+	response		CitizenSurrenderedAnswer
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CitizenSurrenderedTlkIdle"
+{
+	//scene "scenes/episode_1/npc/$gender01/cit_remarks15.vcd" respeakdelay 25 odds 10
+}
+
+rule CitizenSurrenderedTlkIdle
+{
+	criteria		IsCitizen ConceptTalkIdle IsSurrendered
+	response		CitizenSurrenderedTlkIdle
+}
+
+response "CitizenSurrenderedComplain"
+{
+	//scene "scenes/npc/$gender01/vquestion03.vcd" respeakdelay 25 //odds 50
+	scene "scenes/npc/$gender01/vquestion04.vcd" respeakdelay 25 //odds 50
+	scene "scenes/npc/$gender01/vanswer14.vcd" respeakdelay 25 //odds 50
+	scene "scenes/npc/$gender01/answer20.vcd" respeakdelay 25 //odds 50
+	scene "scenes/episode_1/npc/$gender01/cit_alert_soldier07.vcd" respeakdelay 25 //odds 50
+	scene "scenes/episode_1/npc/$gender01/cit_remarks15.vcd" respeakdelay 25 //odds 50
+}
+
+rule CitizenSurrenderedComplain
+{
+	// Can't do it when standing or else it prevents giving health/ammo
+	criteria		IsCitizen ConceptTalkIdle IsSurrendered IsNotSurrenderedStanding
+	//citizentype "5" required
+	response		CitizenSurrenderedComplain
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Surrendered citizens might respond to Bad Cop's speech
+response "CitizenSurrenderedHearBadCop"
+{
+	norepeat
+	scene "scenes/npc/$gender01/answer30.vcd" predelay 0.5
+	scene "scenes/npc/$gender01/gordead_ans04.vcd" predelay 0.5
+	scene "scenes/episode_1/npc/$gender01/cit_alert_head05.vcd" predelay 0.5
+	//scene "scenes/episode_1/npc/$gender01/cit_alert_zombie07.vcd" predelay 0.5
+	//scene "scenes/episode_1/npc/$gender01/cit_alert_zombie08.vcd" predelay 0.5
+}
+
+rule CitizenSurrenderedHearBadCop
+{
+	criteria		IsCitizen ConceptTalkConceptAnswer IsSurrendered NPCIdle SpeechTargetBadCop
+	response		CitizenSurrenderedHearBadCop   
+}
+
+// Surrendered brutes might mock Bad Cop's speech
+response "CitizenSurrenderedBruteMockBadCop"
+{
+	norepeat
+	scene "scenes/npc/$gender01/answer16.vcd"
+	scene "scenes/npc/$gender01/answer24.vcd"
+	scene "scenes/npc/$gender01/vanswer01.vcd"
+	scene "scenes/npc/$gender01/vanswer05.vcd"
+	scene "scenes/npc/$gender01/vanswer08.vcd"
+	scene "scenes/npc/$gender01/vanswer10.vcd"
+}
+
+rule CitizenSurrenderedBruteMockBadCop
+{
+	criteria		IsCitizen ConceptTalkConceptAnswer IsSurrendered SpeechTargetBadCop
+	citizentype "5" required
+	response		CitizenSurrenderedBruteMockBadCop   
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "CitizenSurrenderedTalkPlayerPushed"
+{
+   //scene "scenes/npc/$gender01/excuseme01.vcd" odds 50
+   //scene "scenes/npc/$gender01/excuseme02.vcd" odds 50
+   //scene "scenes/npc/$gender01/pardonme01.vcd" odds 50
+   //scene "scenes/npc/$gender01/pardonme02.vcd" odds 50
+}
+
+rule CitizenSurrenderedTalkPlayerPushed
+{
+	criteria		IsCitizen  ConceptTalkPlayerPushed SeenByPlayer NoRecentCombat IsSurrendered
+	response		CitizenSurrenderedTalkPlayerPushed
+}
+
+//============================================================================================================

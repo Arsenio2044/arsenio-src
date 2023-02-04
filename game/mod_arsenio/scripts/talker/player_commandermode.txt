@@ -1,0 +1,162 @@
+//============================================================================================================
+// Bad Cop Commander Mode
+// 
+// An entire file just for commanding!? How out of order!
+// 
+// Criteria is re-used from the citizen commander criteria in npc_citizen_commandermode.txt
+// 
+//============================================================================================================
+
+//============================================================================================================
+// Bad Cop criteria
+//============================================================================================================
+
+// REMOVE THESE WHEN DONE, they are in the other file already
+criterion "SquadNearPlayer"            "distancetoplayer"               "<240"   required
+criterion "SquadNotNearPlayer"         "distancetoplayer"               ">=240"  required
+criterion "SquadNearCommandPoint"      "commandpoint_dist_to_npc"       "<240"   required
+criterion "SquadNotNearCommandPoint"   "commandpoint_dist_to_npc"       ">=240"  required
+criterion "CommandPointNearPlayer"     "commandpoint_dist_to_player"    "<144"   required
+criterion "CommandPointNotNearPlayer"   "commandpoint_dist_to_player"   ">=144"  required
+criterion "JoinSquadIndividual"        "numjoining"                     "1"      required
+criterion "JoinSquadMultiple"          "numjoining"                     ">1"     required
+criterion "TrailingReinforcement"      "reinforcement"                  "1"     required
+
+//============================================================================================================
+// Commander stuff
+//============================================================================================================
+
+response "BadCopIssueSendCommand"
+{
+	speak "badcop_command1" respeakdelay 10
+	speak "badcop_command2" respeakdelay 10
+	speak "badcop_command3" respeakdelay 10
+	//speak "badcop_command4" respeakdelay 10
+}
+
+// Likely an "Advance" type of order
+response "BadCopIssueSendCommandNearToFar"
+{
+	speak "badcop_command1" respeakdelay 10
+	speak "badcop_command2" respeakdelay 10
+	speak "badcop_command3" respeakdelay 10
+	speak "badcop_command4" respeakdelay 10
+}
+
+// Likely a "Back to me" type of order
+response "BadCopIssueSendCommandFarToNear"
+{
+	speak "badcop_groupup3" respeakdelay 10
+	speak "badcop_command2" respeakdelay 10
+}
+
+// Likely a "Hold down here" type of order
+response "BadCopIssueSendCommandNearToNear"
+{
+	speak "badcop_stayhere2" respeakdelay 10
+	speak "badcop_stayhere3" respeakdelay 10
+}
+
+// Likely a "Advance" type of order
+response "BadCopIssueSendCommandFarToFar"
+{
+	speak "badcop_command1" respeakdelay 10
+	speak "badcop_command2" respeakdelay 10
+	speak "badcop_command3" respeakdelay 10
+	speak "badcop_command4" respeakdelay 10
+}
+
+//------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopIssueRecallCommand"
+{
+	speak "badcop_groupup1" respeakdelay 10
+	speak "badcop_groupup2" respeakdelay 10
+	//speak "badcop_groupup3" respeakdelay 10
+	speak "badcop_groupup4" respeakdelay 10
+}
+
+rule BadCopRecallCommand
+{
+	criteria		IsBadCop ConceptCommandRecall
+	response		BadCopIssueRecallCommand
+}
+
+response "BadCopIssueFollowCommand"
+{
+	speak "badcop_newsquadmember1" respeakdelay 10
+	speak "badcop_newsquadmember2" respeakdelay 10
+	speak "badcop_newsquadmember3" respeakdelay 10
+	speak "badcop_newsquadmember4" respeakdelay 10
+}
+
+rule BadCopFollowCommand
+{
+	criteria		IsBadCop ConceptCommandFollow
+	response		BadCopIssueFollowCommand
+}
+
+response "BadCopIssueStayCommand"
+{
+	// Add more stay lines here
+	speak "badcop_stayhere1" respeakdelay 10
+	speak "badcop_stayhere2" respeakdelay 10
+	speak "badcop_stayhere3" respeakdelay 10
+	speak "badcop_stayhere4" respeakdelay 10
+}
+rule BadCopStayCommand
+{
+	criteria		IsBadCop ConceptCommandStay
+	response		BadCopIssueStayCommand
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopIssueFollowCommandElite"
+{
+	speak "badcop_elitefollow1" respeakdelay 10
+	speak "badcop_elitefollow2" respeakdelay 10
+}
+
+rule BadCopIssueFollowCommandElite
+{
+	criteria		IsBadCop ConceptCommandFollow IsElite
+	response		BadCopIssueFollowCommandElite
+}
+
+//============================================================================================================
+// Bad Cop rules
+//============================================================================================================
+
+rule BadCopSendCommand
+{
+	criteria		IsBadCop ConceptCommandSend
+	response		BadCopIssueSendCommand
+}
+
+rule BadCopIssueSendCommandNearToFar
+{
+	criteria		IsBadCop ConceptCommandSend SquadNearPlayer CommandPointNotNearPlayer
+	response		BadCopIssueSendCommandNearToFar
+}
+
+rule BadCopIssueSendCommandFarToNear
+{
+	criteria		IsBadCop ConceptCommandSend SquadNotNearPlayer CommandPointNearPlayer
+	response		BadCopIssueSendCommandFarToNear
+}
+
+rule BadCopIssueSendCommandNearToNear
+{
+	criteria		IsBadCop ConceptCommandSend SquadNearPlayer CommandPointNearPlayer
+	response		BadCopIssueSendCommandNearToNear
+}
+
+rule BadCopIssueSendCommandFarToFar
+{
+	criteria		IsBadCop ConceptCommandSend SquadNotNearPlayer CommandPointNotNearPlayer
+	response		BadCopIssueSendCommandFarToFar
+}
+
+//------------------------------------------------------------------------------------------------------------

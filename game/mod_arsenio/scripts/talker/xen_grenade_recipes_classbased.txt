@@ -1,0 +1,253 @@
+//============================================================================================================
+// Class-based recipes
+// 
+// These recipes are based off of the type of class sucked up.
+//============================================================================================================
+
+//============================================================================================================
+// Citizens
+//============================================================================================================
+response "SpawnCitizenZombie"
+{
+	print "npc_zombie 1; npc_headcrab 0,1"
+}
+
+rule SpawnCitizenZombie
+{
+	criteria		HullHumanAllowed IsMass50 BestClassCitizen
+	response		SpawnCitizenZombie
+}
+
+response "SpawnCitizenZombie250"
+{
+	print "npc_zombie 2; npc_headcrab 0,3"
+}
+
+rule SpawnCitizenZombie250
+{
+	criteria		HullHumanAllowed IsMass250 BestClassCitizen
+	response		SpawnCitizenZombie250
+}
+
+response "SpawnCitizenManyXenemies"
+{
+	print "npc_zombie 3; npc_headcrab 1,3"
+	print "npc_bullsquid 2"
+}
+
+rule SpawnCitizenManyXenemies
+{
+	criteria		HullHumanAllowed IsMass500 BestClassCitizen
+	response		SpawnCitizenManyXenemies
+}
+
+//============================================================================================================
+// Soldiers
+//============================================================================================================
+response "SpawnSoldierZombine"
+{
+	print "npc_hevzombie 1; npc_headcrab 0,1"
+}
+
+rule SpawnSoldierZombine
+{
+	criteria		HullHumanAllowed IsMass150 BestClassSoldier
+	response		SpawnSoldierZombine
+}
+
+response "SpawnSoldierManyXenemiesMid"
+{
+	print "npc_hevzombie 1,2; npc_headcrab 1,2"
+}
+
+rule SpawnSoldierManyXenemiesMid
+{
+	criteria		HullHumanAllowed IsMass250 BestClassSoldier
+	response		SpawnSoldierManyXenemiesMid
+}
+
+response "SpawnSoldierManyXenemies"
+{
+	print "npc_hevzombie 2,3; npc_headcrab 2,3"
+}
+
+rule SpawnSoldierManyXenemies
+{
+	criteria		HullHumanAllowed IsMass500 BestClassSoldier
+	response		SpawnSoldierManyXenemies
+}
+
+//============================================================================================================
+// Zombies/Headcrabs
+//============================================================================================================
+
+// Replaces headcrab
+response "SpawnZombieAnts"
+{
+	print "npc_antlion 1,2"
+}
+
+rule SpawnZombieAnts
+{
+	criteria		HullMediumAllowed IsMass100 BestClassZombie
+	response		SpawnZombieAnts
+}
+
+rule SpawnCrabAnts
+{
+	criteria		HullMediumAllowed IsMass100 BestClassHeadcrab
+	response		SpawnZombieAnts
+}
+
+// Replaces zombigaunt
+response "SpawnZombieSquids"
+{
+	print "npc_bullsquid 1; npc_bullsquid 2,4: IsBaby 1"
+}
+
+rule SpawnZombieSquids
+{
+	criteria		HullWideShortAllowed IsMass1000 BestClassZombie
+	response		SpawnZombieSquids
+}
+
+rule SpawnCrabSquids
+{
+	criteria		HullWideShortAllowed IsMass1000 BestClassHeadcrab
+	response		SpawnZombieAnts
+}
+
+//============================================================================================================
+// Antlions
+//============================================================================================================
+
+// Replaces antlions
+response "SpawnAntZombies"
+{
+	print "npc_zombie 1,2; npc_headcrab 0,1"
+}
+
+rule SpawnAntZombies
+{
+	criteria		HullHumanAllowed IsMass325 BestClassAntlion
+	response		SpawnAntZombies
+}
+
+// Replaces antlion guard
+response "SpawnGuardXonome"
+{
+	print "npc_zassassin; npc_headcrab 0,1"
+}
+
+rule SpawnGuardXonome
+{
+	criteria		HullHumanAllowed IsMass1000
+	best_class "npc_antlion*" required weight 6 // Outweighs guard's 1.5k mass
+	response		SpawnGuardXonome
+}
+
+//============================================================================================================
+// Vortigaunts
+//============================================================================================================
+response "SpawnVortZombieSingle"
+{
+	print "npc_zombigaunt 1"
+}
+
+rule SpawnVortZombieSingle
+{
+	criteria		HullHumanAllowed IsMass50 BestClassVortigaunt
+	response		SpawnVortZombieSingle
+}
+
+response "SpawnVortZombieMulti"
+{
+	print "npc_zombigaunt 1,2; npc_zombie 0,1; npc_headcrab 0,1"
+}
+
+rule SpawnVortZombieMulti
+{
+	criteria		HullHumanAllowed IsMass250 BestClassVortigaunt
+	response		SpawnVortZombieMulti
+}
+
+//============================================================================================================
+// Combine Mines
+//============================================================================================================
+
+// Need plenty of variety for the mine field in c5_2a
+response "SpawnCombineMineEnemies"
+{
+	print "npc_headcrab 2,3" displayfirst
+	print "npc_zombie 2,3; npc_headcrab 0,1"
+	print "npc_bullsquid 1"
+	print "npc_antlion 2,3"
+	//print "npc_stukabat 1,2" // Fix barnacle crash
+}
+
+rule SpawnCombineMineEnemies
+{
+	criteria		HullHumanAllowed IsMass50 BestClassCombineMine
+	response		SpawnCombineMineEnemies
+}
+
+//============================================================================================================
+// Misc. Wildlife
+//============================================================================================================
+
+// Replaces baby squids
+response "SpawnSquidCrabs"
+{
+	print "npc_headcrab 3,4"
+}
+
+rule SpawnSquidCrabs
+{
+	criteria		HullHumanAllowed IsMass200 BestClassBullsquid
+	response		SpawnSquidCrabs
+}
+
+// Replaces bullsquid
+response "SpawnSquidZombies"
+{
+	print "npc_zombie 2,3; npc_headcrab 0,1"
+	print "npc_antlion 3,4"
+}
+
+rule SpawnSquidZombies
+{
+	criteria		HullHumanAllowed IsMass500 BestClassBullsquid
+	response		SpawnSquidZombies
+}
+
+// Replaces stukabat
+rule SpawnStukaZombies
+{
+	criteria		HullHumanAllowed IsMass425 BestClassStukabat
+	response		SpawnSquidZombies
+}
+
+// Replaces pit drone
+rule SpawnPitDroneZombies
+{
+	criteria		HullHumanAllowed IsMass500 BestClassPitDrone
+	response		SpawnSquidZombies
+}
+
+// Sucking up a bunch of birds/boids causes karma to come and kill you
+response "SpawnBirdKarma"
+{
+	print "npc_vortigaunt 3"
+}
+
+rule SpawnAlienCrowKarma
+{
+	criteria		HullHumanAllowed IsMass25 BestClassAlienCrow
+	response		SpawnBirdKarma
+}
+
+rule SpawnCrowKarma
+{
+	criteria		HullHumanAllowed IsMass25 BestClassCrow
+	response		SpawnBirdKarma
+}

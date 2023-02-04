@@ -1,0 +1,627 @@
+//============================================================================================================
+// Wilson-Player Interactions
+// 
+// "Bad Cop."
+// "What?"
+// "BAD COP!"
+// "WHAT?"
+// "Forget it..."
+// 
+//============================================================================================================
+
+//============================================================================================================
+// Criteria
+//============================================================================================================
+criterion "TargetConceptMobbed"				"speechtarget_concept" "TLK_MOBBED" required
+criterion "TargetConceptManyEnemies"		"speechtarget_concept" "TLK_MANY_ENEMIES" required
+criterion "TargetConceptThrowGrenade"		"speechtarget_concept" "TLK_THROWGRENADE" required
+criterion "TargetConceptEnemyDead"			"speechtarget_concept" "TLK*ENEMY_DEAD" required // Allows for TLK_LAST_ENEMY_DEAD
+criterion "TargetConceptAllyKilled"			"speechtarget_concept" "TLK_ALLY_KILLED" required
+criterion "TargetConceptCommandSend"		"speechtarget_concept" "TLK_COMMAND_SEND" required
+criterion "TargetConceptPlayerReload"		"speechtarget_concept" "TLK_PLRELOAD" required
+criterion "TargetConceptPlayerHurt"			"speechtarget_concept" "TLK_PLHURT" required
+criterion "TargetConceptWound"				"speechtarget_concept" "TLK_WOUND" required
+criterion "TargetConceptWoundRemark"		"speechtarget_concept" "TLK_WOUND_REMARK" required
+criterion "TargetConceptFoundPlayer"		"speechtarget_concept" "TLK_FOUNDPLAYER" required
+criterion "TargetConceptAPCEjected"			"speechtarget_concept" "TLK_APC_EJECTED" required
+criterion "TargetConceptVehicleOverturned"	"speechtarget_concept" "TLK_VEHICLE_OVERTURNED" required
+criterion "TargetConceptUse"				"speechtarget_concept" "TLK_USE" required
+criterion "TargetConceptRemindPlayer"		"speechtarget_concept" "TLK_REMIND_PLAYER" required
+
+criterion "TargetConceptRemark"				"speechtarget_concept" "TLK_REMARK" required
+criterion "TargetConceptAnswerConcept"		"speechtarget_concept" "TLK_CONCEPT_ANSWER" required
+
+criterion "TargetRuleFallDamage"		"speechtarget_rule" "BadCopRemark*FallDamage" required
+criterion "TargetRuleWhiplash"			"speechtarget_rule" "BadCopRemark*Whiplash" required
+
+criterion "PlayerHealthyForResponse"		"playerhealthfrac" ">0.25" required
+
+//------------------------------------------------------------------------------------------------------------
+//============================================================================================================
+// 
+// Will-E
+// 
+//============================================================================================================
+//------------------------------------------------------------------------------------------------------------
+
+//================================================================================
+// Enemies
+// 
+// Will-E comments on Bad Cop's interactions with enemies.
+//================================================================================
+
+// When Bad Cop announces the death of his last enemy, Will-E occasionally remarks in disgust.
+response "WilsonAnswerBadCop_LastEnemyDead"
+{
+	scene "scenes/npc/wilson/bcresponse_enemydead1.vcd" predelay "0.25,0.5" respeakdelay 20
+	scene "scenes/npc/wilson/bcresponse_enemydead2.vcd" predelay "0.25,0.5" respeakdelay 20
+	scene "scenes/npc/wilson/bcresponse_enemydead3.vcd" predelay "0.25,0.5" respeakdelay 20
+	scene "scenes/npc/wilson/bcresponse_enemydead4.vcd" predelay "0.25,0.5" respeakdelay 20
+	scene "scenes/npc/wilson/bcresponse_enemydead5.vcd" predelay "0.25,0.5" respeakdelay 20 speakonce
+}
+
+rule WilsonAnswerBadCop_EnemyDead
+{
+	criteria		IsWilson SpeechTargetBadCop ConceptTalkConceptAnswer TargetConceptEnemyDead PlayerHealthyForResponse ContextOneorLessEnemy WilsonNotDamaged
+	response 		WilsonAnswerBadCop_LastEnemyDead
+}
+
+//--------------------------------------------------------------------------------
+
+// When Bad Cop calls out the death of an ally, Will-E occasionally has something to add.
+response "WilsonAnswerBadCop_AllyKilled"
+{
+	scene "scenes/npc/wilson/bcresponse_allykilled1.vcd" predelay "0.25,0.5" respeakdelay 20
+	scene "scenes/npc/wilson/bcresponse_allykilled2.vcd" predelay "0.25,0.5" respeakdelay 20
+	scene "scenes/npc/wilson/bcresponse_allykilled3.vcd" predelay "0.25,0.5" respeakdelay 20
+}
+
+rule WilsonAnswerBadCop_AllyKilled
+{
+	criteria		IsWilson SpeechTargetBadCop ConceptTalkConceptAnswer TargetConceptAllyKilled PlayerHealthyForResponse WilsonNotDamaged
+	response 		WilsonAnswerBadCop_AllyKilled
+}
+
+//--------------------------------------------------------------------------------
+
+// When Bad Cop comments on being mobbed, Will-E occasionally tries to encourage him.
+response "WilsonAnswerBadCop_Mobbed"
+{
+	//scene "scenes/npc/wilson/bcreload01.vcd" predelay "0.25" respeakdelay 10
+	//speak "BW_12_5" respeakdelay 10 // "You say mean things when you're mad!"
+	
+	speak "will_generic_ohjeez1" respeakdelay 10
+	speak "will_generic_ohjeez2" respeakdelay 10
+	speak "will_generic_ohjeez3" respeakdelay 10
+	
+	// print "You'll get through this!" respeakdelay 10
+	// print "I would help if I could!" respeakdelay 10
+	// print "Your clone dealt with these situations by running!" respeakdelay 10
+}
+
+rule WilsonAnswerBadCop_Mobbed
+{
+	criteria		IsWilson SpeechTargetBadCop ConceptTalkConceptAnswer TargetConceptMobbed
+	response 		WilsonAnswerBadCop_Mobbed
+}
+
+//--------------------------------------------------------------------------------
+
+// When Bad Cop comments on there being lots of enemies, Will-E occasionally comments on his comments.
+// response "WilsonAnswerBadCop_ManyEnemies"
+// {
+// 	//scene "scenes/npc/wilson/bcreload01.vcd" predelay "0.25" respeakdelay 10
+// 	
+// 	print "Er, don't jinx yourself." respeakdelay 10
+// 	print "Be careful." respeakdelay 10
+// 	//print "That ego didn't serve your clone too well!" respeakdelay 10
+// }
+// 
+// rule WilsonAnswerBadCop_ManyEnemies
+// {
+// 	criteria		IsWilson SpeechTargetBadCop ConceptTalkConceptAnswer TargetConceptManyEnemies
+// 	response 		WilsonAnswerBadCop_ManyEnemies
+// }
+
+//--------------------------------------------------------------------------------
+
+// // When Bad Cop calls out his grenade throws, Will-E occasionally says something.
+// response "WilsonAnswerBadCop_ThrowGrenade"
+// {
+// 	//scene "scenes/npc/wilson/bcreload01.vcd" predelay "0.25" respeakdelay 10
+// 	
+// 	print "Ooh, nice throw." respeakdelay 10
+// 	print "You should start playing baseball." respeakdelay 10
+// 	print "You're good at throwing things." respeakdelay 10
+// }
+// 
+// rule WilsonAnswerBadCop_ThrowGrenade
+// {
+// 	criteria		IsWilson SpeechTargetBadCop ConceptTalkConceptAnswer TargetConceptThrowGrenade
+// 	response 		WilsonAnswerBadCop_ThrowGrenade
+// }
+
+//--------------------------------------------------------------------------------
+
+// When Bad Cop is not the Drift King, Will-E will acknowledge this.
+response "WilsonAnswerBadCop_Overturned"
+{
+	norepeat
+	scene "scenes/npc/wilson/playerdead01.vcd" predelay "0.25,0.5"
+	scene "scenes/npc/wilson/playerdead02.vcd" predelay "0.25,0.5"
+}
+
+rule WilsonAnswerBadCop_Overturned
+{
+	criteria		IsWilson SpeechTargetBadCop ConceptTalkConceptAnswer TargetConceptVehicleOverturned
+	response 		WilsonAnswerBadCop_Overturned
+}
+
+//================================================================================
+// Damage
+// 
+// Will-E comments on Bad Cop's damage comments.
+//================================================================================
+
+// When Bad Cop comments on feeling like shit, Will-E attempts to comfort him.
+response "WilsonAnswerBadCop_PlayerHurt"
+{
+	scene "scenes/npc/wilson/bchurt02b.vcd" predelay "0.25,0.5" respeakdelay 10
+	scene "scenes/npc/wilson/bchurt02c.vcd" predelay "0.25,0.5" respeakdelay 10
+}
+
+rule WilsonAnswerBadCop_PlayerHurt
+{
+	criteria		IsWilson SpeechTargetBadCop ConceptTalkConceptAnswer TargetConceptPlayerHurt
+	
+	applyContext "hurt_remark:1:60"
+	
+	response 		WilsonAnswerBadCop_PlayerHurt
+}
+
+//--------------------------------------------------------------------------------
+
+// When Bad Cop breaks his legs, Will-E might comment on it.
+response "WilsonAnswerBadCop_FallDamage"
+{
+	scene "scenes/npc/wilson/bcresponse_fallremark1" predelay "0.25,0.5" respeakdelay 10
+}
+
+rule WilsonAnswerBadCop_FallDamage
+{
+	criteria		IsWilson SpeechTargetBadCop ConceptTalkConceptAnswer TargetConceptWoundRemark TargetRuleFallDamage
+	
+	// "hurt_remark" stops Will-E from doing the regular TLK_PLHURT response later
+	applyContext "hurt_remark:1:60"
+	
+	response 		WilsonAnswerBadCop_FallDamage
+}
+
+// response "WilsonAnswerBadCop_SawIt"
+// {
+// 	
+// 	print "I did! I think." predelay "0.25,0.5" respeakdelay 10
+// }
+// 
+// rule WilsonAnswerBadCop_FallDamageSeen
+// {
+// 	criteria		IsWilson SpeechTargetBadCop ConceptTalkConceptAnswer TargetConceptWoundRemark
+// 	
+// 	speechtarget_response "bc_react_fall_4" required // "Oh, I hope nobody saw that!"
+// 	
+// 	// "hurt_remark" stops Will-E from doing the regular TLK_PLHURT response later
+// 	applyContext "hurt_remark:1:60"
+// 	
+// 	response 		WilsonAnswerBadCop_SawIt
+// }
+// 
+// rule WilsonAnswerBadCop_Roadkill2Seen
+// {
+// 	criteria		IsWilson SpeechTargetBadCop ConceptTalkConceptAnswer TargetConceptEnemyDead
+// 	
+// 	speechtarget_response "bc_apc_roadkill2" required weight 5 // "Heh! Did anybody else see that?"
+// 	
+// 	response 		WilsonAnswerBadCop_SawIt
+// }
+
+//================================================================================
+// Misc
+// 
+// Will-E comments on miscellaneous Bad Cop-related stuff.
+//================================================================================
+
+// When Bad Cop commands soldiers somewhere, Will-E occasionally comments on his remarkable skills as a commander.
+// This is only done a few times and never again.
+response "WilsonAnswerBadCop_CommandSend"
+{
+	norepeat
+	scene "scenes/npc/wilson/bccommand_send1.vcd" predelay "0.25,0.5" respeakdelay 20
+	scene "scenes/npc/wilson/bccommand_send2.vcd" predelay "0.25,0.5" respeakdelay 20
+}
+
+rule WilsonAnswerBadCop_CommandSend
+{
+	criteria		IsWilson SpeechTargetBadCop ConceptTalkConceptAnswer TargetConceptCommandSend WilsonNotDamaged
+	only_silent_commandable "!=1" required // Don't respond to when we only have rollermines, etc. in our squad
+	response 		WilsonAnswerBadCop_CommandSend
+}
+
+//================================================================================
+// Concept Answer
+// 
+// Will-E responds back after Bad Cop comments on his comment.
+//================================================================================
+
+response "WilsonAnswerBadCop_CA_YoureWelcome"
+{
+	response "WilsonGenericItsFine"
+	speak "BW_C3_3_yeah" predelay "0.1,0.25" speakonce // "Yeah..."
+}
+
+rule WilsonAnswerBadCop_CA_YoureWelcome
+{
+	criteria		IsWilson SpeechTargetBadCop ConceptTalkConceptAnswer NPCIdle
+	speechtarget_response "*thanks*" required // Any response with "thanks" in it
+	response 		WilsonAnswerBadCop_CA_YoureWelcome
+}
+
+//------------------------------------------------------------------------------------------------------------
+//============================================================================================================
+// 
+// Bad Cop
+// 
+//============================================================================================================
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopAnswerWilson_Agree"
+{
+	response "BadCopGenericYep"
+}
+
+response "BadCopAnswerWilson_Agree_Awkward"
+{
+	norepeat
+	speak "bc_generic_uhhuh1" predelay "0.25,0.75" respeakdelay 10
+	speak "bc_generic_uhhuh2" predelay "0.25,0.75" respeakdelay 10
+	speak "bc_generic_whateveryousay1" predelay "0.25,0.75" respeakdelay 10
+	speak "bc_generic_whateveryousay1" predelay "0.25,0.75" respeakdelay 10
+	speak "bc_generic_whateveryousay2" predelay "0.25,0.75" respeakdelay 10
+}
+
+response "BadCopAnswerWilson_Agree_Friendly"
+{
+	norepeat
+	speak "BC_C41_nokidding" predelay "0.25,0.75" respeakdelay 10 // "No kidding."
+	speak "BC_C5_believeit" predelay "0.25,0.75" respeakdelay 10 // "You better believe it."
+	response "BadCopGenericChuckle"
+}
+
+response "BadCopAnswerWilson_Thanks_Awkward"
+{
+	norepeat
+	speak "bc_generic_uhhthanks1" predelay "0.25,0.75" respeakdelay 10
+	speak "bc_generic_uhhthanks2" predelay "0.25,0.75" respeakdelay 10
+	speak "bc_generic_uhhthanks3" predelay "0.25,0.75" respeakdelay 10
+}
+
+response "BadCopAnswerWilson_Thanks_Sarcastic"
+{
+	norepeat
+	scene "scenes/npc/badcop/sarcastic_geethanks01a.vcd" predelay "0.25,0.75"
+	scene "scenes/npc/badcop/sarcastic_geethanks02a.vcd" predelay "0.25,0.75"
+	scene "scenes/npc/badcop/sarcastic_geethanks03a.vcd" predelay "0.25,0.75"
+	speak "bc_generic_thanks_sarcastic1" predelay "0.25,0.75" respeakdelay 10
+	speak "bc_generic_thanks_sarcastic2" predelay "0.25,0.75" respeakdelay 10
+	speak "bc_generic_thanks_sarcastic3" predelay "0.25,0.75" respeakdelay 10
+}
+
+response "BadCopAnswerWilson_Apprehensive"
+{
+	norepeat
+	speak "BC_C41_notthink" predelay "0.25,0.75" respeakdelay 10 // "I'd rather not think about that."
+	speak "BC_C41_dontwannatalk" predelay "0.25,0.5" respeakdelay 10 // "I don't wanna talk about it."
+}
+
+response "BadCopAnswerWilson_Banter_Vehicle"
+{
+	norepeat
+	speak "BC_C41_hoodornament" predelay "0.25,0.75" respeakdelay 10 // "Be glad you're not a hood ornament."
+}
+
+response "BadCopAnswerWilson_Greet"
+{
+	norepeat
+	speak "bc_generic_hi1"
+	speak "bc_generic_hi3"
+	speak "bc_generic_hellothere4"
+}
+
+//--------------------------------------------------------------------------------
+
+// "We'll find a medkit eventually. Don't worry."
+// "Uh-huh."
+rule BadCopAnswerWilson_HurtIdle
+{
+	criteria		IsBadCop SpeechTargetWilson ConceptTalkConceptAnswer TargetConceptPlayerHurt
+	response 		BadCopAnswerWilson_Agree_Awkward
+	response 		BadCopAnswerWilson_Apprehensive
+}
+
+// "You should probably reload."
+// "Gee... Thanks."
+rule BadCopAnswerWilson_PlayerReload
+{
+	criteria		IsBadCop SpeechTargetWilson ConceptTalkConceptAnswer TargetConceptPlayerReload
+	response 		BadCopAnswerWilson_Thanks_Sarcastic
+}
+
+// "WHOA!"
+// "*chuckle*"
+//rule BadCopAnswerWilson_APCEject
+//{
+//	criteria		IsBadCop SpeechTargetWilson ConceptTalkConceptAnswer TargetConceptAPCEjected NPCIdle NoRecentCombat
+//	response 		BadCopGenericChuckle
+//}
+
+// "It's a good thing I don't get carsick."
+// "Be glad you're not a hood ornament."
+rule BadCopAnswerWilson_APCEject_Use
+{
+	criteria		IsBadCop SpeechTargetWilson ConceptTalkConceptAnswer TargetConceptUse NPCIdle
+	speechtarget_rule "WilsonUseAfterEjection" required
+	response 		BadCopAnswerWilson_Banter_Vehicle
+}
+
+// "Hey. Don't forget about those Xen grenades."
+// "Uhh... Thanks."
+rule BadCopAnswerWilson_RemindPlayer
+{
+	criteria		IsBadCop SpeechTargetWilson ConceptTalkConceptAnswer TargetConceptRemindPlayer NPCIdle
+	response 		BadCopAnswerWilson_Agree_Awkward
+	response 		BadCopAnswerWilson_Thanks_Awkward
+}
+
+//--------------------------------------------------------------------------------
+
+// "I'm feeling pretty shit."
+// "Hey, don't worry. We'll find a medkit for you eventually."
+// "Uhh... Thanks."
+rule BadCopAnswerWilson_CA_HurtIdle
+{
+	criteria		IsBadCop SpeechTargetWilson ConceptTalkConceptAnswer TargetConceptAnswerConcept
+	speechtarget_rule "WilsonAnswerBadCop_PlayerHurt" required
+	response 		BadCopAnswerWilson_Thanks_Awkward
+	response 		BadCopAnswerWilson_Agree_Awkward
+}
+
+// "Man down!"
+// "These guys die a lot, don't they?"
+// "Yep."
+rule BadCopAnswerWilson_CA_AllyKilled
+{
+	criteria		IsBadCop SpeechTargetWilson ConceptTalkConceptAnswer TargetConceptAnswerConcept
+	speechtarget_rule "WilsonAnswerBadCop_AllyKilled" required
+	response 		BadCopAnswerWilson_Agree
+}
+
+// "Move up!"
+// "You're a great commander."
+// "Uhh... Thanks."
+rule BadCopAnswerWilson_CA_GreatCommander
+{
+	criteria		IsBadCop SpeechTargetWilson ConceptTalkConceptAnswer TargetConceptAnswerConcept NPCIdle
+	speechtarget_response "scenes/npc/wilson/bccommand_send2.vcd" required
+	response 		BadCopAnswerWilson_Thanks_Awkward
+}
+
+// "It's so awesome I finally get to use this thing!"
+// "This is making me really uncomfortable."
+// "Be glad you're not a hood ornament."
+rule BadCopAnswerWilson_CA_EnemyDead_InVehicle
+{
+	criteria		IsBadCop SpeechTargetWilson ConceptTalkConceptAnswer TargetConceptAnswerConcept NPCIdle InVehicle
+	speechtarget_response "scenes/npc/wilson/bcresponse_enemydead5.vcd" required weight 2
+	response 		BadCopAnswerWilson_Banter_Vehicle
+}
+
+//--------------------------------------------------------------------------------
+// LEVEL 2
+//--------------------------------------------------------------------------------
+
+// "Be careful out there!"
+// "Uhh... Thanks."
+rule BadCopAnswerWilson_Farewell_Level2
+{
+	criteria		IsBadCop SpeechTargetWilson BadCopWilsonLevel_2
+	speechtarget_rule "WilsonAPCFarewell" required
+	response 		BadCopAnswerWilson_Agree_Awkward
+	response 		BadCopAnswerWilson_Thanks_Awkward
+}
+
+//--------------------------------------------------------------------------------
+// LEVEL 3
+//--------------------------------------------------------------------------------
+
+// "I think you got 'em."
+// "Yep."
+rule BadCopAnswerWilson_CA_EnemyDead_Level3
+{
+	criteria		IsBadCop SpeechTargetWilson NPCIdle ConceptTalkConceptAnswer TargetConceptAnswerConcept BadCopWilsonLevel_3
+	speechtarget_rule "WilsonAnswerBadCop_EnemyDead" required
+	response 		BadCopAnswerWilson_Agree
+}
+
+// "I don't think they're okay."
+// "Nope."
+rule BadCopAnswerWilson_CA_EnemyDead2_Level3
+{
+	criteria		IsBadCop SpeechTargetWilson NPCIdle ConceptTalkConceptAnswer TargetConceptAnswerConcept BadCopWilsonLevel_3
+	speechtarget_response "scenes/npc/wilson/bcresponse_enemydead2.vcd" required weight 2
+	response 		BadCopGenericNope
+}
+
+// "Be careful out there!"
+// "Yep."
+rule BadCopAnswerWilson_Farewell_Level3
+{
+	criteria		IsBadCop SpeechTargetWilson NPCIdle BadCopWilsonLevel_3
+	speechtarget_rule "WilsonAPCFarewell" required
+	response 		BadCopAnswerWilson_Agree
+}
+
+// "We'll find a medkit eventually. Don't worry."
+// "Yep."
+rule BadCopAnswerWilson_HurtIdle_Level3
+{
+	criteria		IsBadCop SpeechTargetWilson NPCIdle ConceptTalkConceptAnswer TargetConceptPlayerHurt NPCIdle BadCopWilsonLevel_3
+	response 		BadCopAnswerWilson_Agree
+}
+
+// "I'm feeling pretty shit."
+// "Hey, don't worry. We'll find a medkit for you eventually."
+// "Yep."
+rule BadCopAnswerWilson_CA_HurtIdle_Level3
+{
+	criteria		IsBadCop SpeechTargetWilson NPCIdle ConceptTalkConceptAnswer TargetConceptAnswerConcept BadCopWilsonLevel_3
+	speechtarget_rule "WilsonAnswerBadCop_PlayerHurt" required
+	response 		BadCopAnswerWilson_Agree
+}
+
+// "Oh, hello! I haven't seen you in a bit."
+// "Hi."
+rule BadCopAnswerWilson_FoundPlayer_Level3
+{
+	criteria		IsBadCop SpeechTargetWilson ConceptTalkConceptAnswer TargetConceptFoundPlayer BadCopWilsonLevel_3
+	response 		BadCopAnswerWilson_Greet
+}
+
+//--------------------------------------------------------------------------------
+// LEVEL 4
+//--------------------------------------------------------------------------------
+
+// "We'll find a medkit eventually. Don't worry."
+// "No kidding."
+rule BadCopAnswerWilson_HurtIdle_Level4
+{
+	criteria		IsBadCop SpeechTargetWilson ConceptTalkConceptAnswer TargetConceptPlayerHurt BadCopWilsonLevel_4
+	response 		BadCopAnswerWilson_Agree_Friendly
+}
+
+//--------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------
+
+// // Bad Cop makes fun of Will-E accidentally killing something.
+// response "BadCopAnswerWilson_EnemyDead"
+// {
+// 	print "Now you've gotta live with the consequences."
+// 	print "Get used to it."
+// }
+
+rule BadCopAnswerWilson_EnemyDead
+{
+	criteria		IsBadCop SpeechTargetWilson ConceptTalkConceptAnswer TargetConceptEnemyDead
+	// Using the response BadCopGenericChuckle instead of BadCopAnswerWilson_EnemyDead
+	response 		BadCopGenericChuckle
+}
+
+//--------------------------------------------------------------------------------
+
+// Bad Cop does a recursive loop.
+//response "BadCopAnswerWilson_AnswerAnswer"
+//{
+//	speak "BW_1_15" predelay "0.25,0.75" odds 50 respeakdelay 10
+//	speak "BW_2_4" predelay "0.25,0.75" odds 50 respeakdelay 10
+//	speak "BW_3_3" predelay "0.25,0.75" odds 50 respeakdelay 10
+//}
+//
+//rule BadCopAnswerWilson_AnswerAnswer
+//{
+//	criteria		IsBadCop SpeechTargetWilson ConceptTalkConceptAnswer TargetConceptAnswerConcept
+//	response 		BadCopAnswerWilson_AnswerAnswer
+//}
+
+//------------------------------------------------------------------------------------------------------------
+//============================================================================================================
+// 
+// Misc
+// 
+//============================================================================================================
+//------------------------------------------------------------------------------------------------------------
+criterion "InflictorIsWilson" "inflictor" "npc_wilson" required
+
+response "BadCopTakeDamageFromWilson"
+{
+	speak "bc_react_blunthit_2" respeakdelay 4
+	
+	//scene "scenes/npc/wilson/test_hitplayer01.vcd" respeakdelay 5
+}
+
+rule BadCopTakeDamageFromWilson
+{
+	criteria		IsBadCop SpeechTargetWilson ConceptTalkWound DamageTypeNotBlast InflictorIsWilson
+	applyContext "wilson_inflictor:1:10"
+	response 		BadCopTakeDamageFromWilson
+}
+
+response "WilsonApologizeForDamage"
+{
+	speak "NPC_Wilson.HitPlayer01" respeakdelay 4
+}
+
+rule WilsonApologizeForDamage
+{
+	criteria		IsWilson SpeechTargetBadCop ConceptTalkConceptAnswer TargetConceptWound
+	speechtarget_wilson_inflictor "1" required
+	response 		WilsonApologizeForDamage
+}
+
+response "WilsonWaitHere"
+{
+	norepeat
+	// "I'll wait here!"
+	speak "BC_c33_10a" respeakdelay 4
+}
+
+rule WilsonStopFollow
+{
+	criteria		IsWilson ConceptTalkStopFollow
+	response 		WilsonWaitHere
+}
+
+// Xen Grenade Will-E Scenes
+// These need to go here to get at both IsBadCop and IsWilson
+criterion "SubjectXenGrenade" "subject" "xengrenade" required
+
+response "BadCopCommentXenGrenade_Wilson"
+{
+	norepeat
+	scene "scenes/npc/badcop/pickup_xengrenades_wilson.vcd"
+}
+
+rule BadCopPickupXenGrenade_Wilson
+{
+	criteria		IsBadCop ConceptNewWeapon WeaponIsXenGrenade PlayerNearWillE
+	response		BadCopCommentXenGrenade_Wilson
+}
+
+rule WilsonSeeXenGrenade
+{
+	criteria		IsWilson ConceptTalkRemark SubjectXenGrenade IsSubjectNear50
+	response		BadCopCommentXenGrenade_Wilson
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopWilsonZombiguants"
+{
+	norepeat
+	scene "scenes/npc/wilson/c4_3_zombigaunts.vcd" respeakdelay 15
+}
+
+rule BadCopWilsonZombiguants
+{
+	// This rule's weight needs to be kept at 4 to be consistent with regular taunts
+	criteria		IsBadCop ConceptEnemyDead EnemyIsNPC PlayerNearWillE EnemyIsZombigaunt WilsonNotSpeaking
+	matchonce
+	response		BadCopWilsonZombiguants
+}

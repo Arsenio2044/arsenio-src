@@ -1,0 +1,19 @@
+//============================================================================================================
+// REMARKS
+// 
+// This is where the info_remarkables live
+// (and a few stares too)
+// 
+//============================================================================================================
+
+//------------------------------------------------------------------------------------------------------------
+
+//#include "talker/remarks_chapter_1.txt"
+#include "talker/remarks_chapter_2.txt"
+#include "talker/remarks_chapter_3.txt"
+#include "talker/remarks_chapter_4.txt"
+#include "talker/remarks_chapter_5.txt"
+#include "talker/remarks_chapter_6.txt"
+#include "talker/clonecop_radiobox.txt"
+
+//------------------------------------------------------------------------------------------------------------

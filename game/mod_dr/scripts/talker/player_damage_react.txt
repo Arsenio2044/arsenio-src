@@ -1,0 +1,549 @@
+//============================================================================================================
+// Bad Cop Damage React
+// 
+// An entire file just for damage reactions!? Talk about ouch!
+// 
+//============================================================================================================
+
+//============================================================================================================
+// Bad Cop criteria
+//============================================================================================================
+criterion "Damage10OrMore" "damage" ">=10" required
+criterion "InflictorIsVortexController" "inflictor" "vortex_controller" required weight 3
+
+//============================================================================================================
+// Bad Cop response groups
+//============================================================================================================
+
+response "BadCopTakeDamage"
+{
+	speak "bc_pain_generic_1" respeakdelay 4 nodelay 0
+	speak "bc_pain_generic_2" respeakdelay 4 nodelay 0
+	speak "bc_pain_generic_3" respeakdelay 4 nodelay 0
+	speak "bc_pain_generic_4" respeakdelay 4 nodelay 0
+	speak "bc_pain_generic_5" respeakdelay 4 nodelay 0
+	speak "bc_pain_generic_6" respeakdelay 4 nodelay 0
+	speak "bc_pain_generic_7" respeakdelay 4 nodelay 0
+	speak "bc_pain_generic_8" respeakdelay 4 nodelay 0
+	speak "bc_pain_generic_9" respeakdelay 4 nodelay 0
+	speak "bc_pain_generic_10" respeakdelay 4 nodelay 0
+	speak "bc_pain_generic_11" respeakdelay 4 nodelay 0
+	speak "bc_pain_generic_12" respeakdelay 4 nodelay 0
+}
+
+rule BadCopTakeDamage
+{
+	criteria		IsBadCop ConceptTalkWound NotInVehicle LastSpoke15OrMore
+	response 		BadCopTakeDamage
+}
+
+rule BadCopAPCTakeDamage
+{
+	// While in a vehicle, don't do pain grunts from bullets or buckshot
+	criteria		IsBadCop ConceptTalkWound DamageTypeNotBullet DamageTypeNotBuckshot InVehicle LastSpoke05OrMore
+	response 		BadCopTakeDamage
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// He's dead.
+response "BadCopDeath"
+{
+	speak "bc_death_generic_1" noscene respeakdelay 4
+	speak "bc_death_generic_2" noscene respeakdelay 4
+	speak "bc_death_generic_3" noscene respeakdelay 4
+	speak "bc_death_generic_4" noscene respeakdelay 4
+	speak "bc_death_generic_5" noscene respeakdelay 4
+	speak "bc_death_generic_6" noscene respeakdelay 4
+	speak "bc_death_generic_7" noscene respeakdelay 4
+	speak "bc_death_generic_8" noscene respeakdelay 4
+}
+
+rule BadCopDeath
+{
+	criteria		IsBadCop ConceptTalkDeath
+	response 		BadCopDeath
+}
+
+// He's extremely dead.
+response "BadCopExtremeDeath"
+{
+	speak "bc_death_excessive_1" noscene respeakdelay 4
+	speak "bc_death_excessive_2" noscene respeakdelay 4
+	speak "bc_death_excessive_3" noscene respeakdelay 4
+	speak "bc_death_excessive_4" noscene respeakdelay 4
+}
+
+rule BadCopBigFallDeath
+{
+	criteria		IsBadCop ConceptTalkDeath DamageTypeFall
+	damage ">=200" required
+	response 		BadCopExtremeDeath
+}
+
+rule BadCopCrushedDeath
+{
+	criteria		IsBadCop ConceptTalkDeath DamageTypeBlunt
+	damage ">=400" required
+	response 		BadCopExtremeDeath
+}
+
+rule BadCopGonomeDeath
+{
+	criteria		IsBadCop ConceptTalkDeath
+	inflictor "npc_zassassin" required
+	response 		BadCopExtremeDeath
+}
+
+rule BadCopAntlionGuardDeath
+{
+	criteria		IsBadCop ConceptTalkDeath
+	inflictor "npc_antlionguard" required
+	response 		BadCopExtremeDeath
+}
+
+// Death by Xen.
+response "BadCopVortexDeath"
+{
+	// TODO: Unique sound?
+	speak "WeaponXenGrenade.Schlorp_Medium" noscene respeakdelay 4
+}
+
+rule BadCopVortexDeath
+{
+	criteria		IsBadCop ConceptTalkDeath DamageTypeFall InflictorIsVortexController
+	response 		BadCopVortexDeath
+}
+
+//============================================================================================================
+// Damage Exclamations
+// 
+// Bad Cop is really talkative when he's damaged!
+// These have been revised so they're a lot less annoying and leave room for other lines.
+// Whoever dealt the damage should be visible and close enough for Bad Cop to talk to them.
+// 
+//============================================================================================================
+
+response "BadCopRemarkShockDamage"
+{
+	norepeat
+	speak "bc_react_shock_1" respeakdelay 6
+	speak "bc_react_shock_2" respeakdelay 6
+	speak "bc_react_shock_3" respeakdelay 6
+	speak "bc_react_shock_4" respeakdelay 6
+	speak "bc_react_shock_5" respeakdelay 6
+	speak "bc_react_shock_6" respeakdelay 6
+	speak "bc_react_shock_7" respeakdelay 6
+	speak "bc_react_shock_8" respeakdelay 6
+}
+
+rule BadCopRemarkShockDamage
+{
+	criteria		IsBadCop ConceptWoundRemark DamageTypeShock EnemyVisible HaventRemarkedDamageRecently LastSpoke10OrMore
+	
+	// We just remarked
+	applyContext "damage_remarked:1:30"
+	
+	response 		BadCopRemarkShockDamage
+}
+
+// Bad Cop always remarks for trigger_hurts, etc.
+rule BadCopRemarkShockDamageEnvironmental
+{
+	criteria		IsBadCop ConceptTalkWound DamageTypeShock EnemyIsNotNPC LastSpoke10OrMore
+	response 		BadCopRemarkShockDamage
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopRemarkBulletDamage"
+{
+	norepeat
+	speak "bc_react_shot_3" respeakdelay 6 odds 90
+	speak "bc_react_shot_6" respeakdelay 6 odds 90
+	speak "bc_react_shot_7" respeakdelay 6 odds 90
+	speak "bc_react_shot_8" respeakdelay 6 odds 90
+
+	// Now used for specific limbs
+	//speak "bc_react_shot_1"
+	//speak "bc_react_shot_2"
+	//speak "bc_react_shot_4"
+	//speak "bc_react_shot_5"
+}
+
+rule BadCopRemarkBulletDamage
+{
+	criteria		IsBadCop ConceptWoundRemark DamageTypeBullet EnemyVisible EnemyDistance512OrLess HaventRemarkedDamageRecently LastSpoke10OrMore
+	
+	// We just remarked
+	applyContext "damage_remarked:1:30"
+	
+	response 		BadCopRemarkBulletDamage
+}
+
+// Bad Cop was shot in the leg
+response "BadCopRemarkBulletLegDamage"
+{
+	norepeat
+	speak "bc_react_shot_2" respeakdelay 6
+	speak "bc_react_shot_4" respeakdelay 6
+	speak "bc_react_fall_2" respeakdelay 6
+}
+
+rule BadCopRemarkBulletLegDamage
+{
+	criteria		IsBadCop ConceptWoundRemark NotInVehicle DamageTypeBullet EnemyVisible EnemyDistance512OrLess HitgroupAnyLeg HaventRemarkedDamageRecently LastSpoke10OrMore
+	
+	// We just remarked
+	applyContext "damage_remarked:1:30"
+	
+	response 		BadCopRemarkBulletLegDamage
+}
+
+// Bad Cop was shot in the face
+response "BadCopRemarkBulletHeadDamage"
+{
+	norepeat
+	speak "bc_react_shot_1" respeakdelay 6
+	speak "bc_react_shot_5" respeakdelay 6
+	speak "BC_C43_6" respeakdelay 6 // Temp or not?
+}
+
+rule BadCopRemarkBulletHeadDamage
+{
+	criteria		IsBadCop ConceptWoundRemark NotInVehicle DamageTypeBullet EnemyVisible EnemyDistance512OrLess HitgroupHead HaventRemarkedDamageRecently LastSpoke10OrMore
+	
+	// We just remarked
+	applyContext "damage_remarked:1:30"
+	
+	response 		BadCopRemarkBulletHeadDamage
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+rule BadCopRemarkBuckshotDamage
+{
+	criteria		IsBadCop ConceptWoundRemark DamageTypeBuckshot EnemyVisible EnemyDistance512OrLess HaventRemarkedDamageRecently LastSpoke10OrMore
+	
+	// We just remarked
+	applyContext "damage_remarked:1:30"
+	
+	// Maybe use a custom response eventually?
+	response 		BadCopRemarkBulletDamage
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopRemarkBurnDamage"
+{
+	norepeat
+	speak "bc_react_burn_1" respeakdelay 6
+	speak "bc_react_burn_2" respeakdelay 6
+	speak "bc_react_burn_3" respeakdelay 6
+	speak "bc_react_burn_4" respeakdelay 6
+	speak "bc_react_burn_5" respeakdelay 6
+	speak "bc_react_burn_6" respeakdelay 6
+	speak "bc_react_burn_7" respeakdelay 6
+	speak "bc_react_burn_8" respeakdelay 6
+}
+
+rule BadCopRemarkBurnDamage
+{
+	criteria		IsBadCop ConceptWoundRemark DamageTypeBurn EnemyVisible HaventRemarkedDamageRecently LastSpoke05OrMore
+	
+	// We just remarked
+	applyContext "damage_remarked:1:30"
+	
+	response 		BadCopRemarkBurnDamage
+}
+
+// Bad Cop always remarks for trigger_hurts, etc.
+rule BadCopRemarkBurnDamageEnvironmental
+{
+	criteria		IsBadCop ConceptTalkWound DamageTypeBurn EnemyIsNotNPC
+	response 		BadCopRemarkBurnDamage
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopRemarkBluntDamage"
+{
+	norepeat
+	speak "bc_react_blunthit_1" respeakdelay 6
+	speak "bc_react_blunthit_2" respeakdelay 6
+	speak "bc_react_blunthit_3" respeakdelay 6
+	speak "bc_react_blunthit_4" respeakdelay 6
+	speak "bc_react_blunthit_5" respeakdelay 6
+	speak "bc_react_blunthit_6" respeakdelay 6
+	speak "bc_react_blunthit_7" respeakdelay 6
+	speak "bc_react_blunthit_8" respeakdelay 6
+}
+
+rule BadCopRemarkBluntDamage
+{
+	criteria		IsBadCop ConceptWoundRemark DamageTypeBlunt EnemyVisible InflictorIsPhysics HaventRemarkedDamageRecently EnemyIsNPC LastSpoke05OrMore
+	
+	// We just remarked
+	applyContext "damage_remarked:1:30"
+	
+	response 		BadCopRemarkBluntDamage
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// The player fell and took damage
+response "BadCopRemarkFallDamage"
+{
+	norepeat
+	speak "bc_react_fall_1" respeakdelay 6 nodelay 0
+	speak "bc_react_fall_2" respeakdelay 6 nodelay 0
+	speak "bc_react_fall_3" respeakdelay 6 nodelay 0
+	speak "bc_react_fall_4" respeakdelay 6 nodelay 0
+	speak "bc_react_fall_5" respeakdelay 6 nodelay 0
+}
+
+rule BadCopRemarkFallDamage
+{
+	criteria		IsBadCop ConceptWoundRemark DamageTypeFall HaventRemarkedDamageRecently LastSpoke05OrMore
+	
+	// We just remarked
+	applyContext "damage_remarked:1:30,just_fell:1:45"
+	
+	response 		BadCopRemarkFallDamage
+}
+
+// After the player fell and took damage,
+// the player managed to do it again
+response "BadCopRemarkSuccessiveFallDamage"
+{
+	norepeat
+	speak "bc_react_fall_6" //respeakdelay 6
+	speak "bc_react_fall_7" //respeakdelay 6
+	speak "bc_react_fall_8" //respeakdelay 6
+}
+
+rule BadCopRemarkSuccessiveFallDamage
+{
+	criteria		IsBadCop ConceptWoundRemark DamageTypeFall //HaventRemarkedDamageRecently
+	just_fell "1" required weight 2
+	
+	// We just remarked
+	applyContext "damage_remarked:1:30,just_fell:0:10"
+	
+	response 		BadCopRemarkSuccessiveFallDamage
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopRemarkAcidDamage"
+{
+	norepeat
+	speak "bc_react_acid_1" respeakdelay 6
+	speak "bc_react_acid_2" respeakdelay 6
+	speak "bc_react_acid_3" respeakdelay 6
+	speak "bc_react_acid_4" respeakdelay 6
+}
+
+rule BadCopRemarkAcidDamage
+{
+	criteria		IsBadCop ConceptWoundRemark DamageTypeAcid HaventRemarkedDamageRecently LastSpoke05OrMore
+	
+	// We just remarked
+	applyContext "damage_remarked:1:30"
+	
+	response 		BadCopRemarkAcidDamage
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopRemarkAPCDamage"
+{
+	norepeat
+	speak "bc_react_apc_damage_1" respeakdelay 6
+	speak "bc_react_apc_damage_2" respeakdelay 6
+	//speak "bc_react_apc_damage_3" respeakdelay 6
+	speak "bc_react_apc_damage_4" respeakdelay 6
+	speak "bc_react_apc_damage_5" respeakdelay 6
+}
+
+rule BadCopRemarkAPCDamage
+{
+	criteria		IsBadCop ConceptWoundRemark InAPC EnemyVisible HaventRemarkedDamageRecently LastSpoke10OrMore
+	response 		BadCopRemarkAPCDamage
+}
+
+response "BadCopRemarkAPCWhiplash"
+{
+	norepeat
+	speak "bc_react_apc_crash_1" respeakdelay 6
+	speak "bc_react_apc_crash_2" respeakdelay 6
+	// speak "bc_react_apc_crash_3" respeakdelay 6 // TODO Make sure this only plays on ice
+	speak "bc_react_apc_crash_4" respeakdelay 6
+	speak "bc_react_apc_crash_5" respeakdelay 6
+}
+
+rule BadCopRemarkAPCWhiplash
+{
+	criteria		IsBadCop ConceptWoundRemark InVehicle DamageTypeVehicle HaventRemarkedDamageRecently LastSpoke05OrMore
+	response 		BadCopRemarkAPCWhiplash
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopRemarkAntlionDamage"
+{
+	norepeat
+	// Antlion hits are really common in Chapter 1, so they're fine having a lower chance of playing,
+	// especially since it encourages other responses (most notably revenge lines).
+	speak "bc_react_antlionhit_1" respeakdelay 6 odds 75
+	speak "bc_react_antlionhit_2" respeakdelay 6 odds 75
+	speak "bc_react_antlionhit_4" respeakdelay 6 odds 75
+	speak "bc_react_antlionhit_5" respeakdelay 6 odds 75
+	// speak "bc_react_antlionhit_6" respeakdelay 6 odds 75 // Sounds too edgy
+	speak "bc_react_antlionhit_8" respeakdelay 6 odds 75
+	
+	// Now used for slash revenge
+	//speak "bc_react_antlionhit_3"
+	//speak "bc_react_antlionhit_7"
+}
+
+rule BadCopRemarkAntlionDamage
+{
+	criteria		IsBadCop ConceptWoundRemark DamageTypeSlash EnemyVisible EnemyIsAntLion HaventRemarkedDamageRecently LastSpoke10OrMore
+	
+	// We just remarked
+	applyContext "damage_remarked:1:30"
+	
+	response 		BadCopRemarkAntlionDamage
+}
+
+response "BadCopRemarkZombieDamage"
+{
+	norepeat
+	speak "bc_react_zombiehit_1" respeakdelay 6 odds 80
+	speak "bc_react_zombiehit_2" respeakdelay 6 odds 80
+	speak "bc_react_zombiehit_3" respeakdelay 6 odds 80
+	// speak "bc_react_zombiehit_4" respeakdelay 6 odds 80 // Too weird
+	speak "bc_react_zombiehit_5" respeakdelay 6 odds 80
+	speak "bc_react_zombiehit_6" respeakdelay 6 odds 80
+	speak "bc_react_zombiehit_7" respeakdelay 6 odds 80
+	
+	// Now used for slash revenge
+	//speak "bc_react_zombiehit_8" // Low brow
+}
+
+rule BadCopRemarkZombieDamage
+{
+	criteria		IsBadCop ConceptWoundRemark DamageTypeSlash EnemyVisible EnemyIsZombie HaventRemarkedDamageRecently LastSpoke10OrMore
+	
+	// We just remarked
+	applyContext "damage_remarked:1:30"
+	
+	response 		BadCopRemarkZombieDamage
+}
+
+rule BadCopRemarkFastZombieDamage
+{
+	criteria		IsBadCop ConceptWoundRemark DamageTypeSlash EnemyVisible EnemyIsFastZombie HaventRemarkedDamageRecently LastSpoke10OrMore
+	
+	// We just remarked
+	applyContext "damage_remarked:1:30"
+	
+	response 		BadCopRemarkZombieDamage
+}
+
+rule BadCopRemarkZombineDamage
+{
+	criteria		IsBadCop ConceptWoundRemark DamageTypeSlash EnemyVisible EnemyIsZombine HaventRemarkedDamageRecently LastSpoke10OrMore
+	
+	// We just remarked
+	applyContext "damage_remarked:1:30"
+	
+	response 		BadCopRemarkZombieDamage
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopRemarkTemporalCrabDamage"
+{
+	norepeat
+	speak "bc_react_shot_2" respeakdelay 6 odds 75
+	speak "bc_react_blunthit_2" respeakdelay 6 odds 75
+	speak "bc_react_blunthit_3" respeakdelay 6 odds 75
+}
+
+rule BadCopRemarkTemporalCrabDamage
+{
+	criteria		IsBadCop ConceptWoundRemark DamageTypeSonic EnemyVisible EnemyIsPoisonHeadcrab HaventRemarkedDamageRecently LastSpoke10OrMore
+	
+	// We just remarked
+	applyContext "damage_remarked:1:30"
+	
+	response 		BadCopRemarkTemporalCrabDamage
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Gah! Foiled again!
+response "BadCopInBarnacle"
+{
+	speak "bc_pain_generic_3" respeakdelay 100
+	speak "bc_pain_generic_5" respeakdelay 100
+	speak "bc_pain_generic_6" respeakdelay 100
+	speak "bc_pain_generic_8" respeakdelay 100
+	speak "bc_pain_generic_9" respeakdelay 100
+}
+
+rule BadCopInBarnacle
+{
+	criteria		IsBadCop ConceptSelfInBarnacle LastSpoke10OrMore
+	response 		BadCopInBarnacle
+	response 		BadCopGenericJolted
+}
+
+// Paparazzi!
+rule BadCopScannerFlash
+{
+	criteria		IsBadCop ConceptScannerFlash
+	applyContext "flashed:1:15"
+	response 		BadCopInBarnacle
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// TODO: Needs approval
+//response "BadCopRemarkCloneBulletDamage"
+//{
+//	norepeat
+//	speak "bc_react_clone_shot_1" respeakdelay 6
+//}
+//
+//rule BadCopRemarkCloneBulletDamage
+//{
+//	criteria		IsBadCop ConceptWoundRemark DamageTypeBullet EnemyVisible EnemyIsCloneCop HaventRemarkedDamageRecently LastSpoke10OrMore
+//	
+//	// We just remarked
+//	applyContext "damage_remarked:1:30"
+//	
+//	response 		BadCopRemarkCloneBulletDamage
+//}
+
+//------------------------------------------------------------------------------------------------------------
+
+// The player is falling into a Xen vortex
+response "BadCopRemarkVortexDamage"
+{
+	response "BadCopGenericShitRepeat" respeakdelay 6
+}
+
+rule BadCopRemarkVortexDamage
+{
+	criteria		IsBadCop ConceptWoundRemark DamageTypeFall InflictorIsVortexController HaventRemarkedDamageRecently LastSpoke05OrMore
+	
+	// We just remarked
+	applyContext "damage_remarked:1:30"
+	
+	response 		BadCopRemarkVortexDamage
+}
+
+//------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,47 @@
+"weapon_Crossbow.Draw" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/NewCrossbow/xbow_draw.wav"
+}
+
+"weapon_Crossbow.Fidget" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/NewCrossbow/xbow_fidget.wav"
+}
+
+"weapon_Crossbow.Holster" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/NewCrossbow/xbow_putaway.wav"
+}
+
+"weapon_Crossbow.Slingpull" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/NewCrossbow/xbow_slingpull.wav"
+}
+
+"weapon_Crossbow.Magout" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/NewCrossbow/xbow_magout.wav"
+}
+
+"weapon_Crossbow.Magin" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/NewCrossbow/xbow_magin.wav"
+}

@@ -1,0 +1,28 @@
+//============================================================================================================
+// Bad Cop Chapter 3
+// 
+// Bad Cop lines specific to Chapter 3.
+// This is #included from the main scripts.
+// 
+//============================================================================================================
+
+// 
+// NOTE: Remarkables are kept in "remarks_chapter_#.txt" now!!!
+// 
+
+//============================================================================================================
+// ez2_c3_3 map specific response - LET ME IN! LET ME IIIIIIIIN
+//============================================================================================================
+criterion "SpeechTargetAmmoCageDoor" "speechtargetname" "ammocage_door" required
+
+response "BadCopLetMeIn"
+{
+	norepeat
+	speak "BC_c33_3"
+}
+
+rule BadCopUseAmmoCageDoor
+{
+	criteria		IsBadCop ConceptTalkUse SpeechTargetAmmoCageDoor
+	response		BadCopLetMeIn
+}

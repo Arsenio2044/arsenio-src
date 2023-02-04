@@ -1,0 +1,392 @@
+//============================================================================================================
+// Bad Cop Ally Interactions
+// 
+// An entire file just for ally interactions!? I'll tell my friends!
+// 
+//============================================================================================================
+
+//============================================================================================================
+// Bad Cop criteria
+//============================================================================================================
+
+//============================================================================================================
+// Bad Cop response groups
+//============================================================================================================
+
+//============================================================================================================
+// Ally killed
+// 
+// Someone killed Bad Cop's friend!
+//============================================================================================================
+
+// Whenever an ally is killed and a non-final line is used, this context is applied.
+// This was originally intended to prevent the line from being used too often without using a higher respeakdelay,
+// which leaves room for unique lines without branching to another concept.
+// 
+// However, we are also using it for BadCopSquadDead so the line doesn't get used when the player had only 1 squadmate to begin with
+// and is appropriately used when Bad Cop's allies die in quick succession.
+criterion "HaventCommentedAllyDeath" "ally_was_killed" "!=1" required weight -2
+criterion "RecentlyCommentedAllyDeath" "ally_was_killed" "1" required weight 2
+
+// Bad Cop saw one of his squadmates die
+response "BadCopSquadMemberKilled"
+{
+	norepeat
+	speak "bc_squadmemberdown_1" respeakdelay 3
+	speak "bc_squadmemberdown_2" respeakdelay 3
+	speak "BC_C11_cmon_2"  respeakdelay 3 // C'mon!
+}
+rule BadCopSquadMemberKilled
+{
+	criteria		IsBadCop ConceptTalkAllyKilled SpeechTargetInPlayerSquad SpeechTargetVisible HaventCommentedAllyDeath
+	applyContext "ally_was_killed:1:30"
+	response 		BadCopSquadMemberKilled
+}
+
+// All of Bad Cop's squad is dead (doesn't need to see it)
+response "BadCopSquadDead"
+{
+	norepeat
+	speak "bc_squaddown_1" respeakdelay 10
+	speak "bc_squaddown_2" respeakdelay 10
+	speak "bc_squaddown_3" respeakdelay 10
+	response "BadCopGenericWellShit" respeakdelay 10
+}
+rule BadCopSquadDead
+{
+	criteria		IsBadCop ConceptTalkAllyKilled SpeechTargetInPlayerSquad HasOneOrNoSquadMates RecentlyCommentedAllyDeath
+	response 		BadCopSquadDead
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Bad Cop saw an ally die painfully
+response "BadCopAllyBrutallyKilled"
+{
+	norepeat
+	speak "bc_allypainful_1" respeakdelay 10
+	speak "bc_allypainful_2" respeakdelay 10
+	speak "bc_allypainful_3" respeakdelay 10
+	speak "bc_allypainful_4" respeakdelay 10
+
+	// These were originally placeholders
+	speak "bc_taunt_zombine_3" respeakdelay 10 displaylast
+	speak "bc_taunt_fire_4" respeakdelay 10 displaylast
+}
+rule BadCopAllyBrutallyKilled_BigDamage
+{
+	// Catch-all super-damage
+	criteria		IsBadCop ConceptTalkAllyKilled HasMultipleOrNoSquadMates SpeechTargetVisible SpeechTargetHumanoid
+	damage ">=100" required
+	applyContext "ally_was_killed:1:30"
+	response 		BadCopAllyBrutallyKilled
+}
+
+rule BadCopAllyBrutallyKilled_Dissolve
+{
+	criteria		IsBadCop ConceptTalkAllyKilled HasMultipleOrNoSquadMates DamageTypeDissolve SpeechTargetVisible SpeechTargetHumanoid
+	applyContext "ally_was_killed:1:30"
+	response 		BadCopAllyBrutallyKilled
+}
+//rule BadCopAllyBrutallyKilled_Boogie
+//{
+//	// DMG_GENERIC with 10,000 damage = Boogie
+//	// If it's not boogie, then it's probably brutal enough to warrant this anyway.
+//	criteria		IsBadCop ConceptTalkAllyKilled HasMultipleOrNoSquadMates DamageTypeGeneric SpeechTargetVisible SpeechTargetHumanoid
+//	damage "10000" required
+//	applyContext "ally_was_killed:1:30"
+//	response 		BadCopAllyBrutallyKilled
+//}
+//rule BadCopAllyBrutallyKilled_Interaction
+//{
+//	// DMG_PREVENT_PHYSICS_FORCE is used in dynamic interactions, so we use that to test if the enemy was brutally murdered.
+//	criteria		IsBadCop ConceptTalkAllyKilled HasMultipleOrNoSquadMates DamageTypePreventPhysForce DamageTypeNotDissolve SpeechTargetHumanoid
+//	applyContext "ally_was_killed:1:30"
+//	response 		BadCopAllyBrutallyKilled
+//}
+rule BadCopAllyBrutallyKilled_Crossbow
+{
+	criteria		IsBadCop ConceptTalkAllyKilled HasMultipleOrNoSquadMates InflictorIsCrossbowBolt SpeechTargetVisible SpeechTargetHumanoid
+	applyContext "ally_was_killed:1:30"
+	response 		BadCopAllyBrutallyKilled
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Bad Cop saw an elite soldier die
+response "BadCopEliteKilled"
+{
+	norepeat
+	speak "bc_taunt_zombine_3" respeakdelay 10
+}
+rule BadCopEliteKilled
+{
+	criteria		IsBadCop ConceptTalkAllyKilled SpeechTargetVisible HaventCommentedAllyDeath
+	
+	// IsElite exists, but we need to increase response weight
+	elite "1" required weight 2
+	
+	applyContext "ally_was_killed:1:30"
+	matchonce
+	
+	response 		BadCopEliteKilled
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Bad Cop saw a hunter die
+response "BadCopHunterKilled"
+{
+	norepeat
+	speak "bc_hunterdead_1" respeakdelay 3
+	speak "bc_hunterdead_2" respeakdelay 3
+}
+rule BadCopHunterKilled
+{
+	criteria		IsBadCop ConceptTalkAllyKilled SpeechTargetHunter SpeechTargetVisible
+	response 		BadCopHunterKilled
+}
+
+//------------------------------------------------------------------------------------------------------------
+// Wilson Death Responses
+// Changes depending on level
+//------------------------------------------------------------------------------------------------------------
+
+// Bad Cop saw his talking keycard get destroyed
+response "BadCopWilsonKilled_Level0"
+{
+	response "BadCopGenericShit"
+}
+rule BadCopWilsonKilled_Level0
+{
+	criteria		IsBadCop ConceptTalkAllyKilled SpeechTargetWilson BadCopWilsonLevel_0
+	response 		BadCopWilsonKilled_Level0
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Bad Cop saw Wilson die
+response "BadCopWilsonKilled_Level1"
+{
+	scene "scenes/npc/badcop/wilson_death_ohnoanyway01a.vcd" predelay "0.25,0.5" respeakdelay 10
+	scene "scenes/npc/badcop/wilson_death_ohnoanyway02a.vcd" predelay "0.25,0.5" respeakdelay 10
+	scene "scenes/npc/badcop/wilson_death_ohnoanyway03a.vcd" predelay "0.25,0.5" respeakdelay 10
+}
+rule BadCopWilsonKilled_Level1
+{
+	criteria		IsBadCop ConceptTalkAllyKilled SpeechTargetWilson SpeechTargetVisible BadCopWilsonLevel_1
+	response 		BadCopWilsonKilled_Level1
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Bad Cop saw Wilson die
+response "BadCopWilsonKilled_Level2"
+{
+	scene "scenes/npc/badcop/wilson_death_ask01a.vcd" predelay "0.25,0.5" respeakdelay 10
+	scene "scenes/npc/badcop/wilson_death_ask02a.vcd" predelay "0.25,0.5" respeakdelay 10
+	scene "scenes/npc/badcop/wilson_death_ask03a.vcd" predelay "0.25,0.5" respeakdelay 10
+}
+rule BadCopWilsonKilled_Level2
+{
+	criteria		IsBadCop ConceptTalkAllyKilled SpeechTargetWilson SpeechTargetVisible BadCopWilsonLevel_2
+	applyContext "wilson_grief:1:120"
+	response 		BadCopWilsonKilled_Level2
+}
+
+// Bad Cop didn't see Wilson die
+rule BadCopWilsonKilled_Level2_Unseen
+{
+	criteria		IsBadCop ConceptTalkAllyKilled SpeechTargetWilson BadCopWilsonLevel_2
+	applyContext "wilson_grief:1:180"
+	response 		BadCopWilsonKilled_Level2
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Bad Cop saw Wilson die
+response "BadCopWilsonKilled_Level3"
+{
+	scene "scenes/npc/badcop/wilson_death_godshit01a.vcd" respeakdelay 10
+	scene "scenes/npc/badcop/wilson_death_godshit02a.vcd" respeakdelay 10
+	scene "scenes/npc/badcop/wilson_death_godshit03a.vcd" respeakdelay 10
+}
+rule BadCopWilsonKilled_Level3
+{
+	criteria		IsBadCop ConceptTalkAllyKilled SpeechTargetWilson SpeechTargetVisible BadCopWilsonLevel_3
+	applyContext "wilson_grief:1:240"
+	response 		BadCopWilsonKilled_Level3
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// Bad Cop saw Wilson die
+response "BadCopWilsonKilled_Level4"
+{
+	scene "scenes/npc/badcop/wilson_death_wilsoooooon01a.vcd" predelay "0.25,0.5" respeakdelay 10
+	scene "scenes/npc/badcop/wilson_death_wilsoooooon02a.vcd" predelay "0.25,0.5" respeakdelay 10
+	scene "scenes/npc/badcop/wilson_death_wilsoooooon03a.vcd" predelay "0.25,0.5" respeakdelay 10
+}
+rule BadCopWilsonKilled_Level4
+{
+	criteria		IsBadCop ConceptTalkAllyKilled SpeechTargetWilson SpeechTargetVisible BadCopWilsonLevel_4
+	applyContext "wilson_grief:1:300"
+	response 		BadCopWilsonKilled_Level4
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+response "BadCopWilsonGrief"
+{
+	norepeat
+	speak "bc_generic_goddammit1"
+	speak "bc_generic_ugh1"
+	response "BadCopGenericBreatheIn"
+}
+rule BadCopWilsonGrief
+{
+	criteria		IsBadCop ConceptTalkIdle LastSpoke15OrMore NoRecentCombat
+	wilson_grief "1" required
+	response 		BadCopWilsonGrief
+}
+
+//============================================================================================================
+// Enemy killed by ally
+// 
+// Bad Cop cheers on when their enemy is killed by an ally!
+// (when he cares)
+//============================================================================================================
+response "BadCopCheerRollermine"
+{
+	norepeat
+	// TODO: Implement unique lines
+	//response "BadCopTauntGeneric" respeakdelay 10
+	speak "bc_taunt_fire_4" respeakdelay 10
+}
+
+rule BadCopCheerRollermine
+{
+	criteria		IsBadCop ConceptAllyKilledNPC EnemyVisible SpeechTargetRollermine
+	response 		BadCopCheerRollermine
+}
+
+// Bad Cop witnessed a hunter brutally murdering someone.
+response "BadCopCheerHunter"
+{
+	norepeat
+	speak "bc_taunt_hunterkill1" respeakdelay 20 displayfirst
+	speak "bc_taunt_hunterkill2" respeakdelay 20
+	speak "bc_taunt_fire_4" respeakdelay 20
+}
+
+rule BadCopCheerHunter
+{
+	// We used to only allow DMG_PREVENT_PHYSICS_FORCE (dynamic interactions) to trip this, but this now also plays with any non-dissolve hunter damage.
+	criteria		IsBadCop ConceptAllyKilledNPC EnemyVisible SpeechTargetHunter DamageTypeNotDissolve EnemyDistance256OrLess //DamageTypePreventPhysForce
+	response 		BadCopCheerHunter
+}
+
+// Soldiers in the player's squad killed someone with grenades.
+response "BadCopCheerSquadGrenade"
+{
+	norepeat
+	// TODO: Implement unique lines
+	speak "bc_apc_kill_rocket1" respeakdelay 15
+}
+
+rule BadCopCheerSquadGrenade
+{
+	criteria		IsBadCop ConceptAllyKilledNPC EnemyVisible DamageTypeBlast SpeechTargetInPlayerSquad
+	response 		BadCopCheerSquadGrenade
+}
+
+// Bad Cop's enemy was killed by a gunship and it was really close to him.
+response "BadCopCheerCloseShave"
+{
+	norepeat
+	speak "bc_generic_jolted1" respeakdelay 5 // Whoa!
+	speak "bc_generic_jolted2" respeakdelay 5 // Whoa!
+	speak "bc_generic_jolted3" respeakdelay 5 // Whoa!
+	speak "bc_generic_jolted4" respeakdelay 5 // Whoa!
+}
+
+rule BadCopCheerCloseShave
+{
+	criteria		IsBadCop ConceptAllyKilledNPC EnemyVisible SpeechTargetGunship EnemyDistance128OrLess
+	response 		BadCopCheerCloseShave
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// A squadmate saved Bad Cop from dying.
+response "BadCopSavedBySoldier"
+{
+	norepeat
+	// TODO: Implement unique lines
+	speak "bc_taunt_headshot_3" respeakdelay 15
+}
+
+rule BadCopSavedBySoldier
+{
+	criteria		IsBadCop ConceptAllyKilledNPC EnemyVisible SpeechTargetVisible EnemyDistance256OrLess ContextOneorLessEnemy SpeechTargetInPlayerSquad EnemyAttackingMe
+	healthfrac "<0.2" required
+	applyContext "hurt_remark:1:50" // Don't do hurt idle
+	response 		BadCopSavedBySoldier
+}
+
+//------------------------------------------------------------------------------------------------------------
+
+// 
+// Sometimes Bad Cop should say his taunt line anyway when an ally kills an uncommon enemy or an enemy in an uncommon situation.
+// This is to help boost how often Bad Cop says unique lines without losing that opportunity to an ally killing them.
+// 
+
+rule BadCopFriendTauntHEVZombie
+{
+	criteria		IsBadCop ConceptAllyKilledNPC EnemyVisible EnemyIsZombine EnemyIsXenian
+	response		BadCopTauntHEVZombie
+}
+
+//rule BadCopFriendTauntOnFire
+//{
+//	criteria		IsBadCop ConceptAllyKilledNPC EnemyVisible EnemyOnFire EnemyIsNPC EnemyIsNotClassHeadcrab
+//	response		BadCopTauntOnFire
+//}
+
+//rule BadCopFriendTauntZombieOnFire
+//{
+//	criteria		IsBadCop ConceptAllyKilledNPC EnemyVisible EnemyOnFire EnemyIsNPC EnemyIsZombie
+//	response		BadCopTauntZombieOnFire
+//	response		BadCopTauntOnFire
+//}
+
+rule BadCopFriendTauntSpeaking
+{
+	criteria		IsBadCop ConceptAllyKilledNPC EnemyVisible EnemySpeaking EnemyDistance256OrLess ContextOneorLessEnemy HaventTauntedCondition
+	
+	// Don't comment on this stuff for a while
+	applyContext "taunted_enemy_condition:1:100"
+	
+	response		BadCopTauntSpeaking
+}
+
+//============================================================================================================
+// Idle chatter
+// 
+// "How are you doing?"
+// "I'm feeling pretty good about myself today."
+//============================================================================================================
+response "BadCopStareSoldier"
+{
+	norepeat
+	// TODO: Implement unique lines
+	speak "bc_taunt_reb_4" respeakdelay 10
+}
+
+rule BadCopStareSoldier
+{
+	criteria		IsBadCop ConceptTalkStare SpeechTargetSoldier
+	response 		BadCopStareSoldier
+}
+
+//------------------------------------------------------------------------------------------------------------

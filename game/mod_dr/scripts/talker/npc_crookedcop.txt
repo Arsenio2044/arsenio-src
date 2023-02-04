@@ -1,0 +1,358 @@
+//============================================================================================================
+// Crooked Cops in the Entropy : Zero 2 prologue plotting against their coworker.
+// 
+// See npc_dreamcop.txt for the ones not yet plotting against their coworker.
+//============================================================================================================
+criterion "IsCrookedCop" "classname" "npc_crookedcop" "required"
+
+//============================================================================================================
+// npc_metropolice basic sounds
+//============================================================================================================
+rule CrookedCopPain
+{
+	criteria		IsCrookedCop ConceptTalkCopPain PainSoundsAllowed
+	response		CopPain
+}
+
+rule CrookedCopDie
+{
+	criteria		IsCrookedCop ConceptTalkCopDie DeathSoundsAllowed
+	response		CopDie
+}
+
+//============================================================================================================
+// npc_metropolice speech
+//============================================================================================================
+response "CrookedCopGoAlert"
+{
+	sentence "METROPOLICE_GO_ALERT" noscene
+}
+
+rule CrookedCopGoAlert
+{
+	criteria		IsCrookedCop ConceptTalkCopGoAlert
+	response		CrookedCopGoAlert
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CrookedCopWounded"
+{
+	norepeat
+	speak "cop2_C0_36hitme"
+	speak "cop2_C0_notgettingoutofthisone"
+	speak "cop2_C0_youregonnapay"
+}
+
+rule CrookedCopWounded
+{
+	criteria		IsCrookedCop ConceptTalkCopPain
+	
+	// Don't announce wounded again for five seconds
+	applycontext "spoken_wounded:1:5"
+	spoken_wounded !=1 required weight 5
+	
+	response		CrookedCopWounded
+}
+
+response "CrookedCopPainStunstick"
+{
+	norepeat
+	speak "c1_4_cop2_hetoostronk"
+}
+
+rule CrookedCopPainStunstick
+{
+	criteria		IsCrookedCop ConceptTalkCopPain
+	// TODO - how do I do this better with Mapbase?
+	damagetype "128" required weight 10
+	response		CrookedCopPainStunstick
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CrookedCopHearSomethingInVents"
+{
+	//sequential
+	//norepeat
+	scene "scenes/dreamscape/dscape_venterrupt_cop2_hearsomething"
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CrookedCopQuestion"
+{
+	norepeat
+	response "CrookedCopHearSomethingInVents"
+	speak "cop2_C0_realsickof36"
+	//speak "cop2_C0_mystomachiskillingme"
+	//speak "cop2_C0_betterthings"
+	//speak "cop2_C0_kids"
+}
+
+rule CrookedCopQuestion
+{
+	criteria		IsCrookedCop ConceptTalkCopQuestion
+	response		CrookedCopQuestion
+}
+
+response "CrookedCopAnswer"
+{
+	norepeat
+	speak "cop2_C0_hearingthings"
+	speak "cop2_C0_36givesmethecreeps"
+	speak "cop2_C0_quiet"
+	//speak "cop2_C0_paycut"
+	//speak "cop2_C0_ridiculous"
+	//speak "cop2_C0_stopwhining"
+}
+
+rule CrookedCopAnswer
+{
+	criteria		IsCrookedCop ConceptTalkCopAnswer
+	response		CrookedCopAnswer
+}
+
+//------------------------------------------------------------------------------------------------------------
+// Policing Behavior
+//------------------------------------------------------------------------------------------------------------
+response "CrookedCopThreatenInitial"
+{	
+	sequential
+	norepeat
+	scene "scenes/dreamscape/dscape_standoff_cop2_weknow" delay 5 respeakdelay 5
+	scene "scenes/dreamscape/dscape_standoff_cop2_youreasickone" delay 5 respeakdelay 5
+	// scene "scenes/dreamscape/dscape_standoff_cop2_lowerweapon" delay 5 respeakdelay 5
+	// speak "cop2_C0_putitdown" delay 3 respeakdelay 3
+	// speak "cop2_C0_takehimout" delay 3 respeakdelay 3 displaylast 
+}
+
+response "CrookedCopInitialSighting"
+{	
+	speak "cop2_C0_whatwereyoudoingbackthere" delay 5 respeakdelay 5
+}
+
+response "CrookedCopMWeKnowWhatYouDid"
+{	
+	scene "scenes/dreamscape/dscape_standoff_cop2_weknow" delay 8 respeakdelay 8
+}
+
+response "CrookedCopSickOne"
+{	
+	scene "scenes/dreamscape/dscape_standoff_cop2_youreasickone" delay 5 respeakdelay 5
+}
+
+response "CrookedCopLowerWeapon_PutDown"
+{  
+    scene "scenes/dreamscape/dscape_standoff_cop2_putitdown" delay 3 respeakdelay 3
+    scene "scenes/dreamscape/dscape_standoff_cop2_puttheweapondown" delay 3 respeakdelay 3
+}
+
+response "CrookedCopLowerWeapon"
+{    
+    norepeat
+    response "CrookedCopLowerWeapon_PutDown"
+    scene "scenes/dreamscape/dscape_standoff_cop2_freezegetontheground" delay 3 respeakdelay 3
+    scene "scenes/dreamscape/dscape_standoff_cop2_lowerweapon" delay 3 respeakdelay 3
+    scene "scenes/dreamscape/dscape_standoff_cop2_bc_notgonnahappen" delay 5 respeakdelay 5 displaylast
+}
+
+response "CrookedCopTakeHimOut"
+{	
+	sequential
+	norepeat
+	scene "scenes/dreamscape/dscape_standoff_cop2_takehimout"
+}
+
+// rule CrookedCopHarass
+// {
+// 	criteria		IsCrookedCop ConceptTalkCopHarass
+// 	response		CrookedCopThreaten
+// }
+
+rule CrookedCopInitialSighting
+{
+	criteria		IsCrookedCop ConceptTalkCopMoveAlong
+	classname "npc_crookedcop" required weight 10 // Add weight
+	response		CrookedCopInitialSighting
+	matchonce
+}
+
+rule CrookedCopMWeKnowWhatYouDid
+{
+	criteria		IsCrookedCop ConceptTalkCopMoveAlong
+	classname "npc_crookedcop" required weight 5 // Add weight
+	response		CrookedCopMWeKnowWhatYouDid
+	matchonce
+}
+
+rule CrookedCopSickOne
+{
+	criteria		IsCrookedCop ConceptTalkCopMoveAlong
+	classname "npc_crookedcop" required weight 5 // Add weight
+	response		CrookedCopSickOne
+	matchonce
+}
+
+rule CrookedCopTakeHimOut
+{
+	criteria		IsCrookedCop ConceptTalkCopMoveAlong
+	response		CrookedCopTakeHimOut
+}
+
+rule CrookedCopLowerWeapon
+{
+	criteria		IsCrookedCop ConceptTalkCopMoveAlong
+	playerweapon "weapon_pistol" required
+	response		CrookedCopLowerWeapon
+}
+
+// rule CrookedCopBackUp
+// {
+// 	criteria		IsCrookedCop ConceptTalkCopBackUp
+// 	response		CrookedCopThreaten
+// }
+
+//response "CrookedCopActivateBaton"
+//{	
+//	sequential
+//	norepeat
+//	speak "cop2_C0_whatwereyoudoingbackthere" delay 5 respeakdelay 5
+//}
+//
+//rule CrookedCopActivateBaton
+//{
+//	criteria		IsCrookedCop ConceptTalkCopActivateBaton
+//	response		CrookedCopActivateBaton
+//}
+
+
+
+
+//------------------------------------------------------------------------------------------------------------
+response "CrookedCopPlayerHit"
+{
+	norepeat
+    speak "cop2_C0_dontlethimgetaway"
+    speak "cop2_C0_hesmine"
+    speak "cop2_C0_thereisnopointinhiding" // Consider using this elsewhere
+	speak "cop2_C0_hithim"
+	speak "cop2_C0_gothim"
+}
+
+rule CrookedCopPlayerHit
+{
+	criteria		IsCrookedCop ConceptTalkCopPlayerHit
+	response		CrookedCopPlayerHit
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CrookedCopKillPlayer"
+{
+	norepeat
+	speak "cop2_C0_body1"
+	speak "cop2_C0_body2"
+}
+
+rule CrookedCopKillPlayer
+{
+	criteria		IsCrookedCop ConceptTalkCopKillEnemy EnemyIsClassPlayer
+	response		CrookedCopKillPlayer
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CrookedCopManDown"
+{
+	sequential
+	norepeat
+	speak "cop2_C0_hekilledhim"
+	speak "cop2_C0_mandown"
+	speak "c1_4_cop2_holyshit"
+}
+
+rule CrookedCopManDown
+{
+	criteria		IsCrookedCop ConceptTalkCopManDown
+	response		CrookedCopManDown
+}
+
+//------------------------------------------------------------------------------------------------------------
+response "CrookedCopNoAmmo"
+{
+	norepeat
+	speak "cop2_C0_backmeupimout"
+	speak "cop2_C0_coverme"
+}
+
+rule CrookedCopLowAmmo
+{
+	criteria		IsCrookedCop ConceptTalkCopLowAmmo
+	response		CrookedCopNoAmmo
+}
+
+rule CrookedCopNoAmmo
+{
+	criteria		IsCrookedCop ConceptTalkCopNoAmmo
+	response		CrookedCopNoAmmo
+}
+
+
+
+response "CrookedCopPlead"
+{
+	scene "scenes\dreamscape\dscape_standoff_cop1_believe.vcd"
+}
+
+rule CrookedCopPlead
+{
+	criteria		IsCrookedCop IsBreadman ConceptTalkBeg
+	matchonce
+	response		CrookedCopPlead   
+}
+
+//------------------------------------------------------------------------------------------------------------
+// Interjections
+//------------------------------------------------------------------------------------------------------------
+criterion "IsVentNoiseConcept" "concept" "VentNoise" "required"
+
+response "CrookedCop1upDInterject"
+{
+	sequential
+	norepeat
+	scene "scenes/dreamscape/dscape_venterrupt_glance2" delay 5 respeakdelay 5
+	scene "scenes/dreamscape/dscape_venterrupt_glance3" delay 5 respeakdelay 5
+	response "CrookedCopHearSomethingInVents"
+}
+
+response "CrookedCopBreadmanInterject"
+{
+	sequential
+	norepeat
+	scene "scenes/dreamscape/dscape_venterrupt_glance1" delay 5 respeakdelay 5
+	scene "scenes/dreamscape/dscape_venterrupt_glance2" delay 5 respeakdelay 5
+	scene "scenes/dreamscape/dscape_venterrupt_glance3" delay 5 respeakdelay 5
+}
+
+response "CrookedCopCyonsiaInterject"
+{
+	sequential
+	norepeat
+	scene "scenes/dreamscape/dscape_venterrupt_glance3" delay 5 respeakdelay 5
+	scene "scenes/dreamscape/dscape_venterrupt_glance1" delay 5 respeakdelay 5
+	scene "scenes/dreamscape/dscape_venterrupt_glance2" delay 5 respeakdelay 5
+}
+
+rule CrookedCop1upDInterject
+{
+	criteria		Is1upD IsVentNoiseConcept
+	response		CrookedCop1upDInterject
+}
+
+rule CrookedCopBreadmanInterject
+{
+	criteria		IsBreadman IsVentNoiseConcept
+	response		CrookedCopBreadmanInterject
+}
+
+rule CrookedCopCyonsiaInterject
+{
+	criteria		IsCyonsia IsVentNoiseConcept
+	response		CrookedCopCyonsiaInterject
+}

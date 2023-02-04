@@ -1,0 +1,41 @@
+"weapon_Grenade.Draw" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/grenade/grenade_draw.wav"
+}
+
+"weapon_Grenade.Fidget" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/grenade/grenade_fidget.wav"
+}
+
+
+"weapon_Grenade.Holster" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/grenade/grenade_putaway.wav"
+}
+
+"weapon_Grenade.pinpull" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/grenade/pinpull.wav"
+}
+
+
+"weapon_Grenade.throw" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/grenade/single_solo.wav"
+}

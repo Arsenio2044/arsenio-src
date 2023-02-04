@@ -1,0 +1,104 @@
+"weapon_SW.Draw" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/SW29/sw_draw.wav"
+}
+
+"weapon_SW.Holster" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/SW29/sw_putaway.wav"
+}
+
+"weapon_SW.Aim" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/SW29/sw_aim.wav"
+}
+
+"weapon_SW.Down" 
+{
+	"channel"		"CHAN_USER_BASE+1"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/SW29/sw_down.wav"
+}
+
+"weapon_SW.Chamber_lock" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/SW29/sw_chamber_lock.wav"
+}
+
+"weapon_SW.Chamber_Out" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/SW29/sw_chamber_out.wav"
+}
+
+"weapon_SW.Chamber_In" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/SW29/sw_chamber_in_loaderfall.wav"
+}
+
+
+"weapon_SW.Chamber_Roll" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/SW29/sw_chamber_roll.wav"
+}
+
+"weapon_SW.Bulletout" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/SW29/sw_bullet_out.wav"
+}
+
+"weapon_SW.Bulletin" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/SW29/sw_bullet_in.wav"
+}
+
+"weapon_SW.Bulletlock" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/SW29/sw_bullet_lock.wav"
+}
+
+"weapon_SW.Hammer_cock" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/SW29/sw_hammer_cock.wav"
+}
+
+"weapon_SW.Hammer_release" 
+{
+	"channel"		"CHAN_ITEM"
+	"volume"		"VOL_NORM"
+	"soundlevel"	"SNDLVL_NORM"
+	"wave"		"weapons/SW29/sw_hammer_release.wav"
+}

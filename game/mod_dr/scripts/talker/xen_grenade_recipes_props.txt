@@ -1,0 +1,68 @@
+//============================================================================================================
+// Prop recipes
+// 
+// These recipes are based on props rather than NPCs.
+//============================================================================================================
+
+//============================================================================================================
+// Supplies
+//============================================================================================================
+response "SpawnRandomSuppliesSmall" 
+{
+	print "npc_headcrab 2; item_healthkit 2,3; item_healthvial 0,1; item_battery 1,2"
+	print "npc_headcrab 2; item_healthvial 2,3; weapon_frag 1,2"
+}
+
+rule SpawnRandomSuppliesSmall
+{
+	criteria		HullTinyAllowed NoNPCs IsMass100
+	response		SpawnRandomSuppliesSmall
+}
+
+response "SpawnRandomSuppliesMedium" 
+{
+	// TODO - Should spawn 2 stukabats. Changing for 1 due to wonky collisions with stukas
+	print "npc_stukabat 1; npc_headcrab 2; item_healthkit 2,3; item_healthvial 1,2; item_battery 1,3"
+	print "npc_hevzombie 1; npc_headcrab 2; item_healthkit 1,2; item_healthvial 2,3; weapon_smg2 1,2"
+	print "npc_zombie 1; npc_headcrab 2; weapon_hopwire 2,3; item_healthkit 1,3" weight 0.5
+	print "npc_hevzombie 1; npc_headcrab 2; weapon_357 1; item_ammo_357 1,2; item_healthkit 1,3" weight 0.5
+}
+
+rule SpawnRandomSuppliesMedium
+{
+	criteria		HullTinyAllowed NoNPCs IsMass325
+	response		SpawnRandomSuppliesMedium
+}
+
+response "SpawnRandomSuppliesLarge" 
+{
+	print "npc_hevzombie 1; npc_headcrab 2; item_item_crate 1: ItemClass item_dynamic_resupply ItemCount 3; item_healthkit 1,2; item_battery 1,3"
+	print "npc_bullsquid 1; item_ammo_ar2_altfire 1,2; weapon_ar2 1; item_healthkit 1,2; item_battery 1,2"
+	print "npc_hevzombie 1; npc_headcrab 2; item_healthkit 3,5; item_battery 2,3"
+}
+
+rule SpawnRandomSuppliesLarge
+{
+	criteria		HullTinyAllowed NoNPCs IsMass800
+	response		SpawnRandomSuppliesLarge
+}
+
+response "SpawnRandomSuppliesVeryLarge" 
+{
+	// Body with items test
+	//print "prop_ragdoll 1: model models/combine_super_soldier.mdl angleOverride ^0,-76.08 160.09 -2.93,1,2.17 -115.02 60.92,2,0.34 50.51 1.15,3,-54.00 -16.85 51.71,4,35.25 -64.49 63.40,5,70.22 -115.20 -146.85,6,-0.24 -39.70 -1.52,7,41.48 -36.20 -88.30,8,-2.87 -10.91 -12.32,9,3.73 24.58 -7.92,10,24.71 -105.10 -138.35,11,20.87 56.64 -2.39,12,9.65 123.41 17.60,13,-2.34 83.26 -2.36,14,4.79 -50.62 -1.83^; weapon_ar2 1; item_ammo_ar2_altfire 1,2; item_healthvial 1,2; item_battery 2,3"
+	
+	// These weapons can be given earlier than players would normally have the opportunity,
+	// but that's both an edge case and a nice reward for using the Xen grenade with so much mass.
+	print "npc_antlionguard 1: allowbark 1 cavernbreed 1; npc_antlion_grub 1,3; weapon_rpg 1; item_healthkit 3,4; item_healthvial 0,1; item_rpg_round 0,1"
+	print "npc_antlionguard 1: allowbark 1 cavernbreed 1; npc_antlion_grub 1,3; weapon_crossbow 1; weapon_hopwire 1; item_battery 2,3; item_healthvial 0,1"
+	// Spawn an Antlion Guard with the supplies
+
+}
+
+rule SpawnRandomSuppliesVeryLarge
+{
+				// Need HullLargeAllowed because this can spawn an Antlion Guard
+	criteria		HullLargeAllowed NoNPCs IsMass1500
+	response		SpawnRandomSuppliesVeryLarge
+}

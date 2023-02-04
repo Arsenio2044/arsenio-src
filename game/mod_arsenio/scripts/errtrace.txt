@@ -1,0 +1,18 @@
+BufferAddress: 0x35e2a4BufferSize: 9130len=0val=
+Handled an empty string token just fine
+len=15val=Impact.Concrete
+len=12val=Impact.Metal
+len=11val=Impact.Wood
+len=12val=Impact.Glass
+len=12val=Impact.Flesh
+len=18val=Impact.BloodyFlesh
+len=17val=Impact.AlienFlesh
+len=14val=Impact.Antlion
+len=14val=Impact.Antlion
+len=11val=Impact.Sand
+len=12val=Impact.Metal
+len=12val=Impact.Metal
+len=15val=Impact.Concrete
+len=0val=
+First-chance exception at 0x00528016 (tier0.dll) in hl2.exe: 0xC0000005: Access violation reading location 0x6C616365.
+
