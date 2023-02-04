@@ -16,7 +16,6 @@
 #include "tier0/memdbgon.h"
 
 
-
 //==================================
 //		WEAPONS
 //==================================
@@ -63,19 +62,5 @@ STUB_WEAPON_CLASS(weapon_Kaliber, WeaponKaliber, C_BaseHLCombatWeapon); // Snipe
 
 
 
-
-
-#ifdef ARSENIO_CUT
-STUB_WEAPON_CLASS( weapon_egon, WeaponEgon, C_BaseHLCombatWeapon );
-STUB_WEAPON_CLASS(weapon_smg3, WeaponSMG3, C_HLSelectFireMachineGun);
-STUB_WEAPON_CLASS(weapon_kilo, WeaponKILO, C_HLSelectFireMachineGun);
-STUB_WEAPON_CLASS(weapon_50cal, Weapon50cal, C_BaseHLCombatWeapon);
-STUB_WEAPON_CLASS(weapon_minigun, WeaponMiniGun, C_HLMachineGun);
-STUB_WEAPON_CLASS(weapon_oicw, WeaponOICW, C_HLMachineGun); // yeeted vol 2
-STUB_WEAPON_CLASS(weapon_binoculars, WeaponBinoculars, C_BaseHLCombatWeapon); // yeeted vol 4
-STUB_WEAPON_CLASS(weapon_bulk, WeaponBULK, C_BaseHLCombatWeapon); // yeeted vol 5
-// yeeted
-
-#endif
 
 
