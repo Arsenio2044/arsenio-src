@@ -1,6 +1,8 @@
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
 // Purpose: The damaged variant of the MP99K, for use in Data Redacted.
+// Damaged after one of the bad endings of Arsenio, The MP99K was damaged, albeit still functional.
+// This weapon now fires even slower with higher recoil, but with higher accuracy and damage.
 //
 //=============================================================================//
 
