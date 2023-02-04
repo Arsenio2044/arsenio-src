@@ -11,15 +11,16 @@
 #pragma once
 #endif
 
-#ifdef ARSENIO
+#ifdef  ARSENIO
 #define GAME_NAME           "ARSENIO 3044"
 #define GAME_VERSION_MAJOR  1
 #define GAME_VERSION_MINOR  5
 #define GAME_VERSION_PATCH  0
 #endif
 
+
 #ifdef  DR
-#define GAME_NAME           "Data Redacted"
+#define GAME_NAME           "DATA REDACTED"
 #define GAME_VERSION_MAJOR  1
 #define GAME_VERSION_MINOR  5
 #define GAME_VERSION_PATCH  0
