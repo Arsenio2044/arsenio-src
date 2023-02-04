@@ -1953,7 +1953,7 @@ void CDynamicProp::Spawn( )
 		SetSolid( SOLID_NONE );
 		AddSolidFlags( FSOLID_NOT_SOLID );
 	}*/
-
+	// TUX: Cool
 #ifdef TF_DLL
 	const char *pszModelName = modelinfo->GetModelName( GetModel() );
 	if ( pszModelName && pszModelName[0] )
@@ -5729,7 +5729,7 @@ private:
 };
 
 LINK_ENTITY_TO_CLASS( prop_physics_respawnable, CPhysicsPropRespawnable );
-
+#ifdef ARSENIO
 //------------------------------------------------------------------------------
 // Gets info of entity your currently looking at
 //------------------------------------------------------------------------------
@@ -5742,7 +5742,7 @@ void CC_Ent_Info_View(const CCommand& args)
 
 	Msg("Classname: %s\n" "Target Name: %s\n", pEntity->GetClassname(), pEntity->GetEntityName());
 }
-
+#endif
 static ConCommand ent_info_view("ent_info_view", CC_Ent_Info_View, "Get info of entity your currently looking at", FCVAR_CHEAT);
 
 BEGIN_DATADESC( CPhysicsPropRespawnable )
