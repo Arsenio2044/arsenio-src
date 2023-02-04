@@ -250,9 +250,6 @@ bool CWeaponMP99KD::Reload( void )
 	fRet = DefaultReload( GetMaxClip1(), GetMaxClip2(), ACT_VM_RELOAD );
 	if ( fRet )
 	{
-		// Undo whatever the reload process has done to our secondary
-		// attack timer. We allow you to interrupt reloading to fire
-		// a grenade.
 		WeaponSound( RELOAD );
 	}
 
