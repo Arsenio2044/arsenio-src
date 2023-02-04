@@ -1,7 +1,7 @@
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
-// Purpose: The MP99K "Kurz" is a small automatic submachine gun used by the player and various npcs.
-// It is slow and has high recoil, but makes up for it in its accuracy and damage.
+// Purpose: The damaged variant of the MP99K, for use in Data Redacted.
+//
 //=============================================================================//
 
 #include "cbase.h"
