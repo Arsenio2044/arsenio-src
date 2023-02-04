@@ -6419,6 +6419,7 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		GiveAmmo(32, "357");
 		GiveAmmo(16, "XBowBolt");
 
+#ifdef  ARSENIO
 		GiveNamedItem("weapon_frag");
 		GiveNamedItem("weapon_crowbar");
 		GiveNamedItem("weapon_glock");
@@ -6435,6 +6436,21 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		GiveNamedItem("weapon_addamm557");
 		GiveNamedItem("weapon_egar");
 		GiveNamedItem("weapon_mobileturret");
+#endif
+//  EXPANSION PACK (1?) WEAPONS
+#ifdef  DR
+		GiveNamedItem("weapon_mp99kd");
+		GiveNamedItem("weapon_crowbar");
+		GiveNamedItem("weapon_glock");
+		GiveNamedItem("weapon_physcannon");
+		GiveNamedItem("weapon_rpg");
+		GiveNamedItem("weapon_357");
+		GiveNamedItem("weapon_crossbow");
+		GiveNamedItem("weapon_gauss");
+		GiveNamedItem("weapon_mobileturret");
+		GiveNamedItem("weapon_frag");
+		GiveNamedItem("weapon_egar"); // GLITCHY: Expand on this concept for DR?
+#endif
 
 #ifdef OPTUX3_DLL_OLD
 
