@@ -12,7 +12,7 @@
 #endif
 
 
-#define GAME_NAME           "Arsenio"
+#define GAME_NAME           "Data Redacted"
 #define GAME_VERSION_MAJOR  1
 #define GAME_VERSION_MINOR  5
 #define GAME_VERSION_PATCH  0

@@ -257,10 +257,10 @@ void CWeaponGlock::DrawHitmarker( void )
 		return;
 
 #ifndef CLIENT_DLL
-	CSingleUserRecipientFilter filter( pPlayer );
-	UserMessageBegin( filter, "ShowHitmarker" );
-	WRITE_BYTE( 1 );
-	MessageEnd();
+	//CSingleUserRecipientFilter filter( pPlayer );
+	//UserMessageBegin( filter, "ShowHitmarker" );
+	//WRITE_BYTE( 1 );
+	//MessageEnd();
 #endif
 }
 

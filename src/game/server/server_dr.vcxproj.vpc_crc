@@ -1,8 +1,8 @@
 [vpc crc file version 2]
 8209bbc3 E:\ArseSrc\src\devtools\bin\vpc.exe
-_Nc_VS2013/vpcgame:dr_
+_Nc_VS2013/vpcgame:valve_
 52116b43 server_dr.vpc
-7637bfff ..\..\game\server\server_base.vpc
+6676a327 ..\..\game\server\server_base.vpc
 4832e67a ..\..\vpc_scripts\source_dll_base.vpc
 d752cf80 ..\..\vpc_scripts\platform_dirs.vpc
 6c4a5ff1 ..\..\vpc_scripts\source_base.vpc

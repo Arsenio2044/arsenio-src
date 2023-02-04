@@ -6439,7 +6439,7 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 #endif
 //  EXPANSION PACK (1?) WEAPONS
 #ifdef  DR
-		GiveNamedItem("weapon_mp99kd");
+		//GiveNamedItem("weapon_mp99kd");
 		GiveNamedItem("weapon_crowbar");
 		GiveNamedItem("weapon_glock");
 		GiveNamedItem("weapon_physcannon");

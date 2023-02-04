@@ -104,7 +104,7 @@ void CNPC_FeralSeeker::Precache()
 {
 	m_iAmmoType = GetAmmoDef()->Index("Pistol");
 
-	PrecacheModel("models/arsenio/npc/bloodseeker.mdl");
+	PrecacheModel("models/arsenio/npc/bloodseeker.mdl"); // Texture will use frames for different look
 
 	UTIL_PrecacheOther("npc_handgrenade");
 
@@ -114,6 +114,10 @@ void CNPC_FeralSeeker::Precache()
 	PrecacheScriptSound("BloodSeeker.Footstep");
 	PrecacheScriptSound("BloodSeeker.Hurt");
 	PrecacheScriptSound("BloodSeeker.Spawn");
+	//PrecacheScriptSound("FeralSeeker.Enraged");
+	//PrecacheScriptSound("FeralSeeker.Scream");
+    //PrecacheScriptSound("FeralSeeker.CloakOn");
+	//PrecacheScriptSound("FeralSeeker.CloakOff");
 }
 
 int CNPC_FeralSeeker::GetSoundInterests(void)

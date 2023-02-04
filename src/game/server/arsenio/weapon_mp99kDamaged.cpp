@@ -5,6 +5,8 @@
 // This weapon now fires even slower with higher recoil, but with higher accuracy and damage.
 //=============================================================================//
 
+
+
 #include "cbase.h"
 #include "basehlcombatweapon.h"
 #include "npcevent.h"
@@ -80,7 +82,7 @@ protected:
 	float   m_flSpreadComponent;
 };
 
-IMPLEMENT_SERVERCLASS_ST(CWeaponMP99KD, DT_WeaponMP99K)
+IMPLEMENT_SERVERCLASS_ST(CWeaponMP99KD, DT_WeaponMP99KD)
 END_SEND_TABLE()
 
 LINK_ENTITY_TO_CLASS( weapon_mp99kd, CWeaponMP99KD );
