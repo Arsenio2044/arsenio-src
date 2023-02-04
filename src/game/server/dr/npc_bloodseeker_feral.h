@@ -95,6 +95,7 @@ public:
 	float m_flNextGrenadeCheck;
 	Vector	m_vecTossVelocity;
 	bool	m_fThrowGrenade;
+	int		m_isEnraged;
 
 	int		m_iTargetRanderamt;
 
