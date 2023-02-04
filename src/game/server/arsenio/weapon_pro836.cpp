@@ -62,6 +62,8 @@ public:
 	int				WeaponRangeAttack2Condition( float flDot, float flDist );
 	Activity		GetPrimaryAttackActivity();
 
+	void	DrawHitmarker(void);
+
 	// TUX: Values which allow our "spread" to change from button input from player
 	virtual const Vector &GetBulletSpread()
 	{
@@ -230,6 +232,21 @@ void CWeaponPRO836::ItemBusyFrame(void)
 {
 	// Allow zoom toggling even when we're reloading
 	CheckZoomToggle();
+}
+
+void CWeaponPRO836::DrawHitmarker(void)
+{
+	CBasePlayer* pPlayer = ToBasePlayer(GetOwner());
+
+	if (pPlayer == NULL)
+		return;
+
+#ifndef CLIENT_DLL
+	CSingleUserRecipientFilter filter(pPlayer);
+	UserMessageBegin(filter, "ShowHitmarker");
+	WRITE_BYTE(1);
+	MessageEnd();
+#endif
 }
 
 //-----------------------------------------------------------------------------
