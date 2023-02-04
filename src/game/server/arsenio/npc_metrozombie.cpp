@@ -24,7 +24,7 @@
 // ACT_FLINCH_PHYSICS
 
 
-ConVar	sk_metroz_health("sk_metroz_health", "36");
+ConVar	sk_metroz_health("sk_metroz_health", "100");
 
 
 envelopePoint_t envMetrozMoanVolumeFast[] =
