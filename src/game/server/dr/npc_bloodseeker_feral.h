@@ -14,7 +14,7 @@
 #include "ai_basenpc.h"
 #include "soundent.h"
 
-ConVar sk_bloodseeker_health("sk_bloodseeker_health", "500");
+ConVar sk_feralseeker_health("sk_feralseeker_health", "500");
 
 //=========================================================
 // monster-specific schedule types
@@ -56,9 +56,9 @@ enum
 
 #define MEMORY_BADJUMP	bits_MEMORY_CUSTOM1
 
-class CNPC_BloodSeeker : public CAI_BaseNPC
+class CNPC_FeralSeeker : public CAI_BaseNPC
 {
-	DECLARE_CLASS(CNPC_BloodSeeker, CAI_BaseNPC);
+	DECLARE_CLASS(CNPC_FeralSeeker, CAI_BaseNPC);
 
 public:
 	void Spawn(void);

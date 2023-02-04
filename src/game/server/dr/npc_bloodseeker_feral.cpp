@@ -10,7 +10,7 @@
 #include "ammodef.h"
 #include "AI_Hint.h"
 #include "AI_Navigator.h"
-#include "npc_bloodseeker.h"
+#include "npc_bloodseeker_feral.h"
 #include "game.h"
 #include "npcevent.h"
 #include "engine/IEngineSound.h"
@@ -29,9 +29,9 @@
 
 
 
-LINK_ENTITY_TO_CLASS(npc_bloodseeker, CNPC_BloodSeeker);
+LINK_ENTITY_TO_CLASS(npc_feralseeker, CNPC_FeralSeeker);
 
-BEGIN_DATADESC(CNPC_BloodSeeker)
+BEGIN_DATADESC(CNPC_FeralSeeker)
 DEFINE_FIELD(m_flLastShot, FIELD_TIME),
 DEFINE_FIELD(m_flDiviation, FIELD_FLOAT),
 
@@ -52,7 +52,7 @@ END_DATADESC()
 //=========================================================
 // Spawn
 //=========================================================
-void CNPC_BloodSeeker::Spawn()
+void CNPC_FeralSeeker::Spawn()
 {
 	Precache();
 
@@ -68,7 +68,7 @@ void CNPC_BloodSeeker::Spawn()
 	SetMoveType(MOVETYPE_STEP);
 	m_bloodColor = BLOOD_COLOR_RED;
 	ClearEffects();
-	m_iHealth = sk_bloodseeker_health.GetFloat();
+	m_iHealth = sk_feralseeker_health.GetFloat();
 	m_flFieldOfView = VIEW_FIELD_WIDE; // indicates the width of this monster's forward view cone ( as a dotproduct result )
 	m_NPCState = NPC_STATE_NONE;
 
@@ -99,7 +99,7 @@ void CNPC_BloodSeeker::Spawn()
 //=========================================================
 // Precache - precaches all resources this monster needs
 //=========================================================
-void CNPC_BloodSeeker::Precache()
+void CNPC_FeralSeeker::Precache()
 {
 	m_iAmmoType = GetAmmoDef()->Index("Pistol");
 
@@ -115,7 +115,7 @@ void CNPC_BloodSeeker::Precache()
 	PrecacheScriptSound("BloodSeeker.Spawn");
 }
 
-int CNPC_BloodSeeker::GetSoundInterests(void)
+int CNPC_FeralSeeker::GetSoundInterests(void)
 {
 	return	SOUND_WORLD |
 		SOUND_COMBAT |
@@ -123,7 +123,7 @@ int CNPC_BloodSeeker::GetSoundInterests(void)
 		SOUND_DANGER;
 }
 
-Class_T	CNPC_BloodSeeker::Classify(void)
+Class_T	CNPC_FeralSeeker::Classify(void)
 {
 	return CLASS_SHADOW; 
 }
@@ -131,7 +131,7 @@ Class_T	CNPC_BloodSeeker::Classify(void)
 //=========================================================
 // CheckMeleeAttack1 - jump like crazy if the enemy gets too close. 
 //=========================================================
-int CNPC_BloodSeeker::MeleeAttack1Conditions(float flDot, float flDist)
+int CNPC_FeralSeeker::MeleeAttack1Conditions(float flDot, float flDist)
 {
 	if (m_flNextJump < gpGlobals->curtime && (flDist <= 128 || HasMemory(MEMORY_BADJUMP)) && GetEnemy() != NULL)
 	{
@@ -170,7 +170,7 @@ int CNPC_BloodSeeker::MeleeAttack1Conditions(float flDot, float flDist)
 // CheckRangeAttack1  - drop a cap in their ass
 //
 //=========================================================
-int CNPC_BloodSeeker::RangeAttack1Conditions(float flDot, float flDist)
+int CNPC_FeralSeeker::RangeAttack1Conditions(float flDot, float flDist)
 {
 	if (!HasCondition(COND_ENEMY_OCCLUDED) && flDist > 64 && flDist <= 2048)
 	{
@@ -193,7 +193,7 @@ int CNPC_BloodSeeker::RangeAttack1Conditions(float flDot, float flDist)
 //=========================================================
 // CheckRangeAttack2 - toss grenade is enemy gets in the way and is too close. 
 //=========================================================
-int CNPC_BloodSeeker::RangeAttack2Conditions(float flDot, float flDist)
+int CNPC_FeralSeeker::RangeAttack2Conditions(float flDot, float flDist)
 {
 	m_fThrowGrenade = false;
 	if (!FBitSet(GetEnemy()->GetFlags(), FL_ONGROUND))
@@ -232,7 +232,7 @@ int CNPC_BloodSeeker::RangeAttack2Conditions(float flDot, float flDist)
 //=========================================================
 // StartTask
 //=========================================================
-void CNPC_BloodSeeker::StartTask(const Task_t* pTask)
+void CNPC_FeralSeeker::StartTask(const Task_t* pTask)
 {
 	switch (pTask->iTask)
 	{
@@ -259,7 +259,7 @@ void CNPC_BloodSeeker::StartTask(const Task_t* pTask)
 //=========================================================
 // RunTask 
 //=========================================================
-void CNPC_BloodSeeker::RunTask(const Task_t* pTask)
+void CNPC_FeralSeeker::RunTask(const Task_t* pTask)
 {
 	switch (pTask->iTask)
 	{
@@ -319,7 +319,7 @@ void CNPC_BloodSeeker::RunTask(const Task_t* pTask)
 // monster's member function to get a pointer to a schedule
 // of the proper type.
 //=========================================================
-int CNPC_BloodSeeker::SelectSchedule(void)
+int CNPC_FeralSeeker::SelectSchedule(void)
 {
 	switch (m_NPCState)
 	{
@@ -439,7 +439,7 @@ int CNPC_BloodSeeker::SelectSchedule(void)
 //
 // Returns number of events handled, 0 if none.
 //=========================================================
-void CNPC_BloodSeeker::HandleAnimEvent(animevent_t* pEvent)
+void CNPC_FeralSeeker::HandleAnimEvent(animevent_t* pEvent)
 {
 	switch (pEvent->event)
 	{
@@ -491,7 +491,7 @@ void CNPC_BloodSeeker::HandleAnimEvent(animevent_t* pEvent)
 //=========================================================
 // Shoot
 //=========================================================
-void CNPC_BloodSeeker::Shoot(int hand)
+void CNPC_FeralSeeker::Shoot(int hand)
 {
 	Vector vForward, vRight, vUp;
 	Vector vecShootOrigin;
@@ -550,7 +550,7 @@ void CNPC_BloodSeeker::Shoot(int hand)
 
 //=========================================================
 //=========================================================
-int CNPC_BloodSeeker::TranslateSchedule(int scheduleType)
+int CNPC_FeralSeeker::TranslateSchedule(int scheduleType)
 {
 	//Msg( "Frustation: %d\n", m_iFrustration );
 	switch (scheduleType)
@@ -605,7 +605,7 @@ int CNPC_BloodSeeker::TranslateSchedule(int scheduleType)
 //=========================================================
 // RunAI
 //=========================================================
-void CNPC_BloodSeeker::RunAI(void)
+void CNPC_FeralSeeker::RunAI(void)
 {
 	BaseClass::RunAI();
 
@@ -638,7 +638,7 @@ void CNPC_BloodSeeker::RunAI(void)
 	if (GetActivity() == ACT_RUN || GetActivity() == ACT_WALK)
 	{
 		static int iStep = 0;
-		iStep = !iStep;
+		iStep = ~iStep;
 		if (iStep)
 		{
 			EmitSound(filter, entindex(), "BloodSeeker.Footstep");
@@ -646,7 +646,7 @@ void CNPC_BloodSeeker::RunAI(void)
 	}
 }
 
-AI_BEGIN_CUSTOM_NPC(monster_human_bloodseeker, CNPC_BloodSeeker)
+AI_BEGIN_CUSTOM_NPC(monster_human_bloodseeker, CNPC_FeralSeeker)
 
 DECLARE_TASK(TASK_BLOODSEEKER_FALL_TO_GROUND)
 

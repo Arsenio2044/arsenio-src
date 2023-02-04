@@ -62,7 +62,7 @@ STUB_WEAPON_CLASS(weapon_Kaliber, WeaponKaliber, C_BaseHLCombatWeapon); // Snipe
 #endif
 
 #ifdef DR_CLIENT
-STUB_WEAPON_CLASS(weapon_mp99kD, WeaponMp99kD, C_HLMachineGun); // High power LMG
+STUB_WEAPON_CLASS(weapon_mp99kd, WeaponMp99kd, C_HLMachineGun);
 #endif
 
 
