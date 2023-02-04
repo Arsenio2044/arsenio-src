@@ -1620,8 +1620,8 @@ void CHomingMissile::SetOwnerEntity( CBaseEntity* pentOwner )
 	m_hOwner = pentOwner;
 }
 
-
-#define	RPG_BEAM_SPRITE		"effects/laser1_noz.vmt"
+#define	RPG_BEAM_SPRITE		"effects/laser1.vmt"
+#define	RPG_BEAM_SPRITE_NOZ	"effects/laser1_noz.vmt"
 #define	RPG_LASER_SPRITE	"sprites/redglow1.vmt"
 
 //=============================================================================
@@ -1713,7 +1713,6 @@ void CWeaponRPG::Precache( void )
 	PrecacheScriptSound( "Missile.Accelerate" );
 
 	// Laser dot...
-	PrecacheModel( "sprites/redglow1.vmt" );
 	PrecacheModel( RPG_LASER_SPRITE );
 	PrecacheModel( RPG_BEAM_SPRITE );
 
