@@ -29,7 +29,7 @@ $Project "Client - Data Redacted"
 		$File	"c_team_objectiveresource.cpp"
 		$File	"c_team_objectiveresource.h"
 		
-		$Folder	"AR DLL"
+		$Folder	"DR DLL"
 		{
 			$File	"c_vehicle_airboat.h"			
 			$File	"c_weapon_egar.h"

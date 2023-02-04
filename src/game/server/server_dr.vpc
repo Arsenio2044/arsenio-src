@@ -55,7 +55,7 @@ $Project "Server - Data Redacted"
 		$Lib	"responserules" [$NEW_RESPONSE_SYSTEM]
 		
 }
-		$Folder	"AR DLL"
+		$Folder	"DR DLL"
 		{		
 			$File	"$SRCDIR\game\shared\player_mobility_defs.h"
 			$File	"$SRCDIR\game\shared\arsenio\gamemovement_mobility.cpp"
