@@ -18,6 +18,13 @@
 #define GAME_VERSION_PATCH  0
 #endif
 
+#ifdef  DR
+#define GAME_NAME           "Data Redacted"
+#define GAME_VERSION_MAJOR  1
+#define GAME_VERSION_MINOR  5
+#define GAME_VERSION_PATCH  0
+#endif
+
 #define TICK_INTERVAL			(gpGlobals->interval_per_tick)
 
 
