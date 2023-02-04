@@ -4659,6 +4659,8 @@ void CBasePlayer::PostThink()
 					// TUX: This should work, i'm not sure.
 					if (IsLeOSActive())
 					{
+						CPASAttenuationFilter filter(this);
+						filter.UsePredictionRules();
 						EmitSound("LeOS.Regen");
 					}
 #endif
