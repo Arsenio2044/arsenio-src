@@ -1,32 +1,14 @@
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
-// Purpose: LeOS is a prototype AI designed by GreyBox Labs to aid the Combine during and outside of combat. 
-// LeOS aids Arsenio during his journey by providing details on enemies and managing his body.
-// LeOS will also appear as a figure during some scripted sequences. GLITCHUS
+// Purpose: GlitchyOS is an AI that was trapped for 1000 years, before finally being freed.
+// It is similar to LeOS but can inject adrenaline into the player, increasing speed and damage for a certain amount of time.
 //
 //=============================================================================//
 
-#include "cbase.h"
-#include "player.h"
-#include "gamerules.h"
-#include "items.h"
-#ifdef ARSENIO
-#include	"npcevent.h"
-#include	"ai_basenpc.h"
-#include	"ai_hull.h"
-#include "ai_baseactor.h"
-#endif
-// memdbgon must be the last include file in a .cpp file!!!
-#include "tier0/memdbgon.h"
-
-#define SF_SUIT_SHORTLOGON		0x0001
-
-
-
-class CLeOS : public CItem
+class CGlitchyOS : public CItem
 {
 public:
-	DECLARE_CLASS(CLeOS, CItem);
+	DECLARE_CLASS(CGlitchyOS, CItem);
 
 	void Spawn(void)
 	{
@@ -53,13 +35,13 @@ public:
 	}
 };
 
-LINK_ENTITY_TO_CLASS(item_LeOS, CLeOS);
+LINK_ENTITY_TO_CLASS(item_glitchyOS, CGlitchyOS);
 
 
-class CNPC_LeOS : public CAI_BaseActor
+class CNPC_GlitchyOS : public CAI_BaseActor
 {
 public:
-	DECLARE_CLASS(CNPC_LeOS, CAI_BaseActor);
+	DECLARE_CLASS(CNPC_GlitchyOS, CAI_BaseActor);
 
 	void	Spawn(void);
 	void	Precache(void);
@@ -70,13 +52,13 @@ public:
 	void	PrescheduleThink(void);
 };
 
-LINK_ENTITY_TO_CLASS(npc_LeOS, CNPC_LeOS);
+LINK_ENTITY_TO_CLASS(npc_GlitchyOS, CNPC_GlitchyOS);
 
 //-----------------------------------------------------------------------------
 // Classify - indicates this NPC's place in the 
 // relationship table.
 //-----------------------------------------------------------------------------
-Class_T	CNPC_LeOS::Classify(void)
+Class_T	CNPC_GlitchyOS::Classify(void)
 {
 	return	CLASS_PLAYER;
 }
@@ -87,7 +69,7 @@ Class_T	CNPC_LeOS::Classify(void)
 // HandleAnimEvent - catches the NPC-specific messages
 // that occur when tagged animation frames are played.
 //-----------------------------------------------------------------------------
-void CNPC_LeOS::HandleAnimEvent(animevent_t* pEvent)
+void CNPC_GlitchyOS::HandleAnimEvent(animevent_t* pEvent)
 {
 	switch (pEvent->event)
 	{
@@ -101,7 +83,7 @@ void CNPC_LeOS::HandleAnimEvent(animevent_t* pEvent)
 //-----------------------------------------------------------------------------
 // GetSoundInterests - generic NPC can't hear.
 //-----------------------------------------------------------------------------
-int CNPC_LeOS::GetSoundInterests(void)
+int CNPC_GlitchyOS::GetSoundInterests(void)
 {
 	return	NULL;
 }
@@ -109,7 +91,7 @@ int CNPC_LeOS::GetSoundInterests(void)
 //-----------------------------------------------------------------------------
 // LeOS does nothing without a scripted sequence when spawned as an NPC. 
 //-----------------------------------------------------------------------------
-void CNPC_LeOS::Spawn()
+void CNPC_GlitchyOS::Spawn()
 {
 	// LeOS is allowed to use multiple models, because he appears in the pod.
 	// He defaults to his normal model.
@@ -117,6 +99,7 @@ void CNPC_LeOS::Spawn()
 	if (!szModel || !*szModel)
 	{
 		szModel = "models/LeOS.mdl";
+		//szModel = "models/CyberJail.mdl"; // later
 		SetModelName(AllocPooledString(szModel));
 	}
 
@@ -155,7 +138,7 @@ void CNPC_LeOS::Spawn()
 //-----------------------------------------------------------------------------
 // Precache - precaches all resources this NPC needs
 //-----------------------------------------------------------------------------
-void CNPC_LeOS::Precache()
+void CNPC_GlitchyOS::Precache()
 {
 	PrecacheModel(STRING(GetModelName()));
 	BaseClass::Precache();
@@ -164,7 +147,7 @@ void CNPC_LeOS::Precache()
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CNPC_LeOS::SetupWithoutParent(void)
+void CNPC_GlitchyOS::SetupWithoutParent(void)
 {
 	SetSolid(SOLID_BBOX);
 	AddSolidFlags(FSOLID_NOT_STANDABLE);
@@ -177,7 +160,7 @@ void CNPC_LeOS::SetupWithoutParent(void)
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CNPC_LeOS::PrescheduleThink(void)
+void CNPC_GlitchyOS::PrescheduleThink(void)
 {
 	BaseClass::PrescheduleThink();
 
@@ -193,3 +176,4 @@ void CNPC_LeOS::PrescheduleThink(void)
 // AI Schedules Specific to this NPC
 //-----------------------------------------------------------------------------
 
+#endif
