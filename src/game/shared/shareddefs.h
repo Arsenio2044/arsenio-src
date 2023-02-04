@@ -11,11 +11,12 @@
 #pragma once
 #endif
 
-
-#define GAME_NAME           "Data Redacted"
+#ifdef ARSENIO
+#define GAME_NAME           "ARSENIO 2044"
 #define GAME_VERSION_MAJOR  1
 #define GAME_VERSION_MINOR  5
 #define GAME_VERSION_PATCH  0
+#endif
 
 #define TICK_INTERVAL			(gpGlobals->interval_per_tick)
 
