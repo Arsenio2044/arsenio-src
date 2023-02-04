@@ -1,6 +1,6 @@
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
-// Purpose:  Weapon stubs file for ARSENIO.
+// Purpose:  Weapon stubs file for DATA REDACTED.
 //
 //=============================================================================//
 
@@ -48,7 +48,7 @@ STUB_WEAPON_CLASS(weapon_glock, WeaponGlock, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_k189, WeaponK189, C_HLMachineGun );
 STUB_WEAPON_CLASS(weapon_smg1, WeaponSMG1, C_HLSelectFireMachineGun);
 #ifdef LATER
-STUB_WEAPON_CLASS(weapon_mp99k, WeaponMP99K, C_HLSelectFireMachineGun); // Mp5K for modern world.
+STUB_WEAPON_CLASS(weapon_mp99k, WeaponMP99K, C_HLSelectFireMachineGun); // Mp5K for the modern world.
 #endif
 
 // Coming soon
@@ -59,6 +59,10 @@ STUB_WEAPON_CLASS(weapon_overlordgun, WeaponOverlord, C_BaseHLCombatWeapon); // 
 STUB_WEAPON_CLASS(weapon_Kaliber, WeaponKaliber, C_BaseHLCombatWeapon); // Sniper rifle used by SHADOW.
 
 
+#endif
+
+#ifdef DR_CLIENT
+STUB_WEAPON_CLASS(weapon_mp99kD, WeaponMp99kD, C_HLMachineGun); // High power LMG
 #endif
 
 
