@@ -11,7 +11,7 @@
 #pragma once
 #endif
 
-#ifdef ARSENIO
+#ifdef AR
 #define GAME_NAME           "ARSENIO 3044"
 #define GAME_VERSION_MAJOR  1
 #define GAME_VERSION_MINOR  5
