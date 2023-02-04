@@ -79,9 +79,6 @@ $Project
 	
 	$Folder	"IVEngine 2"
 	{
-		$File	"IVEngine2\point_cutscene.cpp"
-		$File	"IVEngine2\actual_bullet.cpp"
-		$File	"IVEngine2\actual_bullet.h"
 		$File	"IVEngine2\searchpath_manager.cpp"
 		$File	"IVEngine2\searchpath_manager.h"
 		$File	"$SRCDIR\game\shared\IVEngine2\gamemovement_duck.cpp"
