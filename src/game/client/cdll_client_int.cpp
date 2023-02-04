@@ -341,9 +341,14 @@ static ConVar s_CV_ShowParticleCounts("showparticlecounts", "0", 0, "Display num
 static ConVar s_cl_team("cl_team", "default", FCVAR_USERINFO | FCVAR_ARCHIVE, "Default team when joining a game");
 static ConVar s_cl_class("cl_class", "default", FCVAR_USERINFO | FCVAR_ARCHIVE, "Default class when joining a game");
 // Discord RPC
-
+#ifdef ARSENIO
 static ConVar cl_discord_appid("cl_discord_appid", "949352645989113906", FCVAR_DEVELOPMENTONLY | FCVAR_CHEAT);
+#endif
+#ifdef DR
+static ConVar cl_discord_appid("cl_discord_appid", "1071573819195658440", FCVAR_DEVELOPMENTONLY | FCVAR_CHEAT);
+#endif
 static int64_t startTimestamp = time(0);
+
 
 #ifdef HL1MP_CLIENT_DLL
 static ConVar s_cl_load_hl1_content("cl_load_hl1_content", "0", FCVAR_ARCHIVE, "Mount the content from Half-Life: Source if possible");
