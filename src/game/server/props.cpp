@@ -5730,6 +5730,7 @@ private:
 
 LINK_ENTITY_TO_CLASS( prop_physics_respawnable, CPhysicsPropRespawnable );
 #ifdef ARSENIO
+// I banged your mom
 //------------------------------------------------------------------------------
 // Gets info of entity your currently looking at
 //------------------------------------------------------------------------------
