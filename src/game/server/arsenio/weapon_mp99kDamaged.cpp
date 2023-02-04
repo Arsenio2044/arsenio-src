@@ -199,8 +199,6 @@ void CWeaponMP99K::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCha
 {
 	switch( pEvent->event )
 	{
-	case EVENT_WEAPON_AR2:
-	case EVENT_WEAPON_SMG2:
 	case EVENT_WEAPON_SMG1:
 		{
 			Vector vecShootOrigin, vecShootDir;
