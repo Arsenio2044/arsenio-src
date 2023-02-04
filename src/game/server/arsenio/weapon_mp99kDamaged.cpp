@@ -3,7 +3,6 @@
 // Purpose: The damaged variant of the MP99K, for use in Data Redacted.
 // Damaged after one of the bad endings of Arsenio, The MP99K was damaged, albeit still functional.
 // This weapon now fires even slower with higher recoil, but with higher accuracy and damage.
-//
 //=============================================================================//
 
 #include "cbase.h"
@@ -27,22 +26,22 @@
 #define MIN_SPREAD_COMPONENT dr_mp99k_min_spread.GetFloat()
 #define MAX_SPREAD_COMPONENT dr_mp99k_max_spread.GetFloat()
 
-ConVar dr_mp99k_altfire_enabled( "dr_mp99k_altfire_enabled", "1", FCVAR_NONE, "Allows weapon_mp99k to fire full auto if the player holds down the secondary attack button." );
+ConVar dr_mp99k_altfire_enabled( "dr_mp99k_altfire_enabled", "1", FCVAR_NONE, "Allows weapon_mp99kd to fire full auto if the player holds down the secondary attack button." );
 ConVar dr_mp99k_altfire_ammo_modifier( "dr_mp99k_altfire_ammo_modifier", "1", FCVAR_NONE, "Multiply the number of bullets per shot by this amount for altfire" );
 ConVar dr_mp99k_altfire_spread_divisor( "dr_mp99k_altfire_spread_divisor", "3", FCVAR_NONE, "How much to divide the spread component for altfire (higher numbers = better sustained accuracy)" );
-ConVar dr_mp99k_altfire_rate( "dr_mp99k_altfire_rate", "0.06", FCVAR_NONE, "weapon_mp99k's full-auto fire rate." );
+ConVar dr_mp99k_altfire_rate( "dr_mp99k_altfire_rate", "0.06", FCVAR_NONE, "weapon_mp99kd's full-auto fire rate." );
 ConVar dr_mp99k_min_spread( "dr_mp99k_min_spread", "0.015", FCVAR_NONE, "MP99K minimum fire cone vector component" );
 ConVar dr_mp99k_max_spread( "dr_mp99k_max_spread", "0.075", FCVAR_NONE, "MP99K maximum fire cone vector component" );
 ConVar dr_mp99k_burst_cycle_rate( "dr_mp99k_burst_cycle_rate", "0.2", FCVAR_NONE, "MP99K maximum fire cone vector component" );
 ConVar dr_mp99k_debug( "dr_mp99k_debug", "0", FCVAR_NONE, "Log messages to console about the MP99K spread" );
 
-class CWeaponMP99K : public CHLSelectFireMachineGun
+class CWeaponMP99KD : public CHLSelectFireMachineGun
 {
 	DECLARE_DATADESC();
 public:
-	DECLARE_CLASS( CWeaponMP99K, CHLSelectFireMachineGun );
+	DECLARE_CLASS( CWeaponMP99KD, CHLSelectFireMachineGun );
 
-	CWeaponMP99K();
+	CWeaponMP99KD();
 
 	DECLARE_SERVERCLASS();
 	
@@ -81,20 +80,20 @@ protected:
 	float   m_flSpreadComponent;
 };
 
-IMPLEMENT_SERVERCLASS_ST(CWeaponMP99K, DT_WeaponMP99K)
+IMPLEMENT_SERVERCLASS_ST(CWeaponMP99KD, DT_WeaponMP99K)
 END_SEND_TABLE()
 
-LINK_ENTITY_TO_CLASS( weapon_mp99k, CWeaponMP99K );
-PRECACHE_WEAPON_REGISTER(weapon_mp99k);
+LINK_ENTITY_TO_CLASS( weapon_mp99kd, CWeaponMP99KD );
+PRECACHE_WEAPON_REGISTER(weapon_mp99kd);
 
-BEGIN_DATADESC( CWeaponMP99K )
+BEGIN_DATADESC( CWeaponMP99KD )
 
 	DEFINE_FIELD(m_flSpreadComponent, FIELD_FLOAT ),
 	DEFINE_FIELD(m_flLastPrimaryAttack, FIELD_TIME ),
 
 END_DATADESC()
 
-acttable_t	CWeaponMP99K::m_acttable[] = 
+acttable_t	CWeaponMP99KD::m_acttable[] = 
 {
 	{ ACT_RANGE_ATTACK1,			ACT_RANGE_ATTACK_SMG1,			true },
 	{ ACT_RELOAD,					ACT_RELOAD_SMG1,				true },
@@ -146,25 +145,25 @@ acttable_t	CWeaponMP99K::m_acttable[] =
 	{ ACT_GESTURE_RELOAD,			ACT_GESTURE_RELOAD_SMG1,		true },
 };
 
-IMPLEMENT_ACTTABLE(CWeaponMP99K);
+IMPLEMENT_ACTTABLE(CWeaponMP99KD);
 
 //=========================================================
-CWeaponMP99K::CWeaponMP99K( )
+CWeaponMP99KD::CWeaponMP99KD( )
 {
 	m_fMinRange1		= 0;// No minimum range. 
-	m_fMaxRange1		= 1400;
+	m_fMaxRange1		= 1900;
 	m_iBurstSize = 0;
 	m_iSecondaryAmmoType = -1;
 	m_iClip2 = -1;
 	m_flSpreadComponent = MIN_SPREAD_COMPONENT;
 
-	m_bAltFiresUnderwater = false;
+	m_bFiresUnderwater = false;
 }
 
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CWeaponMP99K::FireNPCPrimaryAttack( CBaseCombatCharacter *pOperator, Vector &vecShootOrigin, Vector &vecShootDir )
+void CWeaponMP99KD::FireNPCPrimaryAttack( CBaseCombatCharacter *pOperator, Vector &vecShootOrigin, Vector &vecShootDir )
 {
 	// FIXME: use the returned number of bullets to account for >10hz firerate
 	WeaponSoundRealtime( SINGLE_NPC );
@@ -180,7 +179,7 @@ void CWeaponMP99K::FireNPCPrimaryAttack( CBaseCombatCharacter *pOperator, Vector
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CWeaponMP99K::Operator_ForceNPCFire( CBaseCombatCharacter *pOperator, bool bSecondary )
+void CWeaponMP99KD::Operator_ForceNPCFire( CBaseCombatCharacter *pOperator, bool bSecondary )
 {
 	// Ensure we have enough rounds in the clip
 	m_iClip1++;
@@ -195,7 +194,7 @@ void CWeaponMP99K::Operator_ForceNPCFire( CBaseCombatCharacter *pOperator, bool 
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CWeaponMP99K::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator )
+void CWeaponMP99KD::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator )
 {
 	switch( pEvent->event )
 	{
@@ -227,7 +226,7 @@ void CWeaponMP99K::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCha
 // Purpose: 
 // Output : Activity
 //-----------------------------------------------------------------------------
-Activity CWeaponMP99K::GetPrimaryAttackActivity( void )
+Activity CWeaponMP99KD::GetPrimaryAttackActivity( void )
 {
 	if ( m_nShotsFired < 2 )
 		return ACT_VM_PRIMARYATTACK;
@@ -243,7 +242,7 @@ Activity CWeaponMP99K::GetPrimaryAttackActivity( void )
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-bool CWeaponMP99K::Reload( void )
+bool CWeaponMP99KD::Reload( void )
 {
 	bool fRet;
 
@@ -263,7 +262,7 @@ bool CWeaponMP99K::Reload( void )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CWeaponMP99K::AddViewKick( void )
+void CWeaponMP99KD::AddViewKick( void )
 {
 	#define	EASY_DAMPEN			2.5f	// BREADMAN
 	#define	MAX_VERTICAL_KICK	28.0f	//Degrees - was 1.0
@@ -283,12 +282,12 @@ void CWeaponMP99K::AddViewKick( void )
 //
 //
 //-----------------------------------------------------------------------------
-void CWeaponMP99K::PrimaryAttack(void)
+void CWeaponMP99KD::PrimaryAttack(void)
 {
 	BurstAttack( GetBurstSize(), GetBurstCycleRate(), 1, (float)GetBurstSize() );
 }
 
-Vector CWeaponMP99K::GetBulletSpread( WeaponProficiency_t proficiency )
+Vector CWeaponMP99KD::GetBulletSpread( WeaponProficiency_t proficiency )
 {
 	Vector baseSpread = CalculateBurstAttackSpread();
 
@@ -300,7 +299,7 @@ Vector CWeaponMP99K::GetBulletSpread( WeaponProficiency_t proficiency )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CWeaponMP99K::SecondaryAttack(void)
+void CWeaponMP99KD::SecondaryAttack(void)
 {
 	if ( dr_mp99k_altfire_enabled.GetBool() )
 	{
@@ -308,7 +307,7 @@ void CWeaponMP99K::SecondaryAttack(void)
 	}
 }
 
-Vector CWeaponMP99K::CalculateBurstAttackSpread()
+Vector CWeaponMP99KD::CalculateBurstAttackSpread()
 {
 	float l_flSpreadRegen = ((gpGlobals->curtime - m_flLastPrimaryAttack) / GetBurstCycleRate()) * (MAX_SPREAD_COMPONENT - MIN_SPREAD_COMPONENT) / 2;
 	m_flSpreadComponent -= l_flSpreadRegen;
@@ -323,7 +322,7 @@ Vector CWeaponMP99K::CalculateBurstAttackSpread()
 
 	if (dr_mp99k_debug.GetBool())
 	{
-		DevMsg( "CWeaponMP99K::BurstAttack(): MP99K spread component: %f\n", m_flSpreadComponent );
+		DevMsg( "CWeaponMP99KD::BurstAttack(): MP99K spread component: %f\n", m_flSpreadComponent );
 	}
 
 	return Vector( m_flSpreadComponent, m_flSpreadComponent, m_flSpreadComponent );
@@ -332,7 +331,7 @@ Vector CWeaponMP99K::CalculateBurstAttackSpread()
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CWeaponMP99K::BurstAttack( int burstSize, float cycleRate, int spentAmmoModifier, float spreadComponentDivisor )
+void CWeaponMP99KD::BurstAttack( int burstSize, float cycleRate, int spentAmmoModifier, float spreadComponentDivisor )
 {
 	// Bursts always use the weapon's fire rate
 	float fireRate =  GetFireRate();
@@ -450,7 +449,7 @@ void CWeaponMP99K::BurstAttack( int burstSize, float cycleRate, int spentAmmoMod
 // Purpose: MP99K overrides ItemPostFrame because the primary and secondary
 // fire modes are the same but with slightly different parameters.
 //-----------------------------------------------------------------------------
-void CWeaponMP99K::ItemPostFrame(void)
+void CWeaponMP99KD::ItemPostFrame(void)
 {
 	CBasePlayer *pOwner = ToBasePlayer(GetOwner());
 	if (!pOwner)
@@ -489,7 +488,7 @@ void CWeaponMP99K::ItemPostFrame(void)
 			}
 			if ((pOwner->m_nButtons & IN_ATTACK)) 
 			{
-				PrimaryAttack();
+				SecondaryAttack();
 			}
 			else {
 				SecondaryAttack();
@@ -527,7 +526,7 @@ void CWeaponMP99K::ItemPostFrame(void)
 }
 
 //-----------------------------------------------------------------------------
-const WeaponProficiencyInfo_t *CWeaponMP99K::GetProficiencyValues()
+const WeaponProficiencyInfo_t *CWeaponMP99KD::GetProficiencyValues()
 {
 	static WeaponProficiencyInfo_t proficiencyTable[] =
 	{
