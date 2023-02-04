@@ -47,8 +47,9 @@ STUB_WEAPON_CLASS(weapon_mobileturret, WeaponMobileTurret, C_BaseHLBludgeonWeapo
 STUB_WEAPON_CLASS(weapon_glock, WeaponGlock, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_k189, WeaponK189, C_HLMachineGun );
 STUB_WEAPON_CLASS(weapon_smg1, WeaponSMG1, C_HLSelectFireMachineGun);
-STUB_WEAPON_CLASS(weapon_MP99K, WeaponMP99K, C_BaseHLCombatWeapon); // Mp5K for modern world.
-
+#ifdef LATER
+STUB_WEAPON_CLASS(weapon_mp99k, WeaponMP99K, C_HLSelectFireMachineGun); // Mp5K for modern world.
+#endif
 
 // Coming soon
 #ifdef BALLS
