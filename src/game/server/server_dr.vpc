@@ -61,6 +61,7 @@ $Project "Server - Data Redacted"
 			$File	"$SRCDIR\game\shared\arsenio\gamemovement_mobility.cpp"
 			$File	"arsenio\item_exo.cpp"
 			$File	"arsenio\npc_LeOS.cpp"
+			$File	"$SRCDIR\game\shared\arsenio\arsenio_game_log.cpp"
 			
 			$Folder	"Weapons"
 			{
@@ -72,6 +73,7 @@ $Project "Server - Data Redacted"
 			$File	"cyberspace\weapon_addamm557.h"
 			$File	"arsenio\weapon_glock.cpp"
 			$File	"arsenio\weapon_mp5k.cpp"
+//			$File	"arsenio\weapon_mp99k.cpp"
 			$File	"arsenio\weapon_pro836.cpp"
 			$File	"arsenio\weapon_tau.cpp"
 			$File	"arsenio\weapon_tau.h"
@@ -83,6 +85,9 @@ $Project "Server - Data Redacted"
 			$File	"hl2\weapon_egar.cpp"
 			$File	"arsenio\weapon_k189.cpp"
 			$File	"weapon_frag.h"	
+			$File	"hl1\hl1_npc_controller.cpp"
+			$File	"env_instructor_hint.cpp"
+
                         }
 
 			$Folder	"NPCS"

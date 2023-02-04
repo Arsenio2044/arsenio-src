@@ -29,7 +29,7 @@ $Project "Client - Data Redacted"
 		$File	"c_team_objectiveresource.cpp"
 		$File	"c_team_objectiveresource.h"
 		
-		$Folder	"ARSENIO DLL"
+		$Folder	"AR DLL"
 		{
 			$File	"c_vehicle_airboat.h"			
 			$File	"c_weapon_egar.h"
@@ -44,6 +44,8 @@ $Project "Client - Data Redacted"
 			$File	"arsenio\c_weapon_stubs_arsenio.cpp"
 			$File	"arsenio\menu_background.cpp"
 			$File	"arsenio\menu_background.h"
+			$File	"$SRCDIR\game\shared\arsenio\arsenio_game_log.cpp"
+
 		}
 
 		$Folder	"IVEngine2"
@@ -52,6 +54,12 @@ $Project "Client - Data Redacted"
 			$File	"IVEngine2\hud_radar_panel.h"
 			$File	"IVEngine2\VGUI\hsmapoverview.cpp"			
 			$File	"IVEngine2\VGUI\hsmapoverview.h"
+			$File	"c_baselesson.cpp"
+			$File	"c_baselesson.h"
+			$File	"c_gameinstructor.cpp"
+			$File	"c_gameinstructor.h"
+			$File	"hud_locator_target.cpp"
+			$File	"hud_locator_target.h"
 		}
 
 		$Folder "Shader Editor" [$WIN32]
