@@ -24,17 +24,17 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-#define MIN_SPREAD_COMPONENT arsenio_mp99k_min_spread.GetFloat()
-#define MAX_SPREAD_COMPONENT arsenio_mp99k_max_spread.GetFloat()
+#define MIN_SPREAD_COMPONENT dr_mp99k_min_spread.GetFloat()
+#define MAX_SPREAD_COMPONENT dr_mp99k_max_spread.GetFloat()
 
-ConVar arsenio_mp99k_altfire_enabled( "arsenio_mp99k_altfire_enabled", "1", FCVAR_NONE, "Allows weapon_mp99k to fire full auto if the player holds down the secondary attack button." );
-ConVar arsenio_mp99k_altfire_ammo_modifier( "arsenio_mp99k_altfire_ammo_modifier", "1", FCVAR_NONE, "Multiply the number of bullets per shot by this amount for altfire" );
-ConVar arsenio_mp99k_altfire_spread_divisor( "arsenio_mp99k_altfire_spread_divisor", "3", FCVAR_NONE, "How much to divide the spread component for altfire (higher numbers = better sustained accuracy)" );
-ConVar arsenio_mp99k_altfire_rate( "arsenio_mp99k_altfire_rate", "0.06", FCVAR_NONE, "weapon_mp99k's full-auto fire rate." );
-ConVar arsenio_mp99k_min_spread( "arsenio_mp99k_min_spread", "0.015", FCVAR_NONE, "MP99K minimum fire cone vector component" );
-ConVar arsenio_mp99k_max_spread( "arsenio_mp99k_max_spread", "0.075", FCVAR_NONE, "MP99K maximum fire cone vector component" );
-ConVar arsenio_mp99k_burst_cycle_rate( "arsenio_mp99k_burst_cycle_rate", "0.2", FCVAR_NONE, "MP99K maximum fire cone vector component" );
-ConVar arsenio_mp99k_debug( "arsenio_mp99k_debug", "0", FCVAR_NONE, "Log messages to console about the MP99K spread" );
+ConVar dr_mp99k_altfire_enabled( "dr_mp99k_altfire_enabled", "1", FCVAR_NONE, "Allows weapon_mp99k to fire full auto if the player holds down the secondary attack button." );
+ConVar dr_mp99k_altfire_ammo_modifier( "dr_mp99k_altfire_ammo_modifier", "1", FCVAR_NONE, "Multiply the number of bullets per shot by this amount for altfire" );
+ConVar dr_mp99k_altfire_spread_divisor( "dr_mp99k_altfire_spread_divisor", "3", FCVAR_NONE, "How much to divide the spread component for altfire (higher numbers = better sustained accuracy)" );
+ConVar dr_mp99k_altfire_rate( "dr_mp99k_altfire_rate", "0.06", FCVAR_NONE, "weapon_mp99k's full-auto fire rate." );
+ConVar dr_mp99k_min_spread( "dr_mp99k_min_spread", "0.015", FCVAR_NONE, "MP99K minimum fire cone vector component" );
+ConVar dr_mp99k_max_spread( "dr_mp99k_max_spread", "0.075", FCVAR_NONE, "MP99K maximum fire cone vector component" );
+ConVar dr_mp99k_burst_cycle_rate( "dr_mp99k_burst_cycle_rate", "0.2", FCVAR_NONE, "MP99K maximum fire cone vector component" );
+ConVar dr_mp99k_debug( "dr_mp99k_debug", "0", FCVAR_NONE, "Log messages to console about the MP99K spread" );
 
 class CWeaponMP99K : public CHLSelectFireMachineGun
 {
@@ -57,14 +57,14 @@ public:
 	void	SecondaryAttack( void );
 	void	ItemPostFrame(void);
 
-	float	GetBurstCycleRate(void) { return arsenio_mp99k_burst_cycle_rate.GetFloat(); };
+	float	GetBurstCycleRate(void) { return dr_mp99k_burst_cycle_rate.GetFloat(); };
 	int		GetMinBurst() { return 3; }
 	int		GetMaxBurst() { return 3; }
 	int		GetBurstSize(void) { return 3; };
 
 	bool	Reload( void );
 
-	float	GetFullAutoFireRate( void ) { return arsenio_mp99k_altfire_rate.GetFloat(); }
+	float	GetFullAutoFireRate( void ) { return dr_mp99k_altfire_rate.GetFloat(); }
 	int		CapabilitiesGet( void ) { return bits_CAP_WEAPON_RANGE_ATTACK1; }
 	Activity	GetPrimaryAttackActivity( void );
 
@@ -266,8 +266,8 @@ bool CWeaponMP99K::Reload( void )
 void CWeaponMP99K::AddViewKick( void )
 {
 	#define	EASY_DAMPEN			2.5f	// BREADMAN
-	#define	MAX_VERTICAL_KICK	22.0f	//Degrees - was 1.0
-	#define	SLIDE_LIMIT			4.0f	//Seconds - was 2.0
+	#define	MAX_VERTICAL_KICK	28.0f	//Degrees - was 1.0
+	#define	SLIDE_LIMIT			6.0f	//Seconds - was 2.0
 	
 	//Get the view kick
 	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
@@ -302,9 +302,9 @@ Vector CWeaponMP99K::GetBulletSpread( WeaponProficiency_t proficiency )
 //-----------------------------------------------------------------------------
 void CWeaponMP99K::SecondaryAttack(void)
 {
-	if ( arsenio_mp99k_altfire_enabled.GetBool() )
+	if ( dr_mp99k_altfire_enabled.GetBool() )
 	{
-		BurstAttack( 1, GetFullAutoFireRate(), arsenio_mp99k_altfire_ammo_modifier.GetInt(), arsenio_mp99k_altfire_spread_divisor.GetFloat() );
+		BurstAttack( 1, GetFullAutoFireRate(), dr_mp99k_altfire_ammo_modifier.GetInt(), dr_mp99k_altfire_spread_divisor.GetFloat() );
 	}
 }
 
@@ -314,14 +314,14 @@ Vector CWeaponMP99K::CalculateBurstAttackSpread()
 	m_flSpreadComponent -= l_flSpreadRegen;
 
 	// Minimum spread
-	if (m_flSpreadComponent < MIN_SPREAD_COMPONENT)
-		m_flSpreadComponent = MIN_SPREAD_COMPONENT;
+	if (m_flSpreadComponent < MAX_SPREAD_COMPONENT)
+		m_flSpreadComponent = MAX_SPREAD_COMPONENT;
 
 	// Maximum spread
 	if (m_flSpreadComponent > MAX_SPREAD_COMPONENT)
 		m_flSpreadComponent = MAX_SPREAD_COMPONENT;
 
-	if (arsenio_mp99k_debug.GetBool())
+	if (dr_mp99k_debug.GetBool())
 	{
 		DevMsg( "CWeaponMP99K::BurstAttack(): MP99K spread component: %f\n", m_flSpreadComponent );
 	}
@@ -481,11 +481,6 @@ void CWeaponMP99K::ItemPostFrame(void)
 		}
 		else
 		{
-			//NOTENOTE: There is a bug with this code with regards to the way machine guns catch the leading edge trigger
-			//			on the player hitting the attack key.  It relies on the gun catching that case in the same frame.
-			//			However, because the player can also be doing a secondary attack, the edge trigger may be missed.
-			//			We really need to hold onto the edge trigger and only clear the condition when the gun has fired its
-			//			first shot.  Right now that's too much of an architecture change -- jdw
 
 			// If the firing button was just pressed, or the alt-fire just released, reset the firing time
 			//if ((pOwner->m_afButtonPressed & IN_ATTACK) || (pOwner->m_afButtonReleased & IN_ATTACK2))
