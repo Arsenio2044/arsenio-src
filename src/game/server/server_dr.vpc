@@ -62,6 +62,11 @@ $Project "Server - Data Redacted"
 			$File	"arsenio\item_exo.cpp"
 			$File	"arsenio\npc_LeOS.cpp"
 			$File	"$SRCDIR\game\shared\arsenio\arsenio_game_log.cpp"
+
+			$Folder	"DATA REDACTED EXCLUSIVE"
+			{
+			$File	"arsenio\weapon_mp99kDamaged.cpp"
+			}
 			
 			$Folder	"Weapons"
 			{
