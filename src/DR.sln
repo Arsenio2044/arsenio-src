@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31112.23
+# Visual Studio Version 17
+VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Client - Data Redacted", "game\client\client_dr.vcxproj", "{85ABD047-FBE0-EF43-1106-66C43EB21359}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -211,6 +211,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {88553078-6821-4913-A691-3609AAE5FF7E}
+		SolutionGuid = {CEFD2E65-B391-4FE0-9FB2-FF0910E003D9}
 	EndGlobalSection
 EndGlobal

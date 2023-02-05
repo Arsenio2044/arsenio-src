@@ -1807,31 +1807,31 @@ void CBasePlayer::CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, 
 	}
 }
 
-//#ifdef ARSENIO
-//void CBasePlayer::CalcViewModelView(const Vector& eyeOrigin, const QAngle& eyeAngles)
-//{
-//
-//
-//
-//	for (int i = 0; i < MAX_VIEWMODELS; i++)
-//	{
-//		CBaseViewModel* vm = GetViewModel(i);
-//		if (!vm)
-//			continue;
-//
-//		QAngle punchedAngle;
-//		VectorAdd(eyeAngles, m_Local.m_vecPunchAngle * (1.0f - cl_viewpunch_power.GetFloat()), punchedAngle);
-//
-//		Vector bobOffset = vec3_origin;
-//		QAngle blah;
-//		AddViewBob(bobOffset, blah);
-//
-//		vm->CalcViewModelView(this, eyeOrigin + bobOffset * arsenio_viewbob_viewmodel_add.GetFloat(), punchedAngle);
-//	}
-//}
-//#endif
-//#ifndef ARSENIO
+/*
+  #ifdef ARSENIO
+  void CBasePlayer::CalcViewModelView(const Vector& eyeOrigin, const QAngle& eyeAngles)
+  {
+  
+  
+  
+  	for (int i = 0; i < MAX_VIEWMODELS; i++)
+  	{
+  		CBaseViewModel* vm = GetViewModel(i);
+  		if (!vm)
+  			continue;
+  
+  		QAngle punchedAngle;
+  		VectorAdd(eyeAngles, m_Local.m_vecPunchAngle * (1.0f - cl_viewpunch_power.GetFloat()), punchedAngle);
+  
+  		Vector bobOffset = vec3_origin;
+  		QAngle blah;
+		AddViewBob(bobOffset, blah);
 
+		vm->CalcViewModelView(this, eyeOrigin + bobOffset * arsenio_viewbob_viewmodel_add.GetFloat(), punchedAngle);	}
+}
+#endif
+#ifndef ARSENIO
+*/
 void CBasePlayer::CalcViewModelView(const Vector& eyeOrigin, const QAngle& eyeAngles)
 {
 	for ( int i = 0; i < MAX_VIEWMODELS; i++ )
