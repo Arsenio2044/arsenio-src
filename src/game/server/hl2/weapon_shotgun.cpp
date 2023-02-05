@@ -782,22 +782,3 @@ void CWeaponShotgun::ItemHolsterFrame( void )
 	}
 }
 
-//==================================================
-// Purpose: 
-//==================================================
-/*
-void CWeaponShotgun::WeaponIdle( void )
-{
-	//Only the player fires this way so we can cast
-	CBasePlayer *pPlayer = GetOwner()
-
-	if ( pPlayer == NULL )
-		return;
-
-	//If we're on a target, play the new anim
-	if ( pPlayer->IsOnTarget() )
-	{
-		SendWeaponAnim( ACT_VM_IDLE_ACTIVE );
-	}
-}
-*/
