@@ -47,6 +47,7 @@ STUB_WEAPON_CLASS(weapon_glock, WeaponGlock, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_k189, WeaponK189, C_HLMachineGun );
 STUB_WEAPON_CLASS(weapon_smg1, WeaponSMG1, C_HLSelectFireMachineGun);
 STUB_WEAPON_CLASS(weapon_KLO99, WeaponKLO99, C_HLMachineGun); // High power LMG
+STUB_WEAPON_CLASS(weapon_ar3, WeaponAR3, C_HLMachineGun);
 #ifdef LATER
 STUB_WEAPON_CLASS(weapon_mp99k, WeaponMP99K, C_HLSelectFireMachineGun); // Mp5K for modern world.
 #endif
