@@ -1836,7 +1836,7 @@ void CHLClient::LevelInitPreEntity(char const* pMapName)
 		discordPresence.startTimestamp = startTimestamp;
 		Discord_UpdatePresence(&discordPresence);
 	}
-	// 201 COMMITS, FUCK YEAH!!
+	// 201 COMMITS, FUCK YEAH!! outdated lmao
 	// Check low violence settings for this map
 	g_RagdollLVManager.SetLowViolence(pMapName);
 
