@@ -201,7 +201,7 @@ class IStudioRender;
 static ConVar s_UseNetworkVars( "UseNetworkVars", "1", FCVAR_CHEAT, "For profiling, toggle network vars." );
 #endif
 
-extern ConVar sv_noclipduringpause;
+extern ConVar sv_tclduringpause;
 ConVar sv_massreport( "sv_massreport", "0" );
 ConVar sv_force_transmit_ents( "sv_force_transmit_ents", "0", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY, "Will transmit all entities to client, regardless of PVS conditions (will still skip based on transmit flags, however)." );
 

@@ -1048,7 +1048,7 @@ static bool TestEntityPosition ( CBasePlayer *pPlayer )
 //------------------------------------------------------------------------------
 // Searches along the direction ray in steps of "step" to see if 
 // the entity position is passible.
-// Used for putting the player in valid space when toggling off noclip mode.
+// Used for putting the player in valid space when toggling off tcl mode.
 //------------------------------------------------------------------------------
 static int FindPassableSpace( CBasePlayer *pPlayer, const Vector& direction, float step, Vector& oldorigin )
 {
@@ -1076,7 +1076,7 @@ void EnableNoClip( CBasePlayer *pPlayer )
 	// Disengage from hierarchy
 	pPlayer->SetParent( NULL );
 	pPlayer->SetMoveType( MOVETYPE_NOCLIP );
-	ClientPrint( pPlayer, HUD_PRINTCONSOLE, "noclip ON\n");
+	ClientPrint( pPlayer, HUD_PRINTCONSOLE, "tcl ON\n");
 	pPlayer->AddEFlags( EFL_NOCLIP_ACTIVE );
 }
 
@@ -1086,7 +1086,7 @@ void EnableLessClip( CBasePlayer *pPlayer )
 	ClientPrint( pPlayer, HUD_PRINTCONSOLE, "lessclip ON\n" );
 }
 
-// Shared code for coming out of noclip or lessclip. Make sure the player ends up
+// Shared code for coming out of tcl or lessclip. Make sure the player ends up
 // somewhere they can move
 void UnphasePlayer( CBasePlayer *pPlayer, CPlayerState *pl, Vector& oldorigin )
 {
@@ -1143,11 +1143,11 @@ void CC_Player_NoClip( void )
 	pPlayer->SetMoveType( MOVETYPE_WALK );
 
 	Vector oldorigin = pPlayer->GetAbsOrigin();
-	ClientPrint( pPlayer, HUD_PRINTCONSOLE, "noclip OFF\n");
+	ClientPrint( pPlayer, HUD_PRINTCONSOLE, "tcl OFF\n");
 	UnphasePlayer( pPlayer, pl, oldorigin );
 }
 
-static ConCommand noclip("noclip", CC_Player_NoClip, "Toggle. Player becomes non-solid and flies.", FCVAR_CHEAT);
+static ConCommand tcl("tcl", CC_Player_NoClip, "Toggle. Player becomes non-solid and flies.", FCVAR_CHEAT);
 
 void CC_Player_LessClip( void )
 {
@@ -1237,7 +1237,7 @@ CON_COMMAND_F( setpos, "Move player to specified origin (must have sv_cheats).",
 
 	if ( !TestEntityPosition( pPlayer ) )
 	{
-		ClientPrint( pPlayer, HUD_PRINTCONSOLE, "setpos into world, use noclip to unstick yourself!\n");
+		ClientPrint( pPlayer, HUD_PRINTCONSOLE, "setpos into world, use tcl to unstick yourself!\n");
 	}
 }
 

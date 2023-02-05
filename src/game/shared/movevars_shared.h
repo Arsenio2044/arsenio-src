@@ -53,8 +53,8 @@ extern ConVar certain_restrictions;
 
 extern ConVar sv_gravity;
 extern ConVar sv_stopspeed;
-extern ConVar sv_noclipaccelerate;
-extern ConVar sv_noclipspeed;
+extern ConVar sv_tclaccelerate;
+extern ConVar sv_tclspeed;
 extern ConVar sv_maxspeed;
 extern ConVar sv_accelerate;
 extern ConVar sv_airaccelerate;
@@ -72,7 +72,7 @@ extern ConVar sv_backspeed;
 extern ConVar sv_waterdist;
 extern ConVar sv_specaccelerate;
 extern ConVar sv_specspeed;
-extern ConVar sv_specnoclip;
+extern ConVar sv_spectcl;
 
 // Vehicle convars
 extern ConVar r_VehicleViewDampen;

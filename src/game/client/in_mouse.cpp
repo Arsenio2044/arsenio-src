@@ -538,7 +538,7 @@ void CInput::ApplyMouse( QAngle& viewangles, CUserCmd *cmd, float mouse_x, float
 	}
 	else
 	{
-		// Otherwise if holding strafe key and noclipping, then move upward
+		// Otherwise if holding strafe key and tclping, then move upward
 /*		if ((in_strafe.state & 1) && IsNoClipping() )
 		{
 			cmd->upmove -= m_forward.GetFloat() * mouse_y;

@@ -2725,7 +2725,7 @@ bool CNPC_AttackHelicopter::IsBombDropFair( const Vector &vecBombStartPos, const
 	if ( (m_nAttackMode == ATTACK_MODE_BULLRUSH_VEHICLE) && IsInSecondaryMode( BULLRUSH_MODE_SHOOT_IDLE_PLAYER ) )
 		return true;
 
-	// Can happen if you're noclipping around
+	// Can happen if you're tclping around
 	if ( !GetEnemy() )
 		return false;
 

@@ -258,7 +258,7 @@ bool C_BaseHLPlayer::TestMove( const Vector &pos, float fVertDist, float radius,
 //-----------------------------------------------------------------------------
 void C_BaseHLPlayer::PerformClientSideObstacleAvoidance( float flFrameTime, CUserCmd *pCmd )
 {
-	// Don't avoid if noclipping or in movetype none
+	// Don't avoid if tclping or in movetype none
 	switch ( GetMoveType() )
 	{
 	case MOVETYPE_NOCLIP:

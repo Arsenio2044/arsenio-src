@@ -2186,7 +2186,7 @@ int CBasePlayer::GetDefaultFOV( void ) const
 void CBasePlayer::AvoidPhysicsProps( CUserCmd *pCmd )
 {
 #ifndef _XBOX
-	// Don't avoid if noclipping or in movetype none
+	// Don't avoid if tclping or in movetype none
 	switch ( GetMoveType() )
 	{
 	case MOVETYPE_NOCLIP:

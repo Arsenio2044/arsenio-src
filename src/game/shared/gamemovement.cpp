@@ -2433,9 +2433,9 @@ void CGameMovement::FullObserverMove( void )
 		return;
 	}
 
-	if ( sv_specnoclip.GetBool() )
+	if ( sv_spectcl.GetBool() )
 	{
-		// roam in noclip mode
+		// roam in tcl mode
 		FullNoClipMove( sv_specspeed.GetFloat(), sv_specaccelerate.GetFloat() );
 		return;
 	}
@@ -4734,7 +4734,7 @@ void CGameMovement::PlayerMove( void )
 			break;
 
 		case MOVETYPE_NOCLIP:
-			FullNoClipMove( sv_noclipspeed.GetFloat(), sv_noclipaccelerate.GetFloat() );
+			FullNoClipMove( sv_tclspeed.GetFloat(), sv_tclaccelerate.GetFloat() );
 			break;
 
 		case MOVETYPE_FLY:

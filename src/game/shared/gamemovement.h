@@ -161,7 +161,7 @@ protected:
 	// Apply normal ( undecomposed ) gravity
 	void			AddGravity( void );
 
-	// Handle movement in noclip mode.
+	// Handle movement in tcl mode.
 	void			FullNoClipMove( float factor, float maxacceleration );
 
 	// Returns true if he started a jump (ie: should he play the jump animation)?

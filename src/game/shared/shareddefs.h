@@ -607,7 +607,7 @@ enum
 {
 	EFL_KILLME = (1 << 0),	// This entity is marked for death -- This allows the game to actually delete ents at a safe time
 	EFL_DORMANT = (1 << 1),	// Entity is dormant, no updates to client
-	EFL_NOCLIP_ACTIVE = (1 << 2),	// Lets us know when the noclip command is active.
+	EFL_NOCLIP_ACTIVE = (1 << 2),	// Lets us know when the tcl command is active.
 	EFL_SETTING_UP_BONES = (1 << 3),	// Set while a model is setting up its bones.
 	EFL_KEEP_ON_RECREATE_ENTITIES = (1 << 4), // This is a special entity that should not be deleted when we restart entities only
 

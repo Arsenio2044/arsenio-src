@@ -117,7 +117,7 @@ ConVar cl_backspeed("cl_backspeed", "450", FCVAR_REPLICATED | FCVAR_CHEAT);
 #endif // CSTRIKE_DLL
 
 // This is declared in the engine, too
-ConVar	sv_noclipduringpause("sv_noclipduringpause", "0", FCVAR_REPLICATED | FCVAR_CHEAT, "If cheats are enabled, then you can noclip with the game paused (for doing screenshots, etc.).");
+ConVar	sv_tclduringpause("sv_tclduringpause", "0", FCVAR_REPLICATED | FCVAR_CHEAT, "If cheats are enabled, then you can tcl with the game paused (for doing screenshots, etc.).");
 
 extern ConVar sv_maxunlag;
 extern ConVar sv_turbophysics;
@@ -469,7 +469,7 @@ inline bool ShouldRunCommandsInContext(const CCommandContext* ctx)
 	// TODO: This should be enabled at some point. If usercmds can run while paused, then
 	// they can create entities which will never die and it will fill up the entity list.
 #ifdef NO_USERCMDS_DURING_PAUSE
-	return !ctx->paused || sv_noclipduringpause.GetInt();
+	return !ctx->paused || sv_tclduringpause.GetInt();
 #else
 	return true;
 #endif
@@ -3495,10 +3495,10 @@ void CBasePlayer::ProcessUsercmds(CUserCmd* cmds, int numcmds, int totalcmds,
 	{
 		bool clear_angles = true;
 
-		// If no clipping and cheats enabled and sv_noclipduringpause enabled, then don't zero out movement part of CUserCmd
+		// If no clipping and cheats enabled and sv_tclduringpause enabled, then don't zero out movement part of CUserCmd
 		if (GetMoveType() == MOVETYPE_NOCLIP &&
 			sv_cheats->GetBool() &&
-			sv_noclipduringpause.GetBool())
+			sv_tclduringpause.GetBool())
 		{
 			clear_angles = false;
 		}
@@ -5696,7 +5696,7 @@ bool CBasePlayer::GetInVehicle(IServerVehicle* pVehicle, int nRole)
 	SetAbsVelocity(vec3_origin);
 	SetMoveType(MOVETYPE_NOCLIP);
 
-	// This is a hack to fixup the player's stats since they really didn't "cheat" and enter noclip from the console
+	// This is a hack to fixup the player's stats since they really didn't "cheat" and enter tcl from the console
 	gamestats->Event_DecrementPlayerEnteredNoClip(this);
 
 	// Get the seat position we'll be at in this vehicle

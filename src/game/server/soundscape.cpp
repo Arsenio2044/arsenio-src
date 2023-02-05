@@ -430,7 +430,7 @@ void CEnvSoundscapeTriggerable::DelegateStartTouch( CBaseEntity *pEnt )
 		return;
 
 	// Just in case.. we shouldn't already be in the player's list because it should have 
-	// called DelegateEndTouch, but this seems to happen when they're noclipping.
+	// called DelegateEndTouch, but this seems to happen when they're tclping.
 	pPlayer->m_hTriggerSoundscapeList.FindAndRemove( this );
 
 	// Add us to the player's list of soundscapes and 

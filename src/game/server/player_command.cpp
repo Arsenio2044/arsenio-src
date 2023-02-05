@@ -20,7 +20,7 @@
 
 extern IGameMovement *g_pGameMovement;
 extern CMoveData *g_pMoveData;	// This is a global because it is subclassed by each game.
-extern ConVar sv_noclipduringpause;
+extern ConVar sv_tclduringpause;
 
 ConVar sv_maxusrcmdprocessticks_warning( "sv_maxusrcmdprocessticks_warning", "-1", FCVAR_NONE, "Print a warning when user commands get dropped due to insufficient usrcmd ticks allocated, number of seconds to throttle, negative disabled" );
 
@@ -351,11 +351,11 @@ void CPlayerMove::RunCommand ( CBasePlayer *player, CUserCmd *ucmd, IMoveHelper 
 
 	if ( player->m_bGamePaused )
 	{
-		// If no clipping and cheats enabled and noclipduring game enabled, then leave
+		// If no clipping and cheats enabled and tclduring game enabled, then leave
 		//  forwardmove and angles stuff in usercmd
 		if ( player->GetMoveType() == MOVETYPE_NOCLIP &&
 			 sv_cheats->GetBool() && 
-			 sv_noclipduringpause.GetBool() )
+			 sv_tclduringpause.GetBool() )
 		{
 			gpGlobals->frametime = TICK_INTERVAL;
 		}
