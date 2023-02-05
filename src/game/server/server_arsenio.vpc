@@ -15,8 +15,8 @@ $Configuration
 	$Compiler
 	{
 		$AdditionalIncludeDirectories	"$BASE;$SRCDIR\game\shared\hl2;$SRCDIR\game\shared\episodic;.\hl2;.\episodic"
-		$PreprocessorDefinitions		"$BASE;HL2_DLL;ARSENIO;HL2_EPISODIC;USES_SAVERESTORE;ARSENIO_DLL;SKYDOME"
-		$PreprocessorDefinitions		"$BASE;NEW_RESPONSE_SYSTEM"		[$NEW_RESPONSE_SYSTEM]
+		$PreprocessorDefinitions		"$BASE;HL2_DLL;ARSENIO;HL2_EPISODIC;USES_SAVERESTORE;ARSENIO_DLL;AR_DLL;SKYDOME"
+		$PreprocessorDefinitions		"$BASE;AR;NEW_RESPONSE_SYSTEM"		[$NEW_RESPONSE_SYSTEM]
 
 	}
 }
