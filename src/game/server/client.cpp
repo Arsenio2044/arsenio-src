@@ -1076,7 +1076,7 @@ void EnableNoClip( CBasePlayer *pPlayer )
 	// Disengage from hierarchy
 	pPlayer->SetParent( NULL );
 	pPlayer->SetMoveType( MOVETYPE_NOCLIP );
-	ClientPrint( pPlayer, HUD_PRINTCONSOLE, "tcl ON\n");
+	ClientPrint( pPlayer, HUD_PRINTCONSOLE, "Collision ON\n");
 	pPlayer->AddEFlags( EFL_NOCLIP_ACTIVE );
 }
 
@@ -1143,7 +1143,7 @@ void CC_Player_NoClip( void )
 	pPlayer->SetMoveType( MOVETYPE_WALK );
 
 	Vector oldorigin = pPlayer->GetAbsOrigin();
-	ClientPrint( pPlayer, HUD_PRINTCONSOLE, "tcl OFF\n");
+	ClientPrint( pPlayer, HUD_PRINTCONSOLE, "Collision OFF\n");
 	UnphasePlayer( pPlayer, pl, oldorigin );
 }
 
