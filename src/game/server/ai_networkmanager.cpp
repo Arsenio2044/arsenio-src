@@ -1043,8 +1043,9 @@ void CAI_NetworkManager::DelayedInit( void )
 		SetThink ( NULL );
 		return;
 	}
-#ifdef OPTUX3
+#ifdef ARSENIO
 	UTIL_CenterPrintAll("W.I.P BUILD! Report any bugs to Tuxxego!\n");
+	Warning("Arsenio 3044 is WIp and might crash or be buggy.");
 
 #endif
 
