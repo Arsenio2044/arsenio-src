@@ -1,6 +1,6 @@
-//========= TuxUI ===================//
+//========= GameUI ===================//
 //
-// Purpose: Replace GameUI with TuxUI.
+// Purpose: Adds new GameUI. Based off of GameUI2 by NicholasDe.
 //
 //
 //=============================================================================//

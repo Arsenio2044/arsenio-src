@@ -1,6 +1,6 @@
-//========= TuxUI ===================//
+//========= GameUI ===================//
 //
-// Purpose: Replace GameUI with TuxUI.
+// Purpose: Adds new GameUI. Based off of GameUI2 by NicholasDe.
 //
 //
 //=============================================================================//
@@ -17,7 +17,7 @@
 
 Panel_Options::Panel_Options(vgui::VPANEL Parent, const char* PanelName) : BaseClass(nullptr, PanelName)
 {
-	vgui::HScheme Scheme = vgui::scheme()->LoadSchemeFromFile("TuxUI/schemepanel.res", "SchemePanel");
+	vgui::HScheme Scheme = vgui::scheme()->LoadSchemeFromFile("resource/ui/GameUI/schemepanel.res", "SchemePanel");
 	SetScheme(Scheme);
 
 	AnimationController = new vgui::AnimationController(this);

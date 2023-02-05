@@ -30,7 +30,7 @@ int32 __cdecl ButtonsPositionTop(Button_MainMenu* const* s1, Button_MainMenu* co
 
 MainMenu::MainMenu(vgui::Panel* Parent) : BaseClass(nullptr, "MainMenu")
 {
-	vgui::HScheme Scheme = vgui::scheme()->LoadSchemeFromFile("IVEngine2/IvUI/schememainmenu.res", "SchemeMainMenu");
+	vgui::HScheme Scheme = vgui::scheme()->LoadSchemeFromFile("resource/ui/GameUI/GameUI_Layout.res", "SchemeMainMenu");
 	SetScheme(Scheme);
 
 	SetProportional(false);
@@ -44,10 +44,10 @@ MainMenu::MainMenu(vgui::Panel* Parent) : BaseClass(nullptr, "MainMenu")
 
 	bIsVisible = false;
 
-	LogoLeftText = GetGameUI2().ConvertToLocalizedString("#GameUI2_LogoLeft");
-	LogoRightText = GetGameUI2().ConvertToLocalizedString("#GameUI2_LogoRight");
+	LogoLeftText = GetGameUI2().ConvertToLocalizedString("#GameUI_LogoLeft");
+	LogoRightText = GetGameUI2().ConvertToLocalizedString("#GameUI_LogoRight");
 
-	CreateMenu("IVEngine2/IvUI/mainmenu.res");
+	CreateMenu("resource/ui/GameUI/GameUI_mainmenu.res");
 }
 
 void MainMenu::CreateMenu(const char* MenuScript)

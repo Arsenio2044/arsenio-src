@@ -1,12 +1,12 @@
 //-----------------------------------------------------------------------------
-//	IVUI_BASE.VPC
+//	GameUI_BASE.VPC
 //
 //	Project Script
 //-----------------------------------------------------------------------------
 
-$Macro OUTBINNAME	"IvUI"
+$Macro OUTBINNAME	"GameUI"
 $Macro OUTBINDIR	"$SRCDIR\..\game\$GAMENAME\bin"
-$Macro SRCDIR		"..\.."
+$Macro SRCDIR		".."
 
 $Include "$SRCDIR\vpc_scripts\source_dll_base.vpc"
 
@@ -37,7 +37,7 @@ $Configuration
 	
 	$Compiler
 	{
-		$AdditionalIncludeDirectories	"$BASE;.\;$SRCDIR\vgui2\include;$SRCDIR\vgui2\controls;$SRCDIR\IVEngine2\IvUI;..\..\public"
+		$AdditionalIncludeDirectories	"$BASE;.\;$SRCDIR\vgui2\include;$SRCDIR\vgui2\controls;$SRCDIR\gameui;..\..\public"
 		$PreprocessorDefinitions		"$BASE;GAMEUI2_DLL;VERSION_SAFE_STEAM_API_INTERFACES;strncpy=use_Q_strncpy_instead;_snprintf=use_Q_snprintf_instead"
 	}
 
@@ -52,7 +52,7 @@ $Configuration
 	}
 }
 
-$Project "IvUI"
+$Project "GameUI"
 {
 	$Folder	"Base Files"
 	{
@@ -62,7 +62,7 @@ $Project "IvUI"
 
 	$Folder	"Header Files"
 	{
-		$File	"$SRCDIR\IVEngine2\IvUI\igameui2.h"
+		$File	"$SRCDIR\gameui\igameui2.h"
 	}
 
 	$Folder	"Link Libraries"
@@ -95,39 +95,39 @@ $Project "IvUI"
 	{
 		$Folder	"Buttons"
 		{
-			$File	"$SRCDIR\IVEngine2\IvUI\button_mainmenu.cpp"
-			$File	"$SRCDIR\IVEngine2\IvUI\button_mainmenu.h"
-			$File	"$SRCDIR\IVEngine2\IvUI\button_panel.cpp"
-			$File	"$SRCDIR\IVEngine2\IvUI\button_panel.h"
+			$File	"$SRCDIR\gameui\button_mainmenu.cpp"
+			$File	"$SRCDIR\gameui\button_mainmenu.h"
+			$File	"$SRCDIR\gameui\button_panel.cpp"
+			$File	"$SRCDIR\gameui\button_panel.h"
 		}
 		
 		$Folder	"Main menu"
 		{
-			$File	"$SRCDIR\IVEngine2\IvUI\mainmenu.cpp"
-			$File	"$SRCDIR\IVEngine2\IvUI\mainmenu.h"
+			$File	"$SRCDIR\gameui\mainmenu.cpp"
+			$File	"$SRCDIR\gameui\mainmenu.h"
 		}
 
 		$Folder	"Panels"
 		{
-			$File	"$SRCDIR\IVEngine2\IvUI\panel_options.cpp"
-			$File	"$SRCDIR\IVEngine2\IvUI\panel_options.h"
-			$File	"$SRCDIR\IVEngine2\IvUI\panel_quitgame.cpp"
-			$File	"$SRCDIR\IVEngine2\IvUI\panel_quitgame.h"
+			$File	"$SRCDIR\gameui\panel_options.cpp"
+			$File	"$SRCDIR\gameui\panel_options.h"
+			$File	"$SRCDIR\gameui\panel_quitgame.cpp"
+			$File	"$SRCDIR\gameui\panel_quitgame.h"
 		}
 
 		$Folder	"VGUI 2D"
 		{
-			$File	"$SRCDIR\IVEngine2\IvUI\vgui2d\button2d.cpp"
-			$File	"$SRCDIR\IVEngine2\IvUI\vgui2d\button2d.h"
-			$File	"$SRCDIR\IVEngine2\IvUI\vgui2d\frame2d.cpp"
-			$File	"$SRCDIR\IVEngine2\IvUI\vgui2d\frame2d.h"
-			$File	"$SRCDIR\IVEngine2\IvUI\vgui2d\panel2d.cpp"
-			$File	"$SRCDIR\IVEngine2\IvUI\vgui2d\panel2d.h"
+			$File	"$SRCDIR\gameui\vgui2d\button2d.cpp"
+			$File	"$SRCDIR\gameui\vgui2d\button2d.h"
+			$File	"$SRCDIR\gameui\vgui2d\frame2d.cpp"
+			$File	"$SRCDIR\gameui\vgui2d\frame2d.h"
+			$File	"$SRCDIR\gameui\vgui2d\panel2d.cpp"
+			$File	"$SRCDIR\gameui\vgui2d\panel2d.h"
 		}
 
-		$File	"$SRCDIR\IVEngine2\IvUI\basepanel.cpp"
-		$File	"$SRCDIR\IVEngine2\IvUI\basepanel.h"
-		$File	"$SRCDIR\IVEngine2\IvUI\gameui2_interface.cpp"
-		$File	"$SRCDIR\IVEngine2\IvUI\gameui2_interface.h"
+		$File	"$SRCDIR\gameui\basepanel.cpp"
+		$File	"$SRCDIR\gameui\basepanel.h"
+		$File	"$SRCDIR\gameui\gameui2_interface.cpp"
+		$File	"$SRCDIR\gameui\gameui2_interface.h"
 	}
 }

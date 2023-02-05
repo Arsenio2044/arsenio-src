@@ -38,7 +38,7 @@ BasePanel::BasePanel(vgui::VPANEL Parent) : BaseClass(nullptr)
 	BackgroundMusic = "Interface.Music";
 	BackgroundMusicGUID = 0;
 
-	g_pVGuiLocalize->AddFile("TuxUI/localization/gameui2_%language%.txt");
+	g_pVGuiLocalize->AddFile("resource/ui/localization/gameui_%language%.txt");
 
 	MainMenuPanel = new MainMenu(nullptr);
 	MainMenuHelperPanel = new MainMenuHelper(MainMenuPanel, nullptr);

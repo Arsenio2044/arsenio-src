@@ -1,6 +1,6 @@
-//========= TuxUI ===================//
+ //========= GAMEUI ===================//
 //
-// Purpose: Replace GameUI with TuxUI. Based off of GameUI2 by NicholasDe.
+// Purpose: Adds new GameUI. Based off of GameUI2 by NicholasDe.
 //
 //
 //=============================================================================//
@@ -23,15 +23,7 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR(GameUI2, IGameUI2, GAMEUI2_DLL_INTERFACE_VERSI
 
 
 
-//=========================================================================================================================
-//IMPORTANT: PLEASE READ!
-//
-//The TuxUI module requires another binary called TuxUI2. Both MissionChooser and TuxUI require this binary to operate. 
-//It is heavily advised not to edit the TuxUI2 binary because it could fuck up the entire module. 
-//
-//TuxUI2 is made up of multiple different libraries such as IMGui. UPDATE: TuxUI2 is no longer needed.
-//
-//=========================================================================================================================
+
 
 
 
@@ -63,7 +55,7 @@ void GameUI2::Initialize(CreateInterfaceFn AppFactory)
 		MaterialSystem == nullptr ||
 		MaterialSystemSurface == nullptr ||
 		GameUI == nullptr)
-		Error("GameUI2 failed to get necessary interfaces.\n");
+		Error("GameUI failed to get necessary interfaces.\n");
 
 
 
@@ -117,17 +109,17 @@ void GameUI2::OnUpdate()
 
 void GameUI2::OnLevelInitializePreEntity()
 {
-	ConColorMsg(Color(255, 148, 0, 255), "MissionChooser has crashed\n");
+	ConColorMsg(Color(255, 148, 0, 255), "GameUI: Loading\n");
 }
 
 void GameUI2::OnLevelInitializePostEntity()
 {
-	ConColorMsg(Color(255, 148, 0, 255), "Missionchooser has been initialized.\n");
+	ConColorMsg(Color(255, 148, 0, 255), "GameUI: Loading\n");
 }
 
 void GameUI2::OnLevelShutdown()
 {
-	ConColorMsg(Color(255, 148, 0, 255), "CODE: 55JWI\n");
+	ConColorMsg(Color(255, 148, 0, 255), "GameUI: Shutdown\n");
 
 	if (AnimationController != nullptr)
 	{
@@ -231,6 +223,8 @@ vgui::VPANEL GameUI2::GetVPanel() const
 	return GetBasePanel()->GetVPanel();
 }
 
+
+// Gonna redo this soon.
 CON_COMMAND(TuxUI, "List of arguments: version, help")
 {
 	if (args.ArgC() > 1)
