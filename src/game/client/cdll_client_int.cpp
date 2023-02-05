@@ -350,6 +350,9 @@ static ConVar cl_discord_appid("cl_discord_appid", "949352645989113906", FCVAR_D
 #ifdef DR
 static ConVar cl_discord_appid("cl_discord_appid", "1071573819195658440", FCVAR_DEVELOPMENTONLY | FCVAR_CHEAT);
 #endif
+// TUX: oh fuck you
+static int64_t startTimestamp = time(0);
+
 
 #ifdef HL1MP_CLIENT_DLL
 static ConVar s_cl_load_hl1_content("cl_load_hl1_content", "0", FCVAR_ARCHIVE, "Mount the content from Half-Life: Source if possible");
