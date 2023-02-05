@@ -472,8 +472,17 @@ void CWeaponShotgun::PrimaryAttack( void )
 	// Fire the bullets, and force the first shot to be perfectly accuracy
 	pPlayer->FireBullets( sk_plr_num_shotgun_pellets.GetInt(), vecSrc, vecAiming, GetBulletSpread(), MAX_TRACE_LENGTH, m_iPrimaryAmmoType, 0, -1, -1, 0, NULL, true, true );
 	
-	pPlayer->ViewPunch(QAngle(random->RandomFloat(-6.0f, -3.0f), random->RandomFloat(-2.0f, 2.0f), 0.0f));
+#ifdef AR
+	QAngle angles = pPlayer->GetLocalAngles();
 
+	angles.x += random->RandomInt(-1, 1);
+	angles.y += random->RandomInt(-1, 1);
+	angles.z = 0;
+
+	pPlayer->SnapEyeAngles(angles);
+
+	pPlayer->ViewPunch(QAngle(-8, random->RandomFloat(-2, 2), 0));
+#endif
 
 	CSoundEnt::InsertSound( SOUND_COMBAT, GetAbsOrigin(), SOUNDENT_VOLUME_SHOTGUN, 0.2, GetOwner() );
 

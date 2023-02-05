@@ -440,19 +440,19 @@ bool CWeaponGlock::Reload( void )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CWeaponGlock::AddViewKick( void )
+void CWeaponGlock::AddViewKick(void)
 {
-	CBasePlayer *pPlayer  = ToBasePlayer( GetOwner() );
-	
-	if ( pPlayer == NULL )
+	CBasePlayer* pPlayer = ToBasePlayer(GetOwner());
+
+	if (pPlayer == NULL)
 		return;
 
 	QAngle	viewPunch;
 
-	viewPunch.x = random->RandomFloat( 0.25f, 0.5f );
-	viewPunch.y = random->RandomFloat( -.6f, .6f );
+	viewPunch.x = random->RandomFloat(0.25f, 0.5f);
+	viewPunch.y = random->RandomFloat(-.6f, .6f);
 	viewPunch.z = 0.0f;
 
 	//Add it to the view punch
-	pPlayer->ViewPunch( viewPunch );
+	pPlayer->ViewPunch(QAngle(random->RandomFloat(-6.0f, -3.0f), random->RandomFloat(-2.0f, 2.0f), 0.0f));
 }
