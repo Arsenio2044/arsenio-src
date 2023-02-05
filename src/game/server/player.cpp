@@ -6423,14 +6423,11 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		GiveNamedItem("weapon_frag");
 		GiveNamedItem("weapon_crowbar");
 		GiveNamedItem("weapon_glock");
-		//GiveNamedItem("weapon_oicw");
 		GiveNamedItem("weapon_physcannon");
 		GiveNamedItem("weapon_mp5k");
 		GiveNamedItem("weapon_rpg");
 		GiveNamedItem("weapon_357");
 		GiveNamedItem("weapon_crossbow");
-		//GiveNamedItem("weapon_50cal");
-		//GiveNamedItem("weapon_bulk");
 		GiveNamedItem("weapon_pro836");
 		GiveNamedItem("weapon_gauss");
 		GiveNamedItem("weapon_addamm557");
