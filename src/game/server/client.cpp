@@ -788,7 +788,7 @@ CON_COMMAND( say_team, "Display player message to team" )
 
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
-CON_COMMAND( give, "Give item to player.\n\tArguments: <item_name>" )
+CON_COMMAND( placeatme, "Give item to player.\n\tArguments: <item_name>" )
 {
 	CBasePlayer *pPlayer = ToBasePlayer( UTIL_GetCommandClient() ); 
 	if ( pPlayer 
