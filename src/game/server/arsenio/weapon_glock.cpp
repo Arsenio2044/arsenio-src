@@ -1,8 +1,6 @@
-//========= Copyright Valve Corporation, All rights reserved. ============//
+//========= Copyright Glitch Software, All rights reserved. ============//
 //
-// Purpose:		Glock - hand gun
-//
-// $NoKeywords: $
+// Purpose: idfk
 //=============================================================================//
 
 #include "cbase.h"
@@ -257,10 +255,10 @@ void CWeaponGlock::DrawHitmarker( void )
 		return;
 
 #ifndef CLIENT_DLL
-	//CSingleUserRecipientFilter filter( pPlayer );
-	//UserMessageBegin( filter, "ShowHitmarker" );
-	//WRITE_BYTE( 1 );
-	//MessageEnd();
+	CSingleUserRecipientFilter filter( pPlayer );
+	UserMessageBegin( filter, "ShowHitmarker" );
+	WRITE_BYTE( 1 );
+	MessageEnd();
 #endif
 }
 
