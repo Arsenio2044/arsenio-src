@@ -475,13 +475,13 @@ void CWeaponShotgun::PrimaryAttack( void )
 #ifdef AR
 	QAngle angles = pPlayer->GetLocalAngles();
 
-	angles.x += random->RandomInt(-1, 1);
+	angles.x += random->RandomInt(-8, 8);
 	angles.y += random->RandomInt(-1, 1);
 	angles.z = 0;
 
 	pPlayer->SnapEyeAngles(angles);
 
-	pPlayer->ViewPunch(QAngle(-8, random->RandomFloat(-2, 2), 0));
+	pPlayer->ViewPunch(QAngle(-8, random->RandomFloat(-5, 5), 0));
 #endif
 
 	CSoundEnt::InsertSound( SOUND_COMBAT, GetAbsOrigin(), SOUNDENT_VOLUME_SHOTGUN, 0.2, GetOwner() );
