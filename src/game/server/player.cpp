@@ -6424,7 +6424,8 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		GiveNamedItem("weapon_crowbar");
 		GiveNamedItem("weapon_glock");
 		GiveNamedItem("weapon_shotgun");
-		GiveNamedItem("weapon_mp5k");
+		//GiveNamedItem("weapon_mp5k");
+		GiveNamedItem("weapon_mp99k");
 		GiveNamedItem("weapon_rpg");
 		GiveNamedItem("weapon_357");
 		GiveNamedItem("weapon_crossbow");
