@@ -38,7 +38,6 @@ STUB_WEAPON_CLASS(weapon_crossbow, WeaponCrossbow, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_slam, Weapon_SLAM, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_crowbar, WeaponCrowbar, C_BaseHLBludgeonWeapon);
 STUB_WEAPON_CLASS(weapon_hopwire, WeaponHopwire, C_BaseHLCombatWeapon);
-STUB_WEAPON_CLASS(weapon_mp5k, WeaponMP5K, C_HLSelectFireMachineGun ); 
 STUB_WEAPON_CLASS(weapon_pro836, WeaponPRO836, C_HLSelectFireMachineGun);
 STUB_WEAPON_CLASS(weapon_gauss, WeaponGaussGun, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_addamm557, WeaponAdamm557, C_BaseHLCombatWeapon);
@@ -49,8 +48,8 @@ STUB_WEAPON_CLASS(weapon_smg1, WeaponSMG1, C_HLSelectFireMachineGun);
 STUB_WEAPON_CLASS(weapon_KLO99, WeaponKLO99, C_HLMachineGun); // High power LMG
 STUB_WEAPON_CLASS(weapon_ar3, WeaponAR3, C_HLMachineGun);
 STUB_WEAPON_CLASS(weapon_knd12, WeaponKND12, C_BaseHLCombatWeapon);
+STUB_WEAPON_CLASS(weapon_mp99k, WeaponMP99K, C_HLMachineGun); // Mp5K for modern world.
 #ifdef LATER
-STUB_WEAPON_CLASS(weapon_mp99k, WeaponMP99K, C_HLSelectFireMachineGun); // Mp5K for modern world.
 #endif
 
 // Coming soon
