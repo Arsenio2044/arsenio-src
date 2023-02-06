@@ -3315,12 +3315,17 @@ extern ConVar muzzleflash_light;
 void C_BaseAnimating::ProcessMuzzleFlashEvent()
 {
 	Vector vAttachment;
-	QAngle dummyAngles;
-	GetAttachment(1, vAttachment, dummyAngles);
+	QAngle angles;
+#ifdef ARSENIO
+	GetAttachment(1, vAttachment, angles); // set 1 instead "attachment"
+#else
+	GetAttachment(attachment, vAttachment, angles);
+#endif
+
 
 	dlight_t* dl = effects->CL_AllocDlight(LIGHT_INDEX_MUZZLEFLASH + index);
 	dl->origin = vAttachment;
-	dl->radius = 80;
+	dl->radius = 800;
 	dl->decay = dl->radius / 0.37f;
 	dl->die = gpGlobals->curtime + 8.30f;
 	dl->color.r = 255;
