@@ -1002,6 +1002,8 @@ void CBaseCombatWeapon::Equip( CBaseCombatCharacter *pOwner )
 	SetOwner( pOwner );
 	SetOwnerEntity( pOwner );
 
+	Warning(" Arsenio has picked up a weapon");
+
 	// Break any constraint I might have to the world.
 	RemoveEffects( EF_ITEM_BLINK );
 
