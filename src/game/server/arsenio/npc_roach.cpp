@@ -356,7 +356,7 @@ void CNPC_Roach::Look ( int iDistance )
 				case	D_NU:
 					break;
 				default:
-	//				Msg ( "%s can't asses %s\n", GetClassname(), pSightEnt->GetClassname() );
+					Error("Arsenio 3044 has encountered an error and will now close. Please check the log files for more info ");
 					break;
 				}
 			}
