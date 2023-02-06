@@ -338,6 +338,10 @@ public:
 	void					SetBonusProgress( int iBonusProgress );
 	void					SetBonusChallenge( int iBonusChallenge );
 
+#ifdef ARSENIO
+	void					AddViewBob(Vector& eyeOrigin, QAngle& eyeAngles, bool calculate = false);
+#endif
+
 	int						GetBonusProgress() const { return m_iBonusProgress; }
 	int						GetBonusChallenge() const { return m_iBonusChallenge; }
 
