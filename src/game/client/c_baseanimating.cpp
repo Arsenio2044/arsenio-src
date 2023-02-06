@@ -3325,7 +3325,7 @@ void C_BaseAnimating::ProcessMuzzleFlashEvent()
 
 	dlight_t* dl = effects->CL_AllocDlight(LIGHT_INDEX_MUZZLEFLASH + index);
 	dl->origin = vAttachment;
-	dl->radius = 800;
+	dl->radius = 100;
 	dl->decay = dl->radius / 0.37f;
 	dl->die = gpGlobals->curtime + 8.30f;
 	dl->color.r = 255;
