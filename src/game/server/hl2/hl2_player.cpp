@@ -530,7 +530,9 @@ void CHL2_Player::EquipExo(bool bPlayEffects)
 	}
 #endif
 	Warning("ERROR: Did Arsenio pick up the ExoSuit or did he not?");
+#ifndef AR
 	Error("Arsenio 3044 has encountered an error and will now close. Please check the log files for more info .");
+#endif
 
 	if (bPlayEffects == true)
 	{
