@@ -141,8 +141,3 @@ $Project "gameui"
 	"GameUI\gameui2_base.vpc"		[($WIN32||$X360||$POSIX)]
 
 }
-
-$Project "vscript"
-{
-	"vscript\vscript.vpc"
-}

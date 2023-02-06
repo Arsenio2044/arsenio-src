@@ -15,7 +15,7 @@ $Configuration
 	$Compiler
 	{
 		$AdditionalIncludeDirectories	"$BASE;$SRCDIR\game\shared\hl2;$SRCDIR\game\shared\episodic;.\hl2;.\episodic"
-		$PreprocessorDefinitions		"$BASE;AR;HL2_DLL;ARSENIO;HL2_EPISODIC;USES_SAVERESTORE;ARSENIO_DLL;AR_DLL;SKYDOME;MAPBASE_VSCRIPT"
+		$PreprocessorDefinitions		"$BASE;AR;HL2_DLL;ARSENIO;HL2_EPISODIC;USES_SAVERESTORE;ARSENIO_DLL;AR_DLL;SKYDOME"
 		$PreprocessorDefinitions		"$BASE;NEW_RESPONSE_SYSTEM"		[$NEW_RESPONSE_SYSTEM]
 
 	}
@@ -62,13 +62,6 @@ $Project "Server - Arsenio"
 			$File	"arsenio\item_exo.cpp"
 			$File	"arsenio\npc_LeOS.cpp"
 			$File	"$SRCDIR\game\shared\arsenio\arsenio_game_log.cpp"
-					$File	"$SRCDIR\game\shared\IVEngine2\vscript_funcs_shared.cpp" 
-			$File	"$SRCDIR\game\shared\IVEngine2\vscript_funcs_shared.h" 
-			$File	"$SRCDIR\game\shared\IVEngine2\vscript_singletons.cpp" 
-			$File	"$SRCDIR\game\shared\IVEngine2\vscript_singletons.h" 
-			$File	"$SRCDIR\game\shared\IVEngine2\vscript_funcs_hl2.cpp" 
-			$File	"$SRCDIR\game\shared\IVEngine2\vscript_consts_shared.cpp" 
-			$File	"$SRCDIR\game\shared\IVEngine2\vscript_consts_weapons.cpp" 
 			
 			$Folder	"Weapons"
 			{
