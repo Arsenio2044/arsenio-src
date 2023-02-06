@@ -1,0 +1,42 @@
+//-----------------------------------------------------------------------------
+//	SCREENEFFECTS.VPC
+//
+//	Project Script
+//-----------------------------------------------------------------------------
+
+$Macro SRCDIR		".."
+$Macro GAMENAME		"EPISODIC"
+$Macro OUTBINDIR	"$SRCDIR\..\game\bin"
+
+$Include "$SRCDIR\vpc_scripts\source_dll_base.vpc"
+
+$Configuration
+{
+	$Compiler
+	{
+		$AdditionalIncludeDirectories	"$BASE"
+		$PreprocessorDefinitions		"$BASE;RENDERSYSTEM_DLL_EXPORTS"
+	}
+}
+
+$Project "RenderSystem"
+{
+	$Folder	"Source Files"
+	{
+		$File "rendersystem.cpp"
+		$File "rendersystem.h"
+	}
+
+	$Folder	"Header Files"
+	{
+
+	}
+
+	$Folder	"Link Libraries"
+	{
+		$Lib	mathlib
+		$Lib	matsys_controls
+		$Lib	tier2
+		$Lib	tier3
+	}
+}
