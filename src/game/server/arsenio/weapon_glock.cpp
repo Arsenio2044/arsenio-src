@@ -335,7 +335,7 @@ void CWeaponGlock::PrimaryAttack( void )
 			}
 			else
 			{
-				DrawHitmarker();
+				//DrawHitmarker();
 			}
 #endif
 		}
