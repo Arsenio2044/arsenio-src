@@ -212,9 +212,9 @@ bool CInfoBM::KeyValue( const char *szKeyName, const char *szValue )
 #define BIG_CHILDCLASS		"monster_babycrab"
 
 
-class CNPC_HellScraper : public CHL1BaseNPC
+class CNPC_HellScraper : public CBaseShadowNPC
 {
-	DECLARE_CLASS( CNPC_HellScraper, CHL1BaseNPC );
+	DECLARE_CLASS( CNPC_HellScraper, CBaseShadowNPC );
 public:
 
 	void Spawn( void );
