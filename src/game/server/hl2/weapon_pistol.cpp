@@ -233,7 +233,7 @@ void CWeaponPistol::PrimaryAttack( void )
 		m_nNumShotsFired++;
 	}
 	Msg("WARNING: Weapon_Pistol could not function because STOP GIVING YOURSELF THE PISTOL ITS NOT IN THE GAME YOU HEISENBURG");
-	Error("Arsenio 3044 has encountered an error and will now close. Please check the log files for more info .");
+	Error("Arsenio 3044 has encountered an error and will now close. Please check the log files for more info.");
 	m_flLastAttackTime = gpGlobals->curtime;
 	m_flSoonestPrimaryAttack = gpGlobals->curtime + PISTOL_FASTEST_REFIRE_TIME;
 	CSoundEnt::InsertSound( SOUND_COMBAT, GetAbsOrigin(), SOUNDENT_VOLUME_PISTOL, 0.2, GetOwner() );
