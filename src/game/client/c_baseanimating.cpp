@@ -3317,7 +3317,7 @@ void C_BaseAnimating::ProcessMuzzleFlashEvent()
 	Vector vAttachment;
 	QAngle angles;
 #ifdef ARSENIO
-	GetAttachment(1, vAttachment, angles); // set 1 instead "attachment"
+	GetAttachment(1, vAttachment, angles); 
 #else
 	GetAttachment(attachment, vAttachment, angles);
 #endif
