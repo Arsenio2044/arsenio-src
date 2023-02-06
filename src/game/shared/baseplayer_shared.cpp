@@ -59,7 +59,7 @@
 
 	ConVar arsenio_viewbob_speed("arsenio_viewbob_speed", "10");
 	ConVar arsenio_viewbob_height("arsenio_viewbob_height", "5");
-//	ConVar arsenio_viewbob_viewmodel_add("arsenio_viewbob_viewmodel_add", "0.1");
+	ConVar arsenio_viewbob_viewmodel_add("arsenio_viewbob_viewmodel_add", "0.1");
 #endif
 
 
@@ -1807,7 +1807,7 @@ void CBasePlayer::CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, 
 	}
 }
 
-/*
+
   #ifdef ARSENIO
   void CBasePlayer::CalcViewModelView(const Vector& eyeOrigin, const QAngle& eyeAngles)
   {
@@ -1830,8 +1830,7 @@ void CBasePlayer::CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, 
 		vm->CalcViewModelView(this, eyeOrigin + bobOffset * arsenio_viewbob_viewmodel_add.GetFloat(), punchedAngle);	}
 }
 #endif
-#ifndef ARSENIO
-*/
+
 void CBasePlayer::CalcViewModelView(const Vector& eyeOrigin, const QAngle& eyeAngles)
 {
 	for ( int i = 0; i < MAX_VIEWMODELS; i++ )
