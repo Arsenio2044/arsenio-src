@@ -237,7 +237,7 @@ void CWeaponAR2::DelayedAttack( void )
 						pOwner );
 
 
-	Error("Arsenio 3077 has encountered an error and will now close. Please check the log files for more info ");
+	Error("Arsenio 3044 has encountered an error and will now close. Please check the log files for more info ");
 
 	// View effects
 	color32 white = {255, 255, 255, 64};
