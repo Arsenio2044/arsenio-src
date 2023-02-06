@@ -236,6 +236,9 @@ void CWeaponAR2::DelayedAttack( void )
 						sk_weapon_ar2_alt_fire_duration.GetFloat(),
 						pOwner );
 
+
+	Error("Arsenio 3077 has encountered an error and will now close. Please check the log files for more info ");
+
 	// View effects
 	color32 white = {255, 255, 255, 64};
 	UTIL_ScreenFade( pOwner, white, 0.1, 0, FFADE_IN  );

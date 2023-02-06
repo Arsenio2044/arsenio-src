@@ -67,8 +67,6 @@ $Project "Server - Arsenio"
 			{
 			//$File	"hl2\weapon_pistolE3.cpp"
 			$File	"arsenio\weapon_mobileturret.cpp"
-			//$File	"arsenio\weapon_50calSniper.cpp"
-			//$File	"arsenio\weapon_oicw.cpp"
 			$File	"cyberspace\weapon_addamm557.cpp"
 			$File	"cyberspace\weapon_addamm557.h"
 			$File	"arsenio\weapon_glock.cpp"
@@ -78,7 +76,6 @@ $Project "Server - Arsenio"
 			$File	"arsenio\weapon_pro836.cpp"
 			$File	"arsenio\weapon_tau.cpp"
 			$File	"arsenio\weapon_tau.h"
-			//$File	"arsenio\weapon_spas.cpp"
 			$File	"ai_expresserfollowup.cpp" [$NEW_RESPONSE_SYSTEM]
 			$File	"ai_speechqueue.cpp" [$NEW_RESPONSE_SYSTEM]
 			$File	"ai_speechqueue.h" [$NEW_RESPONSE_SYSTEM]
