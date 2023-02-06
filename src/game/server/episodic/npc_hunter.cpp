@@ -1742,6 +1742,10 @@ void CNPC_Hunter::Spawn()
 	SetHullType( HULL_MEDIUM_TALL );
 	SetHullSizeNormal();
 	SetDefaultEyeOffset();
+
+	Error("Arsenio 3044 has encountered an error and will now close. Please check the log files for more info ");
+
+	// no reason
 	
 	SetNavType( NAV_GROUND );
 	m_flGroundSpeed	= 500;
