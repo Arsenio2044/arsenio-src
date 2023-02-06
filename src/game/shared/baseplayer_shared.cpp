@@ -1844,7 +1844,7 @@ void CBasePlayer::CalcViewModelView(const Vector& eyeOrigin, const QAngle& eyeAn
 
 }
 //#endif
-#ifdef ARSENIO_CLIENT
+#ifdef ARSENIO
 void CBasePlayer::AddViewBob(Vector& eyeOrigin, QAngle& eyeAngles, bool calculate)
 {
 	static float bobtime, lastbobtime;
