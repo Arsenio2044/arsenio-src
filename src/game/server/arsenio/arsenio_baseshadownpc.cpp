@@ -114,8 +114,9 @@ bool CBaseShadowNPC::ShouldGib( const CTakeDamageInfo &info )
 
 bool CBaseShadowNPC::HasHumanGibs( void )
 {
-	Class_T myClass = Classify();
 #ifndef AR
+	Class_T myClass = Classify();
+
 	if ( myClass == CLASS_SHADOW ||
 		 myClass == CLASS_PLAYER_ALLY	||
 		 myClass == CLASS_CITIZEN_PASSIVE  ||
@@ -129,8 +130,9 @@ bool CBaseShadowNPC::HasHumanGibs( void )
 
 bool CBaseShadowNPC::HasAlienGibs( void )
 {
-	Class_T myClass = Classify();
 #ifndef AR
+	Class_T myClass = Classify();
+
 	if ( myClass == CLASS_ALIEN_MILITARY ||
 		 myClass == CLASS_ALIEN_MONSTER	||
 		 myClass == CLASS_INSECT  ||
