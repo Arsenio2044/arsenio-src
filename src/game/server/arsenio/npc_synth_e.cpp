@@ -25,6 +25,10 @@
 #include "gameweaponmanager.h"
 #include "vehicle_base.h"
 
+#ifdef AR
+#include "arsenio_baseshadownpc.h" // TUX: For future use.
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 

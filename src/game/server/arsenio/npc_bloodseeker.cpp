@@ -25,6 +25,10 @@
 #include "basegrenade_shared.h"
 #include "grenade_frag.h"
 
+#ifdef AR
+#include "arsenio_baseshadownpc.h" // TUX: For future use.
+#endif
+
 
 
 

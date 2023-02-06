@@ -36,6 +36,10 @@
 #include "te_effect_dispatch.h"
 #include "te_particlesystem.h"
 
+#ifdef AR
+#include "arsenio_baseshadownpc.h" // TUX: For future use.
+#endif
+
 #define HULK_GIB_COUNT			5   //Obsolete, but leaving it here anyway for no reason
 
 // memdbgon must be the last include file in a .cpp file!!!
