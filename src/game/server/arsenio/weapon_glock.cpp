@@ -218,6 +218,8 @@ void CWeaponGlock::FireNPCPrimaryAttack( CBaseCombatCharacter *pOperator, Vector
 	//pOperator->DoMuzzleFlash();
 	DispatchParticleEffect( "hl2mmod_muzzleflash_npc_pistol", vecShootOrigin2, angShootDir2);
 	m_iClip1 = m_iClip1 - 1;
+
+	// LMAO WHY
 }
 
 //-----------------------------------------------------------------------------
