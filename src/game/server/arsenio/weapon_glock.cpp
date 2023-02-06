@@ -249,19 +249,19 @@ void CWeaponGlock::DryFire( void )
 	m_flNextPrimaryAttack		= gpGlobals->curtime + SequenceDuration();
 }
 
-void CWeaponGlock::DrawHitmarker( void )
-{
-	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
-
-	if ( pPlayer == NULL )
-		return;
-
-#ifndef CLIENT_DLL
-	CSingleUserRecipientFilter filter( pPlayer );
-	UserMessageBegin( filter, "ShowHitmarker" );
-	WRITE_BYTE( 1 );
-	MessageEnd();
-#endif
+//void CWeaponGlock::DrawHitmarker( void )
+//{
+//	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
+//
+//	if ( pPlayer == NULL )
+//		return;
+//
+//#ifndef CLIENT_DLL
+//	CSingleUserRecipientFilter filter( pPlayer );
+//	UserMessageBegin( filter, "ShowHitmarker" );
+//	WRITE_BYTE( 1 );
+//	MessageEnd();
+//#endif
 }
 
 //-----------------------------------------------------------------------------
