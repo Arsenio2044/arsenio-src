@@ -1808,7 +1808,7 @@ void CBasePlayer::CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, 
 }
 
 
-  #ifdef ARSENIO
+  #ifndef ARSENIO
   void CBasePlayer::CalcViewModelView(const Vector& eyeOrigin, const QAngle& eyeAngles)
   {
   
