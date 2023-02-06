@@ -37,7 +37,7 @@
 
 #define ARSENIC_MODEL "models/arsenic.mdl"
 
-ConVar	sk_arsenic_health( "sk_arsenic_health","0");
+ConVar	sk_arsenic_health( "sk_arsenic_health","600");
 
 //=========================================================
 // Arsenic activities
