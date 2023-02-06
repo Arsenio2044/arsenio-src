@@ -262,7 +262,7 @@ void CWeaponGlock::DryFire( void )
 //	WRITE_BYTE( 1 );
 //	MessageEnd();
 //#endif
-}
+//}
 
 //-----------------------------------------------------------------------------
 // Purpose:
