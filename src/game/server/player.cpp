@@ -6434,6 +6434,7 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		GiveNamedItem("weapon_egar");
 		GiveNamedItem("weapon_ar3");
 		GiveNamedItem("weapon_mobileturret");
+		GiveNamedItem("weapon_knd12");
 #endif
 //  EXPANSION PACK (1?) WEAPONS
 #ifdef  DR
