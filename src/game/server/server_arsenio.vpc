@@ -107,12 +107,15 @@ $Project "Server - Arsenio"
 			$File	"arsenio\npc_hulk.cpp"
 			$File	"arsenio\npc_houndeye.h"
 			$File	"arsenio\npc_houndeye.cpp"
+			$File	"arsenio\arsenio_baseshadownpc.cpp"
+			$File	"arsenio\arsenio_baseshadownpc.h"
 			$File	"arsenio\npc_conscript.cpp"
 			$File	"arsenio\npc_conscript.h"
 			$File	"arsenio\npc_synth_e.h"
 			$File	"arsenio\npc_synth_e.cpp"
 			$File	"arsenio\npc_crim_s.h"
 			$File	"arsenio\npc_crim_s.cpp"
+			$File	"arsenio\npc_hellscraper.cpp"
                         }
 
 		}

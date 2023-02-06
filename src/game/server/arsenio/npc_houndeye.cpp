@@ -1,7 +1,7 @@
 //========= Copyright  Glitch Software, All rights reserved. ============////
 // Purpose:		Cute hound like Alien.
 //
-// $NoKeywords: $
+// TODO: overhaul because broken.
 //=============================================================================//
 
 #include "cbase.h"

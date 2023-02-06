@@ -1,6 +1,8 @@
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
 // Purpose: Ex workers for the Wyluxian government. They are enemies for most of the game but have an ally mode.
+// 
+// TODO: Might remove, if not, needs heavy reworking and fixing.
 //
 //=============================================================================//
 

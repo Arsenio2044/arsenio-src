@@ -1,6 +1,7 @@
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
 // Purpose: The cut concept from the HL2 beta.
+// TODO: Overhaul file because this is old af.
 //
 //=============================================================================//
 
