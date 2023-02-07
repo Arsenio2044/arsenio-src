@@ -11,3 +11,6 @@
 
 skydome_ps30.fxc
 skydome_vs30.fxc
+
+pbr_vs30.fxc
+pbr_ps30.fxc

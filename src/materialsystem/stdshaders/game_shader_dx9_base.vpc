@@ -59,6 +59,18 @@ $Project
 		$File	"skydome_atmosphere.cpp"
 		$File	"skydome_atmosphere_helper.cpp"
 		$File	"skydome_atmosphere_helper.h"
+		$File	"pbr_dx9.cpp"
+
+		$File	"pbr_dx9.cpp"
+
+			$Folder "fxc"
+			{
+				$File	"pbr_ps30.fxc"
+				$File	"pbr_vs30.fxc"
+				$File	"pbr_ps20b.fxc"
+				$File	"pbr_vs20b.fxc"
+			}
+
 	}
 
 	$Folder	"Header Files"
@@ -72,6 +84,7 @@ $Project
 		$File	"shader_constant_register_map.h"
 
 		$File	"example_model_dx9_helper.h"
+		$File	"pbr_common_ps2_3_x.h"
 	}
 
 	$Folder	"Link Libraries" [$WIN32]

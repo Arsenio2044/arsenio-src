@@ -24,6 +24,7 @@ $Group "game"
 	"vgui_controls"
 	"gameui"
 	"responserules"
+	"game_shader_dx9"
 }
 
 

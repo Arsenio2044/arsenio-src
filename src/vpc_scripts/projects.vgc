@@ -27,7 +27,7 @@ $Project "fgdlib"
 $Project "game_shader_dx9"
 {
 	"materialsystem\stdshaders\game_shader_dx9_hl2.vpc" [$HL2]
-	"materialsystem\stdshaders\game_shader_dx9_episodic.vpc"  [$EPISODIC]
+	"materialsystem\stdshaders\game_shader_dx9_episodic.vpc"  [$ARSENIO]
 }
 
 $Project "glview"
