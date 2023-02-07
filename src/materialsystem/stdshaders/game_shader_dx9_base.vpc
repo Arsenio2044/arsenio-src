@@ -59,7 +59,7 @@ $Project
 		$File	"skydome_atmosphere.cpp"
 		$File	"skydome_atmosphere_helper.cpp"
 		$File	"skydome_atmosphere_helper.h"
-		$File	"pbr_dx9.cpp"
+
 
 		$File	"pbr_dx9.cpp"
 
