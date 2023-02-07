@@ -48,7 +48,7 @@ public:
 	void	ItemPreFrame( void );
 	void	ItemBusyFrame( void );
 	void	PrimaryAttack( void );
-	void	DrawHitmarker( void );
+//	void	DrawHitmarker( void ); // ADAHAHA
 	void	AddViewKick( void );
 	void	DryFire( void );
 	void	Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator );
@@ -249,20 +249,20 @@ void CWeaponGlock::DryFire( void )
 	m_flNextPrimaryAttack		= gpGlobals->curtime + SequenceDuration();
 }
 
-void CWeaponGlock::DrawHitmarker( void )
-{
-	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
-
-	if ( pPlayer == NULL )
-		return;
-
-#ifndef CLIENT_DLL
-	CSingleUserRecipientFilter filter( pPlayer );
-	UserMessageBegin( filter, "ShowHitmarker" );
-	WRITE_BYTE( 1 );
-	MessageEnd();
-#endif
-}
+//void CWeaponGlock::DrawHitmarker( void )
+//{
+//	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
+//
+//	if ( pPlayer == NULL )
+//		return;
+//
+//#ifndef CLIENT_DLL
+//	CSingleUserRecipientFilter filter( pPlayer );
+//	UserMessageBegin( filter, "ShowHitmarker" );
+//	WRITE_BYTE( 1 );
+//	MessageEnd();
+//#endif
+//}
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -335,7 +335,7 @@ void CWeaponGlock::PrimaryAttack( void )
 			}
 			else
 			{
-				DrawHitmarker();
+				//DrawHitmarker();
 			}
 #endif
 		}
