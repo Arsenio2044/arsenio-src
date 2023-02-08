@@ -233,6 +233,7 @@ $Project
 		$File	"c_env_fog_controller.cpp"
 		$File	"c_env_particlescript.cpp"
 		$File	"c_env_projectedtexture.cpp"
+		$File	"c_env_projectedtexture.h"
 		$File	"c_env_screenoverlay.cpp"
 		$File	"c_env_tonemap_controller.cpp"
 		$File	"c_fire_smoke.cpp"
