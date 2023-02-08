@@ -82,7 +82,7 @@
 #include "bonetoworldarray.h"
 #include "cmodel.h"
 #include "worldlight.h"
-#include "../materialsystem/stdshaders/IShaderExtension.h"
+//#include "../materialsystem/stdshaders/IShaderExtension.h"
 #include "renderparm.h"
 //#include "c_lights.h"
 #include "debugoverlay_shared.h"
@@ -1338,7 +1338,7 @@ static void ShadowRestoreFunc( int nChangeFlags )
 }
 
 CSysModule* shaderDLL = nullptr;
-IShaderExtension* g_pShaderExtension;
+//IShaderExtension* g_pShaderExtension;
 
 //-----------------------------------------------------------------------------
 // Initialization, shutdown
@@ -1351,7 +1351,7 @@ bool CClientShadowMgr::Init()
 	char dllPath[MAX_PATH * 2];
 	V_sprintf_safe( dllPath, "%s" CORRECT_PATH_SEPARATOR_S "bin" CORRECT_PATH_SEPARATOR_S "game_shader_dx9" DLL_EXT_STRING, engine->GetGameDirectory() );
 
-	Sys_LoadInterface( dllPath, SHADEREXTENSION_INTERFACE_VERSION, &shaderDLL, reinterpret_cast< void** >( &g_pShaderExtension ) );
+	//Sys_LoadInterface( dllPath, SHADEREXTENSION_INTERFACE_VERSION, &shaderDLL, reinterpret_cast< void** >( &g_pShaderExtension ) );
 
 	Vector dir( 0.1, 0.1, -1 );
 	SetShadowDirection(dir);
@@ -2021,8 +2021,8 @@ void CClientShadowMgr::UpdateFlashlightState( ClientShadowHandle_t shadowHandle,
 
 void CClientShadowMgr::DestroyFlashlight( ClientShadowHandle_t shadowHandle )
 {
-	if ( g_pShaderExtension )
-		g_pShaderExtension->OnFlashlightStateDestroyed( shadowmgr->GetFlashlightState( m_Shadows[shadowHandle].m_ShadowHandle ) );
+//	if ( g_pShaderExtension )
+	//	g_pShaderExtension->OnFlashlightStateDestroyed( shadowmgr->GetFlashlightState( m_Shadows[shadowHandle].m_ShadowHandle ) );
 
 	DestroyShadow( shadowHandle );
 }
@@ -3031,23 +3031,23 @@ void CClientShadowMgr::PreRender()
 	//
 	// -- Render to Texture Shadows -----------------------
 	//
-	bool bRenderToTextureActive = r_shadowrendertotexture.GetBool() &&
+	//bool bRenderToTextureActive = r_shadowrendertotexture.GetBool() &&
 	//	( g_pCSMEnvLight == NULL || !g_pCSMEnvLight->IsCascadedShadowMappingEnabled() );
 
-	if ( bRenderToTextureActive != m_RenderToTextureActive )
-	{
-		if ( m_RenderToTextureActive )
-		{
-			ShutdownRenderToTextureShadows( false );
-		}
-		else
-		{
-			InitRenderToTextureShadows();
-		}
+//	if ( bRenderToTextureActive != m_RenderToTextureActive )
+	//{
+	//	if ( m_RenderToTextureActive )
+	//	{
+	//		ShutdownRenderToTextureShadows( false );
+	//	}
+	//	else
+	//	{
+	//		InitRenderToTextureShadows();
+	//	}
 
-		UpdateAllShadows();
-		return;
-	}
+	//	UpdateAllShadows();
+	//	return;
+	//}
 
 	m_bUpdatingDirtyShadows = true;
 
