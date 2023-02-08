@@ -57,6 +57,7 @@ $Project
 		$File	"skydome_atmosphere.cpp"
 		$File	"skydome_atmosphere_helper.cpp"
 		$File	"skydome_atmosphere_helper.h"
+		$File	"light_volumetrics.cpp"
 
 
 		$File	"pbr_dx9.cpp"

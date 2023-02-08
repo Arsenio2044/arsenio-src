@@ -9,3 +9,5 @@
 
 pbr_vs20b.fxc
 pbr_ps20b.fxc
+light_volumetrics_vs20.fxc
+light_volumetrics_ps20b.fxc
