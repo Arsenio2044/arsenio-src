@@ -82,9 +82,9 @@
 #include "bonetoworldarray.h"
 #include "cmodel.h"
 #include "worldlight.h"
-#include "../materialsystem/stdshaders/IShaderExtension.h"
+//#include "../materialsystem/stdshaders/IShaderExtension.h"
 #include "renderparm.h"
-#include "c_lights.h"
+//#include "c_lights.h"
 #include "debugoverlay_shared.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
@@ -735,7 +735,7 @@ public:
 	// Create flashlight (projected texture light source)
 	virtual ClientShadowHandle_t CreateFlashlight( const FlashlightState_t &lightState );
 	virtual void UpdateFlashlightState( ClientShadowHandle_t shadowHandle, const FlashlightState_t &lightState );
-	virtual void UpdateUberlightState( FlashlightState_t& flashlightState, const UberlightState_t& uberlightState );
+	//virtual void UpdateUberlightState( FlashlightState_t& flashlightState, const UberlightState_t& uberlightState );
 	virtual void DestroyFlashlight( ClientShadowHandle_t shadowHandle );
 
 	// Update a shadow
@@ -1338,7 +1338,7 @@ static void ShadowRestoreFunc( int nChangeFlags )
 }
 
 CSysModule* shaderDLL = nullptr;
-IShaderExtension* g_pShaderExtension;
+//IShaderExtension* g_pShaderExtension;
 
 //-----------------------------------------------------------------------------
 // Initialization, shutdown
@@ -1351,7 +1351,7 @@ bool CClientShadowMgr::Init()
 	char dllPath[MAX_PATH * 2];
 	V_sprintf_safe( dllPath, "%s" CORRECT_PATH_SEPARATOR_S "bin" CORRECT_PATH_SEPARATOR_S "game_shader_dx9" DLL_EXT_STRING, engine->GetGameDirectory() );
 
-	Sys_LoadInterface( dllPath, SHADEREXTENSION_INTERFACE_VERSION, &shaderDLL, reinterpret_cast< void** >( &g_pShaderExtension ) );
+	//Sys_LoadInterface( dllPath, SHADEREXTENSION_INTERFACE_VERSION, &shaderDLL, reinterpret_cast< void** >( &g_pShaderExtension ) );
 
 	Vector dir( 0.1, 0.1, -1 );
 	SetShadowDirection(dir);
@@ -2009,20 +2009,20 @@ void CClientShadowMgr::UpdateFlashlightState( ClientShadowHandle_t shadowHandle,
 	shadowmgr->UpdateFlashlightState( shadow.m_ShadowHandle, flashlightState );
 }
 
-void CClientShadowMgr::UpdateUberlightState( FlashlightState_t& flashlightState, const UberlightState_t& uberlightState )
-{
-	VPROF_BUDGET( "CClientShadowMgr::UpdateUberlightState", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
-
-	if ( !g_pShaderExtension )
-		return;
-
-	g_pShaderExtension->SetUberlightParamsForFlashlightState( flashlightState, uberlightState );
-}
+//void CClientShadowMgr::UpdateUberlightState( FlashlightState_t& flashlightState, const UberlightState_t& uberlightState )
+//{
+//	VPROF_BUDGET( "CClientShadowMgr::UpdateUberlightState", VPROF_BUDGETGROUP_SHADOW_DEPTH_TEXTURING );
+//
+//	if ( !g_pShaderExtension )
+//		return;
+//
+//	g_pShaderExtension->SetUberlightParamsForFlashlightState( flashlightState, uberlightState );
+//}
 
 void CClientShadowMgr::DestroyFlashlight( ClientShadowHandle_t shadowHandle )
 {
-	if ( g_pShaderExtension )
-		g_pShaderExtension->OnFlashlightStateDestroyed( shadowmgr->GetFlashlightState( m_Shadows[shadowHandle].m_ShadowHandle ) );
+//	if ( g_pShaderExtension )
+	//	g_pShaderExtension->OnFlashlightStateDestroyed( shadowmgr->GetFlashlightState( m_Shadows[shadowHandle].m_ShadowHandle ) );
 
 	DestroyShadow( shadowHandle );
 }
@@ -3031,23 +3031,23 @@ void CClientShadowMgr::PreRender()
 	//
 	// -- Render to Texture Shadows -----------------------
 	//
-	bool bRenderToTextureActive = r_shadowrendertotexture.GetBool() &&
-		( g_pCSMEnvLight == NULL || !g_pCSMEnvLight->IsCascadedShadowMappingEnabled() );
+	//bool bRenderToTextureActive = r_shadowrendertotexture.GetBool() &&
+	//	( g_pCSMEnvLight == NULL || !g_pCSMEnvLight->IsCascadedShadowMappingEnabled() );
 
-	if ( bRenderToTextureActive != m_RenderToTextureActive )
-	{
-		if ( m_RenderToTextureActive )
-		{
-			ShutdownRenderToTextureShadows( false );
-		}
-		else
-		{
-			InitRenderToTextureShadows();
-		}
+//	if ( bRenderToTextureActive != m_RenderToTextureActive )
+	//{
+	//	if ( m_RenderToTextureActive )
+	//	{
+	//		ShutdownRenderToTextureShadows( false );
+	//	}
+	//	else
+	//	{
+	//		InitRenderToTextureShadows();
+	//	}
 
-		UpdateAllShadows();
-		return;
-	}
+	//	UpdateAllShadows();
+	//	return;
+	//}
 
 	m_bUpdatingDirtyShadows = true;
 
@@ -4077,10 +4077,10 @@ void CClientShadowMgr::ComputeShadowDepthTextures( const CViewSetup &viewSetup )
 
 			Assert(0);
 			shadowmgr->SetFlashlightDepthTexture( shadow.m_ShadowHandle, NULL, 0 );
-//			if ( j <= ( INT_FLASHLIGHT_DEPTHTEXTURE_FALLBACK_LAST - INT_FLASHLIGHT_DEPTHTEXTURE_FALLBACK_FIRST ) )
-//			{
-//				pRenderContext->SetIntRenderingParameter( INT_FLASHLIGHT_DEPTHTEXTURE_FALLBACK_FIRST + j, 0 );
-//			}
+			/*if ( j <= ( INT_FLASHLIGHT_DEPTHTEXTURE_FALLBACK_LAST - INT_FLASHLIGHT_DEPTHTEXTURE_FALLBACK_FIRST ) )
+			{
+				pRenderContext->SetIntRenderingParameter( INT_FLASHLIGHT_DEPTHTEXTURE_FALLBACK_FIRST + j, 0 );
+			}*/
 			continue;
 		}
 
@@ -4117,16 +4117,16 @@ void CClientShadowMgr::ComputeShadowDepthTextures( const CViewSetup &viewSetup )
 		// Render to the shadow depth texture with appropriate view
 		view->UpdateShadowDepthTexture( m_DummyColorTexture, shadowDepthTexture, shadowView );
 
-//		if ( j <= ( INT_FLASHLIGHT_DEPTHTEXTURE_FALLBACK_LAST - INT_FLASHLIGHT_DEPTHTEXTURE_FALLBACK_FIRST ) )
-//		{
-//			pRenderContext->SetIntRenderingParameter( INT_FLASHLIGHT_DEPTHTEXTURE_FALLBACK_FIRST + j, reinterpret_cast<int>( &(*shadowDepthTexture) )  );
+		//if ( j <= ( INT_FLASHLIGHT_DEPTHTEXTURE_FALLBACK_LAST - INT_FLASHLIGHT_DEPTHTEXTURE_FALLBACK_FIRST ) )
+		//{
+		//	pRenderContext->SetIntRenderingParameter( INT_FLASHLIGHT_DEPTHTEXTURE_FALLBACK_FIRST + j, reinterpret_cast<int>( &(*shadowDepthTexture) )  );
 
-	//		FlashlightState_t state = shadowmgr->GetFlashlightState( shadow.m_ShadowHandle );
-//
-	//		state.m_nShadowQuality = state.m_nShadowQuality | ( ( j + 1 ) << 16 );
+		//	FlashlightState_t state = shadowmgr->GetFlashlightState( shadow.m_ShadowHandle );
+
+		//	state.m_nShadowQuality = state.m_nShadowQuality | ( ( j + 1 ) << 16 );
 
 		//	shadowmgr->UpdateFlashlightState( shadow.m_ShadowHandle, state );
-	//	}
+		//}
 
 		m_ActiveDepthTextureHandle = SHADOW_HANDLE_INVALID;
 
