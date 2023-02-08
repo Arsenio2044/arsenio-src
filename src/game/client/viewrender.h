@@ -33,10 +33,6 @@ class C_BaseEntity;
 struct WriteReplayScreenshotParams_t;
 class CReplayScreenshotTaker;
 
-#ifdef HL2_EPISODIC
-	class CStunEffect;
-#endif // HL2_EPISODIC
-
 //-----------------------------------------------------------------------------
 // Data specific to intro mode to control rendering.
 //-----------------------------------------------------------------------------
@@ -160,6 +156,34 @@ struct WaterRenderInfo_t
 };
 
 //-----------------------------------------------------------------------------
+// Describes a pruned set of leaves to be rendered this view. Reference counted
+// because potentially shared by a number of views
+//-----------------------------------------------------------------------------
+struct ClientWorldListInfo_t : public CRefCounted1<WorldListInfo_t>
+{
+	ClientWorldListInfo_t()
+	{
+		memset( static_cast<WorldListInfo_t *>( this ), 0, sizeof( WorldListInfo_t ) );
+		m_pActualLeafIndex = NULL;
+		m_bPooledAlloc = false;
+	}
+
+	// Allocate a list intended for pruning
+	static ClientWorldListInfo_t *AllocPooled( const ClientWorldListInfo_t &exemplar );
+
+	// Because we remap leaves to eliminate unused leaves, we need a remap
+	// when drawing translucent surfaces, which requires the *original* leaf index
+	// using m_pActualLeafMap[ remapped leaf index ] == actual leaf index
+	LeafIndex_t *m_pActualLeafIndex;
+
+private:
+	virtual bool OnFinalRelease();
+
+	bool m_bPooledAlloc;
+	static CObjectPool<ClientWorldListInfo_t> gm_Pool;
+};
+
+//-----------------------------------------------------------------------------
 // 
 //-----------------------------------------------------------------------------
 class CBase3dView : public CRefCounted<>,
@@ -192,7 +216,7 @@ public:
 	CRendering3dView( CViewRender *pMainView );
 	virtual ~CRendering3dView() { ReleaseLists(); }
 
-	void Setup( const CViewSetup &setup );
+	virtual void	Setup( const CViewSetup &setup );
 
 	// What are we currently rendering? Returns a combination of DF_ flags.
 	virtual int		GetDrawFlags();
@@ -218,10 +242,7 @@ protected:
 	// Purpose: Builds render lists for renderables. Called once for refraction, once for over water
 	void			BuildRenderableRenderLists( int viewID );
 
-	// More concise version of the above BuildRenderableRenderLists().  Called for shadow depth map rendering
-	void			BuildShadowDepthRenderableRenderLists();
-
-	void			DrawWorld( float waterZAdjust );
+	 void			DrawWorld( float waterZAdjust );
 
 	// Draws all opaque/translucent renderables in leaves that were rendered
 	void			DrawOpaqueRenderables( ERenderDepthMode DepthMode );
@@ -329,6 +350,8 @@ protected:
 
 	virtual IReplayScreenshotSystem *GetReplayScreenshotSystem() { return this; }
 
+	virtual void	PostSimulate();
+
 	// IReplayScreenshot implementation
 	virtual void	WriteReplayScreenshot( WriteReplayScreenshotParams_t &params );
 	virtual void	UpdateReplayScreenshotCache();
@@ -423,26 +446,31 @@ public:
 	{
 		m_UnderWaterOverlayMaterial.Init( pMaterial );
 	}
+
 #ifdef SKYDOME
 	void			DrawSky(const CViewSetup& view);
 #endif
 private:
 	int				m_BuildWorldListsNumber;
 
-
-	// General draw methods
+// General draw methods
 	// baseDrawFlags is a combination of DF_ defines. DF_MONITOR is passed into here while drawing a monitor.
 	void			ViewDrawScene( bool bDrew3dSkybox, SkyboxVisibility_t nSkyboxVisible, const CViewSetup &view, int nClearFlags, view_id_t viewID, bool bDrawViewModel = false, int baseDrawFlags = 0, ViewCustomVisibility_t *pCustomVisibility = NULL );
+	void			ViewDrawScene_Intro(const CViewSetup &view, int nClearFlags, const IntroData_t &introData);
 
 	void			DrawMonitors( const CViewSetup &cameraView );
+
+	void			SSAO_DepthPass( const CViewSetup &viewSet );
+	void			SSAO_DrawResults();
 
 	bool			DrawOneMonitor( ITexture *pRenderTarget, int cameraNum, C_PointCamera *pCameraEnt, const CViewSetup &cameraView, C_BasePlayer *localPlayer, 
 						int x, int y, int width, int height );
 
 	// Drawing primitives
 	bool			ShouldDrawViewModel( bool drawViewmodel );
+public:
 	void			DrawViewModels( const CViewSetup &view, bool drawViewmodel );
-
+private:
 	void			PerformScreenSpaceEffects( int x, int y, int w, int h );
 
 	// Overlays
@@ -455,8 +483,6 @@ private:
 	// Water-related methods
 	void			DrawWorldAndEntities( bool drawSkybox, const CViewSetup &view, int nClearFlags, ViewCustomVisibility_t *pCustomVisibility = NULL );
 
-	virtual void			ViewDrawScene_Intro( const CViewSetup &view, int nClearFlags, const IntroData_t &introData );
-
 #ifdef PORTAL 
 	// Intended for use in the middle of another ViewDrawScene call, this allows stencils to be drawn after opaques but before translucents are drawn in the main view.
 	void			ViewDrawScene_PortalStencil( const CViewSetup &view, ViewCustomVisibility_t *pCustomVisibility );
@@ -468,11 +494,12 @@ private:
 
 	bool			UpdateRefractIfNeededByList( CUtlVector< IClientRenderable * > &list );
 	void			DrawRenderablesInList( CUtlVector< IClientRenderable * > &list, int flags = 0 );
-
+	
 	// Sets up, cleans up the main 3D view
 	void			SetupMain3DView( const CViewSetup &view, int &nClearFlags );
 	void			CleanupMain3DView( const CViewSetup &view );
 
+	void			UpdateCascadedShadow( const CViewSetup &view );
 
 	// This stores the current view
  	CViewSetup		m_CurrentView;
@@ -490,9 +517,11 @@ private:
 	CMaterialReference	m_ModulateSingleColor;
 	CMaterialReference	m_ScreenOverlayMaterial;
 	CMaterialReference m_UnderWaterOverlayMaterial;
+
 #ifdef SKYDOME
 	CMaterialReference	m_SkydomeMaterial;
 #endif
+
 
 	Vector			m_vecLastFacing;
 	float			m_flCheapWaterStartDistance;

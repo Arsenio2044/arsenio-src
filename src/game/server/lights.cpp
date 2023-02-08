@@ -9,6 +9,10 @@
 #include "lights.h"
 #include "world.h"
 
+#ifdef DEFERRED
+#include "deferred/deferred_shared_common.h"
+#endif
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -232,23 +236,143 @@ void CLight::FadeThink(void)
 LINK_ENTITY_TO_CLASS( light_spot, CLight );
 LINK_ENTITY_TO_CLASS( light_glspot, CLight );
 
+#ifdef DEFERRED
+#define EnvLightBase CServerOnlyPointEntity
+#else
+#define EnvLightBase CBaseEntity
+#endif
 
-class CEnvLight : public CLight
+class CEnvLight : public EnvLightBase
 {
 public:
-	DECLARE_CLASS( CEnvLight, CLight );
+	DECLARE_CLASS( CEnvLight, EnvLightBase );
+#ifndef DEFERRED
+	DECLARE_NETWORKCLASS();
+	DECLARE_DATADESC();
 
-	bool	KeyValue( const char *szKeyName, const char *szValue ); 
-	void	Spawn( void );
+	CEnvLight();
+#endif
+
+	virtual bool KeyValue( const char *szKeyName, const char *szValue );
+	
+#ifdef DEFERRED
+	void	Activate( void );
+	
+private:
+	float m_vecLight[4];
+	float m_vecAmbientLight[4];
+	float m_fLightPitch;
+#else
+	virtual void Spawn();
+
+	virtual int ObjectCaps()
+	{
+		return BaseClass::ObjectCaps() & ~FCAP_ACROSS_TRANSITION;
+	}
+
+	virtual int UpdateTransmitState()
+	{
+		return SetTransmitState( FL_EDICT_ALWAYS );
+	}
+
+private:
+	CNetworkQAngle( m_angSunAngles );
+	CNetworkVector( m_vecLight );
+	CNetworkVector( m_vecAmbient );
+	CNetworkVar( bool, m_bCascadedShadowMappingEnabled );
+	bool m_bHasHDRLightSet;
+	bool m_bHasHDRAmbientSet;
+#endif
 };
 
 LINK_ENTITY_TO_CLASS( light_environment, CEnvLight );
 
+#ifndef DEFERRED
+BEGIN_DATADESC( CEnvLight )
+	DEFINE_FIELD( m_angSunAngles, FIELD_VECTOR ),
+	DEFINE_FIELD( m_vecLight, FIELD_VECTOR ),
+	DEFINE_FIELD( m_vecAmbient, FIELD_VECTOR ),
+	DEFINE_FIELD( m_bCascadedShadowMappingEnabled, FIELD_BOOLEAN ),
+END_DATADESC()
+
+IMPLEMENT_SERVERCLASS_ST_NOBASE( CEnvLight, DT_CEnvLight )
+	SendPropQAngles( SENDINFO( m_angSunAngles ) ),
+	SendPropVector( SENDINFO( m_vecLight ) ),
+	SendPropVector( SENDINFO( m_vecAmbient ) ),
+	SendPropBool( SENDINFO( m_bCascadedShadowMappingEnabled ) ),
+END_SEND_TABLE()
+
+CEnvLight::CEnvLight() : m_bHasHDRLightSet( false ), m_bHasHDRAmbientSet( false )
+{}
+
+static Vector ConvertLightmapGammaToLinear( int *iColor4 )
+{
+	Vector vecColor;
+	for ( int i = 0; i < 3; ++i )
+	{
+		vecColor[i] = powf( iColor4[i] / 255.0f, 2.2f );
+	}
+	vecColor *= iColor4[3] / 255.0f;
+	return vecColor;
+}
+
 bool CEnvLight::KeyValue( const char *szKeyName, const char *szValue )
 {
-	if (FStrEq(szKeyName, "_light"))
+	if ( FStrEq( szKeyName, "pitch" ) )
 	{
-		// nothing
+		m_angSunAngles.SetX( -atof( szValue ) );
+	}
+	else if ( FStrEq( szKeyName, "angles" ) )
+	{
+		Vector vecParsed;
+		UTIL_StringToVector( vecParsed.Base(), szValue );
+		m_angSunAngles.SetY( vecParsed.y );
+	}
+	else if ( FStrEq( szKeyName, "_light" ) || FStrEq( szKeyName, "_lightHDR" ) )
+	{
+		int iParsed[4];
+		UTIL_StringToIntArray( iParsed, 4, szValue );
+
+		if ( iParsed[0] <= 0 || iParsed[1] <= 0 || iParsed[2] <= 0 )
+			return true;
+
+		if ( FStrEq( szKeyName, "_lightHDR" ) )
+		{
+			// HDR overrides LDR
+			m_bHasHDRLightSet = true;
+		}
+		else if ( m_bHasHDRLightSet )
+		{
+			// If this is LDR and we got HDR already, bail out.
+			return true;
+		}
+
+		m_vecLight = ConvertLightmapGammaToLinear( iParsed );
+		Msg( "Parsed light_environment light: %i %i %i %i\n",
+			 iParsed[0], iParsed[1], iParsed[2], iParsed[3] );
+	}
+	else if ( FStrEq( szKeyName, "_ambient" ) || FStrEq( szKeyName, "_ambientHDR" ) )
+	{
+		int iParsed[4];
+		UTIL_StringToIntArray( iParsed, 4, szValue );
+
+		if ( iParsed[0] <= 0 || iParsed[1] <= 0 || iParsed[2] <= 0 )
+			return true;
+
+		if ( FStrEq( szKeyName, "_ambientHDR" ) )
+		{
+			// HDR overrides LDR
+			m_bHasHDRLightSet = true;
+		}
+		else if ( m_bHasHDRLightSet )
+		{
+			// If this is LDR and we got HDR already, bail out.
+			return true;
+		}
+
+		m_vecAmbient = ConvertLightmapGammaToLinear( iParsed );
+		Msg( "Parsed light_environment ambient: %i %i %i %i\n",
+			 iParsed[0], iParsed[1], iParsed[2], iParsed[3] );
 	}
 	else
 	{
@@ -258,8 +382,67 @@ bool CEnvLight::KeyValue( const char *szKeyName, const char *szValue )
 	return true;
 }
 
-
-void CEnvLight::Spawn( void )
+void CEnvLight::Spawn()
 {
-	BaseClass::Spawn( );
+	SetName( MAKE_STRING( "light_environment" ) );
+
+	BaseClass::Spawn();
+
+	m_bCascadedShadowMappingEnabled = HasSpawnFlags( 0x01 );
 }
+#else
+
+bool CEnvLight::KeyValue( const char *szKeyName, const char *szValue )
+{
+	if (FStrEq(szKeyName, "_light"))
+	{
+		// nothing
+		UTIL_StringToFloatArray( m_vecLight, 4,  szValue );
+	}
+	else
+	{
+		if( FStrEq(szKeyName, "pitch") )
+		{
+			m_fLightPitch = atof( szValue );
+		}
+		else if( FStrEq(szKeyName, "_ambient") )
+		{
+			UTIL_StringToFloatArray( m_vecAmbientLight, 4,  szValue );
+		}
+		return BaseClass::KeyValue( szKeyName, szValue );
+	}
+
+	return true;
+}
+
+static ConVar deferred_autoenvlight_ambient_intensity_low("deferred_autoenvlight_ambient_intensity_low", "0.15");
+static ConVar deferred_autoenvlight_ambient_intensity_high("deferred_autoenvlight_ambient_intensity_high", "0.45");
+static ConVar deferred_autoenvlight_diffuse_intensity("deferred_autoenvlight_diffuse_intensity", "1");
+void CEnvLight::Activate( void )
+{
+	BaseClass::Activate( );
+
+	if ( GetGlobalLight() == NULL )
+	{
+		CBaseEntity *pGlobalLight = CreateEntityByName( "light_deferred_global" );
+		if( pGlobalLight )
+		{
+			float ds = deferred_autoenvlight_diffuse_intensity.GetFloat();
+			float asl = deferred_autoenvlight_ambient_intensity_low.GetFloat();
+			float ash = deferred_autoenvlight_ambient_intensity_high.GetFloat();
+
+			const QAngle &vecAngles = GetAbsAngles();
+			pGlobalLight->KeyValue( "origin", UTIL_VarArgs("%f %f %f", GetAbsOrigin().x, GetAbsOrigin().y, GetAbsOrigin().z ) );
+			pGlobalLight->KeyValue( "diffuse", UTIL_VarArgs("%f %f %f %f", m_vecLight[0], m_vecLight[1], m_vecLight[2], m_vecLight[3] * ds ) );
+			pGlobalLight->KeyValue( "ambient_high", UTIL_VarArgs("%f %f %f %f", m_vecAmbientLight[0], m_vecAmbientLight[1], m_vecAmbientLight[2], m_vecAmbientLight[3] * ash ) );
+			pGlobalLight->KeyValue( "ambient_low", UTIL_VarArgs("%f %f %f %f", m_vecAmbientLight[0], m_vecAmbientLight[1], m_vecAmbientLight[2], m_vecAmbientLight[3] * asl ) );
+			pGlobalLight->KeyValue( "spawnflags", "3" );
+			pGlobalLight->KeyValue( "angles", UTIL_VarArgs("%f %f %f", -m_fLightPitch, vecAngles.y, vecAngles.z ) );
+			DispatchSpawn( pGlobalLight );
+			//pGlobalLight->Activate(); // Should not be activated here: the global light is created before the level activates all entities.
+		}
+	}
+
+	UTIL_Remove( this );
+}
+#endif

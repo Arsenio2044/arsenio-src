@@ -22,9 +22,12 @@
 #define SUPPORT_DX8 0
 #define SUPPORT_DX7 0
 #else
-#define SUPPORT_DX8 1
-#define SUPPORT_DX7 1
+#define SUPPORT_DX8 0
+#define SUPPORT_DX7 0
 #endif
+
+extern ConVar mat_fullbright;
+
 //-----------------------------------------------------------------------------
 // Helper macro for vertex shaders
 //-----------------------------------------------------------------------------
@@ -118,6 +121,7 @@ public:
 											int transformVar, int scaleVar );
 
 	// Moves a matrix into vertex shader constants 
+	void SetVertexShaderMatrix2x4( int vertexReg, int matrixVar );
 	void SetVertexShaderMatrix3x4( int vertexReg, int matrixVar );
 	void SetVertexShaderMatrix4x4( int vertexReg, int matrixVar );
 
@@ -153,11 +157,11 @@ public:
 	void SetColorVertexShaderConstant( int nVertexReg, int colorVar, int alphaVar );
 	void SetColorPixelShaderConstant( int nPixelReg, int colorVar, int alphaVar );
 
-
-#ifndef GAME_SHADER_DLL
 	//
 	// Standard shader passes!
 	//
+
+#ifndef GAME_SHADER_DLL
 
 	void InitParamsUnlitGeneric_DX8( 
 		int baseTextureVar,
@@ -253,12 +257,17 @@ public:
 										   int baseTextureFrame2Var,
 										   bool bSSBump
 		);
-	
+
+#endif // GAME_SHADER_DLL
+
 	// Sets up hw morphing state for the vertex shader
 	void SetHWMorphVertexShaderState( int nDimConst, int nSubrectConst, VertexTextureSampler_t morphSampler );
 
+#ifndef GAME_SHADER_DLL
 	// Computes the shader index for vertex lit materials
 	int ComputeVertexLitShaderIndex( bool bVertexLitGeneric, bool hasBump, bool hasEnvmap, bool hasVertexColor, bool bHasNormal ) const;
+
+#endif // GAME_SHADER_DLL
 
 	// Helper for setting up flashlight constants
 	void SetFlashlightVertexShaderConstants( bool bBump, int bumpTransformVar, bool bDetail, int detailScaleVar, bool bSetTextureTransforms );
@@ -310,8 +319,11 @@ public:
 		bool m_bSSBump;
 		float m_fSeamlessScale;								// 0.0 = not seamless
 	};
+
+#ifndef GAME_SHADER_DLL
 	void DrawFlashlight_dx90( IMaterialVar** params, 
 		IShaderDynamicAPI *pShaderAPI, IShaderShadow* pShaderShadow, DrawFlashlight_dx90_Vars_t &vars );
+
 #endif // GAME_SHADER_DLL
 
 	BlendType_t EvaluateBlendRequirements( int textureVar, bool isBaseTexture, int detailTextureVar = -1 );
@@ -326,10 +338,10 @@ public:
 private:
 	// Helper methods for VertexLitGenericPass
 //	void UnlitGenericShadowState( int baseTextureVar, int detailVar, int envmapVar, int envmapMaskVar, bool doSkin );
-	void UnlitGenericDynamicState( int baseTextureVar, int frameVar, int baseTextureTransformVar,
+	/*void UnlitGenericDynamicState( int baseTextureVar, int frameVar, int baseTextureTransformVar,
 		int detailVar, int detailTransform, bool bDetailTransformIsScale, int envmapVar, 
 		int envMapFrameVar, int envmapMaskVar, int envmapMaskFrameVar,
-		int envmapMaskScaleVar, int envmapTintVar );
+		int envmapMaskScaleVar, int envmapTintVar );*/
 
 	// Converts a color + alpha into a vector4
 	void ColorVarsToVector( int colorVar, int alphaVar, Vector4D &color );
@@ -389,6 +401,8 @@ FORCEINLINE float ShadowFilterFromState( FlashlightState_t const &state )
 	return state.m_flShadowFilterSize / 1024.0f;
 }
 
+typedef void( *UberlightUploadFunc )( int, const float*, int );
+bool SetupUberlightFromState( UberlightUploadFunc func, FlashlightState_t const &state );
 
 // convenient material variable access functions for helpers to use.
 FORCEINLINE bool IsTextureSet( int nVar, IMaterialVar **params )
