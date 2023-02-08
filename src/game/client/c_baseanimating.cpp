@@ -728,6 +728,10 @@ C_BaseAnimating::C_BaseAnimating() :
 #endif
 	m_pStudioHdr = NULL;
 	m_hStudioHdr = MDLHANDLE_INVALID;
+#ifdef ARSENIO
+	m_MuzzleLightHandle = CLIENTSHADOW_INVALID_HANDLE;
+	m_MuzzleLightTexture.Init(materials->FindTexture("effects/muzzleflash", TEXTURE_GROUP_OTHER, false));
+#endif
 
 	m_bReceivedSequence = false;
 
@@ -3309,34 +3313,57 @@ int C_BaseAnimating::InternalDrawModel( int flags )
 }
 
 extern ConVar muzzleflash_light;
+ConVar mat_muzzleflash_rgb("mat_muzzleflash_rgb", "255 128 32", FCVAR_CHEAT, "Colour of the muzzle flash");
+ConVar mat_muzzleflash_brightness("mat_muzzleflash_brightness", "1.5", FCVAR_CHEAT, "Intensity of the muzzle flash");
 
-// TUX: Finally working lighting for this!
-#ifdef ARSENIO
 void C_BaseAnimating::ProcessMuzzleFlashEvent()
 {
-	Vector vAttachment;
-	QAngle angles;
-#ifdef ARSENIO
-	GetAttachment(1, vAttachment, angles); 
-#else
-	GetAttachment(attachment, vAttachment, angles);
-#endif
+	float muzzleflash_colour[3];
+	UTIL_StringToFloatArray(muzzleflash_colour, 3, mat_muzzleflash_rgb.GetString());
 
+	// If we have an attachment, then stick a light on it.
+	if (muzzleflash_light.GetBool())
+	{
+		//FIXME: We should really use a named attachment for this
+		if (m_Attachments.Count() > 0)
+		{
+			FlashlightState_t state;
 
-	dlight_t* dl = effects->CL_AllocDlight(LIGHT_INDEX_MUZZLEFLASH + index);
-	dl->origin = vAttachment;
-	dl->radius = 100;
-	dl->decay = dl->radius / 0.37f;
-	dl->die = gpGlobals->curtime + 8.30f;
-	dl->color.r = 255;
-	dl->color.g = 200;
-	dl->color.b = 74;
-	dl->color.exponent = 6;
-		
-	
+			Vector vForward, vRight, vUp, vPos = GetAbsOrigin();
+			AngleVectors(GetAbsAngles(), &vForward, &vRight, &vUp);
+			state.m_vecLightOrigin = vPos;
+			BasisToQuaternion(vForward, vRight, vUp, state.m_quatOrientation);
+
+			state.m_pSpotlightTexture = m_MuzzleLightTexture;
+			state.m_nSpotlightTextureFrame = 0;
+
+			state.m_fHorizontalFOVDegrees = random->RandomInt(70, 120);
+			state.m_fVerticalFOVDegrees = state.m_fHorizontalFOVDegrees;
+			state.m_Color[0] = (muzzleflash_colour[0] / 255.0f) * mat_muzzleflash_brightness.GetFloat();
+			state.m_Color[1] = (muzzleflash_colour[1] / 255.0f) * mat_muzzleflash_brightness.GetFloat();
+			state.m_Color[2] = (muzzleflash_colour[2] / 255.0f) * mat_muzzleflash_brightness.GetFloat();
+			state.m_fLinearAtten = 100.0f;
+			state.m_NearZ = 5.0f;
+			state.m_FarZ = 750.0f;
+			state.m_bEnableShadows = true;
+
+			DestroyMuzzleLightHandle();
+
+			m_MuzzleLightHandle = g_pClientShadowMgr->CreateFlashlight(state);
+			g_pClientShadowMgr->UpdateProjectedTexture(m_MuzzleLightHandle, true);
+			m_flDestroyMuzzleLightHandle = gpGlobals->curtime + 0.05f;
+		}
+	}
 }
-#endif
 
+void C_BaseAnimating::DestroyMuzzleLightHandle()
+{
+	if (m_MuzzleLightHandle != CLIENTSHADOW_INVALID_HANDLE)
+	{
+		g_pClientShadowMgr->DestroyFlashlight(m_MuzzleLightHandle);
+		m_MuzzleLightHandle = CLIENTSHADOW_INVALID_HANDLE;
+	}
+}
 
 //-----------------------------------------------------------------------------
 // Internal routine to process animation events for studiomodels
@@ -4916,6 +4943,14 @@ void C_BaseAnimating::Simulate()
 	{
 		ClearRagdoll();
 	}
+
+
+#ifdef ARSENIO
+	if (m_flDestroyMuzzleLightHandle < gpGlobals->curtime)
+	{
+		DestroyMuzzleLightHandle();
+	}
+#endif
 }
 
 

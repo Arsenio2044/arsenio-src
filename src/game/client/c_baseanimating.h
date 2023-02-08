@@ -607,6 +607,10 @@ private:
 
 	void							SetupBones_AttachmentHelper( CStudioHdr *pStudioHdr );
 
+#ifdef ARSENIO
+	void		                    DestroyMuzzleLightHandle();
+#endif
+
 	EHANDLE							m_hLightingOrigin;
 	EHANDLE							m_hLightingOriginRelative;
 
@@ -633,6 +637,12 @@ private:
 	mutable CStudioHdr				*m_pStudioHdr;
 	mutable MDLHandle_t				m_hStudioHdr;
 	CThreadFastMutex				m_StudioHdrInitLock;
+
+#ifdef ARSENIO
+	ClientShadowHandle_t			m_MuzzleLightHandle;
+	float							m_flDestroyMuzzleLightHandle;
+	CTextureReference				m_MuzzleLightTexture;
+#endif
 };
 
 enum 
