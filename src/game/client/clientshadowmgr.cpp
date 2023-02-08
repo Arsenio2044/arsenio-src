@@ -3561,16 +3561,16 @@ void CClientShadowMgr::AddShadowToReceiver( ClientShadowHandle_t handle,
 
 	int flags = SHADOW_FLAGS_PROJECTED_TEXTURE_TYPE_MASK;
 	extern ClientShadowHandle_t g_hFlashlightHandle[MAX_PLAYERS + 1];
-	for ( const ClientShadowHandle_t& flashlight_handle : g_hFlashlightHandle )
-	{
-		if ( &g_hFlashlightHandle[0] == &flashlight_handle )
-			continue;
-		if ( flashlight_handle == handle )
-		{
-	//		flags |= SHADOW_FLAGS_PLAYER_FLASHLIGHT;
-			break;
-		}
-	}
+	//for ( const ClientShadowHandle_t& flashlight_handle : g_hFlashlightHandle )
+	//{
+	//	if ( &g_hFlashlightHandle[0] == &flashlight_handle )
+	//		continue;
+	//	if ( flashlight_handle == handle )
+	//	{
+	////		flags |= SHADOW_FLAGS_PLAYER_FLASHLIGHT;
+	//		break;
+	//	}
+	//}
 
 	// Don't bother if this renderable doesn't receive shadows or light from flashlights
 	if( !pRenderable->ShouldReceiveProjectedTextures( flags ) )
