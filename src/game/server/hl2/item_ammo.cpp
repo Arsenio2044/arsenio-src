@@ -139,6 +139,77 @@ LINK_ENTITY_TO_CLASS(item_box_mrounds, CItem_BoxMRounds);
 LINK_ENTITY_TO_CLASS(item_ammo_smg1, CItem_BoxMRounds);
 
 // ========================================================================
+//	>> Smart Rounds For Arsenio
+// ========================================================================
+class CItem_SmartBullets : public CItem
+{
+public:
+	DECLARE_CLASS(CItem_SmartBullets, CItem);
+
+	void Spawn(void)
+	{
+		Precache();
+		//SetModel("models/items/SmartBulletsBox.mdl");
+		SetModel("models/items/boxmrounds.mdl");
+		BaseClass::Spawn();
+	}
+	void Precache(void)
+	{
+		//PrecacheModel("models/items/SmartBulletsBox.mdl");
+		PrecacheModel("models/items/boxmrounds.mdl");
+	}
+	bool MyTouch(CBasePlayer* pPlayer)
+	{
+		if (ITEM_GiveAmmo(pPlayer, SIZE_AMMO_SMART, "SMART"))
+		{
+			if (g_pGameRules->ItemShouldRespawn(this) == GR_ITEM_RESPAWN_NO)
+			{
+				UTIL_Remove(this);
+			}
+			return true;
+		}
+		return false;
+	}
+};
+LINK_ENTITY_TO_CLASS(item_box_smart, CItem_SmartBullets);
+LINK_ENTITY_TO_CLASS(item_ammo_smart, CItem_SmartBullets);
+
+// ========================================================================
+//	>> Large Smart Rounds Box
+// ========================================================================
+class CItem_SmartBulletsLarge : public CItem
+{
+public:
+	DECLARE_CLASS(CItem_SmartBulletsLarge, CItem);
+
+	void Spawn(void)
+	{
+		Precache();
+		SetModel("models/items/boxmrounds.mdl");
+		BaseClass::Spawn();
+	}
+	void Precache(void)
+	{
+		PrecacheModel("models/items/boxmrounds.mdl");
+	}
+	bool MyTouch(CBasePlayer* pPlayer)
+	{
+		if (ITEM_GiveAmmo(pPlayer, SIZE_AMMO_SMART_LARGE, "SMART"))
+		{
+			if (g_pGameRules->ItemShouldRespawn(this) == GR_ITEM_RESPAWN_NO)
+			{
+				UTIL_Remove(this);
+			}
+			return true;
+		}
+		return false;
+	}
+};
+LINK_ENTITY_TO_CLASS(item_smart_box_mrounds, CItem_SmartBulletsLarge);
+LINK_ENTITY_TO_CLASS(item_ammo_smart_large, CItem_SmartBulletsLarge);
+
+
+// ========================================================================
 //	>> LargeBoxMRounds
 // ========================================================================
 class CItem_LargeBoxMRounds : public CItem
@@ -169,7 +240,7 @@ public:
 		return false;
 	}
 };
-LINK_ENTITY_TO_CLASS(item_large_box_mrounds, CItem_LargeBoxMRounds);
+//LINK_ENTITY_TO_CLASS(item_large_box_mrounds, CItem_LargeBoxMRounds);
 LINK_ENTITY_TO_CLASS(item_ammo_smg1_large, CItem_LargeBoxMRounds);
 
 // ========================================================================
