@@ -2509,7 +2509,9 @@ int	CHL2_Player::OnTakeDamage( const CTakeDamageInfo &info )
 
 		m_flNextPainSound = gpGlobals->curtime + RandomFloat(3.0f, 5.0f);
 	}
-
+#ifdef ARSENIO
+	UTIL_ScreenShake(GetAbsOrigin(), 15.0, 150.0, 0.5, 750, SHAKE_START);
+#endif
 
 	gamestats->Event_PlayerDamage( this, info );
 
@@ -2624,10 +2626,16 @@ void CHL2_Player::Event_KilledOther( CBaseEntity *pVictim, const CTakeDamageInfo
 //-----------------------------------------------------------------------------
 void CHL2_Player::Event_Killed( const CTakeDamageInfo &info )
 {
-	BaseClass::Event_Killed( info );
+	BaseClass::Event_Killed(info);
 
-	FirePlayerProxyOutput( "PlayerDied", variant_t(), this, this );
+	FirePlayerProxyOutput("PlayerDied", variant_t(), this, this);
 	NotifyScriptsOfDeath();
+
+	CBasePlayer* pPlayer = UTIL_GetCommandClient();
+	color32 cl = { 0,0,0 };
+	UTIL_ScreenFade(pPlayer, cl, 1, 0, FFADE_OUT | FFADE_PURGE | FFADE_STAYOUT);
+
+	UTIL_ScreenShake(GetAbsOrigin(), 20.0, 150.0, 1.0, 750, SHAKE_START);
 }
 
 //-----------------------------------------------------------------------------
