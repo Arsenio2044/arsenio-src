@@ -34,7 +34,7 @@ const char *GetMassEquivalent(float flMass);
 #define	DISABLE_SHOT	0
 
 //Debug visualization
-ConVar	g_debug_turret( "g_debug_turret", "0" );
+ConVar	g_debug_penis( "g_debug_penis", "0" );
 
 extern ConVar physcannon_tracelength;
 
@@ -649,7 +649,7 @@ bool CNPC_RebelTurret::UpdateFacing( void )
 	Vector vecGoalLocalDir;
 	VectorIRotate( vecGoalDir, m_muzzleToWorld, vecGoalLocalDir );
 
-	if ( g_debug_turret.GetBool() )
+	if ( g_debug_penis.GetBool() )
 	{
 		Vector	vecMuzzle, vecMuzzleDir;
 
@@ -770,7 +770,7 @@ void CNPC_RebelTurret::SuppressThink( void )
 	VectorAngles( vecDirToEnemyEyes, vecAnglesToEnemy );
 
 	//Draw debug info
-	if ( g_debug_turret.GetBool() )
+	if ( g_debug_penis.GetBool() )
 	{
 		NDebugOverlay::Cross3D( vecMid, -Vector(2,2,2), Vector(2,2,2), 0, 255, 0, false, 0.05 );
 		NDebugOverlay::Cross3D( vecMidEnemy, -Vector(2,2,2), Vector(2,2,2), 0, 255, 0, false, 0.05 );
@@ -873,7 +873,7 @@ void CNPC_RebelTurret::ActiveThink( void )
 	float	flDistToEnemy = VectorNormalize( vecDirToEnemy );
 
 	//Draw debug info
-	if ( g_debug_turret.GetBool() )
+	if ( g_debug_penis.GetBool() )
 	{
 		NDebugOverlay::Cross3D( vecMid, -Vector(2,2,2), Vector(2,2,2), 0, 255, 0, false, 0.05 );
 		NDebugOverlay::Cross3D( GetEnemy()->WorldSpaceCenter(), -Vector(2,2,2), Vector(2,2,2), 0, 255, 0, false, 0.05 );
@@ -921,7 +921,7 @@ void CNPC_RebelTurret::ActiveThink( void )
 		return;
 	}
 
-	if ( g_debug_turret.GetBool() )
+	if ( g_debug_penis.GetBool() )
 	{
 		Vector vecMuzzle, vecMuzzleDir;
 
@@ -1471,7 +1471,7 @@ bool CNPC_RebelTurret::PreThink( turretState_e state )
 			}
 
 			//Debug visualization
-			if ( g_debug_turret.GetBool() )
+			if ( g_debug_penis.GetBool() )
 			{
 				Vector	up;
 				GetVectors( NULL, NULL, &up );
@@ -1517,7 +1517,7 @@ bool CNPC_RebelTurret::PreThink( turretState_e state )
 			m_pMotionController->Enable( false );
 
 			//Debug visualization
-			if ( g_debug_turret.GetBool() )
+			if ( g_debug_penis.GetBool() )
 			{
 				Vector	up;
 				GetVectors( NULL, NULL, &up );
