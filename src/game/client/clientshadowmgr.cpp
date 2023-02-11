@@ -4426,13 +4426,13 @@ void CClientShadowMgr::UpdateShadowDirectionFromLocalLightSource( ClientShadowHa
 		float flMinBrightnessSqr = r_worldlight_mincastintensity.GetFloat();
 		flMinBrightnessSqr *= flMinBrightnessSqr;
 
-		if ( g_pWorldLights->GetBrightestLightSource(pRenderable->GetRenderOrigin(), lightPos, lightBrightness) == false
-			|| lightBrightness.LengthSqr() < flMinBrightnessSqr )
-		{
+	//	if ( g_pWorldLights->GetBrightestLightSource(pRenderable->GetRenderOrigin(), lightPos, lightBrightness) == false
+//			|| lightBrightness.LengthSqr() < flMinBrightnessSqr )
+//		{
 			// didn't find a light source at all, use default shadow direction
 			// TODO: Could switch to using blobby shadow in this case
-			lightPos.Init( FLT_MAX, FLT_MAX, FLT_MAX );
-		}
+	//		lightPos.Init( FLT_MAX, FLT_MAX, FLT_MAX );
+		//}
 	}
 
 	if ( shadow.m_LightPosLerp == FLT_MAX )	// first light pos ever, just init

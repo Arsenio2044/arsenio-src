@@ -28,7 +28,7 @@ public:
 	//-------------------------------------------------------------------------
 	// Find the brightest light source at a point
 	//-------------------------------------------------------------------------
-	bool GetBrightestLightSource( const Vector& vecPosition, Vector& vecLightPos, Vector& vecLightBrightness ) const;
+//	bool GetBrightestLightSource( const Vector& vecPosition, Vector& vecLightPos, Vector& vecLightBrightness ) const;
 
 	// CAutoGameSystem overrides
 public:

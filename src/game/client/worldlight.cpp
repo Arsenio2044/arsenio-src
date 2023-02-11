@@ -154,90 +154,90 @@ void CWorldLights::LevelInitPreEntity()
 	DevMsg( "CWorldLights: load successful (%d lights at 0x%p)\n", m_nWorldLights, m_pWorldLights );
 }
 
-//-----------------------------------------------------------------------------
-// Purpose: find the brightest light source at a point
-//-----------------------------------------------------------------------------
-bool CWorldLights::GetBrightestLightSource( const Vector& vecPosition, Vector& vecLightPos, Vector& vecLightBrightness ) const
-{
-	if ( !m_nWorldLights || !m_pWorldLights )
-		return false;
-
-	// Default light position and brightness to zero
-	vecLightBrightness.Init();
-	vecLightPos.Init();
-
-	// Find the size of the PVS for our current position
-	const int nCluster = GetClusterForOrigin( vecPosition );
-	const int nPVSSize = GetPVSForCluster( nCluster, 0, NULL );
-
-	// Get the PVS at our position
-	byte* pvs = new byte[nPVSSize];
-	GetPVSForCluster( nCluster, nPVSSize, pvs );
-
-	// Iterate through all the worldlights
-	for ( int i = 0; i < m_nWorldLights; ++i )
-	{
-		const dworldlight_t& light = m_pWorldLights[i];
-
-		// Skip skyambient
-		if ( light.type == emit_skyambient )
-			continue;
-
-		// Handle sun
-		if ( light.type == emit_skylight )
-		{
-			if ( light.intensity.LengthSqr() <= vecLightBrightness.LengthSqr() )
-				continue;
-
-			const Vector& pos = vecPosition - light.normal * MAX_TRACE_LENGTH;
-
-			trace_t tr;
-			UTIL_TraceLine( vecPosition, pos, MASK_OPAQUE, NULL, COLLISION_GROUP_NONE, &tr );
-
-			if ( !tr.DidHit() )
-				continue;
-
-			if ( !( tr.surface.flags & SURF_SKY ) && !( tr.surface.flags & SURF_SKY2D ) )
-				continue;
-
-			vecLightBrightness = light.intensity;
-			vecLightPos = pos;
-			continue;
-		}
-
-		// Calculate square distance to this worldlight
-		const Vector& vecDelta = light.origin - vecPosition;
-		const float flDistSqr = vecDelta.LengthSqr();
-		const float flRadiusSqr = light.radius * light.radius;
-
-		// Skip lights that are out of our radius
-		if ( light.type != emit_spotlight && flRadiusSqr > 0 && flDistSqr >= flRadiusSqr )
-			continue;
-
-		// Is it out of our PVS?
-		if ( !CheckOriginInPVS( light.origin, pvs, nPVSSize ) )
-			continue;
-
-		// Calculate intensity at our position
-		const float flRatio = Engine_WorldLightDistanceFalloff( light, vecDelta );
-		Vector vecIntensity = light.intensity * flRatio;
-
-		// Is this light more intense than the one we already found?
-		if ( vecIntensity.LengthSqr() <= vecLightBrightness.LengthSqr() )
-			continue;
-
-		// Can we see the light?
-		trace_t tr;
-		const Vector& vecAbsStart = vecPosition + Vector( 0, 0, 30 );
-		UTIL_TraceLine( vecAbsStart, light.origin, MASK_OPAQUE, NULL, COLLISION_GROUP_NONE, &tr );
-
-		if ( tr.DidHit() )
-			continue;
-
-		vecLightPos = light.origin;
-		vecLightBrightness = vecIntensity;
-	}
-
-	delete[] pvs;
-	return !vecLightBrightness.IsZero();
-}
+////-----------------------------------------------------------------------------
+//// Purpose: find the brightest light source at a point
+////-----------------------------------------------------------------------------
+//bool CWorldLights::GetBrightestLightSource( const Vector& vecPosition, Vector& vecLightPos, Vector& vecLightBrightness ) const
+//{
+//	if ( !m_nWorldLights || !m_pWorldLights )
+//		return false;
+//
+//	// Default light position and brightness to zero
+//	vecLightBrightness.Init();
+//	vecLightPos.Init();
+//
+//	// Find the size of the PVS for our current position
+//	const int nCluster = GetClusterForOrigin( vecPosition );
+//	const int nPVSSize = GetPVSForCluster( nCluster, 0, NULL );
+//
+//	// Get the PVS at our position
+//	byte* pvs = new byte[nPVSSize];
+//	GetPVSForCluster( nCluster, nPVSSize, pvs );
+//
+//	// Iterate through all the worldlights
+//	for ( int i = 0; i < m_nWorldLights; ++i )
+//	{
+//		const dworldlight_t& light = m_pWorldLights[i];
+//
+//		// Skip skyambient
+//		if ( light.type == emit_skyambient )
+//			continue;
+//
+//		// Handle sun
+//		if ( light.type == emit_skylight )
+//		{
+//			if ( light.intensity.LengthSqr() <= vecLightBrightness.LengthSqr() )
+//				continue;
+//
+//			const Vector& pos = vecPosition - light.normal * MAX_TRACE_LENGTH;
+//
+//			trace_t tr;
+//			UTIL_TraceLine( vecPosition, pos, MASK_OPAQUE, NULL, COLLISION_GROUP_NONE, &tr );
+//
+//			if ( !tr.DidHit() )
+//				continue;
+//
+//			if ( !( tr.surface.flags & SURF_SKY ) && !( tr.surface.flags & SURF_SKY2D ) )
+//				continue;
+//
+//			vecLightBrightness = light.intensity;
+//			vecLightPos = pos;
+//			continue;
+//		}
+//
+//		// Calculate square distance to this worldlight
+//		const Vector& vecDelta = light.origin - vecPosition;
+//		const float flDistSqr = vecDelta.LengthSqr();
+//		const float flRadiusSqr = light.radius * light.radius;
+//
+//		// Skip lights that are out of our radius
+//		if ( light.type != emit_spotlight && flRadiusSqr > 0 && flDistSqr >= flRadiusSqr )
+//			continue;
+//
+//		// Is it out of our PVS?
+//		if ( !CheckOriginInPVS( light.origin, pvs, nPVSSize ) )
+//			continue;
+//
+//		// Calculate intensity at our position
+//		const float flRatio = Engine_WorldLightDistanceFalloff( light, vecDelta );
+//		Vector vecIntensity = light.intensity * flRatio;
+//
+//		// Is this light more intense than the one we already found?
+//		if ( vecIntensity.LengthSqr() <= vecLightBrightness.LengthSqr() )
+//			continue;
+//
+//		// Can we see the light?
+//		trace_t tr;
+//		const Vector& vecAbsStart = vecPosition + Vector( 0, 0, 30 );
+//		UTIL_TraceLine( vecAbsStart, light.origin, MASK_OPAQUE, NULL, COLLISION_GROUP_NONE, &tr );
+//
+//		if ( tr.DidHit() )
+//			continue;
+//
+//		vecLightPos = light.origin;
+//		vecLightBrightness = vecIntensity;
+//	}
+//
+//	delete[] pvs;
+//	return !vecLightBrightness.IsZero();
+//}
