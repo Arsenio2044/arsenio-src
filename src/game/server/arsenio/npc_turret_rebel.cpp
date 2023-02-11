@@ -1,3 +1,4 @@
+/*
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
 // Purpose: Turret for rebels.
@@ -2326,3 +2327,5 @@ AI_BEGIN_CUSTOM_NPC( npc_turret_floor, CNPC_RebelTurret )
 	DECLARE_INTERACTION( g_interactionTurretStillStanding );	
 
 AI_END_CUSTOM_NPC()
+*/
+#include "cbase.h"

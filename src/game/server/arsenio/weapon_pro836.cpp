@@ -368,6 +368,24 @@ Activity CWeaponPRO836::GetPrimaryAttackActivity()
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
+void CWeaponPRO836::AddViewKick(void)
+{
+#define	EASY_DAMPEN			2.5f	// BREADMAN
+#define	MAX_VERTICAL_KICK	30.0f	//Degrees - was 1.0
+#define	SLIDE_LIMIT			1.0f	//Seconds - was 2.0
+
+	//Get the view kick
+	CBasePlayer* pPlayer = ToBasePlayer(GetOwner());
+
+	if (pPlayer == NULL)
+		return;
+
+	DoMachineGunKick(pPlayer, EASY_DAMPEN, MAX_VERTICAL_KICK, m_fFireDuration, SLIDE_LIMIT);
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
 bool CWeaponPRO836::Reload()
 {
 	bool fRet = DefaultReload( GetMaxClip1(), GetMaxClip2(), ACT_VM_RELOAD );
@@ -376,7 +394,7 @@ bool CWeaponPRO836::Reload()
 
 	return fRet;
 }
-
+/* ; old broken code
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -394,7 +412,7 @@ void CWeaponPRO836::AddViewKick()
 
 	DoMachineGunKick( pPlayer, EASY_DAMPEN, MAX_VERTICAL_KICK, m_fFireDuration, SLIDE_LIMIT );
 }
-
+*/
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------

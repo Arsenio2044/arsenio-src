@@ -792,7 +792,7 @@ void CBreakable::VPhysicsCollision( int index, gamevcollisionevent_t *pEvent )
 	}
 	else if ( !HasSpawnFlags( SF_BREAK_DONT_TAKE_PHYSICS_DAMAGE ) )
 	{
-		int otherIndex = !index;
+		int otherIndex = ~index;
 		CBaseEntity *pOther = pEvent->pEntities[otherIndex];
 
 		// We're to take normal damage from this
@@ -1306,7 +1306,7 @@ int CPushable::OnTakeDamage( const CTakeDamageInfo &info )
 //-----------------------------------------------------------------------------
 void CPushable::VPhysicsCollision( int index, gamevcollisionevent_t *pEvent )
 {
-	int otherIndex = !index;
+	int otherIndex = ~index;
 	CBaseEntity *pOther = pEvent->pEntities[otherIndex];
 	if ( pOther->IsPlayer() )
 	{

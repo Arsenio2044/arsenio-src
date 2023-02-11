@@ -318,6 +318,12 @@ ConVar	sk_npc_dmg_ar2			( "sk_npc_dmg_ar2","0", FCVAR_REPLICATED);
 ConVar	sk_max_ar2				( "sk_max_ar2","0", FCVAR_REPLICATED);
 ConVar	sk_max_ar2_altfire		( "sk_max_ar2_altfire","0", FCVAR_REPLICATED);
 
+ConVar	sk_plr_dmg_smart("sk_plr_dmg_smart", "0", FCVAR_REPLICATED);
+ConVar	sk_max_smart("sk_max_smart", "0", FCVAR_REPLICATED);
+
+ConVar	sk_plr_dmg_xen("sk_plr_dmg_xen", "0", FCVAR_REPLICATED);
+ConVar	sk_max_xen("sk_max_xen", "0", FCVAR_REPLICATED);
+
 ConVar	sk_plr_dmg_alyxgun		( "sk_plr_dmg_alyxgun","0", FCVAR_REPLICATED );
 ConVar	sk_npc_dmg_alyxgun		( "sk_npc_dmg_alyxgun","0", FCVAR_REPLICATED);
 ConVar	sk_max_alyxgun			( "sk_max_alyxgun","0", FCVAR_REPLICATED);
@@ -2252,6 +2258,8 @@ CAmmoDef *GetAmmoDef()
 		def.AddAmmoType("GaussEnergy",		DMG_SHOCK,					TRACER_NONE,			"sk_jeep_gauss_damage",		"sk_jeep_gauss_damage", "sk_max_gauss_round", BULLET_IMPULSE(650, 8000), 0 ); // hit like a 10kg weight at 400 in/s
 		def.AddAmmoType("CombineCannon",	DMG_BULLET,					TRACER_LINE,			"sk_npc_dmg_gunship_to_plr", "sk_npc_dmg_gunship", NULL, 1.5 * 750 * 12, 0 ); // hit like a 1.5kg weight at 750 ft/s
 		def.AddAmmoType("AirboatGun",		DMG_AIRBOAT,				TRACER_LINE,			"sk_plr_dmg_airboat",		"sk_npc_dmg_airboat",		NULL,					BULLET_IMPULSE(10, 600), 0 );
+		def.AddAmmoType("SMART",            DMG_BULLET,                 TRACER_LINE_AND_WHIZ,   "sk_plr_dmg_smart",          "sk_plr_dmg_smg1",       "sk_max_smart", BULLET_IMPULSE(800, 2000), 0);
+		def.AddAmmoType("XENIUM",           DMG_SHOCK|DMG_BURN,         TRACER_NONE,   "sk_plr_dmg_xen",           "sk_plr_dmg_xen",       "sk_max_xen", BULLET_IMPULSE(200, 4000), 0);
 
 		//=====================================================================
 		// STRIDER MINIGUN DAMAGE - Pull up a chair and I'll tell you a tale.
