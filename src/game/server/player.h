@@ -799,6 +799,9 @@ public:
 
 	void	AllowImmediateDecalPainting();
 
+
+
+
 	// Suicide...
 	virtual void CommitSuicide( bool bExplode = false, bool bForce = false );
 	virtual void CommitSuicide( const Vector &vecForce, bool bExplode = false, bool bForce = false );

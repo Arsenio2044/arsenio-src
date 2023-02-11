@@ -60,6 +60,9 @@ public:
 	virtual bool IsLineOfSightClear(CBaseEntity* entity, LineOfSightCheckType checkType = IGNORE_NOTHING) const;// strictly LOS check with no other considerations
 	virtual bool IsLineOfSightClear(const Vector& pos, LineOfSightCheckType checkType = IGNORE_NOTHING, CBaseEntity* entityToIgnore = NULL) const;
 
+#ifdef ARSENIO
+	friend class C_ShowWeapon; // This allows CShowWeapon to access whatever it needs to update for the character
+#endif
 	// -----------------------
 	// Ammo
 	// -----------------------

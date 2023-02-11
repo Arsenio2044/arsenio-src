@@ -8,6 +8,7 @@
 #include "cbase.h"
 #include "ammodef.h"
 
+
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
@@ -59,7 +60,9 @@ bool CBaseCombatCharacter::Weapon_Switch( CBaseCombatWeapon *pWeapon, int viewmo
 			return false;
 	}
 
+#ifndef ARSENIO
 	m_hActiveWeapon = pWeapon;
+#endif
 
 	return pWeapon->Deploy( );
 }
@@ -93,6 +96,8 @@ bool CBaseCombatCharacter::Weapon_CanSwitchTo( CBaseCombatWeapon *pWeapon )
 		if ( !m_hActiveWeapon->CanHolster() )
 			return false;
 	}
+
+
 
 	return true;
 }

@@ -133,6 +133,10 @@ public:
 	int					TakeHealth( float flHealth, int bitsDamageType );
 	void				CauseDeath( const CTakeDamageInfo &info );
 
+#ifdef ARSENIO
+	friend class CShowWeapon; // This allows CShowWeapon to access whatever it needs to update for the character
+#endif
+
 	// Effects of a player landing on this basecombatcharacter
 	void                LandOnMe( CBaseEntity *guy );
 
