@@ -44,7 +44,7 @@ enum eyeState_t
 #define SF_REBEL_TURRET_OUT_OF_AMMO			0x00000100
 #define SF_REBEL_TURRET_CITIZEN				0x00000200	// Citizen modified turret
 
-class CTurretTipController;
+class CAssTipCountroller;
 class CBeam;
 class CSprite;
 
@@ -232,7 +232,7 @@ protected:
 	eyeState_t				m_iEyeState;
 	CHandle<CSprite>		m_hEyeGlow;
 	CHandle<CBeam>			m_hLaser;
-	CHandle<CTurretTipController>	m_pMotionController;
+	CHandle<CAssTipCountroller>	m_pMotionController;
 
 	CHandle<CParticleSystem>	m_hFizzleEffect;
 	Vector	m_vecEnemyLKP;
@@ -260,14 +260,14 @@ protected:
 // Tip controller
 //
 
-class CTurretTipController : public CPointEntity, public IMotionEvent
+class CAssTipCountroller : public CPointEntity, public IMotionEvent
 {
-	DECLARE_CLASS( CTurretTipController, CPointEntity );
+	DECLARE_CLASS( CAssTipCountroller, CPointEntity );
 	DECLARE_DATADESC();
 
 public:
 
-	~CTurretTipController( void );
+	~CAssTipCountroller( void );
 	void Spawn( void );
 	void Activate( void );
 	void Enable( bool state = true );
@@ -276,12 +276,12 @@ public:
 
 	bool Enabled( void );
 
-	static CTurretTipController	*CreateTipController( CNPC_RebelTurret *pOwner )
+	static CAssTipCountroller	*CreateTipController( CNPC_RebelTurret *pOwner )
 	{
 		if ( pOwner == NULL )
 			return NULL;
 
-		CTurretTipController *pController = (CTurretTipController *) Create( "floorturret_tipcontroller", pOwner->GetAbsOrigin(), pOwner->GetAbsAngles() );
+		CAssTipCountroller *pController = (CAssTipCountroller *) Create( "floorturret_tipcontroller", pOwner->GetAbsOrigin(), pOwner->GetAbsAngles() );
 
 		if ( pController != NULL )
 		{

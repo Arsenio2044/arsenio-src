@@ -365,7 +365,7 @@ void CNPC_RebelTurret::Activate( void )
 	if ( !m_pMotionController )
 	{
 		// Create the motion controller
-		m_pMotionController = CTurretTipController::CreateTipController( this );
+		m_pMotionController = CAssTipCountroller::CreateTipController( this );
 
 		// Enable the controller
 		if ( m_pMotionController != NULL )
@@ -2150,13 +2150,13 @@ void CNPC_RebelTurret::InputSelfDestruct( inputdata_t &inputdata )
 // Tip controller
 //
 
-LINK_ENTITY_TO_CLASS( floorturret_tipcontroller, CTurretTipController );
+LINK_ENTITY_TO_CLASS( rebelturret_tipcontroller, CAssTipCountroller );
 
 
 //---------------------------------------------------------
 // Save/Restore
 //---------------------------------------------------------
-BEGIN_DATADESC( CTurretTipController )
+BEGIN_DATADESC( CAssTipCountroller )
 
 	DEFINE_FIELD( m_bEnabled,			FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_flSuspendTime,	FIELD_TIME ),
@@ -2170,7 +2170,7 @@ END_DATADESC()
 
 
 
-CTurretTipController::~CTurretTipController()
+CAssTipCountroller::~CAssTipCountroller()
 {
 	if ( m_pController )
 	{
@@ -2182,7 +2182,7 @@ CTurretTipController::~CTurretTipController()
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CTurretTipController::Spawn( void )
+void CAssTipCountroller::Spawn( void )
 {
 	m_bEnabled = true;
 
@@ -2201,7 +2201,7 @@ void CTurretTipController::Spawn( void )
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CTurretTipController::Activate( void )
+void CAssTipCountroller::Activate( void )
 {
 	BaseClass::Activate();
 
@@ -2235,7 +2235,7 @@ void CTurretTipController::Activate( void )
 //-----------------------------------------------------------------------------
 // Purpose: Actual simulation for tip controller
 //-----------------------------------------------------------------------------
-IMotionEvent::simresult_e CTurretTipController::Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime, Vector &linear, AngularImpulse &angular )
+IMotionEvent::simresult_e CAssTipCountroller::Simulate( IPhysicsMotionController *pController, IPhysicsObject *pObject, float deltaTime, Vector &linear, AngularImpulse &angular )
 {
 	if ( Enabled() == false )
 		return SIM_NOTHING;
@@ -2284,7 +2284,7 @@ IMotionEvent::simresult_e CTurretTipController::Simulate( IPhysicsMotionControll
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CTurretTipController::Enable( bool state )
+void CAssTipCountroller::Enable( bool state )
 {
 	m_bEnabled = state;
 }
@@ -2293,13 +2293,13 @@ void CTurretTipController::Enable( bool state )
 // Purpose: 
 // Input  : time - 
 //-----------------------------------------------------------------------------
-void CTurretTipController::Suspend( float time )
+void CAssTipCountroller::Suspend( float time )
 {
 	m_flSuspendTime = gpGlobals->curtime + time;
 }
 
 
-float CTurretTipController::SuspendedTill( void )
+float CAssTipCountroller::SuspendedTill( void )
 {
 	return m_flSuspendTime;
 }
@@ -2308,7 +2308,7 @@ float CTurretTipController::SuspendedTill( void )
 // Purpose: 
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CTurretTipController::Enabled( void )
+bool CAssTipCountroller::Enabled( void )
 {
 	if ( m_flSuspendTime > gpGlobals->curtime )
 		return false;
