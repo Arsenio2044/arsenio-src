@@ -730,7 +730,7 @@ C_BaseAnimating::C_BaseAnimating() :
 	m_hStudioHdr = MDLHANDLE_INVALID;
 #ifdef ARSENIO
 	m_MuzzleLightHandle = CLIENTSHADOW_INVALID_HANDLE;
-	m_MuzzleLightTexture.Init(materials->FindTexture("effects/muzzleflash", TEXTURE_GROUP_OTHER, false));
+	m_MuzzleLightTexture.Init(materials->FindTexture("effects/muzzleflash.vtf", TEXTURE_GROUP_OTHER, false));
 #endif
 
 	m_bReceivedSequence = false;
