@@ -117,6 +117,7 @@ $Project "Server - Arsenio"
 			$File	"arsenio\npc_crim_s.cpp"
 			$File	"arsenio\npc_hellscraper.cpp"
 			$File	"arsenio\npc_turret_rebel.cpp"
+			$File	"arsenio\npc_turret_rebel.h"
                         }
 
 		}
