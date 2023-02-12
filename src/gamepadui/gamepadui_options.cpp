@@ -466,6 +466,8 @@ public:
             return m_cvar.GetInt();
     }
 
+    //troll
+
     void SetToDefault() OVERRIDE
     {
         if ( m_cvar.IsValid() )
