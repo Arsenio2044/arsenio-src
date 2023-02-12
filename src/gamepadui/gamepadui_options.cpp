@@ -1821,6 +1821,18 @@ void GamepadUIOptionsPanel::LoadOptionTabs( const char *pszOptionsFile )
                         button->SetEnabled( false );
                         m_Tabs[ m_nTabCount ].pButtons.AddToTail( button );
                     }
+                    else if (!V_strcmp(pItemType, "textytext"))
+                    {
+                        // add header item
+                        auto button = new GamepadUIButton(
+                            this, this,
+                            GAMEPADUI_RESOURCE_FOLDER "schemeoptions_dong.res",
+                            "button_pressed",
+                            pItemData->GetString("text", ""), pItemData->GetString("description", ""));
+                        //button->SetFooterButton( true );
+                        button->SetEnabled(false);
+                        m_Tabs[m_nTabCount].pButtons.AddToTail(button);
+                    }
                     else if ( !V_strcmp( pItemType, "wheelywheel" ) )
                     {
                         const char *pszCvar = pItemData->GetString( "convar" );
