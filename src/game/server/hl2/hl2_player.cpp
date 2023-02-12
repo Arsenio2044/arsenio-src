@@ -89,7 +89,9 @@ ConVar hl2_walkspeed( "hl2_walkspeed", "0" );
 ConVar hl2_normspeed( "hl2_normspeed", "190" );
 ConVar hl2_sprintspeed( "hl2_sprintspeed", "320" );
 ConVar hl2_incapspeed( "hl2_incapspeed", "150" );
-
+#ifdef ARSENIO
+ConVar arsenio_screenshake("arsenio_screenshake", "1");
+#endif
 
 ConVar hl2_darkness_flashlight_factor ( "hl2_darkness_flashlight_factor", "1" );
 
@@ -2634,8 +2636,12 @@ void CHL2_Player::Event_Killed( const CTakeDamageInfo &info )
 	CBasePlayer* pPlayer = UTIL_GetCommandClient();
 	color32 cl = { 0,0,0 };
 	UTIL_ScreenFade(pPlayer, cl, 1, 0, FFADE_OUT | FFADE_PURGE | FFADE_STAYOUT);
-
-	UTIL_ScreenShake(GetAbsOrigin(), 20.0, 150.0, 1.0, 750, SHAKE_START);
+#ifdef ARSENIO
+	if (arsenio_screenshake.GetInt() == 1)
+	{
+		UTIL_ScreenShake(GetAbsOrigin(), 20.0, 150.0, 1.0, 750, SHAKE_START);
+	}
+#endif
 }
 
 //-----------------------------------------------------------------------------

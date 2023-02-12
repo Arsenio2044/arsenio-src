@@ -51,6 +51,8 @@ public:
 
     bool IsGamepadUIVisible() const;
 
+
+
     vgui::VPANEL GetRootVPanel() const;
     vgui::Panel *GetBasePanel() const;
     vgui::VPANEL GetBaseVPanel() const;
@@ -87,6 +89,8 @@ private:
     IVEngineClient          *m_pEngineClient           = NULL;
     IVRenderView            *m_pRenderView             = NULL;
 
+
+
     IGameUI                 *m_pGameUI                 = NULL;
     IAchievementMgr         *m_pAchievementMgr         = NULL;
 
@@ -99,6 +103,8 @@ private:
     GamepadUIMainMenu* GetMainMenu() const;
 
     static GamepadUI *s_pGamepadUI;
+
+
 };
 
 #endif // GAMEPADUI_INTERFACE_H

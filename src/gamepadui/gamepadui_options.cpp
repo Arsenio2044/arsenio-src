@@ -19,6 +19,9 @@
 #include "inputsystem/iinputsystem.h"
 #include "materialsystem/materialsystem_config.h"
 
+
+
+
 #if defined( USE_SDL )
 #include "SDL.h"
 #endif
@@ -43,6 +46,7 @@ ConVar _gamepadui_sound_quality( "_gamepadui_sound_quality", "0" );
 ConVar _gamepadui_closecaptions( "_gamepadui_closecaptions", "0" );
 ConVar _gamepadui_hudaspect( "_gamepadui_hudaspect", "0" );
 ConVar _gamepadui_skill( "_gamepadui_skill", "0" );
+
 
 struct GamepadUITab
 {
@@ -113,11 +117,14 @@ private:
     GamepadUIGlyph m_rightGlyph;
 
     static GamepadUIOptionsPanel *s_pOptionsPanel;
+
 };
 
 GamepadUIOptionsPanel* GamepadUIOptionsPanel::s_pOptionsPanel = NULL;
 
 ConVar gamepadui_last_options_tab( "gamepadui_last_options_tab", "0", FCVAR_ARCHIVE );
+
+
 
 class GamepadUICheckButton : public GamepadUIButton
 {
@@ -182,6 +189,8 @@ public:
         , m_szBinding( pszBinding )
     {
     }
+
+
 
     void Paint() OVERRIDE
     {
@@ -297,6 +306,8 @@ public:
     void SetKey( const char *pKey ) { m_szKey = pKey; }
 
     void ClearKey() { m_szKey = ""; }
+
+
 
 protected:
     CUtlString m_szBinding;
@@ -1196,6 +1207,8 @@ GamepadUIOptionsPanel::GamepadUIOptionsPanel( vgui::Panel* pParent, const char* 
     SetActiveTab( GetActiveTab() );
 
     UpdateGradients();
+
+ 
 }
 
 GamepadUIOptionsPanel::~GamepadUIOptionsPanel()
@@ -2023,5 +2036,6 @@ void GamepadUIOptionsPanel::LoadOptionTabs( const char *pszOptionsFile )
 
 CON_COMMAND( gamepadui_openoptionsdialog, "" )
 {
+
     new GamepadUIOptionsPanel( GamepadUI::GetInstance().GetBasePanel(), "" );
 }
