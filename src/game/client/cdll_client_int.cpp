@@ -347,6 +347,8 @@ static ConVar s_cl_team("cl_team", "default", FCVAR_USERINFO | FCVAR_ARCHIVE, "D
 static ConVar s_cl_class("cl_class", "default", FCVAR_USERINFO | FCVAR_ARCHIVE, "Default class when joining a game");
 // Discord RPC
 
+ConVar arsenio_rpc("arsenio_rpc", "1");
+
 #ifdef AR
 static ConVar cl_discord_appid("cl_discord_appid", "949352645989113906", FCVAR_DEVELOPMENTONLY | FCVAR_CHEAT);
 #endif
@@ -1207,7 +1209,7 @@ int CHLClient::Init(CreateInterfaceFn appSystemFactory, CreateInterfaceFn physic
 	sprintf(appid, "%d", engine->GetAppID());
 	Discord_Initialize(cl_discord_appid.GetString(), &handlers, 1, appid);
 
-	if (!g_bTextMode)
+	if ( (!g_bTextMode) && (arsenio_rpc.GetInt() == 1))
 	{
 		DiscordRichPresence discordPresence;
 		memset(&discordPresence, 0, sizeof(discordPresence));
@@ -1886,7 +1888,7 @@ void CHLClient::LevelInitPreEntity(char const* pMapName)
 #endif
 
 	// Discord RPC
-	if (!g_bTextMode)
+	if ((!g_bTextMode) && (arsenio_rpc.GetInt() == 1))
 	{
 		DiscordRichPresence discordPresence;
 		memset(&discordPresence, 0, sizeof(discordPresence));
@@ -2023,7 +2025,7 @@ void CHLClient::LevelShutdown(void)
 	gHUD.LevelShutdown();
 
 	// Discord RPC
-	if (!g_bTextMode)
+	if ((!g_bTextMode) && (arsenio_rpc.GetInt() == 1))
 	{
 		DiscordRichPresence discordPresence;
 		memset(&discordPresence, 0, sizeof(discordPresence));
