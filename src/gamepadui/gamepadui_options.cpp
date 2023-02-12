@@ -364,7 +364,7 @@ public:
         ButtonCode_t buttonCode = GetBaseButtonCode( code );
         switch ( buttonCode )
         {
-        case KEY_LEFT:
+        case KEY_A:
         case KEY_XBUTTON_LEFT:
 
 #ifdef HL2_RETAIL // Steam input and Steam Controller are not supported in SDK2013 (Madi)
@@ -376,7 +376,7 @@ public:
                 UpdateConVar();
             break;
 
-        case KEY_RIGHT:
+        case KEY_D:
         case KEY_XBUTTON_RIGHT:
 
 #ifdef HL2_RETAIL
