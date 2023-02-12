@@ -443,7 +443,7 @@ void GamepadUIMobModePanel::StartGame( int nChapter )
     }
 }
 
-CON_COMMAND( gamepadui_opennewgamedialog, "" )
+CON_COMMAND( gamepadui_openMobModedialog, "" )
 {
     new GamepadUIMobModePanel( GamepadUI::GetInstance().GetBasePanel(), "" );
 }
