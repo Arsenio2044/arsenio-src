@@ -141,3 +141,9 @@ $Project "gameui"
 	"GameUI\gameui2_base.vpc"		[($WIN32||$X360||$POSIX)]
 
 }
+
+$Project "gamepadui"
+{
+	"gamepadui\gamepadui_hl2.vpc"		[($WIN32||$X360||$POSIX)]
+
+}

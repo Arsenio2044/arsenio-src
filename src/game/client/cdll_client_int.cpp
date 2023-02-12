@@ -171,6 +171,8 @@ extern vgui::IInputInternal* g_InputInternal;
 #include "sixense/in_sixense.h"
 #endif
 
+#include "../gamepadui/igamepadui.h"
+
 
 #include "..\GameUI\iGameUI2.h"
 
@@ -223,6 +225,7 @@ IReplaySystem* g_pReplay = NULL;
 
 
 IGameUI2* GameUI2 = nullptr;
+IGamepadUI* g_pGamepadUI = nullptr;
 
 
 IHaptics* haptics = NULL;// NVNT haptics system interface singleton
@@ -365,6 +368,22 @@ bool g_bTextMode = false;
 class IClientPurchaseInterfaceV2* g_pClientPurchaseInterface = (class IClientPurchaseInterfaceV2*)(&g_bTextMode + 156);
 
 static ConVar* g_pcv_ThreadMode = NULL;
+#ifdef SOON
+const bool IsSteamDeck()
+{
+	if (CommandLine()->HasParm("-gamepadui"))
+		return true;
+
+	if (CommandLine()->HasParm("-nogamepadui"))
+		return false;
+
+	const char* pszSteamDeckEnv = getenv("SteamDeck");
+	if (pszSteamDeckEnv && *pszSteamDeckEnv)
+		return atoi(pszSteamDeckEnv) != 0;
+
+	return false;
+}
+#endif
 
 // Load any external DLLs (sike this doesn't work)
 //static class DllOverride {
@@ -1277,6 +1296,40 @@ void CHLClient::PostInit()
 #endif
 
 
+	
+		CSysModule* pGamepadUIModule = g_pFullFileSystem->LoadModule("gamepadui", "GAMEBIN", false);
+		if (pGamepadUIModule != nullptr)
+		{
+			GamepadUI_Log("Loaded gamepadui module.\n");
+
+			CreateInterfaceFn gamepaduiFactory = Sys_GetFactory(pGamepadUIModule);
+			if (gamepaduiFactory != nullptr)
+			{
+				g_pGamepadUI = (IGamepadUI*)gamepaduiFactory(GAMEPADUI_INTERFACE_VERSION, NULL);
+				if (g_pGamepadUI != nullptr)
+				{
+					GamepadUI_Log("Initializing IGamepadUI interface...\n");
+
+					factorylist_t factories;
+					FactoryList_Retrieve(factories);
+					g_pGamepadUI->Initialize(factories.appSystemFactory);
+				}
+				else
+				{
+					GamepadUI_Log("Unable to pull IGamepadUI interface.\n");
+				}
+			}
+			else
+			{
+				GamepadUI_Log("Unable to get gamepadui factory.\n");
+			}
+		}
+		else
+		{
+			GamepadUI_Log("Unable to load gamepadui module\n");
+		}
+	
+
 
 
 
@@ -1384,6 +1437,10 @@ void CHLClient::Shutdown(void)
 		GameUI2->Shutdown();
 	}
 
+	if (g_pGamepadUI != nullptr)
+	{
+		g_pGamepadUI->Shutdown();
+	}
 
 
 
@@ -1489,6 +1546,9 @@ void CHLClient::HudUpdate(bool bActive)
 
 	if (GameUI2 != nullptr)
 		GameUI2->OnUpdate();
+
+	if (g_pGamepadUI != nullptr)
+		g_pGamepadUI->OnUpdate(frametime);
 
 
 }
@@ -1857,6 +1917,10 @@ void CHLClient::LevelInitPreEntity(char const* pMapName)
 	if (GameUI2 != nullptr)
 		GameUI2->OnLevelInitializePreEntity();
 
+	if (g_pGamepadUI != nullptr)
+		g_pGamepadUI->OnLevelInitializePreEntity();
+
+
 
 
 }
@@ -1874,6 +1938,9 @@ void CHLClient::LevelInitPostEntity()
 
 	if (GameUI2 != nullptr)
 		GameUI2->OnLevelInitializePostEntity();
+
+	if (g_pGamepadUI != nullptr)
+		g_pGamepadUI->OnLevelInitializePostEntity();
 
 
 
@@ -1946,6 +2013,9 @@ void CHLClient::LevelShutdown(void)
 
 	if (GameUI2 != nullptr)
 		GameUI2->OnLevelShutdown();
+
+	if (g_pGamepadUI != nullptr)
+		g_pGamepadUI->OnLevelShutdown();
 
 
 
