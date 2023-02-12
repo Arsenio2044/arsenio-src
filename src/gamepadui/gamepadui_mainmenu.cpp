@@ -13,7 +13,7 @@
 
 #define GAMEPADUI_MAINMENU_SCHEME GAMEPADUI_RESOURCE_FOLDER "schememainmenu.res"
 #define GAMEPADUI_MAINMENU_FILE GAMEPADUI_RESOURCE_FOLDER "mainmenu.res"
-#ifdef ARSE
+
 GamepadUIMainMenu::GamepadUIMainMenu( vgui::Panel* pParent )
     : BaseClass( pParent, "MainMenu" )
 {
@@ -258,4 +258,3 @@ float GamepadUIMainMenu::GetCurrentLogoOffset()
 {
     return GetCurrentMenuState() == GamepadUIMenuStates::InGame ? m_flLogoOffsetYInGame : m_flLogoOffsetYMenu;
 }
-#endif
