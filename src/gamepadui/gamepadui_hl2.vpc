@@ -20,4 +20,13 @@ $Configuration
 
 $Project "GamepadUI (Arsenio)"
 {
+	$Folder "Header Files"
+    {
+		 $File "gamepadui_loading.h"
+	}
+
+	$Folder "Source Files"
+    {
+		 $File "gamepadui_loading.cpp"
+	}
 }
