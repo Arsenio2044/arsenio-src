@@ -1208,7 +1208,17 @@ void CHL2_Player::Spawn(void)
 #endif
 
 	BaseClass::Spawn();
+#ifdef ARSENIO
 
+	// Ported from CHL2MP_Player. Fixes issues with respawning players in SP
+	if (!IsObserver())
+	{
+		pl.deadflag = false;
+		RemoveSolidFlags(FSOLID_NOT_SOLID);
+
+		RemoveEffects(EF_NODRAW);
+	}
+#endif
 	//
 	// Our player movement speed is set once here. This will override the cl_xxxx
 	// cvars unless they are set to be lower than this.

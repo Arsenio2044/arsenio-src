@@ -134,7 +134,7 @@ void SoftwareCursorChangedCB( IConVar *pVar, const char *pOldValue, float fOldVa
 	ConVar *pConVar = (ConVar *)pVar;
 	vgui::surface()->SetSoftwareCursor( pConVar->GetBool() || UseVR() );
 }
-static ConVar cl_software_cursor ( "cl_software_cursor", "0", FCVAR_ARCHIVE, "Switches the game to use a larger software cursor instead of the normal OS cursor", SoftwareCursorChangedCB );
+static ConVar cl_software_cursor ( "cl_software_cursor", "1", FCVAR_ARCHIVE, "Switches the game to use a larger software cursor instead of the normal OS cursor", SoftwareCursorChangedCB );
 
 
 static Vector s_DemoView;
@@ -1259,6 +1259,22 @@ void CViewRender::Render( vrect_t *rect )
 			// we should use the monitor view from the left eye for both eyes
 			flags |= RENDERVIEW_SUPPRESSMONITORRENDERING;
 		}
+	#ifdef ARSENIOS
+
+		if (pPlayer && pPlayer->InFirstPersonView() && pPlayer->GetViewModel(0))
+		{
+			int iCamAttachment = pPlayer->GetViewModel(0)->LookupAttachment("attach_camera");
+
+			if (iCamAttachment != -1)
+			{
+				Vector cameraOrigin = Vector(0, 0, 0);
+				QAngle cameraAngles = QAngle(0, 0, 0);
+				pPlayer->GetViewModel(0)->GetAttachmentLocal(iCamAttachment, cameraOrigin, cameraAngles);
+				view.angles += cameraAngles;
+				view.origin += cameraOrigin;
+			}
+		}
+		#endif
 
 	    RenderView( view, nClearFlags, flags );
 
