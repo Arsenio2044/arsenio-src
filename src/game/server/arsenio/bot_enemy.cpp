@@ -145,6 +145,13 @@ void CBotEnemy::Spawn( void )
 
 }
 
+Class_T	CBotEnemy::Classify()
+{
+
+	return CLASS_PLAYER_ALLY;
+}
+
+
 
 
 //-----------------------------------------------------------------------------

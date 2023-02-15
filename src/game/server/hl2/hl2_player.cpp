@@ -2522,7 +2522,10 @@ int	CHL2_Player::OnTakeDamage( const CTakeDamageInfo &info )
 		m_flNextPainSound = gpGlobals->curtime + RandomFloat(3.0f, 5.0f);
 	}
 #ifdef ARSENIO
-	UTIL_ScreenShake(GetAbsOrigin(), 15.0, 150.0, 0.5, 750, SHAKE_START);
+	if (arsenio_screenshake.GetInt() == 1)
+	{
+		UTIL_ScreenShake(GetAbsOrigin(), 15.0, 150.0, 0.5, 750, SHAKE_START);
+	}
 #endif
 
 	gamestats->Event_PlayerDamage( this, info );

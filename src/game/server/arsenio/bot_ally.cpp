@@ -145,11 +145,6 @@ void CBotAlly::Spawn( void )
 
 }
 
-Class_T	CBotAlly::Classify()
-{
-
-	return CLASS_PLAYER_ALLY;
-}
 
 //-----------------------------------------------------------------------------
 // Purpose:
