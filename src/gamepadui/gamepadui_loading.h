@@ -7,6 +7,16 @@
 #include "gamepadui_interface.h"
 #include "vgui_controls/Panel.h"
 #include "GameUI/IGameUI.h"
+#include <vgui_controls/Label.h>
+#include "filesystem.h"
+
+namespace vgui
+{
+	class Panel;
+}
+
+class IVEngineClient;
+
 
 class GamepadUILoading : public vgui::Panel
 {
@@ -18,6 +28,8 @@ public:
 	virtual void	PerformLayout();
 	virtual void	Paint();
 	MESSAGE_FUNC(OnActivate, "activate");
+	virtual void SetRandomLoadingTip();
+
 
 private:
 	void	SolveEnginePanel();
@@ -38,7 +50,13 @@ private:
 	vgui::ImagePanel* m_pSpinnerImage;
 	vgui::ImagePanel* m_pLogoImage;
 	int m_SpinnerFrame;
+	vgui::Label* m_pTextLoadingTip;
+
+
+	// Tips
+	float m_flTipDisplayTime;
 };
+
 
 extern GamepadUILoading* g_pGamepadUILoading;
 

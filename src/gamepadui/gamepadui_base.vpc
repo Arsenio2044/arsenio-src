@@ -73,6 +73,7 @@ $Project
         $File "gamepadui_scroll.h"
         $File "gamepadui_string.h"
         $File "gamepadui_util.h"
+        $File "$SRCDIR\game\client\cdll_util.h"
     }
 
     $Folder "Source Files"
