@@ -45,7 +45,7 @@ public:
 	void ReloadScheme( void );
 
 	void NextTip( void );
-
+	// troll
 private:
 	void SetupTips( void );
 	int	 DrawSmearBackgroundFade( int x, int y, int wide, int tall );
