@@ -2,7 +2,7 @@
 #include "gamepadui_basepanel.h"
 #include "gamepadui_mainmenu.h"
 #include "gamepadui_loading.h"
-#include "loadingtippanel.h"
+
 
 #include "vgui/ILocalize.h"
 
@@ -15,7 +15,7 @@ EXPOSE_SINGLE_INTERFACE_GLOBALVAR( GamepadUI, IGamepadUI, GAMEPADUI_INTERFACE_VE
 
 GamepadUI *GamepadUI::s_pGamepadUI = NULL;
 
-CLoadingTipPanel* g_pLoadingTip = NULL;
+
 
 GamepadUI& GamepadUI::GetInstance()
 {
@@ -84,8 +84,7 @@ void GamepadUI::Initialize( CreateInterfaceFn factory )
     g_pGamepadUILoading = new GamepadUILoading(GetRootVPanel());
     m_pGameUI->SetLoadingBackgroundDialog(g_pGamepadUILoading->GetVPanel());
 
-    g_pLoadingTip = new CLoadingTipPanel(GetRootVPanel());
-    m_pGameUI->SetLoadingBackgroundDialog(g_pLoadingTip->GetVPanel());
+
 
     m_pGameUI->SetMainMenuOverride( GetBaseVPanel() );
 
