@@ -9,6 +9,7 @@ using namespace vgui;
 
 GamepadUILoading* g_pGamepadUILoading = NULL;
 
+
 GamepadUILoading::GamepadUILoading(VPANEL parent) : vgui::Panel(NULL, "LoadingDialog")
 {
 	SetParent(parent);
