@@ -182,6 +182,9 @@ void GamepadUILoading::SetRandomLoadingTip()
 		for (KeyValues* sub = kvLoadingTips->GetFirstSubKey(); sub; sub = sub->GetNextKey())
 			iAmountTips++;
 
+		
+		//Msg("Loading tips\n");
+
 		KeyValues* kvSelectedTip = kvLoadingTips->FindKey(VarArgs("%i", random->RandomInt(1, iAmountTips)));
 		if (kvSelectedTip)
 			m_pTextLoadingTip->SetText(kvSelectedTip->GetString());
@@ -189,6 +192,7 @@ void GamepadUILoading::SetRandomLoadingTip()
 	else
 	{
 		m_pTextLoadingTip->SetText("");
+		//Msg("No loading tips\n");
 	}
 
 	kvLoadingTips->deleteThis();
