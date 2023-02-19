@@ -14,7 +14,7 @@
 #include "vgui_controls/Button.h"
 #include "vgui_controls/ImagePanel.h"
 
-
+#include "GameBase_Client.h"
 #include "KeyValues.h"
 #include "filesystem.h"
 
@@ -389,9 +389,9 @@ void CDialogueMenu::OnShowPanel(bool bShow)
 	ConVar* thirdpers_cvar = cvar->FindVar("cl_thirdperson");
 	ConVar* cam_dist = cvar->FindVar("cam_idealdist");
 	ConVar* cam_pos = cvar->FindVar("cam_idealdistright");
-#ifdef FUTURE
+
 	GameBaseClient->ShowConsole(false, true, false);
-#endif
+
 	if (bShow)
 	{
 		engine->ClientCmd_Unrestricted("gameui_preventescapetoshow\n");
@@ -442,7 +442,7 @@ void CDialogueMenu::OnCommand(const char* pcCommand)
 					engine->ClientCmd(VarArgs("ar_dialogue_option_pressed %i %s\n", i, szRecentTargetEnt));
 
 				if (iShouldClose >= 1)
-					OpenPanel(4); // Close
+					GameBaseClient->OpenPanel(4); // Close
 			}
 
 			kvDialogueData->deleteThis(); // Clear memory...

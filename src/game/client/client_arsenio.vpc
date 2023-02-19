@@ -47,6 +47,10 @@ $Project "Client - Arsenio"
 			$File	"$SRCDIR\game\shared\arsenio\arsenio_game_log.cpp"
 			$File 	"arsenio\DialoguePanel.cpp"
 			$File 	"arsenio\DialoguePanel.h"
+			$File 	"arsenio\GameBase_Client.cpp"
+			$File	"arsenio\GameBase_Client.h"
+			$File 	"arsenio\gameconsoledialog.cpp"
+			$File 	"arsenio\gameconsoledialog.h"
 
 		}
 

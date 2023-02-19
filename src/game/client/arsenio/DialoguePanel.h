@@ -34,10 +34,7 @@ public:
 	void OnThink();
 	void OnShowPanel(bool bShow);
 	void OnScreenSizeChanged(int iOldWide, int iOldTall);
-	virtual bool PlayerHasItem(const char* szItem) = 0;
-	virtual void ShowConsole(bool bToggle, bool bClose, bool bClear) = 0;
-	virtual void StartDialogueScene(const char* szFile, const char* szEntity, bool bOption1, bool bOption2, bool bOption3) = 0;
-	virtual void OpenPanel(int iPanel) = 0; // Opens a vgui panel of the x type.
+
 
 	void CheckRollovers(int x, int y);
 
