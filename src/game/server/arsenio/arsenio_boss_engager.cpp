@@ -13,8 +13,8 @@
 #include "GameEventListener.h"
 
 // Get class deffs
-#include "npc_monster.h"
-#include "npc_soldier.h"
+#include "npc_overlord.h"
+
 
 class CBossEngager : public CLogicalEntity, public CGameEventListener
 {
@@ -68,24 +68,18 @@ void CBossEngager::OnThink()
 	pTargetEnt = gEntList.FindEntityByName( NULL, szTargetEnt.ToCStr() ); // Make sure we still can find it...
 	if ( pTargetEnt )
 	{
-		CNPC_Soldier *pSoldier = dynamic_cast< CNPC_Soldier * > ( pTargetEnt );
-		CNPC_Monster *pMonster = dynamic_cast< CNPC_Monster * > ( pTargetEnt );
+		CNPC_OverLord *pOverLord = dynamic_cast< CNPC_OverLord * > ( pTargetEnt );
 		char szMessageName[64];
 		int iMaxHealth = 0;
 		int m_iCurrHealth = 0;
 
-		if ( pSoldier )
+		if ( pOverLord )
 		{
-			Q_strncpy( szMessageName, pSoldier->GetEntName(), 64 );
-			iMaxHealth = pSoldier->GetMaxHP();
-			m_iCurrHealth = pSoldier->GetHealth();
+			Q_strncpy( szMessageName, pOverLord->GetEntName(), 64 );
+			iMaxHealth = pOverLord->GetMaxHP();
+			m_iCurrHealth = pOverLord->GetHealth();
 		}
-		else if ( pMonster )
-		{
-			Q_strncpy( szMessageName, pMonster->GetEntName(), 64 );
-			iMaxHealth = pMonster->GetMaxHP();
-			m_iCurrHealth = pMonster->GetHealth();
-		}
+
 
 		CRecipientFilter user;
 		user.AddAllPlayers();

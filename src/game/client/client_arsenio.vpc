@@ -51,6 +51,7 @@ $Project "Client - Arsenio"
 			$File	"arsenio\GameBase_Client.h"
 			$File 	"arsenio\gameconsoledialog.cpp"
 			$File 	"arsenio\gameconsoledialog.h"
+			$File 	"arsenio\hud_bossbar.cpp"
 
 		}
 
