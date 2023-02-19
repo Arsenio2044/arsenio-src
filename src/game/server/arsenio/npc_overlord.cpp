@@ -26,6 +26,7 @@
 #include "gameweaponmanager.h"
 #include "vehicle_base.h"
 
+
 #ifdef AR
 #include "arsenio_baseshadownpc.h" // TUX: For future use.
 #endif
@@ -42,19 +43,22 @@ ConVar sk_overlorda_kick("sk_overlorda_kick", "0");
 // Whether or not the synth guard should spawn health on death
 ConVar overlorda_spawn_health("overlorda_spawn_health", "1");
 
+
+
 extern ConVar sk_plr_dmg_buckshot;
 extern ConVar sk_plr_num_shotgun_pellets;
 
 //Whether or not the synth should spawn health on death
 ConVar	overlordpawn_health("overlordpawn_health", "1");
 
-ConVar  add_yourmom_prob("add_yourmom_prob", "0", 0,
+ConVar  overlord_soldier_prob("overlord_soldier_prob", "0", 0,
 	"Every synth soldier has this chance to spawn a hunter");
 
 LINK_ENTITY_TO_CLASS(npc_overlord, CNPC_OverLord);
 
 
 #define AE_SOLDIER_BLOCK_PHYSICS		20 // trying to block an incoming physics object
+#define COMBINE_AE_ROCKET				( 21 )
 
 #define MD_BC_YAW		0
 #define MD_BC_PITCH		1
@@ -62,6 +66,8 @@ LINK_ENTITY_TO_CLASS(npc_overlord, CNPC_OverLord);
 #define MD_AP_RGUN		1
 #define MD_YAW_SPEED	24
 #define MD_PITCH_SPEED  12
+
+#define MD_FULLAMMO	500
 
 extern Activity ACT_WALK_EASY;
 extern Activity ACT_WALK_MARCH;
@@ -105,9 +111,9 @@ void CNPC_OverLord::Spawn(void)
 
 
 	// Maybe spawn a hunter if the player wants hunters
-	if (add_yourmom_prob.GetFloat() > 0)
+	if (overlord_soldier_prob.GetFloat() > 0)
 	{
-		if (RandomFloat() <= add_yourmom_prob.GetFloat())
+		if (RandomFloat() <= overlord_soldier_prob.GetFloat())
 		{
 			// one more check - don't spawn a hunter if there's already two nearby
 			int nearby_hunters = 0;
@@ -199,7 +205,7 @@ void CNPC_OverLord::Precache()
 	PrecacheScriptSound("NPC_MissileDefense.Reload");
 	PrecacheScriptSound("NPC_MissileDefense.Turn");
 
-	if (add_yourmom_prob.GetFloat() > 0)
+	if (overlord_soldier_prob.GetFloat() > 0)
 	{
 		UTIL_PrecacheOther("npc_hunter");
 	}
@@ -333,6 +339,12 @@ void CNPC_OverLord::HandleAnimEvent(animevent_t* pEvent)
 	case AE_SOLDIER_BLOCK_PHYSICS:
 		DevMsg("BLOCKING!\n");
 		m_fIsBlocking = true;
+		break;
+
+	case COMBINE_AE_ROCKET:
+
+	//	CHomingMissile* missile =
+	//	CHomingMissile::Create(muzzlePoint, launch_angle, this, target, m_nRocketsQueued - 1);
 		break;
 
 	default:
@@ -487,6 +499,8 @@ bool CNPC_OverLord::IsHeavyDamage(const CTakeDamageInfo& info)
 {
 	// Combine considers AR2 fire to be heavy damage
 	if (info.GetAmmoType() == GetAmmoDef()->Index("AR2"))
+
+
 		return true;
 
 	// 357 rounds are heavy damage
@@ -764,4 +778,35 @@ void CNPC_OverLord::AimGun(void)
 	{
 		StopSound("NPC_MissileDefense.Turn");
 	}
+}
+
+//------------------------------------------------------------------------------
+// Purpose :
+// Input   :
+// Output  :
+//------------------------------------------------------------------------------
+void CNPC_OverLord::RunAI(void)
+{
+
+
+	if (GetEnemy() == NULL)
+	{
+		//GetSenses()->Look(4092);
+		//SetEnemy(BestEnemy());
+
+		if (GetEnemy() != NULL)
+		{
+			m_iAmmoLoaded = MD_FULLAMMO;
+			m_flReloadedTime = gpGlobals->curtime;
+		}
+	}
+
+	if (m_iAmmoLoaded < 1 && gpGlobals->curtime > m_flReloadedTime)
+	{
+		m_iAmmoLoaded = MD_FULLAMMO;
+	}
+
+	AimGun();
+	FireCannons();
+	SetNextThink(gpGlobals->curtime + 0.05);
 }

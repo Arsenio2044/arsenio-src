@@ -53,7 +53,7 @@ protected:
 
 private:
 
-	CPanelAnimationVar(vgui::HFont, m_hTextFont, "TextFont", "HUD_TFO_Health");
+	CPanelAnimationVar(vgui::HFont, m_hTextFont, "TextFont", "Nidus Sans");
 	CPanelAnimationVar(Color, m_TextColor, "TextColor", "255 255 255 160");
 
 	CPanelAnimationVarAliasType(float, m_flBarInsetX, "BarInsetX", "26", "proportional_float");

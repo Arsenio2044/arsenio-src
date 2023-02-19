@@ -12,6 +12,7 @@
 
 #include "npc_combine.h"
 
+
 //=========================================================
 //	>> CNPC_OverLord
 //=========================================================
@@ -36,15 +37,23 @@ public:
 	void		OnListened();
 	Class_T 	Classify();
 
+
+
+	CAI_Senses* m_pSenses;
+	CSound* m_pLockedBestSound;
+
 	// Get Ent Name
 	const char* GetEntName(void) { return ("OverLord"); }
 	int GetMaxHP(void) { return 15000; }
 
 	void	GetGunAim(Vector* vecAim);
 
+	void	RunAI(void);
 	void	FireCannons(void);
 	void	AimGun(void);
 	void	EnemyShootPosition(CBaseEntity* pEnemy, Vector* vPosition);
+
+
 
 	void		ClearAttackConditions(void);
 
