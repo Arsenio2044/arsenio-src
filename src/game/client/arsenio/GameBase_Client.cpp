@@ -138,37 +138,7 @@ void CGameBase_Client::DestroyPanels(void)
 
 }
 
-// We check if we can load the main menu, if not we load a 2d menu.
-bool CGameBase_Client::CanLoadMainMenu(void)
-{
-	// If we're in-game, reset all stuff:
-	C_BasePlayer *pClient = C_BasePlayer::GetLocalPlayer();
-	if (pClient)
-	{
-		// If we're in-game we might also be in a background map = main menu map = no need to proceed... Unless the user fucked up and wrote map_background blabla tho...
-		if (engine->IsLevelMainMenuBackground())
-		{
-			Warning("You're already in the main menu area!\n");
-			return false;
-		}
 
-		ResetAll();
-	}
-
-
-
-
-
-
-
-	// In HL2_CLIENT we re-enable this once we know that the menu has been successfully / finished loading... :) Notice that hl2_client is server only, we'll be running an event to change stuff on the client...
-
-
-
-
-
-
-}
 
 
 

@@ -13,6 +13,8 @@
 
 using namespace vgui;
 
+IGameBase_Client* GameBaseClient = NULL;
+
 //-----------------------------------------------------------------------------
 // Purpose: Constructor
 //-----------------------------------------------------------------------------
@@ -57,7 +59,7 @@ void CGameConsoleDialog::OnCommandSubmitted(const char *pCommand)
 	else if (!Q_strnicmp(szCommand, "save ", 5))
 	{
 		szCommand += 5;
-		int iSlot = atoi(szCommand);
+//		int iSlot = atoi(szCommand);
 	}
 	else if (!Q_strnicmp(szCommand, "reload", 6))
 	{

@@ -23,6 +23,8 @@ using namespace vgui;
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
+IGameBase_Client* GameBaseClient = NULL;
+
 ConVar cl_dialoguepanel("cl_dialoguepanel", "0", FCVAR_CLIENTDLL | FCVAR_HIDDEN, "Opens Dialogue Panel when interacting with CRUCIAL NPC's");
 ConVar cl_dialoguemode("cl_dialoguemode", "0", FCVAR_ARCHIVE, "0 = Firstperson and 1 = Thirdperson");
 
