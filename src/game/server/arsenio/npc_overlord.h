@@ -37,6 +37,7 @@ public:
 	void		OnListened();
 	Class_T 	Classify();
 	void Shove(void);
+	void Hop(void);
 
 
 

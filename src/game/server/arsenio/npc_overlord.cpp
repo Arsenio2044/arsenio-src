@@ -59,7 +59,6 @@ LINK_ENTITY_TO_CLASS(npc_overlord, CNPC_OverLord);
 
 
 #define AE_SOLDIER_BLOCK_PHYSICS		20 // trying to block an incoming physics object
-#define COMBINE_AE_ROCKET				( 2 )
 #define	OVERLORD_AE_HOP			1
 
 #define MD_BC_YAW		0
@@ -430,6 +429,25 @@ float CNPC_OverLord::GetHitgroupDamageMultiplier(int iHitGroup, const CTakeDamag
 	return BaseClass::GetHitgroupDamageMultiplier(iHitGroup, info);
 }
 
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CNPC_OverLord::Hop(void)
+{
+			float flGravity = sv_gravity.GetFloat();
+
+		// throw the squid up into the air on this frame.
+		if (GetFlags() & FL_ONGROUND)
+		{
+		SetGroundEntity(NULL);
+		}
+
+		// jump into air for 0.8 (24/30) seconds
+		Vector vecVel = GetAbsVelocity();
+		vecVel.z += (0.625 * flGravity) * 0.5;
+		SetAbsVelocity(vecVel);
+}
+
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
@@ -442,11 +460,6 @@ void CNPC_OverLord::HandleAnimEvent(animevent_t* pEvent)
 		m_fIsBlocking = true;
 		break;
 
-	case COMBINE_AE_ROCKET:
-
-	//	CHomingMissile* missile =
-	//	CHomingMissile::Create(muzzlePoint, launch_angle, this, target, m_nRocketsQueued - 1);
-		break;
 
 	case OVERLORD_AE_SHAKEIMPACT:
 		Shove();
@@ -454,22 +467,9 @@ void CNPC_OverLord::HandleAnimEvent(animevent_t* pEvent)
 		break;
 
 	case OVERLORD_AE_HOP:
-	{
-		float flGravity = sv_gravity.GetFloat();
-
-		// throw the squid up into the air on this frame.
-		if (GetFlags() & FL_ONGROUND)
-		{
-			SetGroundEntity(NULL);
-		}
-
-		// jump into air for 0.8 (24/30) seconds
-		Vector vecVel = GetAbsVelocity();
-		vecVel.z += (0.625 * flGravity) * 0.5;
-		SetAbsVelocity(vecVel);
-	}
-
-	break;
+	
+		Hop();
+		break;
 
 	case OVERLORD_AE_SHOVE:
 		Shove();
