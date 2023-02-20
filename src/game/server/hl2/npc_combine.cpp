@@ -1513,11 +1513,7 @@ int CNPC_Combine::SelectCombatSchedule()
 		return SCHED_NONE;
 	}
 
-	if ((HasCondition(COND_NO_PRIMARY_AMMO) || HasCondition(COND_LOW_PRIMARY_AMMO)) && !HasCondition(COND_CAN_MELEE_ATTACK1))//
-	{
-		CHomingMissile* missile =
-			CHomingMissile::Create(muzzlePoint, launch_angle, this, target, m_nRocketsQueued - 1);
-	}
+
 
 	// -----------
 	// new enemy

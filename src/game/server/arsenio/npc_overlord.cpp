@@ -24,6 +24,7 @@
 #include "weapon_physcannon.h"
 #include "hl2_gamerules.h"
 #include "gameweaponmanager.h"
+#include "movevars_shared.h"
 #include "vehicle_base.h"
 
 
@@ -59,6 +60,7 @@ LINK_ENTITY_TO_CLASS(npc_overlord, CNPC_OverLord);
 
 #define AE_SOLDIER_BLOCK_PHYSICS		20 // trying to block an incoming physics object
 #define COMBINE_AE_ROCKET				( 21 )
+#define	OVERLORD_AE_HOP			1
 
 #define MD_BC_YAW		0
 #define MD_BC_PITCH		1
@@ -80,6 +82,19 @@ void CNPC_OverLord::Spawn(void)
 	Precache();
 	SetModel(STRING(GetModelName()));
 
+	float flGravity = sv_gravity.GetFloat();
+
+	// throw the squid up into the air on this frame.
+	if (GetFlags() & FL_ONGROUND)
+	{
+		SetGroundEntity(NULL);
+	}
+
+	// jump into air for 0.8 (24/30) seconds
+	Vector vecVel = GetAbsVelocity();
+	vecVel.z += (0.625 * flGravity) * 0.5;
+	SetAbsVelocity(vecVel);
+
 	if (IsElite())
 	{
 		// Stronger, tougher.
@@ -97,6 +112,7 @@ void CNPC_OverLord::Spawn(void)
 	CapabilitiesAdd(bits_CAP_ANIMATEDFACE);
 	CapabilitiesAdd(bits_CAP_MOVE_SHOOT);
 	CapabilitiesAdd(bits_CAP_DOORS_GROUP);
+	CapabilitiesAdd(bits_CAP_MOVE_JUMP | bits_CAP_MOVE_CLIMB);
 
 	SetBoneController(MD_BC_YAW, 10);
 	SetBoneController(MD_BC_PITCH, 0);
@@ -170,6 +186,22 @@ Class_T	CNPC_OverLord::Classify()
 {
 
 	return CLASS_SHADOW;
+}
+
+bool CNPC_OverLord::IsJumpLegal(const Vector& startPos, const Vector& apex, const Vector& endPos) const
+{
+	const float MAX_JUMP_RISE = 400.0f;
+	const float MAX_JUMP_DISTANCE = 800.0f;
+	const float MAX_JUMP_DROP = 2048.0f;
+
+	if (BaseClass::IsJumpLegal(startPos, apex, endPos, MAX_JUMP_RISE, MAX_JUMP_DROP, MAX_JUMP_DISTANCE))
+	{
+		// Hang onto the jump distance. The AI is going to want it.
+		m_flJumpDist = (startPos - endPos).Length();
+
+		return true;
+	}
+	return false;
 }
 
 //-----------------------------------------------------------------------------
@@ -346,6 +378,23 @@ void CNPC_OverLord::HandleAnimEvent(animevent_t* pEvent)
 	//	CHomingMissile* missile =
 	//	CHomingMissile::Create(muzzlePoint, launch_angle, this, target, m_nRocketsQueued - 1);
 		break;
+
+	case OVERLORD_AE_HOP:
+	{
+		float flGravity = sv_gravity.GetFloat();
+
+		// throw the squid up into the air on this frame.
+		if (GetFlags() & FL_ONGROUND)
+		{
+			SetGroundEntity(NULL);
+		}
+
+		// jump into air for 0.8 (24/30) seconds
+		Vector vecVel = GetAbsVelocity();
+		vecVel.z += (0.625 * flGravity) * 0.5;
+		SetAbsVelocity(vecVel);
+	}
+	break;
 
 	default:
 		BaseClass::HandleAnimEvent(pEvent);
@@ -780,33 +829,3 @@ void CNPC_OverLord::AimGun(void)
 	}
 }
 
-//------------------------------------------------------------------------------
-// Purpose :
-// Input   :
-// Output  :
-//------------------------------------------------------------------------------
-void CNPC_OverLord::RunAI(void)
-{
-
-
-	if (GetEnemy() == NULL)
-	{
-		//GetSenses()->Look(4092);
-		//SetEnemy(BestEnemy());
-
-		if (GetEnemy() != NULL)
-		{
-			m_iAmmoLoaded = MD_FULLAMMO;
-			m_flReloadedTime = gpGlobals->curtime;
-		}
-	}
-
-	if (m_iAmmoLoaded < 1 && gpGlobals->curtime > m_flReloadedTime)
-	{
-		m_iAmmoLoaded = MD_FULLAMMO;
-	}
-
-	AimGun();
-	FireCannons();
-	SetNextThink(gpGlobals->curtime + 0.05);
-}

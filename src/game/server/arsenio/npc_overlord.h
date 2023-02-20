@@ -48,7 +48,7 @@ public:
 
 	void	GetGunAim(Vector* vecAim);
 
-	void	RunAI(void);
+
 	void	FireCannons(void);
 	void	AimGun(void);
 	void	EnemyShootPosition(CBaseEntity* pEnemy, Vector* vPosition);
@@ -58,10 +58,13 @@ public:
 	void		ClearAttackConditions(void);
 
 	bool		m_fIsBlocking;
+	bool IsJumpLegal(const Vector& startPos, const Vector& apex, const Vector& endPos) const;
 
 	Vector		m_vGunAng;
 	int			m_iAmmoLoaded;
 	float		m_flReloadedTime;
+	mutable float	m_flJumpDist;
+
 
 	bool		IsLightDamage(const CTakeDamageInfo& info);
 	bool		IsHeavyDamage(const CTakeDamageInfo& info);
