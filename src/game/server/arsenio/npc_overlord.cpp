@@ -26,6 +26,7 @@
 #include "gameweaponmanager.h"
 #include "movevars_shared.h"
 #include "vehicle_base.h"
+#include "weapon_rpg.h"
 
 
 #ifdef AR
@@ -71,8 +72,20 @@ LINK_ENTITY_TO_CLASS(npc_overlord, CNPC_OverLord);
 #define MD_FULLAMMO	500
 
 #define	OVERLORD_AE_SHOVE	3
+#define	OVERLORD_AE_MISSILE	4
 
 #define OVERLORD_AE_SHAKEIMPACT 22
+
+#define ROCKET_ATTACK_RANGE_MAX 5500.0f
+#define ROCKET_ATTACK_RANGE_MIN 1250.0f
+
+
+#define ROCKET_SALVO_SIZE				5
+#define ROCKET_DELAY_TIME				1.5
+#define ROCKET_MIN_BURST_PAUSE_TIME		3
+#define ROCKET_MAX_BURST_PAUSE_TIME		4
+#define ROCKET_SPEED					800
+
 
 extern Activity ACT_WALK_EASY;
 extern Activity ACT_WALK_MARCH;
@@ -469,6 +482,11 @@ void CNPC_OverLord::HandleAnimEvent(animevent_t* pEvent)
 	case OVERLORD_AE_HOP:
 	
 		Hop();
+		break;
+
+	case OVERLORD_AE_MISSILE:
+
+		FireRocket();
 		break;
 
 	case OVERLORD_AE_SHOVE:
@@ -908,3 +926,74 @@ void CNPC_OverLord::AimGun(void)
 	}
 }
 
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CNPC_OverLord::GetRocketShootPosition(Vector* pPosition)
+{
+	GetAttachment(m_nRocketAttachment, *pPosition);
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CNPC_OverLord::FireRocket(void)
+{
+	if (m_flRocketTime > gpGlobals->curtime)
+		return;
+
+	// If we're still firing the salvo, fire quickly
+	m_iRocketSalvoLeft--;
+	if (m_iRocketSalvoLeft > 0)
+	{
+		m_flRocketTime = gpGlobals->curtime + ROCKET_DELAY_TIME;
+	}
+	else
+	{
+		// Reload the salvo
+		m_iRocketSalvoLeft = ROCKET_SALVO_SIZE;
+		m_flRocketTime = gpGlobals->curtime + random->RandomFloat(ROCKET_MIN_BURST_PAUSE_TIME, ROCKET_MAX_BURST_PAUSE_TIME);
+	}
+
+	Vector vecRocketOrigin;
+	GetRocketShootPosition(&vecRocketOrigin);
+
+	static float s_pSide[] = { 0.966, 0.866, 0.5, -0.5, -0.866, -0.966 };
+
+	Vector forward;
+	GetVectors(&forward, NULL, NULL);
+
+	Vector vecDir;
+	CrossProduct(Vector(0, 0, 1), forward, vecDir);
+	vecDir.z = 1.0f;
+	vecDir.x *= s_pSide[m_nRocketSide];
+	vecDir.y *= s_pSide[m_nRocketSide];
+	if (++m_nRocketSide >= 6)
+	{
+		m_nRocketSide = 0;
+	}
+
+	VectorNormalize(vecDir);
+
+	Vector vecVelocity;
+	VectorMultiply(vecDir, ROCKET_SPEED, vecVelocity);
+
+	QAngle angles;
+	VectorAngles(vecDir, angles);
+
+	CAPCMissile* pRocket = (CAPCMissile*)CAPCMissile::Create(vecRocketOrigin, angles, vecVelocity, this);
+	pRocket->IgniteDelay();
+
+	if (m_hSpecificRocketTarget)
+	{
+		pRocket->AimAtSpecificTarget(m_hSpecificRocketTarget);
+		m_hSpecificRocketTarget = NULL;
+	}
+	else if (m_strMissileHint != NULL_STRING)
+	{
+		pRocket->SetGuidanceHint(STRING(m_strMissileHint));
+	}
+
+	EmitSound("PropAPC.FireRocket");
+	//m_OnFiredMissile.FireOutput(this, this);
+}

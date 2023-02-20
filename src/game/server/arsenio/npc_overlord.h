@@ -38,11 +38,22 @@ public:
 	Class_T 	Classify();
 	void Shove(void);
 	void Hop(void);
+	void GetRocketShootPosition(Vector* pPosition);
 
 
+	void FireRocket(void);
 
-	CAI_Senses* m_pSenses;
-	CSound* m_pLockedBestSound;
+
+	// Rocket attacks
+	EHANDLE	m_hLaserDot;
+	EHANDLE m_hRocketTarget;
+	int		m_iRocketSalvoLeft;
+	float	m_flRocketTime;
+	int		m_nRocketAttachment;
+	int		m_nRocketSide;
+	EHANDLE m_hSpecificRocketTarget;
+	string_t m_strMissileHint;
+
 
 	// Get Ent Name
 	const char* GetEntName(void) { return ("OverLord"); }
