@@ -36,6 +36,7 @@ public:
 	void		Event_Killed(const CTakeDamageInfo& info);
 	void		OnListened();
 	Class_T 	Classify();
+	void Shove(void);
 
 
 

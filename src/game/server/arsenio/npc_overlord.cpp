@@ -59,7 +59,7 @@ LINK_ENTITY_TO_CLASS(npc_overlord, CNPC_OverLord);
 
 
 #define AE_SOLDIER_BLOCK_PHYSICS		20 // trying to block an incoming physics object
-#define COMBINE_AE_ROCKET				( 21 )
+#define COMBINE_AE_ROCKET				( 2 )
 #define	OVERLORD_AE_HOP			1
 
 #define MD_BC_YAW		0
@@ -70,6 +70,10 @@ LINK_ENTITY_TO_CLASS(npc_overlord, CNPC_OverLord);
 #define MD_PITCH_SPEED  12
 
 #define MD_FULLAMMO	500
+
+#define	OVERLORD_AE_SHOVE	3
+
+#define OVERLORD_AE_SHAKEIMPACT 22
 
 extern Activity ACT_WALK_EASY;
 extern Activity ACT_WALK_MARCH;
@@ -320,6 +324,58 @@ void CNPC_OverLord::PrescheduleThink(void)
 	BaseClass::PrescheduleThink();
 }
 
+#define	COMBINEGUARD_MELEE1_RANGE	98 //92 initially
+#define	COMBINEGUARD_MELEE1_CONE	0.5f
+
+#define	COMBINEGUARD_RANGE1_RANGE	1024
+#define	COMBINEGUARD_RANGE1_CONE	0.0f
+
+void CNPC_OverLord::Shove(void) 
+{
+	if (GetEnemy() == NULL)
+		return;
+
+	CBaseEntity* pHurt = NULL;
+
+	Vector forward;
+	AngleVectors(GetLocalAngles(), &forward);
+
+	float flDist = (GetEnemy()->GetAbsOrigin() - GetAbsOrigin()).Length();
+	Vector2D v2LOS = (GetEnemy()->GetAbsOrigin() - GetAbsOrigin()).AsVector2D();
+	Vector2DNormalize(v2LOS);
+	float flDot = DotProduct2D(v2LOS, forward.AsVector2D());
+
+	flDist -= GetEnemy()->WorldAlignSize().x * 0.5f;
+
+	if (flDist < COMBINEGUARD_MELEE1_RANGE && flDot >= COMBINEGUARD_MELEE1_CONE)
+	{
+		Vector vStart = GetAbsOrigin();
+		vStart.z += WorldAlignSize().z * 0.5;
+
+		Vector vEnd = GetEnemy()->GetAbsOrigin();
+		vEnd.z += GetEnemy()->WorldAlignSize().z * 0.5;
+
+		pHurt = CheckTraceHullAttack(vStart, vEnd, Vector(-16, -16, 0), Vector(16, 16, 24), 25, DMG_CLUB);
+	}
+
+	if (pHurt)
+	{
+		pHurt->ViewPunch(QAngle(-20, 0, 20));
+
+		UTIL_ScreenShake(pHurt->GetAbsOrigin(), 100.0, 1.5, 1.0, 2, SHAKE_START);
+
+		color32 white = { 255, 255, 255, 64 };
+		UTIL_ScreenFade(pHurt, white, 0.5f, 0.1f, FFADE_IN);
+
+		if (pHurt->IsPlayer())
+		{
+			Vector forward, up;
+			AngleVectors(GetLocalAngles(), &forward, NULL, &up);
+			pHurt->ApplyAbsVelocityImpulse(forward * 300 + up * 250);
+		}
+	}
+}
+
 //-----------------------------------------------------------------------------
 // Purpose: Allows for modification of the interrupt mask for the current schedule.
 //			In the most cases the base implementation should be called first.
@@ -379,6 +435,11 @@ void CNPC_OverLord::HandleAnimEvent(animevent_t* pEvent)
 	//	CHomingMissile::Create(muzzlePoint, launch_angle, this, target, m_nRocketsQueued - 1);
 		break;
 
+	case OVERLORD_AE_SHAKEIMPACT:
+		Shove();
+		UTIL_ScreenShake(GetAbsOrigin(), 25.0, 150.0, 1.0, 750, SHAKE_START);
+		break;
+
 	case OVERLORD_AE_HOP:
 	{
 		float flGravity = sv_gravity.GetFloat();
@@ -394,7 +455,12 @@ void CNPC_OverLord::HandleAnimEvent(animevent_t* pEvent)
 		vecVel.z += (0.625 * flGravity) * 0.5;
 		SetAbsVelocity(vecVel);
 	}
+
 	break;
+
+	case OVERLORD_AE_SHOVE:
+		Shove();
+		break;
 
 	default:
 		BaseClass::HandleAnimEvent(pEvent);
