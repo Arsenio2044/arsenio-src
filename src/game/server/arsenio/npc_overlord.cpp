@@ -347,6 +347,19 @@ void CNPC_OverLord::Shove(void)
 
 	flDist -= GetEnemy()->WorldAlignSize().x * 0.5f;
 
+	float flGravity = sv_gravity.GetFloat();
+
+	// throw the squid up into the air on this frame.
+	if (GetFlags() & FL_ONGROUND)
+	{
+		SetGroundEntity(NULL);
+	}
+
+	// jump into air for 0.8 (24/30) seconds
+	Vector vecVel = GetAbsVelocity();
+	vecVel.z += (0.625 * flGravity) * 0.5;
+	SetAbsVelocity(vecVel);
+
 	if (flDist < COMBINEGUARD_MELEE1_RANGE && flDot >= COMBINEGUARD_MELEE1_CONE)
 	{
 		Vector vStart = GetAbsOrigin();
