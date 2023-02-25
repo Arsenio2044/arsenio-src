@@ -37,6 +37,8 @@
 #include "hud_vote.h"
 #include "ienginevgui.h"
 #include "sourcevr/isourcevirtualreality.h"
+#include <vgui_controls/Label.h>
+
 
 // Only for Optux 3 for now.
 #ifdef ARSENIO
@@ -402,6 +404,8 @@ void ClientModeShared::Init()
 			pPanelBg->InvalidateLayout(false, true);
 			pPanelBg->SetVisible(false);
 			pPanelBg->MakePopup(false);
+	//		m_pTextLoadingTip->SetVisible(true);
+
 			pGameUI->SetLoadingBackgroundDialog(pPanelBg->GetVPanel());
 		}
 	}
