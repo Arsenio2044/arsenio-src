@@ -81,7 +81,7 @@ LINK_ENTITY_TO_CLASS(npc_overlord, CNPC_OverLord);
 
 
 #define ROCKET_SALVO_SIZE				5
-#define ROCKET_DELAY_TIME				1.5
+#define ROCKET_DELAY_TIME				15.5
 #define ROCKET_MIN_BURST_PAUSE_TIME		3
 #define ROCKET_MAX_BURST_PAUSE_TIME		4
 #define ROCKET_SPEED					800
@@ -481,15 +481,21 @@ void CNPC_OverLord::HandleAnimEvent(animevent_t* pEvent)
 
 	case OVERLORD_AE_HOP:
 	
+		Machine();
+		Talk();
 		Hop();
 		break;
 
 	case OVERLORD_AE_MISSILE:
 
+		Machine();
+		Talk();
 		FireRocket();
 		break;
 
 	case OVERLORD_AE_SHOVE:
+		Machine();
+		Talk();
 		Shove();
 		break;
 
@@ -996,4 +1002,20 @@ void CNPC_OverLord::FireRocket(void)
 
 	EmitSound("PropAPC.FireRocket");
 	//m_OnFiredMissile.FireOutput(this, this);
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: TUX: We want OverLord to talk during the battle.
+//-----------------------------------------------------------------------------
+void CNPC_OverLord::Talk(void)
+{
+		EmitSound("OverLord.Talk");
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: TUX: OverLord is a cyborg, so we want him to emit machine sounds sometimes.
+//-----------------------------------------------------------------------------
+void CNPC_OverLord::Machine(void)
+{
+	EmitSound("OverLord.Machine");
 }

@@ -39,6 +39,8 @@ public:
 	void Shove(void);
 	void Hop(void);
 	void GetRocketShootPosition(Vector* pPosition);
+	void Talk(void);
+	void Machine(void);
 
 
 	void FireRocket(void);

@@ -39,10 +39,10 @@
 #include "sourcevr/isourcevirtualreality.h"
 
 // Only for Optux 3 for now.
-#ifdef OPTUX3
+#ifdef ARSENIO
 #include "GameUI/IGameUI.h"
 #include "IVEngine2/loadingbg.h"
-#include "../FireUI/basepanel.h"
+//#include "../FireUI/basepanel.h"
 #endif
 
 #if defined( _X360 )
@@ -84,7 +84,7 @@ class CHudVote;
 
 static vgui::HContext s_hVGuiContext = DEFAULT_VGUI_CONTEXT;
 
-#ifdef OPTUX3
+#ifdef ARSENIO
 static CDllDemandLoader g_GameUI("GameUI");
 #endif
 
@@ -98,10 +98,10 @@ extern ConVar voice_modenable;
 
 extern bool IsInCommentaryMode( void );
 
-#ifdef OPTUX3
+#ifdef ARSENIO
 CMapLoadBG* pPanelBg;
 IMaterial* pMatMapBg;
-BasePanel* pBasePanel;
+//BasePanel* pBasePanel;
 #endif
 
 
@@ -296,7 +296,7 @@ ClientModeShared::ClientModeShared()
 	m_pChatElement = NULL;
 	m_pWeaponSelection = NULL;
 	m_nRootSize[ 0 ] = m_nRootSize[ 1 ] = -1;
-#ifdef OPTUX3
+#ifdef ARSENIO
 	pPanelBg = NULL;
 	pMatMapBg = NULL;
 #endif
@@ -390,7 +390,7 @@ void ClientModeShared::Init()
 
 	HOOK_MESSAGE( VGUIMenu );
 	HOOK_MESSAGE( Rumble );
-#ifdef OPTUX3
+#ifdef ARSENIO
 	CreateInterfaceFn gameUIFactory = g_GameUI.GetFactory();
 	if (gameUIFactory)
 	{
@@ -870,7 +870,7 @@ void ClientModeShared::LevelInit( const char *newmap )
 	// Reset any player explosion/shock effects
 	CLocalPlayerFilter filter;
 	enginesound->SetPlayerDSP( filter, 0, true );
-#ifdef OPTUX3
+#ifdef ARSENIO
 	#ifdef _WIN32
 		char szMapBgName[MAX_PATH];
 	#else	// !_WIN32
