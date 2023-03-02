@@ -36,16 +36,16 @@ const int MAX_LORE_TABS = 8;
 class GamepadUIWheelyWheel;
 void OnResolutionsNeedUpdate( IConVar *var, const char *pOldValue, float flOldValue );
 
-ConVar _gamepadui_water_detail( "_gamepadui_water_detail", "0" );
-ConVar _gamepadui_shadow_detail( "_gamepadui_shadow_detail", "0" );
-ConVar _gamepadui_antialiasing( "_gamepadui_antialiasing", "0" );
-ConVar _gamepadui_aspectratio( "_gamepadui_aspectratio", "0", FCVAR_NONE, "", OnResolutionsNeedUpdate );
-ConVar _gamepadui_displaymode( "_gamepadui_displaymode", "0", FCVAR_NONE, "", OnResolutionsNeedUpdate );
-ConVar _gamepadui_resolution( "_gamepadui_resolution", "0" );
-ConVar _gamepadui_sound_quality( "_gamepadui_sound_quality", "0" );
-ConVar _gamepadui_closecaptions( "_gamepadui_closecaptions", "0" );
-ConVar _gamepadui_hudaspect( "_gamepadui_hudaspect", "0" );
-ConVar _gamepadui_skill( "_gamepadui_skill", "0" );
+ConVar _gamepadui2_water_detail( "_gamepadui2_water_detail", "0" );
+ConVar _gamepadui2_shadow_detail( "_gamepadui2_shadow_detail", "0" );
+ConVar _gamepadui2_antialiasing( "_gamepadui2_antialiasing", "0" );
+ConVar _gamepadui2_aspectratio( "_gamepadui2_aspectratio", "0", FCVAR_NONE, "", OnResolutionsNeedUpdate );
+ConVar _gamepadui2_displaymode( "_gamepadui2_displaymode", "0", FCVAR_NONE, "", OnResolutionsNeedUpdate );
+ConVar _gamepadui2_resolution( "_gamepadui2_resolution", "0" );
+ConVar _gamepadui2_sound_quality( "_gamepadui2_sound_quality", "0" );
+ConVar _gamepadui2_closecaptions( "_gamepadui2_closecaptions", "0" );
+ConVar _gamepadui2_hudaspect( "_gamepadui2_hudaspect", "0" );
+ConVar _gamepadui2_skill( "_gamepadui2_skill", "0" );
 
 
 struct GamepadUITab
@@ -103,7 +103,7 @@ private:
 
     GAMEPADUI_PANEL_PROPERTY( float, m_flTabsOffsetX, "Tabs.OffsetX", "0", SchemeValueTypes::ProportionalFloat );
     GAMEPADUI_PANEL_PROPERTY( float, m_flTabsOffsetY, "Tabs.OffsetY", "0", SchemeValueTypes::ProportionalFloat );
-    GAMEPADUI_PANEL_PROPERTY( float, m_flLoreFade, "Lore.Fade", "80", SchemeValueTypes::ProportionalFloat );
+    GAMEPADUI_PANEL_PROPERTY( float, m_flLoreFade, "Options.Fade", "80", SchemeValueTypes::ProportionalFloat );
     GAMEPADUI_PANEL_PROPERTY( float, m_flScrollBarOffsetX, "Scrollbar.OffsetX", "10", SchemeValueTypes::ProportionalFloat );
     GAMEPADUI_PANEL_PROPERTY( float, m_flScrollBarWidth, "Scrollbar.Width", "80", SchemeValueTypes::ProportionalFloat );
     GAMEPADUI_PANEL_PROPERTY( float, m_flScrollBarHeight, "Scrollbar.Height", "80", SchemeValueTypes::ProportionalFloat );
@@ -674,7 +674,7 @@ public:
 
     ButtonState GetCurrentButtonState() OVERRIDE
     {
-        if ( _gamepadui_skill.GetInt() == m_nSkill )
+        if ( _gamepadui2_skill.GetInt() == m_nSkill )
             return ButtonState::Pressed;
 
         return BaseClass::GetCurrentButtonState();
@@ -684,14 +684,14 @@ public:
     {
         BaseClass::NavigateTo();
 
-        _gamepadui_skill.SetValue( m_nSkill );
+        _gamepadui2_skill.SetValue( m_nSkill );
     }
 
     void DoClick() OVERRIDE
     {
         BaseClass::DoClick();
 
-        _gamepadui_skill.SetValue( m_nSkill );
+        _gamepadui2_skill.SetValue( m_nSkill );
     }
 
     void Paint() OVERRIDE
@@ -998,7 +998,7 @@ void FlushPendingAntialiasing()
     ConVarRef mat_antialias( "mat_antialias" );
     ConVarRef mat_aaquality( "mat_aaquality" );
 
-    int nAAMode = Clamp( _gamepadui_antialiasing.GetInt(), 0, Max( 0, g_nNumAAModes - 1 ) );
+    int nAAMode = Clamp( _gamepadui2_antialiasing.GetInt(), 0, Max( 0, g_nNumAAModes - 1 ) );
     if ( mat_antialias.GetInt() != g_AAModes[ nAAMode ].m_nNumSamples )
         mat_antialias.SetValue( g_AAModes[ nAAMode ].m_nNumSamples );
 
@@ -1011,8 +1011,8 @@ void FlushPendingWaterDetail()
     ConVarRef r_waterforceexpensive( "r_waterforceexpensive" );
     ConVarRef r_waterforcereflectentities( "r_waterforcereflectentities" );
 
-    bool bForceExpensive = _gamepadui_water_detail.GetInt() > 0;
-    bool bForceReflect = _gamepadui_water_detail.GetInt() > 1;
+    bool bForceExpensive = _gamepadui2_water_detail.GetInt() > 0;
+    bool bForceReflect = _gamepadui2_water_detail.GetInt() > 1;
 
     if ( r_waterforceexpensive.GetBool() != bForceExpensive )
         r_waterforceexpensive.SetValue( bForceExpensive );
@@ -1026,8 +1026,8 @@ void FlushPendingShadowDetail()
     ConVarRef r_shadowrendertotexture( "r_shadowrendertotexture" );
     ConVarRef r_flashlightdepthtexture( "r_flashlightdepthtexture" );
 
-    bool bShadowRenderToTexture = _gamepadui_shadow_detail.GetInt() > 0;
-    bool bFlashlightDepthTexture = _gamepadui_shadow_detail.GetInt() > 1;
+    bool bShadowRenderToTexture = _gamepadui2_shadow_detail.GetInt() > 0;
+    bool bFlashlightDepthTexture = _gamepadui2_shadow_detail.GetInt() > 1;
 
     if ( r_shadowrendertotexture.GetBool() != bShadowRenderToTexture )
         r_shadowrendertotexture.SetValue( bShadowRenderToTexture );
@@ -1046,14 +1046,14 @@ void FlushPendingResolution()
     if ( !pResButton )
         return;
 
-    GamepadUIOption *pOption = pResButton->GetOption( _gamepadui_resolution.GetInt() );
+    GamepadUIOption *pOption = pResButton->GetOption( _gamepadui2_resolution.GetInt() );
     if ( !pOption )
         return;
 
     const MaterialSystem_Config_t &config = materials->GetCurrentConfigForVideoCard();
     bool bDirty = false;
 
-    if ( GetCurrentDisplayMode() != _gamepadui_displaymode.GetInt() )
+    if ( GetCurrentDisplayMode() != _gamepadui2_displaymode.GetInt() )
         bDirty = true;
 
     if ( pOption->userdata.nWidth != config.m_VideoMode.m_Width || pOption->userdata.nHeight != config.m_VideoMode.m_Height )
@@ -1065,12 +1065,12 @@ void FlushPendingResolution()
     const int nWidth = pOption->userdata.nWidth;
     const int nHeight = pOption->userdata.nHeight;
 #ifdef HL2_RETAIL
-    const int nWindowed = _gamepadui_displaymode.GetInt() < 2 ? 1 : 0;
-    const int nBorderless = _gamepadui_displaymode.GetInt() == 1 ? 1 : 0;
+    const int nWindowed = _gamepadui2_displaymode.GetInt() < 2 ? 1 : 0;
+    const int nBorderless = _gamepadui2_displaymode.GetInt() == 1 ? 1 : 0;
 #else
     // TODO FIXME: SDK2013 uses the inverse here...1 is "windowed" and 0 is "fullscreen" in materialsystem.
     // but our values mean the opposite in gamepadUI code. (Madi)
-    const int nWindowed = _gamepadui_displaymode.GetInt() == 1 ? 0 /* fullscreen*/ : 1 /* windowed */;
+    const int nWindowed = _gamepadui2_displaymode.GetInt() == 1 ? 0 /* fullscreen*/ : 1 /* windowed */;
 #endif
 
     char szCmd[ 256 ];
@@ -1091,7 +1091,7 @@ void FlushPendingSoundQuality()
     ConVarRef dsp_enhance_stereo( "dsp_enhance_stereo" );
     ConVarRef snd_surround_speakers( "snd_surround_speakers" );
 
-    int nSoundQuality = _gamepadui_sound_quality.GetInt();
+    int nSoundQuality = _gamepadui2_sound_quality.GetInt();
     switch ( nSoundQuality )
     {
         default:
@@ -1117,7 +1117,7 @@ void FlushPendingCloseCaptions()
     ConVarRef closecaption( "closecaption" );
     ConVarRef cc_subtitles( "cc_subtitles" );
 
-    int nCloseCaptions = _gamepadui_closecaptions.GetInt();
+    int nCloseCaptions = _gamepadui2_closecaptions.GetInt();
     bool bCloseCaptionConvarValue = false;
     switch ( nCloseCaptions )
     {
@@ -1148,7 +1148,7 @@ void FlushPendingHudAspectRatio()
 {
     ConVarRef hud_aspect( "hud_aspect" );
 
-    int nHudAspect = _gamepadui_hudaspect.GetInt();
+    int nHudAspect = _gamepadui2_hudaspect.GetInt();
     switch ( nHudAspect )
     {
     default:
@@ -1170,20 +1170,20 @@ void FlushPendingHudAspectRatio()
 void FlushPendingSkill()
 {
     ConVarRef map( "map" );
-    map.SetValue( _gamepadui_skill.GetInt() );
+    map.SetValue( _gamepadui2_skill.GetInt() );
 }
 
 void UpdateHelperConvars()
 {
-    _gamepadui_water_detail.SetValue( GetCurrentWaterDetail() );
-    _gamepadui_shadow_detail.SetValue( GetCurrentShadowDetail() );
-    _gamepadui_antialiasing.SetValue( GetCurrentAntialiasing() );
-    _gamepadui_aspectratio.SetValue( GetCurrentAspectRatio() );
-    _gamepadui_displaymode.SetValue( GetCurrentDisplayMode() );
-    _gamepadui_sound_quality.SetValue( GetCurrentSoundQuality() );
-    _gamepadui_closecaptions.SetValue( GetCurrentCloseCaptions() );
-    _gamepadui_hudaspect.SetValue( GetCurrentHudAspectRatio() );
-    _gamepadui_skill.SetValue( GetCurrentSkill() );
+    _gamepadui2_water_detail.SetValue( GetCurrentWaterDetail() );
+    _gamepadui2_shadow_detail.SetValue( GetCurrentShadowDetail() );
+    _gamepadui2_antialiasing.SetValue( GetCurrentAntialiasing() );
+    _gamepadui2_aspectratio.SetValue( GetCurrentAspectRatio() );
+    _gamepadui2_displaymode.SetValue( GetCurrentDisplayMode() );
+    _gamepadui2_sound_quality.SetValue( GetCurrentSoundQuality() );
+    _gamepadui2_closecaptions.SetValue( GetCurrentCloseCaptions() );
+    _gamepadui2_hudaspect.SetValue( GetCurrentHudAspectRatio() );
+    _gamepadui2_skill.SetValue( GetCurrentSkill() );
 }
 
 void FlushHelperConVars()
@@ -1485,9 +1485,9 @@ static void GetCurrentAndDesktopSize( int &currentWidth, int &currentHeight, int
 	GamepadUI::GetInstance().GetGameUIFuncs()->GetDesktopResolution( desktopWidth, desktopHeight );
 
 #if defined( USE_SDL )
-    bool bWindowed = _gamepadui_displaymode.GetInt() < 2;
+    bool bWindowed = _gamepadui2_displaymode.GetInt() < 2;
 
-    int nNewDisplayIndex = _gamepadui_displaymode.GetInt() - 2;
+    int nNewDisplayIndex = _gamepadui2_displaymode.GetInt() - 2;
 	if ( !bWindowed )
 	{
 
@@ -1534,7 +1534,7 @@ void GamepadUILorePanel::UpdateResolutions()
 
         int iAspectMode = GetScreenAspectMode( plist->width, plist->height );
 
-        if ( iAspectMode == _gamepadui_aspectratio.GetInt() )
+        if ( iAspectMode == _gamepadui2_aspectratio.GetInt() )
         {
 		    if ( ( plist->width == currentWidth && plist->height == currentHeight ) ||
                  ( nSelectedDefaultMode == -1 && plist->width == config.m_VideoMode.m_Width && plist->height == config.m_VideoMode.m_Height ) )
@@ -1554,7 +1554,7 @@ void GamepadUILorePanel::UpdateResolutions()
     if ( nSelectedDefaultMode == -1 )
         nSelectedDefaultMode = Max( m_pResolutionButton->GetOptionCount() - 1, 0 );
 
-    _gamepadui_resolution.SetValue( nSelectedDefaultMode );
+    _gamepadui2_resolution.SetValue( nSelectedDefaultMode );
     m_pResolutionButton->SetToDefault();
 }
 
