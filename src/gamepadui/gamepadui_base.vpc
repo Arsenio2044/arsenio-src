@@ -95,6 +95,7 @@ $Project
         $File "gamepadui_mobmode.cpp"
         $File "gamepadui_savegame.cpp"
         $File "gamepadui_options.cpp"
+        $File "gamepadui_lore.cpp"
         $File "gamepadui_util.cpp"
     }
 
