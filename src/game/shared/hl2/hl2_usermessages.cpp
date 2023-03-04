@@ -45,9 +45,7 @@ void RegisterUserMessages( void )
 	usermessages->Register( "LogoTimeMsg", 4 );
 	usermessages->Register( "AchievementEvent", -1 );
 	usermessages->Register( "UpdateJalopyRadar", -1 );
-#ifdef ARSENIO
-	usermessages->Register( "BossData", -1 );
-#endif
+
 
 #ifndef _X360
 	// NVNT register haptic user messages

@@ -1,9 +1,10 @@
+
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
 // Purpose: Dialogue Panel handles Dialogue Scenes. Max 3 options per scene.
 // 
 //=============================================================================//
-
+#ifndef ARSENIO
 #include "cbase.h"
 #include "DialoguePanel.h"
 #include "vgui_controls/Frame.h"
@@ -14,16 +15,16 @@
 #include "vgui_controls/Button.h"
 #include "vgui_controls/ImagePanel.h"
 
-#include "GameBase_Client.h"
+//#include "GameBase_Client.h"
 #include "KeyValues.h"
 #include "filesystem.h"
 
-using namespace vgui;
+//using namespace vgui;
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-IGameBase_Client* GameBaseClient = NULL;
+//IGameBase_Client* GameBaseClient = NULL;
 
 ConVar cl_dialoguepanel("cl_dialoguepanel", "0", FCVAR_CLIENTDLL | FCVAR_HIDDEN, "Opens Dialogue Panel when interacting with CRUCIAL NPC's");
 ConVar cl_dialoguemode("cl_dialoguemode", "0", FCVAR_ARCHIVE, "0 = Firstperson and 1 = Thirdperson");
@@ -453,3 +454,4 @@ void CDialogueMenu::OnCommand(const char* pcCommand)
 		}
 	}
 }
+#endif

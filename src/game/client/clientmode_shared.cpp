@@ -41,7 +41,7 @@
 
 
 // Only for Optux 3 for now.
-#ifdef ARSENIO
+#ifdef ASS
 #include "GameUI/IGameUI.h"
 #include "IVEngine2/loadingbg.h"
 //#include "../FireUI/basepanel.h"
@@ -86,7 +86,7 @@ class CHudVote;
 
 static vgui::HContext s_hVGuiContext = DEFAULT_VGUI_CONTEXT;
 
-#ifdef ARSENIO
+#ifdef ASS
 static CDllDemandLoader g_GameUI("GameUI");
 #endif
 
@@ -100,7 +100,7 @@ extern ConVar voice_modenable;
 
 extern bool IsInCommentaryMode( void );
 
-#ifdef ARSENIO
+#ifdef ASS
 CMapLoadBG* pPanelBg;
 IMaterial* pMatMapBg;
 //BasePanel* pBasePanel;
@@ -298,7 +298,7 @@ ClientModeShared::ClientModeShared()
 	m_pChatElement = NULL;
 	m_pWeaponSelection = NULL;
 	m_nRootSize[ 0 ] = m_nRootSize[ 1 ] = -1;
-#ifdef ARSENIO
+#ifdef ASS
 	pPanelBg = NULL;
 	pMatMapBg = NULL;
 #endif
@@ -392,7 +392,7 @@ void ClientModeShared::Init()
 
 	HOOK_MESSAGE( VGUIMenu );
 	HOOK_MESSAGE( Rumble );
-#ifdef ARSENIO
+#ifdef ASS
 	CreateInterfaceFn gameUIFactory = g_GameUI.GetFactory();
 	if (gameUIFactory)
 	{
@@ -874,7 +874,7 @@ void ClientModeShared::LevelInit( const char *newmap )
 	// Reset any player explosion/shock effects
 	CLocalPlayerFilter filter;
 	enginesound->SetPlayerDSP( filter, 0, true );
-#ifdef ARSENIO
+#ifdef ASS
 	#ifdef _WIN32
 		char szMapBgName[MAX_PATH];
 	#else	// !_WIN32

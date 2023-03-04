@@ -730,93 +730,93 @@ private:
     GAMEPADUI_BUTTON_ANIMATED_PROPERTY( Color, m_colDescriptionBackground, "Button.Description.Background", "0 0 0 0",  SchemeValueTypes::Color );
 };
 
-struct AAMode_t
+struct AAAMode_t
 {
     GamepadUIString strName;
 	int m_nNumSamples;
 	int m_nQualityLevel;
 };
 
-int g_nNumAAModes = 0;
-AAMode_t g_AAModes[16];
+int g_nNumAAAModes = 0;
+AAAMode_t g_AAAModes[16];
 
-void InitAAModes()
+void InitAAAModes()
 {
-    static bool s_bAAModesInitialized = false;
-    if ( s_bAAModesInitialized )
+    static bool s_bAAAModesInitialized = false;
+    if ( s_bAAAModesInitialized )
         return;
-    s_bAAModesInitialized = true;
+    s_bAAAModesInitialized = true;
 
-    g_nNumAAModes = 0;
+    g_nNumAAAModes = 0;
 
-    g_AAModes[g_nNumAAModes].strName = "#GameUI_None";
-    g_AAModes[g_nNumAAModes].m_nNumSamples = 1;
-	g_AAModes[g_nNumAAModes].m_nQualityLevel = 0;
-	g_nNumAAModes++;
+    g_AAAModes[g_nNumAAAModes].strName = "#GameUI_None";
+    g_AAAModes[g_nNumAAAModes].m_nNumSamples = 1;
+	g_AAAModes[g_nNumAAAModes].m_nQualityLevel = 0;
+	g_nNumAAAModes++;
 
 	if ( materials->SupportsMSAAMode(2) )
 	{
-        g_AAModes[g_nNumAAModes].strName = "#GameUI_2X";
-		g_AAModes[g_nNumAAModes].m_nNumSamples = 2;
-		g_AAModes[g_nNumAAModes].m_nQualityLevel = 0;
-		g_nNumAAModes++;
+        g_AAAModes[g_nNumAAAModes].strName = "#GameUI_2X";
+		g_AAAModes[g_nNumAAAModes].m_nNumSamples = 2;
+		g_AAAModes[g_nNumAAAModes].m_nQualityLevel = 0;
+		g_nNumAAAModes++;
 	}
 
 	if ( materials->SupportsMSAAMode(4) )
 	{
-		g_AAModes[g_nNumAAModes].strName = "#GameUI_4X";
-		g_AAModes[g_nNumAAModes].m_nNumSamples = 4;
-		g_AAModes[g_nNumAAModes].m_nQualityLevel = 0;
-		g_nNumAAModes++;
+		g_AAAModes[g_nNumAAAModes].strName = "#GameUI_4X";
+		g_AAAModes[g_nNumAAAModes].m_nNumSamples = 4;
+		g_AAAModes[g_nNumAAAModes].m_nQualityLevel = 0;
+		g_nNumAAAModes++;
 	}
 
 	if ( materials->SupportsMSAAMode(6) )
 	{
-		g_AAModes[g_nNumAAModes].strName = "#GameUI_6X";
-		g_AAModes[g_nNumAAModes].m_nNumSamples = 6;
-		g_AAModes[g_nNumAAModes].m_nQualityLevel = 0;
-		g_nNumAAModes++;
+		g_AAAModes[g_nNumAAAModes].strName = "#GameUI_6X";
+		g_AAAModes[g_nNumAAAModes].m_nNumSamples = 6;
+		g_AAAModes[g_nNumAAAModes].m_nQualityLevel = 0;
+		g_nNumAAAModes++;
 	}
 
 	if ( materials->SupportsCSAAMode(4, 2) )							// nVidia CSAA			"8x"
 	{
-		g_AAModes[g_nNumAAModes].strName = "#GameUI_8X_CSAA";
-		g_AAModes[g_nNumAAModes].m_nNumSamples = 4;
-		g_AAModes[g_nNumAAModes].m_nQualityLevel = 2;
-		g_nNumAAModes++;
+		g_AAAModes[g_nNumAAAModes].strName = "#GameUI_8X_CSAA";
+		g_AAAModes[g_nNumAAAModes].m_nNumSamples = 4;
+		g_AAAModes[g_nNumAAAModes].m_nQualityLevel = 2;
+		g_nNumAAAModes++;
 	}
 
 	if ( materials->SupportsCSAAMode(4, 4) )							// nVidia CSAA			"16x"
 	{
-		g_AAModes[g_nNumAAModes].strName = "#GameUI_16X_CSAA";
-		g_AAModes[g_nNumAAModes].m_nNumSamples = 4;
-		g_AAModes[g_nNumAAModes].m_nQualityLevel = 4;
-		g_nNumAAModes++;
+		g_AAAModes[g_nNumAAAModes].strName = "#GameUI_16X_CSAA";
+		g_AAAModes[g_nNumAAAModes].m_nNumSamples = 4;
+		g_AAAModes[g_nNumAAAModes].m_nQualityLevel = 4;
+		g_nNumAAAModes++;
 	}
 
 	if ( materials->SupportsMSAAMode(8) )
 	{
-		g_AAModes[g_nNumAAModes].strName = "#GameUI_8X";
-		g_AAModes[g_nNumAAModes].m_nNumSamples = 8;
-		g_AAModes[g_nNumAAModes].m_nQualityLevel = 0;
-		g_nNumAAModes++;
+		g_AAAModes[g_nNumAAAModes].strName = "#GameUI_8X";
+		g_AAAModes[g_nNumAAAModes].m_nNumSamples = 8;
+		g_AAAModes[g_nNumAAAModes].m_nQualityLevel = 0;
+		g_nNumAAAModes++;
 	}
 
 	if ( materials->SupportsCSAAMode(8, 2) )							// nVidia CSAA			"16xQ"
 	{
-		g_AAModes[g_nNumAAModes].strName = "#GameUI_16XQ_CSAA";
-		g_AAModes[g_nNumAAModes].m_nNumSamples = 8;
-		g_AAModes[g_nNumAAModes].m_nQualityLevel = 2;
-		g_nNumAAModes++;
+		g_AAAModes[g_nNumAAAModes].strName = "#GameUI_16XQ_CSAA";
+		g_AAAModes[g_nNumAAAModes].m_nNumSamples = 8;
+		g_AAAModes[g_nNumAAAModes].m_nQualityLevel = 2;
+		g_nNumAAAModes++;
 	}
 }
 
-struct RatioToAspectMode_t
+struct RatioToAspectModeAss_t
 {
 	int anamorphic;
 	float aspectRatio;
 };
-RatioToAspectMode_t g_RatioToAspectModes[] =
+RatioToAspectModeAss_t g_RatioToAspectModeAsss[] =
 {
 	{	0,		4.0f / 3.0f },
 	{	1,		16.0f / 9.0f },
@@ -824,27 +824,27 @@ RatioToAspectMode_t g_RatioToAspectModes[] =
 	{	2,		1.0f },
 };
 
-int GetScreenAspectMode( int width, int height )
+int GetScreenAsspectMode( int width, int height )
 {
 	float aspectRatio = (float)width / (float)height;
 
 	// just find the closest ratio
 	float closestAspectRatioDist = 99999.0f;
 	int closestAnamorphic = 0;
-	for (int i = 0; i < ARRAYSIZE(g_RatioToAspectModes); i++)
+	for (int i = 0; i < ARRAYSIZE(g_RatioToAspectModeAsss); i++)
 	{
-		float dist = fabs( g_RatioToAspectModes[i].aspectRatio - aspectRatio );
+		float dist = fabs( g_RatioToAspectModeAsss[i].aspectRatio - aspectRatio );
 		if (dist < closestAspectRatioDist)
 		{
 			closestAspectRatioDist = dist;
-			closestAnamorphic = g_RatioToAspectModes[i].anamorphic;
+			closestAnamorphic = g_RatioToAspectModeAsss[i].anamorphic;
 		}
 	}
 
 	return closestAnamorphic;
 }
 
-void OnResolutionsNeedUpdate( IConVar *var, const char *pOldValue, float flOldValue )
+void OnResolutionassNeedUpdate( IConVar *var, const char *pOldValue, float flOldValue )
 {
     GamepadUILorePanel* pLorePanel = GamepadUILorePanel::GetInstance();
     if ( pLorePanel )
@@ -875,7 +875,7 @@ static int GetSDLDisplayIndexFullscreen()
 #endif
 }
 
-int GetCurrentWaterDetail()
+int GetCurrent5WaterDetail()
 {
     ConVarRef r_waterforceexpensive( "r_waterforceexpensive" );
     ConVarRef r_waterforcereflectentities( "r_waterforcereflectentities" );
@@ -889,7 +889,7 @@ int GetCurrentWaterDetail()
     return 0;
 }
 
-int GetCurrentShadowDetail()
+int GetCurrent5ShadowDetail()
 {
     ConVarRef r_shadowrendertotexture( "r_shadowrendertotexture" );
     ConVarRef r_flashlightdepthtexture( "r_flashlightdepthtexture" );
@@ -903,7 +903,7 @@ int GetCurrentShadowDetail()
     return 0;
 }
 
-int GetCurrentAntialiasing()
+int GetCurrent5Antialiasing()
 {
     ConVarRef mat_antialias( "mat_antialias" );
     ConVarRef mat_aaquality( "mat_aaquality" );
@@ -911,25 +911,25 @@ int GetCurrentAntialiasing()
     int nAAQuality = mat_aaquality.GetInt();
 
 	// Run through the AA Modes supported by the device
-    for ( int nAAMode = 0; nAAMode < g_nNumAAModes; nAAMode++ )
+    for ( int nAAAMode = 0; nAAAMode < g_nNumAAAModes; nAAAMode++ )
 	{
 		// If we found the mode that matches what we're looking for, return the index
-		if ( ( g_AAModes[nAAMode].m_nNumSamples == nAASamples) && ( g_AAModes[nAAMode].m_nQualityLevel == nAAQuality) )
+		if ( ( g_AAAModes[nAAAMode].m_nNumSamples == nAASamples) && ( g_AAAModes[nAAAMode].m_nQualityLevel == nAAQuality) )
 		{
-			return nAAMode;
+			return nAAAMode;
 		}
 	}
 
 	return 0;	// Didn't find what we're looking for, so no AA
 }
 
-int GetCurrentAspectRatio()
+int GetCurrent5AspectRatio()
 {
     const MaterialSystem_Config_t &config = materials->GetCurrentConfigForVideoCard();
-    return GetScreenAspectMode( config.m_VideoMode.m_Width, config.m_VideoMode.m_Height );
+    return GetScreenAsspectMode( config.m_VideoMode.m_Width, config.m_VideoMode.m_Height );
 }
 
-int GetCurrentDisplayMode()
+int GetCurrent5DisplayMode()
 {
     const MaterialSystem_Config_t &config = materials->GetCurrentConfigForVideoCard();
     if ( config.Windowed() )
@@ -946,7 +946,7 @@ int GetCurrentDisplayMode()
 }
 
 
-int GetCurrentSoundQuality()
+int GetCurrent5SoundQuality()
 {
 	ConVarRef snd_pitchquality( "snd_pitchquality" );
 	ConVarRef dsp_slow_cpu( "dsp_slow_cpu" );
@@ -960,7 +960,7 @@ int GetCurrentSoundQuality()
     return 0;
 }
 
-int GetCurrentCloseCaptions()
+int GetCurrent5CloseCaptions()
 {
     ConVarRef closecaption( "closecaption" );
     ConVarRef cc_subtitles( "cc_subtitles" );
@@ -970,7 +970,7 @@ int GetCurrentCloseCaptions()
     return 0;
 }
 
-int GetCurrentHudAspectRatio()
+int GetCurrent5HudAspectRatio()
 {
     ConVarRef hud_aspect( "hud_aspect" );
     float flHudAspect = hud_aspect.GetFloat();
@@ -987,26 +987,26 @@ int GetCurrentHudAspectRatio()
 		return 0;
 }
 
-int GetCurrentSkill()
+int GetCurrent5Skill()
 {
     ConVarRef map( "map" );
     return map.GetInt();
 }
 
-void FlushPendingAntialiasing()
+void FlushPending3Antialiasing()
 {
     ConVarRef mat_antialias( "mat_antialias" );
     ConVarRef mat_aaquality( "mat_aaquality" );
 
-    int nAAMode = Clamp( _gamepadui2_antialiasing.GetInt(), 0, Max( 0, g_nNumAAModes - 1 ) );
-    if ( mat_antialias.GetInt() != g_AAModes[ nAAMode ].m_nNumSamples )
-        mat_antialias.SetValue( g_AAModes[ nAAMode ].m_nNumSamples );
+    int nAAAMode = Clamp( _gamepadui2_antialiasing.GetInt(), 0, Max( 0, g_nNumAAAModes - 1 ) );
+    if ( mat_antialias.GetInt() != g_AAAModes[ nAAAMode ].m_nNumSamples )
+        mat_antialias.SetValue( g_AAAModes[ nAAAMode ].m_nNumSamples );
 
-    if ( mat_aaquality.GetInt() != g_AAModes[ nAAMode ].m_nQualityLevel )
-        mat_aaquality.SetValue( g_AAModes[ nAAMode ].m_nQualityLevel );
+    if ( mat_aaquality.GetInt() != g_AAAModes[ nAAAMode ].m_nQualityLevel )
+        mat_aaquality.SetValue( g_AAAModes[ nAAAMode ].m_nQualityLevel );
 }
 
-void FlushPendingWaterDetail()
+void FlushPending3WaterDetail()
 {
     ConVarRef r_waterforceexpensive( "r_waterforceexpensive" );
     ConVarRef r_waterforcereflectentities( "r_waterforcereflectentities" );
@@ -1021,7 +1021,7 @@ void FlushPendingWaterDetail()
         r_waterforcereflectentities.SetValue(bForceReflect);
 }
 
-void FlushPendingShadowDetail()
+void FlushPending3ShadowDetail()
 {
     ConVarRef r_shadowrendertotexture( "r_shadowrendertotexture" );
     ConVarRef r_flashlightdepthtexture( "r_flashlightdepthtexture" );
@@ -1036,7 +1036,7 @@ void FlushPendingShadowDetail()
         r_flashlightdepthtexture.SetValue( bFlashlightDepthTexture );
 }
 
-void FlushPendingResolution()
+void FlushPending3Resolution()
 {
     GamepadUILorePanel *pLore = GamepadUILorePanel::GetInstance();
     if ( !pLore )
@@ -1053,7 +1053,7 @@ void FlushPendingResolution()
     const MaterialSystem_Config_t &config = materials->GetCurrentConfigForVideoCard();
     bool bDirty = false;
 
-    if ( GetCurrentDisplayMode() != _gamepadui2_displaymode.GetInt() )
+    if ( GetCurrent5DisplayMode() != _gamepadui2_displaymode.GetInt() )
         bDirty = true;
 
     if ( pOption->userdata.nWidth != config.m_VideoMode.m_Width || pOption->userdata.nHeight != config.m_VideoMode.m_Height )
@@ -1084,7 +1084,7 @@ void FlushPendingResolution()
 	GamepadUI::GetInstance().GetEngineClient()->ClientCmd_Unrestricted( szCmd );
 }
 
-void FlushPendingSoundQuality()
+void FlushPending3SoundQuality()
 {
 	ConVarRef snd_pitchquality( "snd_pitchquality" );
 	ConVarRef dsp_slow_cpu( "dsp_slow_cpu" );
@@ -1112,7 +1112,7 @@ void FlushPendingSoundQuality()
     }
 }
 
-void FlushPendingCloseCaptions()
+void FlushPending3CloseCaptions()
 {
     ConVarRef closecaption( "closecaption" );
     ConVarRef cc_subtitles( "cc_subtitles" );
@@ -1144,7 +1144,7 @@ void FlushPendingCloseCaptions()
 	GamepadUI::GetInstance().GetEngineClient()->ClientCmd_Unrestricted( szCmd );
 }
 
-void FlushPendingHudAspectRatio()
+void FlushPending3HudAspectRatio()
 {
     ConVarRef hud_aspect( "hud_aspect" );
 
@@ -1167,35 +1167,35 @@ void FlushPendingHudAspectRatio()
     }
 }
 
-void FlushPendingSkill()
+void FlushPending3Skill()
 {
     ConVarRef map( "map" );
     map.SetValue( _gamepadui2_skill.GetInt() );
 }
 
-void UpdateHelperConvars()
+void UpdateHelperConvar()
 {
-    _gamepadui2_water_detail.SetValue( GetCurrentWaterDetail() );
-    _gamepadui2_shadow_detail.SetValue( GetCurrentShadowDetail() );
-    _gamepadui2_antialiasing.SetValue( GetCurrentAntialiasing() );
-    _gamepadui2_aspectratio.SetValue( GetCurrentAspectRatio() );
-    _gamepadui2_displaymode.SetValue( GetCurrentDisplayMode() );
-    _gamepadui2_sound_quality.SetValue( GetCurrentSoundQuality() );
-    _gamepadui2_closecaptions.SetValue( GetCurrentCloseCaptions() );
-    _gamepadui2_hudaspect.SetValue( GetCurrentHudAspectRatio() );
-    _gamepadui2_skill.SetValue( GetCurrentSkill() );
+    _gamepadui2_water_detail.SetValue( GetCurrent5WaterDetail() );
+    _gamepadui2_shadow_detail.SetValue( GetCurrent5ShadowDetail() );
+    _gamepadui2_antialiasing.SetValue( GetCurrent5Antialiasing() );
+    _gamepadui2_aspectratio.SetValue( GetCurrent5AspectRatio() );
+    _gamepadui2_displaymode.SetValue( GetCurrent5DisplayMode() );
+    _gamepadui2_sound_quality.SetValue( GetCurrent5SoundQuality() );
+    _gamepadui2_closecaptions.SetValue( GetCurrent5CloseCaptions() );
+    _gamepadui2_hudaspect.SetValue( GetCurrent5HudAspectRatio() );
+    _gamepadui2_skill.SetValue( GetCurrent5Skill() );
 }
 
-void FlushHelperConVars()
+void FlashHelperConVar()
 {
-    FlushPendingWaterDetail();
-    FlushPendingShadowDetail();
-    FlushPendingAntialiasing();
-    FlushPendingResolution();
-    FlushPendingSoundQuality();
-    FlushPendingCloseCaptions();
-    FlushPendingHudAspectRatio();
-    FlushPendingSkill();
+    FlushPending3WaterDetail();
+    FlushPending3ShadowDetail();
+    FlushPending3Antialiasing();
+    FlushPending3Resolution();
+    FlushPending3SoundQuality();
+    FlushPending3CloseCaptions();
+    FlushPending3HudAspectRatio();
+    FlushPending3Skill();
 }
 
 GamepadUILorePanel::GamepadUILorePanel( vgui::Panel* pParent, const char* pPanelName )
@@ -1211,8 +1211,8 @@ GamepadUILorePanel::GamepadUILorePanel( vgui::Panel* pParent, const char* pPanel
 
     Activate();
 
-    InitAAModes();
-    UpdateHelperConvars();
+    InitAAAModes();
+    UpdateHelperConvar();
 
     LoadOptionTabs( GAMEPADUI_LORE_FILE );
     FillInBindings();
@@ -1407,7 +1407,7 @@ void GamepadUILorePanel::OnCommand( char const* pCommand )
                 pConVarButton->UpdateConVar();
         }
 
-        FlushHelperConVars();
+        FlashHelperConVar();
         ApplyKeyBindings();
         GamepadUI::GetInstance().GetEngineClient()->ClientCmd_Unrestricted( "exec userconfig.cfg\nhost_writeconfig\nmat_savechanges\n" );
     }
@@ -1462,7 +1462,7 @@ int GamepadUILorePanel::GetActiveTab()
     return nActiveTab;
 }
 
-const char *UTIL_Parse( const char *data, char *token, int sizeofToken )
+const char *UTIL_Parse2( const char *data, char *token, int sizeofToken )
 {
 	data = GamepadUI::GetInstance().GetEngineClient()->ParseFile( data, token, sizeofToken );
 	return data;
@@ -1532,7 +1532,7 @@ void GamepadUILorePanel::UpdateResolutions()
 		char sz[ 256 ];
 		GetResolutionName( plist, sz, sizeof( sz ), desktopWidth, desktopHeight );
 
-        int iAspectMode = GetScreenAspectMode( plist->width, plist->height );
+        int iAspectMode = GetScreenAsspectMode( plist->width, plist->height );
 
         if ( iAspectMode == _gamepadui2_aspectratio.GetInt() )
         {
@@ -1801,7 +1801,7 @@ void GamepadUILorePanel::LoadOptionTabs( const char *pszLoreFile )
                     {
                         auto button = new GamepadUICheckButton(
                             this, this,
-                            GAMEPADUI_RESOURCE_FOLDER "schemelore_checkybox.res",
+                            GAMEPADUI_RESOURCE_FOLDER "schemeoptions_checkybox.res",
                             "button_pressed",
                             pItemData->GetString( "text", "" ), pItemData->GetString( "description", "" ) );
                         m_Tabs[ m_nTabCount ].pButtons.AddToTail( button );
@@ -1810,7 +1810,7 @@ void GamepadUILorePanel::LoadOptionTabs( const char *pszLoreFile )
                     {
                         auto button = new GamepadUISkillySkill(
                             this, this,
-                            GAMEPADUI_RESOURCE_FOLDER "schemelore_skillyskill.res",
+                            GAMEPADUI_RESOURCE_FOLDER "schemeoptions_skillyskill.res",
                             "button_pressed",
                             pItemData->GetString( "text", "" ), pItemData->GetString( "description", "" ),
                             pItemData->GetString( "image", "" ), V_atoi( pItemData->GetString( "map", "" ) ) );
@@ -1829,7 +1829,7 @@ void GamepadUILorePanel::LoadOptionTabs( const char *pszLoreFile )
                         auto button = new GamepadUISlideySlide(
                             pszCvar, pszCvarDepends, bInstantApply, flMin, flMax, flStep, nTextPrecision,
                             this, this,
-                            GAMEPADUI_RESOURCE_FOLDER "schemelore_slideyslide.res",
+                            GAMEPADUI_RESOURCE_FOLDER "schemeoptions_slideyslide.res",
                             "button_pressed",
                             pItemData->GetString( "text", "" ), pItemData->GetString( "description", "" ) );
                         button->SetToDefault();
@@ -1840,19 +1840,33 @@ void GamepadUILorePanel::LoadOptionTabs( const char *pszLoreFile )
 				        // add header item
                         auto button = new GamepadUIButton(
                             this, this,
-                            GAMEPADUI_RESOURCE_FOLDER "schemelore_sectiontitle.res",
+                            GAMEPADUI_RESOURCE_FOLDER "schemeoptions_sectiontitle.res",
                             "button_pressed",
                             pItemData->GetString( "text", "" ), pItemData->GetString( "description", "" ) );
                         //button->SetFooterButton( true );
                         button->SetEnabled( false );
                         m_Tabs[ m_nTabCount ].pButtons.AddToTail( button );
                     }
+
+                    else if (!V_strcmp(pItemType, "images"))
+                    {
+                        // add header item
+                        auto button = new GamepadUIButton(
+                            this, this,
+                            GAMEPADUI_RESOURCE_FOLDER "schemeoptions_image.res",
+                            "button_pressed",
+                            pItemData->GetString("text", ""), pItemData->GetString("description", ""));
+                            pItemData->GetString("image", ""),
+                        //button->SetFooterButton( true );
+                        button->SetEnabled(false);
+                        m_Tabs[m_nTabCount].pButtons.AddToTail(button);
+                    }
                     else if (!V_strcmp(pItemType, "textytext"))
                     {
                         // add header item
                         auto button = new GamepadUIButton(
                             this, this,
-                            GAMEPADUI_RESOURCE_FOLDER "schemelore_dong.res",
+                            GAMEPADUI_RESOURCE_FOLDER "schemeoptions_dong.res",
                             "button_pressed",
                             pItemData->GetString("text", ""), pItemData->GetString("description", ""));
                         //button->SetFooterButton( true );
@@ -1868,7 +1882,7 @@ void GamepadUILorePanel::LoadOptionTabs( const char *pszLoreFile )
                         auto button = new GamepadUIWheelyWheel(
                             pszCvar, pszCvarDepends, bInstantApply, bSignOnly,
                             this, this,
-                            GAMEPADUI_RESOURCE_FOLDER "schemelore_wheelywheel.res",
+                            GAMEPADUI_RESOURCE_FOLDER "schemeoptions_wheelywheel.res",
                             "button_pressed",
                             pItemData->GetString( "text", "" ), pItemData->GetString( "description", "" ) );
 
@@ -1888,11 +1902,11 @@ void GamepadUILorePanel::LoadOptionTabs( const char *pszLoreFile )
                         {
                             if ( !V_strcmp( pszLoreFrom, "antialiasing" ) )
                             {
-                                for ( int i = 0; i < g_nNumAAModes; i++ )
+                                for ( int i = 0; i < g_nNumAAAModes; i++ )
                                 {
                                     GamepadUIOption option;
                                     option.nValue = i;
-                                    option.strOptionText = g_AAModes[ i ].strName;
+                                    option.strOptionText = g_AAAModes[ i ].strName;
                                     button->AddOptionItem( option );
                                 }
                             }
@@ -1957,7 +1971,7 @@ void GamepadUILorePanel::LoadOptionTabs( const char *pszLoreFile )
                     {
                         auto button = new GamepadUIButton(
                             this, this,
-                            GAMEPADUI_RESOURCE_FOLDER "schemelore_wheelywheel.res",
+                            GAMEPADUI_RESOURCE_FOLDER "schemeoptions_wheelywheel.res",
                             pItemData->GetString( "command", "button_pressed" ),
                             pItemData->GetString( "text", "" ), pItemData->GetString( "description", "" ) );
                         m_Tabs[ m_nTabCount ].pButtons.AddToTail( button );
@@ -1980,14 +1994,14 @@ void GamepadUILorePanel::LoadOptionTabs( const char *pszLoreFile )
 	            char token[512];
 	            while ( 1 )
 	            {
-		            data = UTIL_Parse( data, token, sizeof( token ) );
+		            data = UTIL_Parse2( data, token, sizeof( token ) );
 		            // Done.
 		            if ( strlen( token ) <= 0 )
 			            break;
 
 		            Q_strncpy( szBinding, token, sizeof( szBinding ) );
 
-		            data = UTIL_Parse( data, token, sizeof( token ) );
+		            data = UTIL_Parse2( data, token, sizeof( token ) );
 		            if ( strlen( token ) <= 0 )
 		            {
 			            break;
@@ -2004,7 +2018,7 @@ void GamepadUILorePanel::LoadOptionTabs( const char *pszLoreFile )
 				            // add header item
                             auto button = new GamepadUIButton(
                                 this, this,
-                                GAMEPADUI_RESOURCE_FOLDER "schemelore_sectiontitle.res",
+                                GAMEPADUI_RESOURCE_FOLDER "schemeoptions_sectiontitle.res",
                                 "button_pressed",
                                 szDescription, "" );
                             //button->SetFooterButton( true );
@@ -2016,7 +2030,7 @@ void GamepadUILorePanel::LoadOptionTabs( const char *pszLoreFile )
 				            // Add to list
                             auto button = new GamepadUIKeyButton(
                                 szBinding, this, this,
-                                GAMEPADUI_RESOURCE_FOLDER "schemelore_wheelywheel.res",
+                                GAMEPADUI_RESOURCE_FOLDER "schemeoptions_wheelywheel.res",
                                 "button_pressed",
                                 szDescription, "" );
                             m_Tabs[ m_nTabCount ].pButtons.AddToTail( button );

@@ -126,7 +126,6 @@ $Project "Server - Arsenio"
 			$File	"arsenio\npc_turret_rebel.h"
 			$File	"arsenio\npc_overlord.cpp"
 			$File	"arsenio\npc_overlord.h"
-			$File	"arsenio\arsenio_boss_engager.cpp"
                         }
 
 		}

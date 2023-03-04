@@ -1,9 +1,10 @@
+
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
 // Purpose: Dialogue Panel handles Dialogue Scenes. Max 3 options per scene.
 // 
 //=============================================================================//
-
+#ifndef ARSENIO
 #include "cbase.h"
 #include "vgui_controls/Frame.h"
 #include <vgui/ISurface.h>
@@ -56,3 +57,4 @@ private:
 	bool InGameLayout;
 	bool InRolloverButton[3];
 };
+#endif
