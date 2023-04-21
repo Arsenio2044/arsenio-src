@@ -2312,6 +2312,9 @@ bool CBasePlayer::StartObserverMode(int mode)
 	if (gpGlobals->eLoadType != MapLoad_Background)
 	{
 		ShowViewPortPanel("specgui", ModeWantsSpectatorGUI(mode));
+#ifdef ARSENIO
+		debugoverlay->AddScreenTextOverlay(0.02f, 0.60f, 0.0f, 0, 255, 255, 255, CFmtStr("Arsenio April ALPHA."));
+#endif
 	}
 
 	// Setup flags
