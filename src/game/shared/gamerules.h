@@ -294,7 +294,6 @@ public:
 
 #ifdef ARSENIO
 	virtual bool AllowSPRespawn() { return false; }
-	void StartDialogueScene(const char* szFile, const char* szEntity, bool bOption1, bool bOption2, bool bOption3);
 #endif
 
 	virtual bool AllowAutoTargetCrosshair( void ) { return TRUE; };

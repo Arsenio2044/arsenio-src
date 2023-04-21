@@ -570,8 +570,6 @@ public:
         }
     }
 
-
-
     void UpdateConVar() OVERRIDE
     {
         if ( IsDirty() )

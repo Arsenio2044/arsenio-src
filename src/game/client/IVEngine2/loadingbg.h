@@ -9,10 +9,6 @@
 #include <vgui_controls/EditablePanel.h>
 #include <vgui_controls\ImagePanel.h>
 #include "ienginevgui.h"
-#include <vgui_controls/Label.h>
-
-
-
 
 //-----------------------------------------------------------------------------
 // Purpose: 
@@ -28,19 +24,11 @@ public:
 
 	void SetNewBackgroundImage( char const *imageName );
 
-	void SetRandomLoadingTip();
-
-
 protected:
 	void ApplySchemeSettings( vgui::IScheme *pScheme );
 
 private:
 	vgui::ImagePanel *m_pBackground;
-
-	vgui::Label* m_pTextLoadingTip;
-
-	// Tips
-	float m_flTipDisplayTime;
 };
 
 #endif	// !LOADINGBG_H

@@ -1513,8 +1513,6 @@ int CNPC_Combine::SelectCombatSchedule()
 		return SCHED_NONE;
 	}
 
-
-
 	// -----------
 	// new enemy
 	// -----------

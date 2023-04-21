@@ -63,8 +63,6 @@ $Project "Server - Arsenio"
 			$File	"arsenio\npc_LeOS.cpp"
 			$File	"$SRCDIR\game\shared\arsenio\arsenio_game_log.cpp"
 			$File	"arsenio\logic_skill.cpp"
-			$File	 "arsenio\arsenio_dialogue.cpp"
-			$File	 "arsenio\arsenio_dialogue.h"
 
 			$Folder	"Weapons"
 			{
@@ -90,10 +88,7 @@ $Project "Server - Arsenio"
 			$File	"weapon_frag.h"	
 			$File	"hl1\hl1_npc_controller.cpp"
 			$File	"env_instructor_hint.cpp"
-	//		$File	"arsenio\npc_zassassin.cpp"
-	//		$File	"arsenio\npc_zassassin.h"
-			$File	"arsenio\bot_ally.cpp"
-			$File	"arsenio\bot_enemy.cpp"
+
                         }
 
 			$Folder	"NPCS"

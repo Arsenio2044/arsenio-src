@@ -155,24 +155,6 @@ CGameRules::CGameRules() : CAutoGameSystemPerFrame( "CGameRules" )
 
 	m_flNextVerboseLogOutput = 0.0f;
 }
-#ifdef ARSENIO
-void CGameRules::StartDialogueScene(const char* szFile, const char* szEntity, bool bOption1, bool bOption2, bool bOption3)
-{
-#ifndef CLIENT_DLL
-	IGameEvent* event = gameeventmanager->CreateEvent("dialogue_started");
-	if (event)
-	{
-		event->SetString("entity", szEntity);
-		event->SetString("script", szFile);
-		event->SetInt("option1", bOption1);
-		event->SetInt("option2", bOption2);
-		event->SetInt("option3", bOption3);
-
-		gameeventmanager->FireEvent(event);
-	}
-#endif
-}
-#endif
 
 //-----------------------------------------------------------------------------
 // Purpose: Return true if the specified player can carry any more of the ammo type

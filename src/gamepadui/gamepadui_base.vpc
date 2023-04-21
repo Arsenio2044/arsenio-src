@@ -73,7 +73,6 @@ $Project
         $File "gamepadui_scroll.h"
         $File "gamepadui_string.h"
         $File "gamepadui_util.h"
-        $File "$SRCDIR\game\client\cdll_util.h"
     }
 
     $Folder "Source Files"
@@ -95,7 +94,6 @@ $Project
         $File "gamepadui_mobmode.cpp"
         $File "gamepadui_savegame.cpp"
         $File "gamepadui_options.cpp"
-        $File "gamepadui_lore.cpp"
         $File "gamepadui_util.cpp"
     }
 

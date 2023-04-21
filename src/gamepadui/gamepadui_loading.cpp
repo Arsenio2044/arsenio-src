@@ -4,70 +4,10 @@
 #include "vgui/IVGui.h"
 #include "vgui_controls/Frame.h"
 #include "vgui_controls/ProgressBar.h"
-#include "ienginevgui.h"
-#include "KeyValues.h"
-//#include "cdll_int.h"
 
 using namespace vgui;
 
 GamepadUILoading* g_pGamepadUILoading = NULL;
-IFileSystem* filesystem = NULL;
-IUniformRandomStream* random = NULL;
-IVEngineClient* engine = NULL;
-IEngineVGui* enginevgui = NULL;
-
-#define ASS_COLOR		    Color( 255, 255, 255, 255 )
-
-//-----------------------------------------------------------------------------
-// Purpose: Performs a var args printf into a static return buffer
-// Input  : *format - 
-//			... - 
-// Output : char
-//-----------------------------------------------------------------------------
-char* VarArgs(const char* format, ...)
-{
-	va_list		argptr;
-	static char		string[1024];
-
-	va_start(argptr, format);
-	Q_vsnprintf(string, sizeof(string), format, argptr);
-	va_end(argptr);
-
-	return string;
-}
-
-void GetHudSize(int& w, int& h)
-{
-	vgui::surface()->GetScreenSize(w, h);
-
-	VPANEL hudParent = enginevgui->GetPanel(PANEL_CLIENTDLL);
-	if (hudParent)
-	{
-		vgui::ipanel()->GetSize(hudParent, w, h);
-	}
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: ScreenHeight returns the height of the screen, in pixels
-// Output : int
-//-----------------------------------------------------------------------------
-int ScreenHeight(void)
-{
-	int w, h;
-	GetHudSize(w, h);
-	return h;
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: ScreenWidth returns the width of the screen, in pixels
-// Output : int
-//-----------------------------------------------------------------------------
-int ScreenWidth(void)
-{
-	int w, h;
-	GetHudSize(w, h);
-	return w;
-}
 
 GamepadUILoading::GamepadUILoading(VPANEL parent) : vgui::Panel(NULL, "LoadingDialog")
 {
@@ -77,8 +17,6 @@ GamepadUILoading::GamepadUILoading(VPANEL parent) : vgui::Panel(NULL, "LoadingDi
 	SetProportional(true);
 	SetPaintBackgroundEnabled(false);
 	SetPaintBorderEnabled(false);
-
-
 
 	m_iBarX = m_iBarY = m_iBarW = m_iBarH = 0;
 	m_pBGImage = new vgui::ImagePanel(this, "BackgroundImage");
@@ -90,15 +28,7 @@ GamepadUILoading::GamepadUILoading(VPANEL parent) : vgui::Panel(NULL, "LoadingDi
 	m_pSpinnerImage = new vgui::ImagePanel(this, "SteamDeckSpinner");
 	m_pLogoImage = new vgui::ImagePanel(this, "SteamDeckLogo");
 
-	// Loading Tips
-	m_pTextLoadingTip = vgui::SETUP_PANEL(new vgui::Label(this, "TextTip", ""));
-	m_pTextLoadingTip->SetZPos(180);
-	m_pTextLoadingTip->SetFgColor(ASS_COLOR);
-	m_pTextLoadingTip->SetText("");
-
 	m_SpinnerFrame = 0;
-
-
 
 	InvalidateLayout(false, true);
 }
@@ -106,9 +36,6 @@ GamepadUILoading::GamepadUILoading(VPANEL parent) : vgui::Panel(NULL, "LoadingDi
 void GamepadUILoading::ApplySchemeSettings(IScheme* pScheme)
 {
 	BaseClass::ApplySchemeSettings(pScheme);
-
-	m_pTextLoadingTip->SetFont(pScheme->GetFont("arial"));
-
 
 	int wide, tall;
 	vgui::surface()->GetScreenSize(wide, tall);
@@ -130,9 +57,6 @@ void GamepadUILoading::PerformLayout()
 	vgui::surface()->GetScreenSize(wide, tall);
 	SetSize(wide, tall);
 
-	m_pTextLoadingTip->SetFgColor(ASS_COLOR);
-
-
 	m_pProgressMirror->SetProportional(false);
 	m_pProgressMirror->SetBarInset(0);
 	m_pProgressMirror->SetMargin(0);
@@ -151,18 +75,6 @@ void GamepadUILoading::PerformLayout()
 	m_pSpinnerImage->SetShouldScaleImage(true);
 	m_pSpinnerImage->SetPos(wide - imageSize - imageMargin, imageMargin);
 
-	m_pTextLoadingTip->SetSize(ScreenWidth(), scheme()->GetProportionalScaledValueEx(GetScheme(), 30));
-
-	int tipW, tipH;
-	m_pTextLoadingTip->GetSize(tipW, tipH);
-
-	m_pTextLoadingTip->SetPos(((ScreenWidth() / 2) - (tipW / 2)), scheme()->GetProportionalScaledValueEx(GetScheme(), 395));
-
-
-
-
-
-
 	m_pLogoImage->SetSize(imageSize, imageSize);
 	m_pLogoImage->SetShouldScaleImage(true);
 	m_pLogoImage->SetPos(wide - imageSize - imageMargin, imageMargin);
@@ -173,31 +85,6 @@ void GamepadUILoading::PerformLayout()
 	BaseClass::PerformLayout();
 }
 
-void GamepadUILoading::SetRandomLoadingTip()
-{
-	KeyValues* kvLoadingTips = new KeyValues("LoadingTipData");
-	if (kvLoadingTips->LoadFromFile( filesystem, "resource/data/settings/Tips.txt", "MOD"))
-	{
-		int iAmountTips = 0;
-		for (KeyValues* sub = kvLoadingTips->GetFirstSubKey(); sub; sub = sub->GetNextKey())
-			iAmountTips++;
-
-		
-		//Msg("Loading tips\n");
-
-		KeyValues* kvSelectedTip = kvLoadingTips->FindKey(VarArgs("%i", random->RandomInt(1, iAmountTips)));
-		if (kvSelectedTip)
-			m_pTextLoadingTip->SetText(kvSelectedTip->GetString());
-	}
-	else
-	{
-		m_pTextLoadingTip->SetText("");
-		//Msg("No loading tips\n");
-	}
-
-	kvLoadingTips->deleteThis();
-}
-
 void GamepadUILoading::OnActivate()
 {
 	m_pDialog = nullptr;
@@ -205,9 +92,6 @@ void GamepadUILoading::OnActivate()
 	m_bResolved = false;
 
 	m_SpinnerFrame = 0;
-
-	m_pTextLoadingTip->SetVisible(true);
-
 
 	int wide, tall;
 	vgui::surface()->GetScreenSize(wide, tall);
@@ -219,13 +103,6 @@ void GamepadUILoading::OnActivate()
 	bool bWidescreen = (((float)wide / (float)tall) < 1.5 ? false : true);
 	if (bWidescreen)
 		Q_strcat(szImage, "_widescreen", sizeof(szImage));
-
-	// Tips / Poems / Conclusions:
-	if (m_flTipDisplayTime <= engine->Time())
-	{
-		m_flTipDisplayTime = engine->Time() + 1.5f;
-		SetRandomLoadingTip();
-	}
 
 	m_pBGImage->SetImage(szImage);
 }

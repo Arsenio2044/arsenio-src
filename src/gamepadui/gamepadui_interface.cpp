@@ -1,9 +1,7 @@
 #include "gamepadui_interface.h"
 #include "gamepadui_basepanel.h"
 #include "gamepadui_mainmenu.h"
-#ifdef OLDARSE
 #include "gamepadui_loading.h"
-#endif
 
 #include "vgui/ILocalize.h"
 
@@ -15,8 +13,6 @@ static CDllDemandLoader s_GameUI( "GameUI" );
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR( GamepadUI, IGamepadUI, GAMEPADUI_INTERFACE_VERSION, GamepadUI::GetInstance() );
 
 GamepadUI *GamepadUI::s_pGamepadUI = NULL;
-
-
 
 GamepadUI& GamepadUI::GetInstance()
 {
@@ -81,11 +77,9 @@ void GamepadUI::Initialize( CreateInterfaceFn factory )
     }
 
     GamepadUI_Log( "Overriding menu.\n" );
-#ifdef OLDARSE
+
     g_pGamepadUILoading = new GamepadUILoading(GetRootVPanel());
     m_pGameUI->SetLoadingBackgroundDialog(g_pGamepadUILoading->GetVPanel());
-#endif
-
 
     m_pGameUI->SetMainMenuOverride( GetBaseVPanel() );
 

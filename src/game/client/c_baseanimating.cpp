@@ -68,10 +68,9 @@ ConVar r_sequence_debug( "r_sequence_debug", "" );
 
 // If an NPC is moving faster than this, he should play the running footstep sound
 const float RUN_SPEED_ESTIMATE_SQR = 150.0f * 150.0f;
-#ifdef ARSENIO
+
 // Arsenio Ragdoll Fade.
 const float RAGDOLL_FADE_OUT_DELAY = 3.0f;
-#endif
 
 
 // Removed macro used by shared code stuff
