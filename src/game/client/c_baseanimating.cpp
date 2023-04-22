@@ -3327,31 +3327,24 @@ void C_BaseAnimating::ProcessMuzzleFlashEvent()
 		//FIXME: We should really use a named attachment for this
 		if (m_Attachments.Count() > 0)
 		{
-			FlashlightState_t state;
+			Vector vAttachment, vAng;
+			QAngle angles;
+#ifdef HL2_EPISODIC
+			GetAttachment(1, vAttachment, angles); // set 1 instead "attachment"
+#else
+			GetAttachment(attachment, vAttachment, angles);
+#endif
+			AngleVectors(angles, &vAng);
+			vAttachment += vAng * 2;
 
-			Vector vForward, vRight, vUp, vPos = GetAbsOrigin();
-			AngleVectors(GetAbsAngles(), &vForward, &vRight, &vUp);
-			state.m_vecLightOrigin = vPos;
-			BasisToQuaternion(vForward, vRight, vUp, state.m_quatOrientation);
-
-			state.m_pSpotlightTexture = m_MuzzleLightTexture;
-			state.m_nSpotlightTextureFrame = 0;
-
-			state.m_fHorizontalFOVDegrees = random->RandomInt(70, 120);
-			state.m_fVerticalFOVDegrees = state.m_fHorizontalFOVDegrees;
-			state.m_Color[0] = (muzzleflash_colour[0] / 255.0f) * mat_muzzleflash_brightness.GetFloat();
-			state.m_Color[1] = (muzzleflash_colour[1] / 255.0f) * mat_muzzleflash_brightness.GetFloat();
-			state.m_Color[2] = (muzzleflash_colour[2] / 255.0f) * mat_muzzleflash_brightness.GetFloat();
-			state.m_fLinearAtten = 100.0f;
-			state.m_NearZ = 5.0f;
-			state.m_FarZ = 750.0f;
-			state.m_bEnableShadows = true;
-
-			DestroyMuzzleLightHandle();
-
-			m_MuzzleLightHandle = g_pClientShadowMgr->CreateFlashlight(state);
-			g_pClientShadowMgr->UpdateProjectedTexture(m_MuzzleLightHandle, true);
-			m_flDestroyMuzzleLightHandle = gpGlobals->curtime + 0.05f;
+			dlight_t* dl = effects->CL_AllocDlight(index);
+			dl->origin = vAttachment;
+			dl->color.r = 231;
+			dl->color.g = 219;
+			dl->color.b = 14;
+			dl->die = gpGlobals->curtime + 0.05f;
+			dl->radius = random->RandomFloat(245.0f, 256.0f);
+			dl->decay = 512.0f;
 		}
 	}
 }
