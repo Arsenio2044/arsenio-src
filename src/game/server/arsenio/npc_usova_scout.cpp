@@ -175,7 +175,7 @@ void CNPC_UScout::Precache()
 
 	if( !GetModelName() )
 	{
-		SetModelName( MAKE_STRING( "models/elite_usovas/elite_usovas.mdl" ) );
+		SetModelName( MAKE_STRING( "models/elite_usovas/combine_super_soldier.mdl" ) );
 	}
 
 	PrecacheModel( STRING( GetModelName() ) );
