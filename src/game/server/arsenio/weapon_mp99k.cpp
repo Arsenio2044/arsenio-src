@@ -275,7 +275,7 @@ void CWeaponMP99K::AddViewKick( void )
 
 	DoMachineGunKick( pPlayer, EASY_DAMPEN, MAX_VERTICAL_KICK, m_fFireDuration, SLIDE_LIMIT );
 
-	UTIL_ScreenShake(GetAbsOrigin(), 1.0, 150.0, 0.25, 750, SHAKE_START);
+	//UTIL_ScreenShake(GetAbsOrigin(), 1.0, 150.0, 0.25, 750, SHAKE_START);
 }
 
 //-----------------------------------------------------------------------------
