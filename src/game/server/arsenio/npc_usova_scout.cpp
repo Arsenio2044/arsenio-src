@@ -47,7 +47,7 @@ extern ConVar sk_plr_num_shotgun_pellets;
 //Whether or not the usovas should spawn health on death
 ConVar	usova_scoutpawn_health( "usova_scoutpawn_health", "1" );
 
-ConVar  add_yourmom_prob( "add_yourmom_prob", "1", 0,
+ConVar  add_usova_prob( "add_usova_prob", "1", 0,
 	"Every usovas soldier has this chance to spawn a hunter" );
 
 LINK_ENTITY_TO_CLASS( npc_usova_scout, CNPC_UScout );
@@ -94,9 +94,9 @@ void CNPC_UScout::Spawn( void )
 
 
 	// Maybe spawn a hunter if the player wants hunters
-	if ( add_yourmom_prob.GetFloat() > 0 )
+	if ( add_usova_prob.GetFloat() > 0 )
 	{
-		if (RandomFloat() <= add_yourmom_prob.GetFloat())
+		if (RandomFloat() <= add_usova_prob.GetFloat())
 		{
 			// one more check - don't spawn a hunter if there's already two nearby
 			int nearby_hunters = 0;
@@ -117,7 +117,7 @@ void CNPC_UScout::Spawn( void )
 			}
 
 			// Yep, spawn a hunter
-			CBaseEntity* pent = CreateEntityByName( "npc_hulk" );
+			CBaseEntity* pent = CreateEntityByName( "npc_usova_dog" );
 			CAI_BaseNPC* pHunter = dynamic_cast<CAI_BaseNPC*>(pent);
 			if (!pHunter)
 				return;
@@ -184,7 +184,7 @@ void CNPC_UScout::Precache()
 	UTIL_PrecacheOther( "weapon_frag" );
 	UTIL_PrecacheOther( "item_ammo_ar2_altfire" );
 
-	if (add_yourmom_prob.GetFloat() > 0)
+	if (add_usova_prob.GetFloat() > 0)
 	{
 		UTIL_PrecacheOther( "npc_hunter" );
 	}
