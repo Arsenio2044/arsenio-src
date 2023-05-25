@@ -29,6 +29,7 @@
 #include <vgui/IPanel.h>
 #include <vgui_controls/Button.h>
 
+
 #include <igameresources.h>
 
 // sub dialogs
@@ -49,6 +50,10 @@
 #include <convar.h>
 #include "ienginevgui.h"
 #include "iclientmode.h"
+
+#ifdef ARSENIO
+#include "Arsenio/CursorClip.h"
+#endif
 
 #include "tier0/etwprof.h"
 
@@ -201,6 +206,9 @@ void CBaseViewport::OnScreenSizeChanged(int iOldWide, int iOldTall)
 	IViewPortPanel* pSpecGuiPanel = FindPanelByName(PANEL_SPECGUI);
 	bool bSpecGuiWasVisible = pSpecGuiPanel && pSpecGuiPanel->IsVisible();
 	
+#ifdef ARSENIO
+	g_pCursorClipManager->SetLockAction(CURSOR_CLIPMANAGEMENT_RELOCKREQUIRED);
+#endif
 	// reload the script file, so the screen positions in it are correct for the new resolution
 	ReloadScheme( NULL );
 

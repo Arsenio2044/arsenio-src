@@ -133,6 +133,10 @@
 #include "haptics/haptic_utils.h"
 #include "haptics/haptic_msgs.h"
 
+#ifdef ARSENIO
+#include "Arsenio/CursorClip.h"
+#endif
+
 #if defined( TF_CLIENT_DLL )
 #include "abuse_report.h"
 #endif
@@ -1297,6 +1301,7 @@ void CHLClient::PostInit()
 	}
 #endif
 
+	CCursorClipManagement::Init();
 
 	
 		CSysModule* pGamepadUIModule = g_pFullFileSystem->LoadModule("gamepadui", "GAMEBIN", false);
@@ -2547,6 +2552,8 @@ void OnRenderEnd()
 {
 	// Disallow access to bones (access is enabled in CViewRender::SetUpView).
 	C_BaseAnimating::PopBoneAccess("CViewRender::SetUpView->OnRenderEnd");
+
+	g_pCursorClipManager->Think();
 
 	UpdatePVSNotifiers();
 

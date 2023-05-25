@@ -44,6 +44,8 @@ $Project "Client - Arsenio"
 			$File	"arsenio\c_weapon_stubs_arsenio.cpp"
 			$File	"arsenio\menu_background.cpp"
 			$File	"arsenio\menu_background.h"
+			$File	"arsenio\CursorClip.cpp"
+			$File	"arsenio\CursorClip.h"
 			$File	"$SRCDIR\game\shared\arsenio\arsenio_game_log.cpp"
 
 		}
