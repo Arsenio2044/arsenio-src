@@ -56,6 +56,46 @@ END_PREDICTION_DATA()
 
 ConVar sk_auto_reload_time("sk_auto_reload_time", "3", FCVAR_REPLICATED);
 
+ConVar sv_recoil_override("sv_recoil_override", "", FCVAR_CHEAT, "USAGE: min:[pitch yaw roll] max:[pitch yaw roll]. Use just min if you want no randomness.");
+
+
+
+#ifdef GAME_DLL
+QAngle CBaseHLCombatWeapon::GetRecoil()
+{
+	const FileWeaponInfo_t& info = GetWpnData();
+
+	if (V_strcmp(sv_recoil_override.GetString(), "") != 0)
+	{
+		QAngle recoil[2]; // min and max
+		UTIL_StringToFloatArray(recoil[0].Base(), 6, sv_recoil_override.GetString());
+
+		if (recoil[1] != vec3_angle) // This weapon wants random min/max-based recoil
+		{
+			return QAngle(RandomFloat(recoil[0].x, recoil[1].x),
+				RandomFloat(recoil[0].y, recoil[1].y),
+				RandomFloat(recoil[0].z, recoil[1].z));
+		}
+		else // This weapon wants fixed recoil
+		{
+			return recoil[0];
+		}
+	}
+
+	if (info.recoilMax != vec3_angle) // This weapon wants random min/max-based recoil
+	{
+		return QAngle(RandomFloat(info.recoilMin.x, info.recoilMax.x),
+			RandomFloat(info.recoilMin.y, info.recoilMax.y),
+			RandomFloat(info.recoilMin.z, info.recoilMax.z));
+	}
+	else // This weapon wants fixed recoil
+	{
+		return info.recoilMin;
+	}
+}
+#endif
+
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
