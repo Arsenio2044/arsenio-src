@@ -1609,7 +1609,7 @@ Activity CBaseCombatWeapon::GetDrawActivity( void )
 	if (m_bFirstDraw && GetWpnData().bHasFirstDrawAnim)
 	{
 		m_bFirstDraw = false;
-		return ACT_VM_FIRSTDRAW;
+		return ACT_VM_INSPECT;
 	}
 	else
 	{
