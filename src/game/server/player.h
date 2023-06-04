@@ -466,6 +466,7 @@ public:
 
 	virtual void            ChuckGrenade( void ); // for throwing a grenade now no matter what gun we're holding
 	virtual void            CheckMelee( void ); // for quick melee attacks
+	virtual void            CheckFlipoff(void); // lmao
 
 	virtual const char	   *GetOverrideStepSound( const char *pszBaseStepSoundName ) { return pszBaseStepSoundName; }
 	virtual void			GetStepSoundVelocities( float *velwalk, float *velrun );

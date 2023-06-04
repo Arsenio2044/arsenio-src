@@ -63,6 +63,7 @@ $Project "Server - Arsenio"
 			$File	"arsenio\npc_LeOS.cpp"
 			$File	"$SRCDIR\game\shared\arsenio\arsenio_game_log.cpp"
 			$File	"arsenio\logic_skill.cpp"
+			$File	"env_instructor_hint.cpp"
 
 			$Folder	"Weapons"
 			{
@@ -85,9 +86,11 @@ $Project "Server - Arsenio"
 			$File	"arsenio\weapon_k189.cpp"
 			$File	"arsenio\weapon_ar3.cpp"
 			$File	"arsenio\weapon_ar3.h"
+			$File	"arsenio\weapon_flipoff.cpp"
+			$File	"arsenio\weapon_flipoff.h"
 			$File	"weapon_frag.h"	
 			$File	"hl1\hl1_npc_controller.cpp"
-			$File	"env_instructor_hint.cpp"
+
 
                         }
 

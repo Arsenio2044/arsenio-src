@@ -5658,6 +5658,45 @@ void CBasePlayer::CheckMelee(void)
 
 }
 
+void CBasePlayer::CheckFlipoff(void)
+{
+	if (IsObserver())
+		return;
+	CBaseCombatWeapon* pFlipoff = Weapon_OwnsThisType("weapon_flipoff");
+	CBaseHLBludgeonWeapon* pClub = dynamic_cast<CBaseHLBludgeonWeapon*>(pFlipoff);
+	if (m_afButtonPressed & IN_FLIPOFF && (pClub))
+	{
+		// If they're holding anything with the gravity gun, drop it first
+		CBaseCombatWeapon* current = GetActiveWeapon();
+		if (current && FClassnameIs(current, "weapon_physcannon"))
+		{
+			PhysCannonForceDrop(current, NULL);
+		}
+
+		Weapon_Switch(pClub);
+		pClub->SetQuickMelee(QMELEE_DOING);
+	}
+
+	// If they pressed or are holding down the button, 
+	// we're done
+	if (!(m_afButtonReleased & IN_FLIPOFF) ||
+		(m_afButtonPressed & IN_FLIPOFF))
+	{
+		return;
+	}
+
+	// If we get here it means they released the button
+	if (pClub)
+	{
+		pClub->SetQuickMelee(QMELEE_DONE);
+		// Responsibility for the attack is delegated to the weapon
+
+		// Set player melee state so they know to do a fast weapon deploy
+		m_nMeleeState = MELEE_DONE;
+	}
+
+}
+
 
 
 //-----------------------------------------------------------------------------
@@ -6968,6 +7007,12 @@ bool CBasePlayer::BumpWeapon(CBaseCombatWeapon* pWeapon)
 				{
 					//Msg( "Not Switching weapon, %d, %d\n", m_afButtonLast, m_afButtonPressed );
 				}
+
+				else if ((m_afButtonLast & IN_FLIPOFF) ||
+					(m_afButtonPressed & IN_FLIPOFF))
+				{
+					//Msg( "Not Switching weapon, %d, %d\n", m_afButtonLast, m_afButtonPressed );
+				}
 				else {
 					//Msg( "Switching weapon, %d, %d\n", m_afButtonLast, m_afButtonPressed );
 					Weapon_Switch(pWeapon);
@@ -7672,6 +7717,10 @@ void CBasePlayer::Weapon_Equip(CBaseCombatWeapon* pWeapon)
 	// should we switch to this item?
 	if ((m_afButtonLast & IN_ATTACK3) ||
 		(m_afButtonPressed & IN_ATTACK3)) {
+	}
+	// should we switch to this item?
+	else if ((m_afButtonLast & IN_FLIPOFF) ||
+		(m_afButtonPressed & IN_FLIPOFF)) {
 	}
 	else if (bShouldSwitch)
 	{
