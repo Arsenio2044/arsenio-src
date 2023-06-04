@@ -940,8 +940,15 @@ int GetCurrentDisplayMode()
         return 0;
     }
 
+#ifdef HL2_RETAIL
     return 2 + GetSDLDisplayIndex();
+#else
+    return 1 + GetSDLDisplayIndex();
+
+#endif
 }
+
+
 
 
 int GetCurrentSoundQuality()
