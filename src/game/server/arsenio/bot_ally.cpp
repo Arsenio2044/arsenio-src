@@ -79,6 +79,7 @@ void CBotAlly::Spawn( void )
 	CapabilitiesAdd( bits_CAP_ANIMATEDFACE );
 	CapabilitiesAdd( bits_CAP_MOVE_SHOOT );
 	CapabilitiesAdd( bits_CAP_DOORS_GROUP );
+	CapabilitiesAdd(bits_CAP_FRIENDLY_DMG_IMMUNE);
 
 	BaseClass::Spawn();
 
