@@ -97,11 +97,11 @@ CFlashlightEffect::CFlashlightEffect(int nEntIndex)
 	m_iFlashLightType = type;
 	if (g_pMaterialSystemHardwareConfig->SupportsBorderColor() && IsNVG())
 	{
-		m_FlashlightTexture.Init("effects/MetroVision_border", TEXTURE_GROUP_OTHER, true);
+		m_FlashlightTexture.Init("effects/filmgrain", TEXTURE_GROUP_OTHER, true);
 	}
 	else if (IsNVG())
 	{
-		m_FlashlightTexture.Init("effects/MetroVision", TEXTURE_GROUP_OTHER, true);
+		m_FlashlightTexture.Init("effects/filmgrain", TEXTURE_GROUP_OTHER, true);
 	}
 	else
 #endif

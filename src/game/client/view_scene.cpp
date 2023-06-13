@@ -155,11 +155,11 @@ void UpdateFullScreenDepthTexture( void )
 }
 
 #ifdef ARSENIO
-// Night vision
+// Night vision turned into Film Grain.
 static void ScreenOver_f(void)
 {
-	IMaterial* pMaterial = materials->FindMaterial("arsenio/common/Mask_NvMap", TEXTURE_GROUP_OTHER, true);
-	
+	IMaterial* pMaterial = materials->FindMaterial("effects/filmgrain", TEXTURE_GROUP_OTHER, true);
+
 
 	{
 		static bool bDisplayed = false;
