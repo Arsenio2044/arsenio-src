@@ -616,6 +616,12 @@ void CAI_BaseNPC::Event_Killed( const CTakeDamageInfo &info )
 	{
 		EmitSound("Weapon_Generic.BulletHitKillFeedback");
 	}
+
+	// Kill screen overlay
+
+	color32 blue = { 0,0,128,128 };
+	UTIL_ScreenFade(this, blue, 1.0f, 0.1f, FFADE_IN);
+
 #endif
 	
 	// Make sure this condition is fired too (OnTakeDamage breaks out before this happens on death)

@@ -197,7 +197,7 @@ ConVar sv_regeneration_wait_time("sv_regeneration_wait_time", "7.0", FCVAR_REPLI
 ConVar sv_regeneration_rate("sv_regeneration_rate", "1.5", FCVAR_REPLICATED);
 #else
 ConVar sv_regeneration("sv_regeneration", "1", FCVAR_REPLICATED);
-ConVar sv_regeneration_wait_time("sv_regeneration_wait_time", "20.0", FCVAR_REPLICATED);
+ConVar sv_regeneration_wait_time("sv_regeneration_wait_time", "7.0", FCVAR_REPLICATED);
 ConVar sv_regeneration_rate("sv_regeneration_rate", "10", FCVAR_REPLICATED);
 #endif
 

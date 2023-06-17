@@ -1333,6 +1333,9 @@ void CHL2_Player::StartSprinting( void )
 		// Don't sprint unless there's a reasonable
 		// amount of suit power.
 
+		engine->ClientCommand(edict(), "fov_desired", 120);
+
+
 
 
 		
@@ -1533,6 +1536,8 @@ void CHL2_Player::StopSprinting( void )
 	{
 		SuitPower_RemoveDevice( SuitDeviceSprint );
 	}
+
+	engine->ClientCommand(edict(), "fov_desired", 90);
 
 	m_fIsSprinting = false;
 
