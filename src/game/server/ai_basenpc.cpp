@@ -609,6 +609,14 @@ void CAI_BaseNPC::Event_Killed( const CTakeDamageInfo &info )
 	{
 		m_bImportanRagdoll = RagdollManager_SaveImportant( this );
 	}
+
+#ifdef ARSENIO
+	// Kill SFX
+	if (info.GetAttacker()->IsPlayer())
+	{
+		EmitSound("Weapon_Generic.BulletHitKillFeedback");
+	}
+#endif
 	
 	// Make sure this condition is fired too (OnTakeDamage breaks out before this happens on death)
 	SetCondition( COND_LIGHT_DAMAGE );
@@ -730,6 +738,14 @@ int CAI_BaseNPC::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 	{
 		PainSound( info );// "Ouch!"
 	}
+
+#ifdef ARSENIO
+	// Damage  SFX
+	if (info.GetAttacker()->IsPlayer())
+	{
+		EmitSound("Weapon_Generic.BulletHitImpactFeedback");
+	}
+#endif
 
 	// See if we're running a dynamic interaction that should break when I am damaged.
 	if ( IsActiveDynamicInteraction() )
