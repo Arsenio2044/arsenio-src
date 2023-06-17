@@ -10964,6 +10964,8 @@ void CAI_BaseNPC::Precache( void )
 	PrecacheScriptSound( "AI_BaseNPC.BodyDrop_Heavy" );
 	PrecacheScriptSound( "AI_BaseNPC.BodyDrop_Light" );
 	PrecacheScriptSound( "AI_BaseNPC.SentenceStop" );
+	PrecacheScriptSound( "Weapon_Generic.BulletHitKillFeedback" );
+	PrecacheScriptSound( "Weapon_Generic.BulletHitImpactFeedback" );
 
 	BaseClass::Precache();
 }
