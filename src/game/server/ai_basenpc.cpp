@@ -586,6 +586,8 @@ void CAI_BaseNPC::Event_Killed( const CTakeDamageInfo &info )
 
 	Wake( false );
 	
+
+	// ADRIAN SHEAPARD HOLY FUCK HES A DEVELOPER
 	//Adrian: Select a death pose to extrapolate the ragdoll's velocity.
 	SelectDeathPose( info );
 
