@@ -105,39 +105,6 @@ void CBaseViewModel::Precache( void )
 {
 }
 
-void CBaseViewModel::CalcIronsights(Vector& pos, QAngle& ang)
-{
-	CBaseCombatWeapon* pWeapon = GetOwningWeapon();
-
-	if (!pWeapon)
-		return;
-
-	//get delta time for interpolation
-	float delta = (gpGlobals->curtime - pWeapon->m_flIronsightedTime) * 2.5f; //modify this value to adjust how fast the interpolation is
-	float exp = (pWeapon->IsIronsighted()) ?
-		(delta > 1.0f) ? 1.0f : delta : //normal blending
-		(delta > 1.0f) ? 0.0f : 1.0f - delta; //reverse interpolation
-
-	if (exp <= 0.001f) //fully not ironsighted; save performance
-		return;
-
-	Vector newPos = pos;
-	QAngle newAng = ang;
-
-	Vector vForward, vRight, vUp, vOffset;
-	AngleVectors(newAng, &vForward, &vRight, &vUp);
-	vOffset = pWeapon->GetIronsightPositionOffset();
-
-	newPos += vForward * vOffset.x;
-	newPos += vRight * vOffset.y;
-	newPos += vUp * vOffset.z;
-	newAng += pWeapon->GetIronsightAngleOffset();
-	//fov is handled by CBaseCombatWeapon
-
-	pos += (newPos - pos) * exp;
-	ang += (newAng - ang) * exp;
-}
-
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -626,8 +593,7 @@ void CBaseViewModel::CalcViewModelView(CBasePlayer *owner, const Vector& eyePosi
 
 	CBaseCombatWeapon *pWeapon = m_hWeapon.Get();
 	//Allow weapon lagging
-	//only if not in ironsight-mode
-	if (pWeapon == NULL || !pWeapon->IsIronsighted())
+	if (pWeapon != NULL)
 	{
 
 		CalcViewModelCollision(vmorigin, vmangles, owner);
@@ -663,8 +629,6 @@ void CBaseViewModel::CalcViewModelView(CBasePlayer *owner, const Vector& eyePosi
 	{
 		g_ClientVirtualReality.OverrideViewModelTransform(vmorigin, vmangles, pWeapon && pWeapon->ShouldUseLargeViewModelVROverride());
 	}
-
-	CalcIronsights(vmorigin, vmangles);
 
 	SetLocalOrigin(vmorigin);
 	SetLocalAngles(vmangles);

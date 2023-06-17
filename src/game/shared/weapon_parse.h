@@ -112,10 +112,6 @@ public:
 	Vector					vCollisionOffset;
 	QAngle					angCollisionRotation;
 
-	Vector					vecIronsightPosOffset;
-	QAngle					angIronsightAngOffset;
-	float					flIronsightFOVOffset;
-
 
 
 	QAngle					recoilMin;								// If we don't want randomness, just use the min

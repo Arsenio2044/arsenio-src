@@ -195,17 +195,6 @@ public:
 	virtual bool			VisibleInWeaponSelection( void );
 	virtual bool			HasAmmo( void );
 
-	// Iron Sights
-	Vector					GetIronsightPositionOffset(void) const;
-	QAngle					GetIronsightAngleOffset(void) const;
-	float					GetIronsightFOVOffset(void) const;
-	virtual bool			HasIronsights(void) { return true; } //default yes; override and return false for weapons with no ironsights (like weapon_crowbar)
-	bool					IsIronsighted(void);
-	void					ToggleIronsights(void);
-	void					EnableIronsights(void);
-	void					DisableIronsights(void);
-	void					SetIronsightTime(void);
-
 	// Weapon Pickup For Player
 	virtual void			SetPickupTouch( void );
 	virtual void 			DefaultTouch( CBaseEntity *pOther );	// default weapon touch
@@ -641,9 +630,6 @@ public:
 	CNetworkVar( int, m_iSecondaryAmmoType );	// "secondary" ammo index into the ammo info array
 	CNetworkVar( int, m_iClip1 );				// number of shots left in the primary weapon clip, -1 it not used
 	CNetworkVar( int, m_iClip2 );				// number of shots left in the secondary weapon clip, -1 it not used
-	// Iron Sights for ARSENIO 2044
-	CNetworkVar(bool, m_bIsIronsighted);
-	CNetworkVar(float, m_flIronsightedTime);
 	bool					m_bFiresUnderwater;		// true if this weapon can fire underwater
 	bool					m_bAltFiresUnderwater;		// true if this weapon can fire underwater
 	float					m_fMinRange1;			// What's the closest this weapon can be used?

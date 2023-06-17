@@ -88,10 +88,6 @@ public:
 	void					SetControlPanelsActive( bool bState );
 	void					ShowControlPanells( bool show );
 
-	// Iron Sights for ARSENIO 2044
-	void		CalcIronsights(Vector& pos, QAngle& ang);
-
-
 
 	virtual CBaseCombatWeapon *GetOwningWeapon( void );
 	
