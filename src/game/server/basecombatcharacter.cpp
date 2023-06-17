@@ -2508,7 +2508,7 @@ int CBaseCombatCharacter::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 			pPlayer->m_bShouldDrawBloodOverlay = true;
 
 		pPlayer = ToBasePlayer(info.GetAttacker());
-		if (pPlayer && (this->BloodColor() != BLOOD_COLOR_MECH))
+		if (pPlayer && (this->BloodColor() != BLOOD_COLOR_RED))
 		{
 			if (pPlayer->GetAbsOrigin().DistTo(this->GetAbsOrigin()) < 200.0f)
 				pPlayer->m_bShouldDrawBloodOverlay = true;
