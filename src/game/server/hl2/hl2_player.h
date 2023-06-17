@@ -167,6 +167,12 @@ public:
 	// Sprint Device
 	virtual void DeriveMaxSpeed( void );
 	void StartAutoSprint( void );
+	#ifdef ARSENIO
+	void StartBreathingNormal(void);
+	void StopBreathingNormal(void);
+	void StartBreathingHeavy(void);
+	void StopBreathingHeavy(void);
+	#endif
 	void StartSprinting( void );
 	void StopSprinting( void );
 	void StartIncaping( void );
@@ -337,6 +343,10 @@ private:
 	float				m_fAutoSprintMinTime;	// Minimum time to maintain autosprint regardless of player speed. 
 
 	CNetworkVar( bool, m_fIsSprinting );
+#ifdef ARSENIO
+	CNetworkVar( bool, m_fIsBreathingNormally );
+	CNetworkVar( bool, m_fIsBreathingHeavily );
+#endif
 	CNetworkVarForDerived( bool, m_fIsWalking );
 	CNetworkVarForDerived( bool, m_fIsIncaped );
 

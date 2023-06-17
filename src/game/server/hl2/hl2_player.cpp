@@ -1369,6 +1369,161 @@ void CHL2_Player::StartSprinting( void )
 	DeriveMaxSpeed();
 }
 
+#ifdef ARSENIO
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+void CHL2_Player::StartBreathingNormal(void)
+{
+
+
+
+	CPASAttenuationFilter filter(this);
+	filter.UsePredictionRules();
+	if (GetHealth() < 50)
+	{
+		EmitSound(filter, entindex(), "Player.BreathePain");
+	}
+	else
+	{
+		EmitSound(filter, entindex(), "Player.Breathe");
+	}
+
+
+
+
+	m_fIsBreathingNormally = true;
+
+}
+
+void CC_BreathNormal (void)
+{
+
+
+
+	CBasePlayer* pPlayer = UTIL_GetCommandClient();
+
+
+	CHL2_Player* pHL2Player = dynamic_cast<CHL2_Player*>(pPlayer);
+
+	pHL2Player->StartBreathingNormal();
+
+}
+
+
+static ConCommand BreathNormally("BreathNormally", CC_BreathNormal, "Breathes Normal");
+
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+void CHL2_Player::StopBreathingNormal(void)
+{
+
+
+
+	StopSound("Player.BreathePain");
+	StopSound("Player.Breathe");
+
+
+
+
+	m_fIsBreathingNormally = false;
+
+}
+
+void CC_DontBreathNormal(void)
+{
+
+
+
+	CBasePlayer* pPlayer = UTIL_GetCommandClient();
+
+
+	CHL2_Player* pHL2Player = dynamic_cast<CHL2_Player*>(pPlayer);
+
+	pHL2Player->StopBreathingNormal();
+
+}
+
+
+static ConCommand DontBreathNormally("DontBreathNormally", CC_DontBreathNormal, "Doesn't Breathes Normal");
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+void CHL2_Player::StartBreathingHeavy(void)
+{
+
+
+
+	CPASAttenuationFilter filter(this);
+	filter.UsePredictionRules();
+	if (GetHealth() < 50)
+	{
+		EmitSound(filter, entindex(), "Player.BreathePain");
+	}
+	else
+	{
+		EmitSound(filter, entindex(), "Player.BreatheHeavy");
+	}
+
+
+
+
+	m_fIsBreathingHeavily = true;
+
+}
+
+void CC_BreathHeavy(void)
+{
+
+
+
+	CBasePlayer* pPlayer = UTIL_GetCommandClient();
+
+
+	CHL2_Player* pHL2Player = dynamic_cast<CHL2_Player*>(pPlayer);
+
+	pHL2Player->StartBreathingHeavy();
+
+}
+
+
+static ConCommand BreathHeavily("BreathHeavily", CC_BreathHeavy, "Breathes Heavy");
+
+
+//-----------------------------------------------------------------------------
+//-----------------------------------------------------------------------------
+void CHL2_Player::StopBreathingHeavy(void)
+{
+
+
+
+	StopSound("Player.BreathePain");
+	StopSound("Player.BreatheHeavy");
+
+
+
+
+	m_fIsBreathingHeavily = false;
+
+}
+
+void CC_DontBreathHeavy(void)
+{
+
+
+
+	CBasePlayer* pPlayer = UTIL_GetCommandClient();
+
+
+	CHL2_Player* pHL2Player = dynamic_cast<CHL2_Player*>(pPlayer);
+
+	pHL2Player->StopBreathingHeavy();
+
+}
+
+
+static ConCommand DontBreathHeavily("DontBreathHeavily", CC_DontBreathHeavy, "Doesn't Breathes Heavy");
+#endif
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------

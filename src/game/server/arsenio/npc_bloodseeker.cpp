@@ -87,6 +87,8 @@ void CNPC_BloodSeeker::Spawn()
 	SetRenderColor(255, 255, 255, 20);
 	m_nRenderMode = kRenderTransTexture;
 
+
+
 	if (m_iHealth > 30)
 	{
 		CPASAttenuationFilter filter(this);
@@ -332,6 +334,9 @@ int CNPC_BloodSeeker::SelectSchedule(void)
 	{
 		if (HasCondition(COND_HEAR_DANGER) || HasCondition(COND_HEAR_COMBAT))
 		{
+
+
+
 			if (HasCondition(COND_HEAR_DANGER))
 				return SCHED_TAKE_COVER_FROM_BEST_SOUND;
 
@@ -419,6 +424,9 @@ int CNPC_BloodSeeker::SelectSchedule(void)
 		{
 			//Msg( "face - combat\n");
 			return SCHED_COMBAT_FACE;
+
+
+
 		}
 
 		// new enemy

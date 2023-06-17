@@ -50,8 +50,13 @@ public:
 
 	LadderMove_t		*GetLadderMove() { return &m_HL2Local.m_LadderMove; }
 	virtual void		ExitLadder();
+#ifdef ARSENIO
+	bool				IsBreathingNormally() const { return m_fIsBreathingNormally; }
+	bool				IsBreathingHeavily() const { return m_fIsBreathingHeavily; }
+#endif
 	bool				IsSprinting() const { return m_fIsSprinting; }
-	
+
+
 	// Input handling
 	virtual bool	CreateMove( float flInputSampleTime, CUserCmd *pCmd );
 	void			PerformClientSideObstacleAvoidance( float flFrameTime, CUserCmd *pCmd );
@@ -65,7 +70,10 @@ public:
 	EHANDLE				m_hClosestNPC;
 	float				m_flSpeedModTime;
 	bool				m_fIsSprinting;
-
+	#ifdef ARSENIO
+	bool				m_fIsBreathingNormally;
+	bool				m_fIsBreathingHeavily;
+	#endif
 private:
 	C_BaseHLPlayer( const C_BaseHLPlayer & ); // not defined, not accessible
 	
