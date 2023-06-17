@@ -18,7 +18,7 @@
 #include "water_ps20b.inc"
 
 #ifndef _X360
-static ConVar r_waterforceexpensive( "r_waterforceexpensive", "0", FCVAR_ARCHIVE );
+static ConVar r_waterforceexpensive( "r_waterforceexpensive", "1", FCVAR_ARCHIVE );
 #endif
 
 DEFINE_FALLBACK_SHADER( Water, Water_DX9_HDR )
