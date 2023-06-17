@@ -625,3 +625,25 @@ void CHeadlightEffect::UpdateLight(const Vector& vecPos, const Vector& vecDir, c
 
 	g_pClientShadowMgr->UpdateProjectedTexture(GetFlashlightHandle(), true);
 }
+
+#ifdef ARSENIO
+// TUX: Okay, so I forgot to add this from Operation: Outbreak.
+static void EnableFilmGrain(IConVar* pConVar, char const* pOldString, float flOldValue)
+{
+	ConVarRef var(pConVar);
+	if (var.GetBool())
+	{
+		IMaterial* pMaterial = materials->FindMaterial("effects/filmgrain", TEXTURE_GROUP_OTHER, true);
+		if (pMaterial && view)
+			view->SetScreenOverlayMaterial(pMaterial);
+	}
+	else
+	{
+		if (view)
+			view->SetScreenOverlayMaterial(NULL);
+	}
+}
+
+static ConVar arsenio_fx_filmgrain("arsenio_fx_filmgrain", "1", FCVAR_CLIENTDLL | FCVAR_ARCHIVE, "Enable or Disable film grain.", true, 0, true, 1, EnableFilmGrain);
+static ConVar arsenio_fx_filmgrain_strength("arsenio_fx_filmgrain_strength", "2", FCVAR_CLIENTDLL | FCVAR_ARCHIVE, "Set film grain strength.", true, 0.75f, true, 2.0f);
+#endif

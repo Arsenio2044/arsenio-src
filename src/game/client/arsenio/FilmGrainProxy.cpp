@@ -58,10 +58,10 @@ C_BaseEntity *C_FilmGrainProxy::BindArgToEntity(void *pArg)
 
 void C_FilmGrainProxy::OnBind(void* pC_BaseEntity)
 {
-	//ConVarRef filmGrain("opout_fx_filmgrain");
-	ConVarRef filmGrainStr("opout_fx_filmgrain_strength");
+	ConVarRef filmGrain("arsenio_fx_filmgrain");
+	ConVarRef filmGrainStr("arsenio_fx_filmgrain_strength");
 
-	//if (!filmGrain.GetBool())
+	if (!filmGrain.GetBool())
 		return;
 
 	// Determine the scale of the film grain here:
