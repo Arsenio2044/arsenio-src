@@ -291,6 +291,8 @@ DEFINE_FIELD(m_iFOVStart, FIELD_INTEGER),
 DEFINE_FIELD(m_flFOVTime, FIELD_TIME),
 DEFINE_FIELD(m_iDefaultFOV, FIELD_INTEGER),
 DEFINE_FIELD(m_flVehicleViewFOV, FIELD_FLOAT),
+DEFINE_FIELD(m_bShouldDrawBloodOverlay, FIELD_BOOLEAN),
+
 
 //DEFINE_FIELD( m_fOnTarget, FIELD_BOOLEAN ), // Don't need to restore
 DEFINE_FIELD(m_iObserverMode, FIELD_INTEGER),
@@ -580,6 +582,10 @@ CBasePlayer::CBasePlayer()
 	m_fRegenRemander = 0; // Health regen
 	Weapon_SetLast(NULL);
 	m_bitsDamageType = 0;
+
+	#ifdef ARSENIO
+	m_bShouldDrawBloodOverlay = false;
+	#endif
 
 	m_bForceOrigin = false;
 	m_hVehicle = NULL;
@@ -8378,6 +8384,9 @@ SendPropInt(SENDINFO(m_iDefaultFOV), 8, SPROP_UNSIGNED),
 SendPropEHandle(SENDINFO(m_hZoomOwner)),
 SendPropArray(SendPropEHandle(SENDINFO_ARRAY(m_hViewModel)), m_hViewModel),
 SendPropString(SENDINFO(m_szLastPlaceName)),
+#ifdef ARSENIO
+SendPropBool(SENDINFO(m_bShouldDrawBloodOverlay)),
+#endif
 
 #if defined USES_ECON_ITEMS
 SendPropUtlVector(SENDINFO_UTLVECTOR(m_hMyWearables), MAX_WEARABLES_SENT_FROM_SERVER, SendPropEHandle(NULL, 0)),

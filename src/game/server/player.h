@@ -464,6 +464,10 @@ public:
 	virtual void            PlayWallRunSound( Vector &vecOrigin );
 	virtual void            StopWallRunSound( void );
 
+#ifdef ARSENIO
+	CNetworkVar(bool, m_bShouldDrawBloodOverlay); // Have we been hit or have blood splatted on us?
+#endif
+
 	virtual void            ChuckGrenade( void ); // for throwing a grenade now no matter what gun we're holding
 	virtual void            CheckMelee( void ); // for quick melee attacks
 	virtual void            CheckFlipoff(void); // lmao

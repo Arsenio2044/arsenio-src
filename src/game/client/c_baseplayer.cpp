@@ -298,6 +298,10 @@ END_RECV_TABLE()
 
 		RecvPropString( RECVINFO(m_szLastPlaceName) ),
 
+#ifdef ARSENIO
+		RecvPropBool(RECVINFO(m_bShouldDrawBloodOverlay)),
+#endif
+
 #if defined USES_ECON_ITEMS
 		RecvPropUtlVector( RECVINFO_UTLVECTOR( m_hMyWearables ), MAX_WEARABLES_SENT_FROM_SERVER,	RecvPropEHandle(NULL, 0, 0) ),
 #endif
@@ -443,6 +447,10 @@ C_BasePlayer::C_BasePlayer() : m_iv_vecViewOffset( "C_BasePlayer::m_iv_vecViewOf
 	m_nForceVisionFilterFlags = 0;
 
 	ListenForGameEvent( "base_player_teleported" );
+
+#ifdef ARSENIO
+	m_bShouldDrawBloodOverlay = false;
+#endif
 }
 
 //-----------------------------------------------------------------------------

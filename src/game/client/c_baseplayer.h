@@ -113,6 +113,10 @@ public:
 	void				AddViewBob(Vector& eyeOrigin, QAngle& eyeAngles, bool calculate = false);
 #endif
 
+#ifdef ARSENIO
+	bool m_bShouldDrawBloodOverlay;
+#endif
+
 	// View model prediction setup
 	virtual void		CalcView( Vector &eyeOrigin, QAngle &eyeAngles, float &zNear, float &zFar, float &fov );
 	virtual void		CalcViewModelView( const Vector& eyeOrigin, const QAngle& eyeAngles);
