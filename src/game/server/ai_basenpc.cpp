@@ -10968,6 +10968,8 @@ void CAI_BaseNPC::Precache( void )
 	PrecacheScriptSound( "Weapon_Generic.BulletHitImpactFeedback" );
 
 	BaseClass::Precache();
+
+	// fuck you glitchy
 }
 
 
