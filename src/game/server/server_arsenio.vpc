@@ -63,6 +63,7 @@ $Project "Server - Arsenio"
 			$File	"arsenio\npc_LeOS.cpp"
 			$File	"$SRCDIR\game\shared\arsenio\arsenio_game_log.cpp"
 			$File	"arsenio\logic_skill.cpp"
+			$File	"arsenio\closecaption_entity.cpp"
 			$File	"env_instructor_hint.cpp"
 
 			$Folder	"Weapons"
