@@ -6430,7 +6430,7 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		if (!giPrecacheGrunt)
 		{
 			giPrecacheGrunt = 1;
-			Msg("You must now restart to use Grunt-o-matic.\n");
+			Msg("You must now restart to use Grunt-o-matic.\n"); // TUX: That's fucking funny
 		}
 		else
 		{
