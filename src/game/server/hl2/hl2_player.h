@@ -198,9 +198,7 @@ public:
 	// Incapped
 	bool IsIncaping( void ) { return m_fIsIncaped; }
 
-#ifdef ARSENIO
-	void SetAnimation(PLAYER_ANIM playerAnim);
-#endif
+
 
 	// Aiming heuristics accessors
 	virtual float		GetIdleTime( void ) const { return ( m_flIdleTime - m_flMoveTime ); }

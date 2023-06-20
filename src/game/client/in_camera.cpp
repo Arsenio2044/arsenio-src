@@ -26,8 +26,7 @@ static ConVar cam_command( "cam_command", "0", FCVAR_CHEAT | FCVAR_CHEAT);	 // t
 static ConVar cam_snapto( "cam_snapto", "0", FCVAR_ARCHIVE | FCVAR_CHEAT);	 // snap to thirdperson view
 static ConVar cam_ideallag( "cam_ideallag", "4.0", FCVAR_ARCHIVE| FCVAR_CHEAT, "Amount of lag used when matching offset to ideal angles in thirdperson view" );
 static ConVar cam_idealdelta( "cam_idealdelta", "4.0", FCVAR_ARCHIVE| FCVAR_CHEAT, "Controls the speed when matching offset to ideal angles in thirdperson view" );
-static ConVar cam_idealyaw("cam_idealyaw", "0", FCVAR_ARCHIVE); // thirdperson yaw
-
+ConVar cam_idealyaw( "cam_idealyaw", "0", FCVAR_ARCHIVE| FCVAR_CHEAT );	 // thirdperson yaw
 ConVar cam_idealpitch( "cam_idealpitch", "0", FCVAR_ARCHIVE | FCVAR_CHEAT  );	 // thirperson pitch
 ConVar cam_idealdist( "cam_idealdist", "150", FCVAR_ARCHIVE | FCVAR_CHEAT );	 // thirdperson distance
 ConVar cam_idealdistright( "cam_idealdistright", "0", FCVAR_ARCHIVE | FCVAR_CHEAT );	 // thirdperson distance
@@ -46,21 +45,7 @@ static ConVar c_orthoheight( "c_orthoheight",   "100", FCVAR_ARCHIVE | FCVAR_CHE
 static kbutton_t cam_pitchup, cam_pitchdown, cam_yawleft, cam_yawright;
 static kbutton_t cam_in, cam_out; // -- "cam_move" is unused
 
-float mf_NextSwitch;
-
-
 extern ConVar cl_thirdperson;
-
-#define CAM_MIN_DIST		16.0 // Don't let the camera get any closer than ...
-#define CAM_MAX_DIST		96.0 // ... or any farther away than ...
-#define CAM_SWITCH_DIST		96.0 // the default camera distance when switching 1st to 3rd person
-#define CAM_HULL_OFFSET		6.0  // the size of the bounding hull used for collision checking
-#define START_TRANS_DIST	40.0 // how close to player when it starts making model translucent
-#define TRANS_DELTA	        1.9921875 // Set to 255 / START_TRANS_DIST
-#define CAM_ANGLE_SPEED 2.5
-
-static Vector CAM_HULL_MIN(-CAM_HULL_OFFSET, -CAM_HULL_OFFSET, -CAM_HULL_OFFSET);
-static Vector CAM_HULL_MAX(CAM_HULL_OFFSET, CAM_HULL_OFFSET, CAM_HULL_OFFSET);
 
 
 // API Wrappers
@@ -279,34 +264,8 @@ void CInput::CAM_Think( void )
 
 	g_ThirdPersonManager.Update();
 
-	// Toggle first/3rd person, check every 0.5 seconds
-	if (gpGlobals->curtime >= mf_NextSwitch) {
-		if (input->KeyState(&in_camchange))
-		{
-			mf_NextSwitch = gpGlobals->curtime + 0.5; /* Check if the key has been pressed every
-																 0.5 seconds */
-			if (!m_fCameraInThirdPerson)
-			{
-				CAM_ToThirdPerson();
-			}
-			else {
-				CAM_ToFirstPerson();
-			}
-		}
-	}
-
-	if (!m_fCameraInThirdPerson)
-	{
-		// If in FP mode, transparent
-		// This is sort of a hack since when the map first loads you ARE transparent...
-		// This is for when you switch from 3rd to 1st.
-		if (C_BasePlayer::GetLocalPlayer()) {
-			C_BasePlayer::GetLocalPlayer()->SetRenderMode(kRenderTransColor);
-			C_BasePlayer::GetLocalPlayer()->SetRenderColorA(0);
-		}
-
+	if( !m_fCameraInThirdPerson )
 		return;
-	}
 
 	// In Maya-mode
 	if ( Is_CAM_ThirdPerson_MayaMode() )
@@ -479,12 +438,6 @@ void CInput::CAM_Think( void )
 	}
 	else if( input->KeyState( &cam_out ) )
 		idealAngles[ DIST ] += 2*cam_idealdelta.GetFloat();
-
-	// Prevent the cam_out from going any further
-	// NOTE: Without this, it _appears_ it's not moving, but
-	// the transparency changes so it is... this fixes it.
-		if (DIST > CAM_MAX_DIST)
-			idealAngles[ DIST ]= CAM_MAX_DIST;
 	
 	if (m_fCameraDistanceMove)
 	{
@@ -566,72 +519,32 @@ void CInput::CAM_Think( void )
 	// Note: CameraOffset = viewangle + idealAngle
 	VectorCopy( g_ThirdPersonManager.GetCameraOffsetAngles(), camOffset );
 	
-	if (cam_snapto.GetInt())
+	if( cam_snapto.GetInt() )
 	{
-		viewangles[YAW] = cam_idealyaw.GetFloat() + viewangles[YAW];
-		viewangles[PITCH] = cam_idealpitch.GetFloat() + viewangles[PITCH];
-		viewangles[2] = cam_idealdist.GetFloat();
+		camOffset[ YAW ] = cam_idealyaw.GetFloat() + viewangles[ YAW ];
+		camOffset[ PITCH ] = cam_idealpitch.GetFloat() + viewangles[ PITCH ];
+		camOffset[ DIST ] = cam_idealdist.GetFloat();
 	}
 	else
 	{
-		if (viewangles[YAW] - viewangles[YAW] != cam_idealyaw.GetFloat())
-			viewangles[YAW] = MoveToward(viewangles[YAW],
-				cam_idealyaw.GetFloat() + viewangles[YAW],
-				CAM_ANGLE_SPEED);
+		float lag = MAX( 1, 1 + cam_ideallag.GetFloat() );
 
-		if (viewangles[PITCH] - viewangles[PITCH] != cam_idealpitch.GetFloat())
-			viewangles[PITCH] = MoveToward(viewangles[PITCH],
-				cam_idealpitch.GetFloat() + viewangles[PITCH],
-				CAM_ANGLE_SPEED);
-
-		if (!C_BasePlayer::GetLocalPlayer()) {
-			// this code can be hit from the main menu, where it will crash
-			viewangles[2] = DIST; // if there's no localplayer to calc from
-		}
-		else {
-			trace_t tr;
-			float adjDist = DIST;
-			C_BasePlayer* localPlayer = C_BasePlayer::GetLocalPlayer();
-
-			Vector origin = localPlayer->GetLocalOrigin(); // find our player's origin
-			origin += localPlayer->GetViewOffset(); // and from there, his eye position
-
-			AngleVectors(QAngle(viewangles.x, viewangles.y, viewangles.z),
-				&camForward, NULL, NULL); // get the forward vector
-
-			UTIL_TraceHull(origin, origin - (camForward * DIST),
-				CAM_HULL_MIN, CAM_HULL_MAX,
-				MASK_SOLID, NULL, &tr); /* use our previously #defined hull to
-											collision trace */
-
-			if (tr.fraction < 1.0) {
-				adjDist = DIST * tr.fraction; // move the camera closer if it hit something
-			}
-			else {
-				adjDist = DIST; // no trace hit, use cam_idealdist without adjusting it
-			}
-
-			if (adjDist < START_TRANS_DIST) {
-				localPlayer->SetRenderMode(kRenderTransColor); // make him translucent
-				localPlayer->SetRenderColorA((byte)(adjDist * TRANS_DELTA)); // closer=less opacity
-			}
-
-			if (adjDist < CAM_MIN_DIST)
-				adjDist = CAM_MIN_DIST; // clamp up to minimum
-
-			if (adjDist > CAM_MAX_DIST)
-				adjDist = CAM_MAX_DIST; // clamp down to maximum
-
-			viewangles[2] = adjDist;
-		}
+		if( camOffset[ YAW ] - viewangles[ YAW ] != cam_idealyaw.GetFloat() )
+			camOffset[ YAW ] = MoveToward( camOffset[ YAW ], cam_idealyaw.GetFloat() + viewangles[ YAW ], lag );
+		
+		if( camOffset[ PITCH ] - viewangles[ PITCH ] != cam_idealpitch.GetFloat() )
+			camOffset[ PITCH ] = MoveToward( camOffset[ PITCH ], cam_idealpitch.GetFloat() + viewangles[ PITCH ], lag );
+		
+		if( abs( camOffset[ DIST ] - cam_idealdist.GetFloat() ) < 2.0 )
+			camOffset[ DIST ] = cam_idealdist.GetFloat();
+		else
+			camOffset[ DIST ] += ( cam_idealdist.GetFloat() - camOffset[ DIST ] ) / lag;
 	}
-
-
 
 	// move the camera closer to the player if it hit something
 	if ( cam_collision.GetInt() )
 	{
-		QAngle desiredCamAngles = QAngle( camOffset[ PITCH ], camOffset[ YAW ], camOffset[ ROLL ] );
+		QAngle desiredCamAngles = QAngle( camOffset[ PITCH ], camOffset[ YAW ], camOffset[ DIST ] );
 
 		if ( g_ThirdPersonManager.IsOverridingThirdPerson() == false )
 		{
@@ -769,7 +682,7 @@ void CInput::CAM_ToThirdPerson(void)
 	{
 		m_fCameraInThirdPerson = true; 
 	
-		g_ThirdPersonManager.SetCameraOffsetAngles( Vector( viewangles[ YAW ], viewangles[ PITCH ], CAM_SWITCH_DIST) );
+		g_ThirdPersonManager.SetCameraOffsetAngles( Vector( viewangles[ YAW ], viewangles[ PITCH ], CAM_MIN_DIST ) );
 	}
 
 	cam_command.SetValue( 0 );

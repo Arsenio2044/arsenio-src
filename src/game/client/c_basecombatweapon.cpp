@@ -478,26 +478,6 @@ int C_BaseCombatWeapon::DrawModel( int flags )
 	// check if local player chases owner of this weapon in first person
 	C_BasePlayer *localplayer = C_BasePlayer::GetLocalPlayer();
 
-	// Get rid of view model, crosshair and weapon in 3rd person
-	// Once we actually get weapons working, we'll let it draw only the weapon
-	if (localplayer)
-	{
-		if (input->CAM_IsThirdPerson())
-		{
-			// make sure the caller is the player to prevent hiding EVERYONE's weapon model.
-			if (localplayer == GetOwner())
-			{
-				SetModel(GetWorldModel());
-				// Hide crosshair, remove this line if you still want to see it.
-				localplayer->m_Local.m_iHideHUD |= HIDEHUD_CROSSHAIR;
-				return false;
-				/* Comment above and uncomment the line underneath if you want
-				   to be able to do weapon things (it will display the weapon). */
-				   //return BaseClass:: DrawModel( flags );
-			}
-		}
-	}
-
 	if ( localplayer && localplayer->IsObserver() && GetOwner() )
 	{
 		// don't draw weapon if chasing this guy as spectator
