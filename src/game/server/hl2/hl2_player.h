@@ -14,7 +14,9 @@
 #include "hl2_playerlocaldata.h"
 #include "simtimer.h"
 #include "soundenvelope.h"
-
+#ifdef ARSENIO
+#include "iclientrenderable.h"
+#endif
 class CAI_Squad;
 class CPropCombineBall;
 
@@ -292,6 +294,11 @@ public:
 	virtual void RemoveSuit( void );
 	void  HandleAdmireGlovesAnimation( void );
 	void  StartAdmireGlovesAnimation( void );
+
+	// Should this object cast shadows?
+#ifdef ARSENIO
+	virtual ShadowType_t ShadowCastType() { return SHADOWS_RENDER_TO_TEXTURE_DYNAMIC; }
+#endif
 	
 	void  HandleSpeedChanges( void );
 
