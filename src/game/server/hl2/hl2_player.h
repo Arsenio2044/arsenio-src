@@ -190,6 +190,12 @@ public:
 	bool IsZooming( void );
 	void CheckSuitZoom( void );
 
+#ifdef ARSENIO
+
+	// Player anims PLS WORK!
+	void SetAnimation(PLAYER_ANIM playerAnim);
+#endif
+
 	// Walking
 	void StartWalking( void );
 	void StopWalking( void );
