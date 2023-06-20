@@ -146,9 +146,11 @@ static	kbutton_t	in_flipoff;
 #ifdef ARSENIO
 static	kbutton_t	in_oicwswitch1;
 static	kbutton_t	in_oicwswitch2;
+kbutton_t	in_camchange;
 #endif
 kbutton_t	in_ducktoggle;
 kbutton_t   in_speedtoggle;
+
 
 // Mobility hack
 static const char* toggle_duck_key = ""; // need this for unducktoggle on jump
@@ -512,6 +514,8 @@ void IN_FlipOffUp(const CCommand& args) { KeyUp(&in_flipoff, args[1]); }
 #ifdef ARSENIO
 void IN_OicwSwitchUp(const CCommand& args) { KeyUp(&in_oicwswitch1, args[1]); }
 void IN_OicwSwitchDown(const CCommand& args) { KeyDown(&in_oicwswitch2, args[1]); }
+void IN_CamChangeDown(const CCommand& args) { KeyDown(&in_camchange, args[1]); }
+void IN_CamChangeUp(const CCommand& args) { KeyUp(&in_camchange, args[1]); }
 #endif
 
 void IN_DuckToggle( const CCommand &args ) 
@@ -1531,7 +1535,7 @@ int CInput::GetButtonBits( int bResetState )
 #ifdef ARSENIO
 	CalcButtonBits( bits, IN_OICWSWITCH1, s_ClearInputState, &in_oicwswitch1, bResetState );
 	CalcButtonBits( bits, IN_OICWSWITCH2, s_ClearInputState, &in_oicwswitch2, bResetState );
-
+	CalcButtonBits(bits, IN_CAMCHANGE, s_ClearInputState, &in_camchange, bResetState);
 #endif
 
 
@@ -1696,12 +1700,15 @@ static ConCommand endgrenade2( "-grenade2", IN_Grenade2Up );
 static ConCommand startgrenade2( "+grenade2", IN_Grenade2Down );
 static ConCommand startattack3("+attack3", IN_Attack3Down);
 static ConCommand endattack3("-attack3", IN_Attack3Up);
-static ConCommand startflipoff("+flipoff", IN_FlipOffDown);
-static ConCommand endflipoff("-flipoff", IN_FlipOffUp);
+
 
 #ifdef ARSENIO
 static ConCommand oicwswitch1("+oicwswitch", IN_OicwSwitchUp);
 static ConCommand oicwswitch2("-oicwswitch", IN_OicwSwitchDown);
+static ConCommand startcamchange("+camchange", IN_CamChangeDown);
+static ConCommand endcamchange("-camchange", IN_CamChangeUp);
+static ConCommand startflipoff("+flipoff", IN_FlipOffDown);
+static ConCommand endflipoff("-flipoff", IN_FlipOffUp);
 #endif
 
 

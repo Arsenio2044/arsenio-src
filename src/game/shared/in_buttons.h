@@ -41,6 +41,7 @@
 #ifdef ARSENIO
 #define	IN_OICWSWITCH1		(1 << 27)
 #define	IN_OICWSWITCH2		(1 << 28)
+#define IN_CAMCHANGE	(1 << 29)
 #endif
 
 

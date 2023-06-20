@@ -23,7 +23,7 @@
 
 //-------------------------------------------------- Constants
 
-#define CAM_MIN_DIST 30.0
+//#define CAM_MIN_DIST 30.0
 #define CAM_ANGLE_MOVE .5
 #define MAX_ANGLE_DIFF 10.0
 #define PITCH_MAX 90.0
