@@ -466,7 +466,7 @@ void CHL2_Player::Precache( void )
 	PrecacheScriptSound( "Player.Spawn" );
 	PrecacheScriptSound( "Player.Die" );
 #ifdef ARSENIO
-	PrecacheModel("models/alyx.mdl");
+	PrecacheModel("models/barney.mdl");
 #endif
 
 
@@ -1354,7 +1354,7 @@ void CHL2_Player::Spawn(void)
 
 #ifndef HL2MP
 #ifndef PORTAL
-	SetModel( "models/alyx.mdl" );
+	SetModel( "models/barney.mdl" );
 #endif
 #endif
 
