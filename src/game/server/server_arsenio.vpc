@@ -65,6 +65,7 @@ $Project "Server - Arsenio"
 			$File	"arsenio\logic_skill.cpp"
 			$File	"arsenio\closecaption_entity.cpp"
 			$File	"env_instructor_hint.cpp"
+			$File	"$SRCDIR\game\shared\arsenio\hands_shared.cpp"
 
 			$Folder	"Weapons"
 			{

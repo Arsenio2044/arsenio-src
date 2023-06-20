@@ -49,6 +49,7 @@ $Project "Client - Arsenio"
 			$File	"arsenio\CursorClip.h"
 			$File	"arsenio\FilmGrainProxy.cpp"
 			$File	"$SRCDIR\game\shared\arsenio\arsenio_game_log.cpp"
+			$File	"$SRCDIR\game\shared\arsenio\hands_shared.cpp"
 
 		}
 

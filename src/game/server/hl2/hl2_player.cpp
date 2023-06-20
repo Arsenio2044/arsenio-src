@@ -467,6 +467,8 @@ void CHL2_Player::Precache( void )
 	PrecacheScriptSound( "Player.Die" );
 #ifdef ARSENIO
 	PrecacheModel("models/barney.mdl");
+	PrecacheModel("models/weapons/arms/v_arms_gambler_new.mdl");
+
 #endif
 
 
@@ -1369,6 +1371,9 @@ void CHL2_Player::Spawn(void)
 
 		RemoveEffects(EF_NODRAW);
 	}
+
+	GetViewModel(1)->SetModel("models/weapons/arms/v_arms_gambler_new.mdl");
+
 #endif
 	//
 	// Our player movement speed is set once here. This will override the cl_xxxx
