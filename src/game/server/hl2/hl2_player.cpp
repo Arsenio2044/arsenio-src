@@ -553,9 +553,13 @@ void CHL2_Player::SetAnimation(PLAYER_ANIM playerAnim)
 			}
 			else
 			{
-				if (speed > 0)
+				if (IsSprinting() && speed >= 290)
 				{
-					idealActivity = m_fIsSprinting ? ACT_WALK : ACT_RUN;
+					idealActivity = ACT_RUN;
+				}
+				else if ( speed >= 110 && GetWaterLevel() != 3 && (GetFlags() & FL_ONGROUND))
+				{
+					idealActivity = ACT_WALK;
 				}
 				else
 				{

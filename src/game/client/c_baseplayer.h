@@ -217,8 +217,12 @@ public:
 	float						MaxSpeed() const		{ return m_flMaxspeed; }
 
 	// Should this object cast shadows?
-	virtual ShadowType_t		ShadowCastType() { return SHADOWS_NONE; }
+	#ifdef ARSENIO
+	virtual ShadowType_t ShadowCastType() { return SHADOWS_RENDER_TO_TEXTURE_DYNAMIC; }
+	#else
 
+	virtual ShadowType_t		ShadowCastType() { return SHADOWS_NONE; }
+#endif
 	virtual bool				ShouldReceiveProjectedTextures( int flags )
 	{
 		return false;
