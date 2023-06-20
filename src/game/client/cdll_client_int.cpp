@@ -353,6 +353,8 @@ static ConVar s_cl_class("cl_class", "default", FCVAR_USERINFO | FCVAR_ARCHIVE, 
 
 ConVar arsenio_rpc("arsenio_rpc", "1");
 
+ConVar arsenio_mobmode("arsenio_mobmode", "0");
+
 #ifdef AR
 static ConVar cl_discord_appid("cl_discord_appid", "949352645989113906", FCVAR_DEVELOPMENTONLY | FCVAR_CHEAT);
 #endif
@@ -1218,8 +1220,8 @@ int CHLClient::Init(CreateInterfaceFn appSystemFactory, CreateInterfaceFn physic
 		DiscordRichPresence discordPresence;
 		memset(&discordPresence, 0, sizeof(discordPresence));
 
-		discordPresence.state = "In-Game";
-		discordPresence.details = "Main Menu";
+		discordPresence.state = "In the Menu";
+		discordPresence.details = "June ALPHA";
 		discordPresence.startTimestamp = startTimestamp;
 		discordPresence.largeImageKey = "deez";
 		Discord_UpdatePresence(&discordPresence);
@@ -1899,7 +1901,14 @@ void CHLClient::LevelInitPreEntity(char const* pMapName)
 		memset(&discordPresence, 0, sizeof(discordPresence));
 
 		char buffer[256];
-		discordPresence.state = "In-Game";
+		if (arsenio_mobmode.GetInt() == 1)
+		{
+			discordPresence.state = "Mobility Mode";
+		}
+		else
+		{
+			discordPresence.state = "In-Game";
+		}
 		sprintf(buffer, "Map: %s", pMapName);
 		discordPresence.details = buffer;
 		discordPresence.largeImageKey = "deez";
