@@ -192,13 +192,14 @@ ConVar	sk_player_leg("sk_player_leg", "1");
 
 // Health Regen
 #if OPTUX3_DLL
-ConVar sv_regeneration("sv_regeneration", "1", FCVAR_REPLICATED);
-ConVar sv_regeneration_wait_time("sv_regeneration_wait_time", "7.0", FCVAR_REPLICATED);
-ConVar sv_regeneration_rate("sv_regeneration_rate", "1.5", FCVAR_REPLICATED);
+ConVar arsenio_leos_regen("arsenio_leos_regen", "1", FCVAR_REPLICATED);
+ConVar arsenio_leos_regen_wait_time("arsenio_leos_regen_wait_time", "7.0", FCVAR_REPLICATED);
+ConVar arsenio_leos_regen_rate("arsenio_leos_regen_rate", "1.5", FCVAR_REPLICATED);
 #else
-ConVar sv_regeneration("sv_regeneration", "1", FCVAR_REPLICATED);
-ConVar sv_regeneration_wait_time("sv_regeneration_wait_time", "7.0", FCVAR_REPLICATED);
-ConVar sv_regeneration_rate("sv_regeneration_rate", "10", FCVAR_REPLICATED);
+ConVar arsenio_leos_regen("arsenio_leos_regen", "1", FCVAR_REPLICATED);
+ConVar arsenio_leos_regen_wait_time("arsenio_leos_regen_wait_time", "7.0", FCVAR_REPLICATED);
+ConVar arsenio_leos_regen_rate("arsenio_leos_regen_rate", "10", FCVAR_REPLICATED);
+ConVar arsenio_leos_cancer("arsenio_leos_cancer", "0", FCVAR_REPLICATED);
 #endif
 
 
@@ -4684,21 +4685,27 @@ void CBasePlayer::PostThink()
 
 			}
 			// Regenerate heath
-			if  (IsExoEquipped() && IsAlive() && GetHealth() < GetMaxHealth() && !(GetHealth() < 30) && (sv_regeneration.GetInt() == 1)) // dick
+			if  (IsExoEquipped() && IsAlive() && GetHealth() < GetMaxHealth() && !(GetHealth() < 30) && (arsenio_leos_regen.GetInt() == 1)) // dick
 			{
 				// Color to overlay on the screen while the player is taking damage
 				color32 hurtScreenOverlay = { 80, 0, 0, 64 };
 
-				if (gpGlobals->curtime > m_flLastDamageTime + sv_regeneration_wait_time.GetFloat())
+				if (gpGlobals->curtime > m_flLastDamageTime + arsenio_leos_regen_wait_time.GetFloat())
 				{
 					//Regenerate based on rate, and scale it by the frametime
-					m_fRegenRemander += sv_regeneration_rate.GetFloat() * gpGlobals->frametime;
+					m_fRegenRemander += arsenio_leos_regen_rate.GetFloat() * gpGlobals->frametime;
 #ifdef ARSENIO
 					// TUX: This should work, i'm not sure.
-					if (IsLeOSActive())
+					if (IsLeOSActive() && (arsenio_leos_cancer.GetInt() == 1))
 					{
 						CPASAttenuationFilter filter(this);
 						filter.UsePredictionRules();
+						EmitSound("LeOS.Regen");
+					}
+
+					if (IsLeOSActive() && (arsenio_leos_cancer.GetInt() == 0))
+					{
+
 						EmitSound("LeOS.Regen");
 					}
 #endif
