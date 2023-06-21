@@ -338,6 +338,8 @@ void CAI_BaseNPC::InitDefaultActivitySR(void)
 	ADD_ACTIVITY_TO_SR( ACT_FISTS_VM_IDLE );
 	ADD_ACTIVITY_TO_SR( ACT_FISTS_VM_DRAW );
 
+
+
 //===========================
 // HL2 Specific Activities
 //===========================
