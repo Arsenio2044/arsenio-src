@@ -22,7 +22,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-#define	STRIKER_FASTEST_REFIRE_TIME		1.1f
+#define	STRIKER_FASTEST_REFIRE_TIME		1.0f
 #define	STRIKER_FASTEST_DRY_REFIRE_TIME	0.2f
 
 #define	STRIKER_ACCURACY_SHOT_PENALTY_TIME		0.2f	// Applied amount of time each shot adds to the time we must recover from
@@ -297,7 +297,7 @@ void CWeaponStriker::PrimaryAttack( void )
 	BaseClass::PrimaryAttack();
 
 	// Draw effect
-	DispatchParticleEffect( "weapon_striker_muzzleflash", PATTACH_POINT_FOLLOW, pOwner->GetViewModel(), "muzzle", true);
+	//DispatchParticleEffect( "muzzle_minigun_core", PATTACH_POINT_FOLLOW, pOwner->GetViewModel(), "muzzle", true);
 
 	// Add an accuracy penalty which can move past our maximum penalty time if we're really spastic
 	m_flAccuracyPenalty += STRIKER_ACCURACY_SHOT_PENALTY_TIME;
@@ -354,6 +354,7 @@ void CWeaponStriker::SecondaryAttack(void)
 {
 
 	SendWeaponAnim(ACT_VM_MELEE);
+
 }
 
 //-----------------------------------------------------------------------------
