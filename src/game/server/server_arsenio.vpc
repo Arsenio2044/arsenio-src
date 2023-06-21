@@ -91,6 +91,7 @@ $Project "Server - Arsenio"
 			$File	"arsenio\weapon_ar3.h"
 		//	$File	"arsenio\logic_fear.cpp"
 	//		$File	"arsenio\weapon_flipoff.h"
+			$File	"arsenio\weapon_striker.cpp"
 			$File	"weapon_frag.h"	
 			$File	"hl1\hl1_npc_controller.cpp"
 
