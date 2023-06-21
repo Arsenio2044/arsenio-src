@@ -22,7 +22,7 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-#define	STRIKER_FASTEST_REFIRE_TIME		0.1f
+#define	STRIKER_FASTEST_REFIRE_TIME		1.1f
 #define	STRIKER_FASTEST_DRY_REFIRE_TIME	0.2f
 
 #define	STRIKER_ACCURACY_SHOT_PENALTY_TIME		0.2f	// Applied amount of time each shot adds to the time we must recover from
@@ -48,6 +48,7 @@ public:
 	void	ItemPreFrame( void );
 	void	ItemBusyFrame( void );
 	void	PrimaryAttack( void );
+	void	SecondaryAttack(void);
 //	void	DrawHitmarker( void ); // ADAHAHA
 	void	AddViewKick( void );
 	void	DryFire( void );
@@ -319,6 +320,8 @@ void CWeaponStriker::PrimaryAttack( void )
 	vecStart = pPlayer->Weapon_ShootPosition();
 	vecStop = vecStart + vecDir * MAX_TRACE_LENGTH;
 
+
+
 	// Do the TraceLine
 	UTIL_TraceLine( vecStart, vecStop, MASK_ALL, pPlayer, COLLISION_GROUP_NONE, &tr );
 
@@ -340,6 +343,17 @@ void CWeaponStriker::PrimaryAttack( void )
 #endif
 		}
 	}
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: 
+//
+//
+//-----------------------------------------------------------------------------
+void CWeaponStriker::SecondaryAttack(void)
+{
+
+	SendWeaponAnim(ACT_VM_MELEE);
 }
 
 //-----------------------------------------------------------------------------
