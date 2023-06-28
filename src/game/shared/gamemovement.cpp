@@ -71,7 +71,7 @@ ConVar xc_uncrouch_on_jump( "xc_uncrouch_on_jump", "1", FCVAR_ARCHIVE, "Uncrouch
 ConVar player_limit_jump_speed( "player_limit_jump_speed", "1", FCVAR_REPLICATED );
 #endif
 
-#if !defined ( OPTUX3_CLIENT ) && !defined( OPTUX3_DLL ) && !defined( ARSENIO )
+#if !defined ( OPTUX3_CLIENT ) && !defined( OPTUX3_DLL ) && !defined( ARSENIO_M )
 // Camera Bob for Arsenio.
 ConVar arsenio_viewbob_enabled("arsenio_viewbob_enabled", "1", 0, "Oscillation Toggle", true, 0, true, 1);
 ConVar arsenio_viewbob_timer("arsenio_viewbob_timer", "2", 0, "Speed of Oscillation");
@@ -2077,7 +2077,7 @@ void CGameMovement::StayOnGround( void )
 //-----------------------------------------------------------------------------
 void CGameMovement::WalkMove( void )
 {
-#if !defined ( OPTUX3_CLIENT ) && !defined( OPTUX3_DLL ) && !defined( ARSENIO )
+#if !defined ( OPTUX3_CLIENT ) && !defined( OPTUX3_DLL ) && defined( ARSENIO )
 	//view bob code for Arsenio
 	if (arsenio_viewbob_enabled.GetInt() == 1 && !engine->IsPaused())
 	{

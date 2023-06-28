@@ -5627,6 +5627,8 @@ void CBasePlayer::ChuckGrenade(void)
 	if (IsObserver())
 		return;
 
+
+
 	float flDur; // for sounds
 	CBaseCombatWeapon* pWeap = GetFragWeap(this);
 	if (!zHasFrags(this))

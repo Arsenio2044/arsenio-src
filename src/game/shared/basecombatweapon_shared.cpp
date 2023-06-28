@@ -20,6 +20,7 @@
 
 
 
+
 // NVNT start extra includes
 #include "haptics/haptic_utils.h"
 #ifdef CLIENT_DLL
@@ -51,6 +52,7 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
+
 
 // The minimum time a hud hint for a weapon should be on screen. If we switch away before
 // this, then teh hud hint counter will be deremented so the hint will be shown again, as
@@ -935,6 +937,17 @@ bool CBaseCombatWeapon::ShouldDisplayReloadHUDHint()
 
 	if( pOwner != NULL && pOwner->IsPlayer() && UsesClipsForAmmo1() && m_iClip1 < (GetMaxClip1() / 2) )
 	{
+
+#ifdef ARSENIO_DLL 
+		IGameEvent* pEvent = gameeventmanager->CreateEvent("instructor_reload");
+
+		if (pEvent)
+		{
+			pEvent->SetInt("userid", GetUserID());
+			gameeventmanager->FireEvent(pEvent);
+		}
+#endif
+
 		// I'm owned by a player, I use clips, I have less then half a clip loaded. Now, does the player have more ammo?
 		if ( pOwner )
 		{
@@ -949,8 +962,12 @@ bool CBaseCombatWeapon::ShouldDisplayReloadHUDHint()
 //-----------------------------------------------------------------------------
 void CBaseCombatWeapon::DisplayReloadHudHint()
 {
+
+
 #if !defined( CLIENT_DLL )
-	UTIL_HudHintText( GetOwner(), "valve_hint_reload" );
+	//UTIL_HudHintText( GetOwner(), "valve_hint_reload" );
+
+
 	m_iReloadHudHintCount++;
 	m_bReloadHudHintDisplayed = true;
 	m_flHudHintMinDisplayTime = gpGlobals->curtime + MIN_HUDHINT_DISPLAY_TIME;
@@ -2297,7 +2314,17 @@ bool CBaseCombatWeapon::ReloadsSingly( void ) const
 //-----------------------------------------------------------------------------
 bool CBaseCombatWeapon::Reload( void )
 {
+
 	return DefaultReload( GetMaxClip1(), GetMaxClip2(), ACT_VM_RELOAD );
+#ifdef ARSENIO_DLL
+	IGameEvent* pEvent = gameeventmanager->CreateEvent("use_reload");
+
+	if (pEvent)
+	{
+		pEvent->SetInt("userid", GetUserID());
+		gameeventmanager->FireEvent(pEvent);
+	}
+#endif
 }
 
 //=========================================================
@@ -2562,7 +2589,11 @@ void CBaseCombatWeapon::PrimaryAttack( void )
 	info.m_vecSpread = GetActiveWeapon()->GetBulletSpread();
 #endif // CLIENT_DLL
 
+
 	pPlayer->FireBullets( info );
+
+
+
 
 
 

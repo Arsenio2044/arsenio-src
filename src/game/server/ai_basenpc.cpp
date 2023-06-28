@@ -615,12 +615,13 @@ void CAI_BaseNPC::Event_Killed( const CTakeDamageInfo &info )
 	if (info.GetAttacker()->IsPlayer())
 	{
 		EmitSound("Weapon_Generic.BulletHitKillFeedback");
+		// Kill screen overlay
+
+		color32 blue = { 0,0,128,128 };
+		UTIL_ScreenFade(this, blue, 1.0f, 0.1f, FFADE_IN | FFADE_PURGE);
 	}
 
-	// Kill screen overlay
 
-	color32 blue = { 0,0,128,128 };
-	UTIL_ScreenFade(this, blue, 1.0f, 0.1f, FFADE_IN);
 
 #endif
 	

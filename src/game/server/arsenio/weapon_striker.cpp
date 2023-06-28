@@ -18,9 +18,14 @@
 #include "particle_parse.h"
 #include "effect_dispatch_data.h"
 #include "te_effect_dispatch.h"
+#include "actual_bullet.h"
+
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
+
+// TUX: Using code from shotgun for this 
+extern ConVar sk_plr_num_shotgun_pellets;
 
 #define	STRIKER_FASTEST_REFIRE_TIME		1.0f
 #define	STRIKER_FASTEST_DRY_REFIRE_TIME	0.2f
@@ -294,7 +299,31 @@ void CWeaponStriker::PrimaryAttack( void )
 		pOwner->ViewPunchReset();
 	}
 
+	FireBulletsInfo_t info;
+	info.m_iAmmoType = m_iPrimaryAmmoType;
+	info.m_iShots = 4;
+	info.m_pAttacker = GetOwnerEntity();
+
+	// Only the player fires this way so we can cast
+	CBasePlayer* pPlayer = ToBasePlayer(GetOwner());
+
+	if (!pPlayer)
+	{
+		return;
+	}
+
+
+	Vector	vecSrc = pPlayer->Weapon_ShootPosition();
+	Vector	vecAiming = pPlayer->GetAutoaimVector(AUTOAIM_SCALE_DEFAULT);
+
 	BaseClass::PrimaryAttack();
+
+	pPlayer->FireBullets(sk_plr_num_shotgun_pellets.GetInt(), vecSrc, vecAiming, GetBulletSpread(), MAX_TRACE_LENGTH, m_iPrimaryAmmoType, 0, -1, -1, 0, NULL, true, true);
+
+	pPlayer->ViewPunch(QAngle(-8, random->RandomFloat(-2, 2), 0));
+
+	FireActualBullet(info, 12000, GetTracerType());
+
 
 	// Draw effect
 	//DispatchParticleEffect( "muzzle_minigun_core", PATTACH_POINT_FOLLOW, pOwner->GetViewModel(), "muzzle", true);
@@ -305,9 +334,6 @@ void CWeaponStriker::PrimaryAttack( void )
 	m_iPrimaryAttacks++;
 	gamestats->Event_WeaponFired( pOwner, true, GetClassname() );
 
-	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
-	if ( !pPlayer )
-		return;
 
 	// Set up the vectors and traceline
 	trace_t tr;
