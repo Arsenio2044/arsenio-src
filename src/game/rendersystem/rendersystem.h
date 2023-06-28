@@ -20,6 +20,7 @@ public:
 	virtual void Render(const CViewSetup& view, int nClearFlags, int whatToDraw);
 	virtual void EndFrame();
 
+
 	virtual void PushRenderable(IRenderSystem_Renderable* pRenderable);
 #if !defined (CLIENT_DLL)
 	virtual const CViewSetup& GetViewSetup() { return m_ViewStack.Top(); };

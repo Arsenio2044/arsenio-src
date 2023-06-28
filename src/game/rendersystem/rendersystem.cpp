@@ -257,3 +257,4 @@ void CRenderSystem::PopView()
 
 	m_ViewStack.Pop();
 }
+

@@ -180,6 +180,9 @@ extern vgui::IInputInternal* g_InputInternal;
 
 #include "..\GameUI\iGameUI2.h"
 
+#include "..\RenderSystem\irendersystem.h"
+
+#include "..\RenderSystem\rendersystem.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -229,6 +232,7 @@ IReplaySystem* g_pReplay = NULL;
 
 
 IGameUI2* GameUI2 = nullptr;
+IRenderSystem* RenderSystem = nullptr;
 IGamepadUI* g_pGamepadUI = nullptr;
 
 
@@ -1389,6 +1393,52 @@ void CHLClient::PostInit()
 
 	}
 
+	if (CommandLine()->FindParm("-norendersystem") == 0)
+	{
+		char RenderSystemPath[2048];
+		Q_snprintf(RenderSystemPath, sizeof(RenderSystemPath), "%s\\bin\\GameUI.dll", engine->GetGameDirectory());
+
+		CSysModule* RenderSystemModule = Sys_LoadModule(RenderSystemPath);
+		if (RenderSystemModule != nullptr)
+		{
+			ConColorMsg(Color(0, 148, 255, 255), "Loaded GameUI.dll\n");
+			CreateInterfaceFn RenderSystemFactory = Sys_GetFactory(RenderSystemModule);
+			if (RenderSystemFactory)
+			{
+				RenderSystem = (IRenderSystem*)RenderSystemFactory(RENDERSYSTEM_INTERFACE_VERSION, NULL);
+				if (RenderSystem != nullptr)
+				{
+					ConColorMsg(Color(0, 148, 255, 255), "GameUI: Started with runtime: 995B12\n");
+
+					factorylist_t Factories;
+					FactoryList_Retrieve(Factories);
+					RenderSystem->Connect(Factories.appSystemFactory);
+					RenderSystem->Init();
+				}
+				else
+				{
+					ConColorMsg(Color(0, 148, 255, 255), "Unable to pull RenderSystem interface.\n");
+					Warning("GameUI: Unable to pull RenderSystem interface ");
+
+				}
+			}
+			else
+			{
+				ConColorMsg(Color(0, 148, 255, 255), "Unable to get RenderSystem factory.\n");
+				Warning("RenderSystem: No factory! ");
+
+			}
+		}
+		else
+
+
+		{
+			ConColorMsg(Color(0, 148, 255, 255), "Unable to load RenderSystem.dll from:\n%s\n", RenderSystemPath);
+			Warning("Couldn't load Library RenderSystem.dll ");
+		}
+
+	}
+
 #ifdef ARSENIO
 	SwapDisconnectCommand();
 #endif
@@ -1444,6 +1494,12 @@ void CHLClient::Shutdown(void)
 	{
 		GameUI2->OnShutdown();
 		GameUI2->Shutdown();
+	}
+
+	if (RenderSystem != nullptr)
+	{
+		//RenderSystem->OnShutdown();
+		RenderSystem->Shutdown();
 	}
 
 	if (g_pGamepadUI != nullptr)
@@ -1555,6 +1611,9 @@ void CHLClient::HudUpdate(bool bActive)
 
 	if (GameUI2 != nullptr)
 		GameUI2->OnUpdate();
+
+	if (RenderSystem != nullptr)
+		//RenderSystem->OnUpdate();
 
 	if (g_pGamepadUI != nullptr)
 		g_pGamepadUI->OnUpdate(frametime);
@@ -1933,6 +1992,9 @@ void CHLClient::LevelInitPreEntity(char const* pMapName)
 	if (GameUI2 != nullptr)
 		GameUI2->OnLevelInitializePreEntity();
 
+	if (RenderSystem != nullptr)
+		ConColorMsg(Color(255, 148, 0, 255), "Rendersystem: Loading\n");
+
 	if (g_pGamepadUI != nullptr)
 		g_pGamepadUI->OnLevelInitializePreEntity();
 
@@ -1954,6 +2016,9 @@ void CHLClient::LevelInitPostEntity()
 
 	if (GameUI2 != nullptr)
 		GameUI2->OnLevelInitializePostEntity();
+
+	if (RenderSystem != nullptr)
+		ConColorMsg(Color(255, 148, 0, 255), "Rendersystem: Loading\n");
 
 	if (g_pGamepadUI != nullptr)
 		g_pGamepadUI->OnLevelInitializePostEntity();
@@ -2029,6 +2094,9 @@ void CHLClient::LevelShutdown(void)
 
 	if (GameUI2 != nullptr)
 		GameUI2->OnLevelShutdown();
+
+	if (RenderSystem != nullptr)
+		//RenderSystem->OnLevelShutdown();
 
 	if (g_pGamepadUI != nullptr)
 		g_pGamepadUI->OnLevelShutdown();

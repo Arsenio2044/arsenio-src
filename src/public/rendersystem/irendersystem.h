@@ -12,6 +12,7 @@ public:
 	virtual void StartFrame() = 0;
 	virtual void Render(const CViewSetup& view, int nClearFlags, int whatToDraw) = 0;
 	virtual void EndFrame() = 0;
+
 	
 	virtual void PushRenderable(IRenderSystem_Renderable* pRenderable) = 0;
 	virtual const CViewSetup& GetViewSetup() = 0;
