@@ -13,6 +13,7 @@ $Group "gamedlls"
 	"client"
 	"server"
 	"gameui"
+	"rendersystem"
 }
 
 $Group "game"
@@ -26,6 +27,7 @@ $Group "game"
 	"responserules"
 	"game_shader_dx9"
 	"gamepadui"
+	"rendersystem"
 }
 
 

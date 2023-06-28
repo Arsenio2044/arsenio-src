@@ -147,3 +147,8 @@ $Project "gamepadui"
 	"gamepadui\gamepadui_hl2.vpc"		[($WIN32||$X360||$POSIX)]
 
 }
+
+$Project "rendersystem"
+{
+	"game\rendersystem\rendersystem.vpc"		[($WIN32||$X360||$POSIX)]
+}
