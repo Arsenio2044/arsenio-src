@@ -1394,10 +1394,28 @@ bool CBaseCombatWeapon::IsWeaponVisible( void )
 //-----------------------------------------------------------------------------
 bool CBaseCombatWeapon::ReloadOrSwitchWeapons( void )
 {
+
+#ifndef ARSENIO
 	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
 	Assert( pOwner );
-
+#endif
 	m_bFireOnEmpty = false;
+
+#ifdef ARSENIO_DLL 
+	if (m_iClip1 < (GetMaxClip1() / 2))
+	{
+		IGameEvent* pEvent = gameeventmanager->CreateEvent("instructor_reload");
+
+		if (pEvent)
+		{
+			pEvent->SetInt("userid", GetUserID());
+			gameeventmanager->FireEvent(pEvent);
+		}
+	}
+
+#endif
+
+#ifndef ARSENIO
 //#ifdef GAME_DLL
 //	IGameEvent* pEvent = gameeventmanager->CreateEvent("instructor_reload");
 //	if (pEvent)
@@ -1431,6 +1449,7 @@ bool CBaseCombatWeapon::ReloadOrSwitchWeapons( void )
 				return true;
 		}
 	}
+#endif
 
 	return false;
 }
@@ -2236,6 +2255,16 @@ bool CBaseCombatWeapon::DefaultReload( int iClipSize1, int iClipSize2, int iActi
 	if (!pOwner)
 		return false;
 
+#ifdef ARSENIO_DLL
+	IGameEvent* pEvent = gameeventmanager->CreateEvent("use_reload");
+
+	if (pEvent)
+	{
+		pEvent->SetInt("userid", GetUserID());
+		gameeventmanager->FireEvent(pEvent);
+	}
+#endif
+
 	// If I don't have any spare ammo, I can't reload
 	if ( pOwner->GetAmmoCount(m_iPrimaryAmmoType) <= 0 )
 		return false;
@@ -2316,15 +2345,7 @@ bool CBaseCombatWeapon::Reload( void )
 {
 
 	return DefaultReload( GetMaxClip1(), GetMaxClip2(), ACT_VM_RELOAD );
-#ifdef ARSENIO_DLL
-	IGameEvent* pEvent = gameeventmanager->CreateEvent("use_reload");
 
-	if (pEvent)
-	{
-		pEvent->SetInt("userid", GetUserID());
-		gameeventmanager->FireEvent(pEvent);
-	}
-#endif
 }
 
 //=========================================================
