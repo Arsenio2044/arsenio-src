@@ -144,6 +144,25 @@ public:
 #define HUD_PRINTTALK		3
 #define HUD_PRINTCENTER		4
 
+// Gamemode for Arsenio 2044
+enum GameMode_t
+{
+	GAMEMODE_UNKNOWN = 0, // Unrecognized map
+	GAMEMODE_MOB = 1,
+	GAMEMODE_KILLZONE = 2,
+
+
+	// NOTE NOTE: IF YOU UPDATE THIS, UPDATE MOMENTUM.FGD's "GameTypes" BASECLASS!
+	GAMEMODE_COUNT // Should be last
+};
+
+const char* const g_szGameModes[] = {
+	"#MOM_GameType_Unknown",
+	"#MOM_GameType_Mob",
+	"#MOM_GameType_Killzone",
+};
+
+
 // Vote creation or processing failure codes
 typedef enum
 {

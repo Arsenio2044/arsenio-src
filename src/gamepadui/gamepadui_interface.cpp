@@ -1,7 +1,7 @@
 #include "gamepadui_interface.h"
 #include "gamepadui_basepanel.h"
 #include "gamepadui_mainmenu.h"
-#include "gamepadui_loading.h"
+//#include "gamepadui_loading.h"
 
 #include "vgui/ILocalize.h"
 
@@ -78,8 +78,8 @@ void GamepadUI::Initialize( CreateInterfaceFn factory )
 
     GamepadUI_Log( "Overriding menu.\n" );
 
-    g_pGamepadUILoading = new GamepadUILoading(GetRootVPanel());
-    m_pGameUI->SetLoadingBackgroundDialog(g_pGamepadUILoading->GetVPanel());
+  //  g_pGamepadUILoading = new GamepadUILoading(GetRootVPanel());
+    //m_pGameUI->SetLoadingBackgroundDialog(g_pGamepadUILoading->GetVPanel());
 
     m_pGameUI->SetMainMenuOverride( GetBaseVPanel() );
 

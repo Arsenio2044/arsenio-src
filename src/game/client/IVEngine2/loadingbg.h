@@ -9,6 +9,8 @@
 #include <vgui_controls/EditablePanel.h>
 #include <vgui_controls\ImagePanel.h>
 #include "ienginevgui.h"
+#include "TipManager.h"
+
 
 //-----------------------------------------------------------------------------
 // Purpose: 
@@ -24,11 +26,27 @@ public:
 
 	void SetNewBackgroundImage( char const *imageName );
 
+	void SetTipPanelText(const char* pMapName);
+
+	void LoadMapData(const char* pMapName);
+
+
+	vgui::Label* m_pTipLabel;
+
+
+	CTipManager m_TipManager;
+
+
+
 protected:
 	void ApplySchemeSettings( vgui::IScheme *pScheme );
 
 private:
+
+
 	vgui::ImagePanel *m_pBackground;
+
+
 };
 
 #endif	// !LOADINGBG_H

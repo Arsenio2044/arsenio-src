@@ -74,7 +74,7 @@ ConVar player_limit_jump_speed( "player_limit_jump_speed", "1", FCVAR_REPLICATED
 #if !defined ( OPTUX3_CLIENT ) && !defined( OPTUX3_DLL ) && !defined( ARSENIO_M )
 // Camera Bob for Arsenio.
 ConVar arsenio_viewbob_enabled("arsenio_viewbob_enabled", "1", 0, "Oscillation Toggle", true, 0, true, 1);
-ConVar arsenio_viewbob_timer("arsenio_viewbob_timer", "2", 0, "Speed of Oscillation");
+ConVar arsenio_viewbob_timer("arsenio_viewbob_timer", "6", 0, "Speed of Oscillation");
 ConVar arsenio_viewbob_scale_x("arsenio_viewbob_scale_x", "0.0", 0, "Magnitude of Oscillation");
 ConVar arsenio_viewbob_scale_y("arsenio_viewbob_scale_y", "0.1", 0, "Magnitude of Oscillation");
 ConVar arsenio_viewbob_scale_z("arsenio_viewbob_scale_z", "0.1", 0, "Magnitude of Oscillation");
