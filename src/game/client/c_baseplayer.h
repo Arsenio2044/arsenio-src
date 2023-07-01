@@ -26,6 +26,9 @@
 #include "igameevents.h"
 #include "GameEventListener.h"
 #include "player_mobility_defs.h"
+#ifdef ARSENIO
+#include "ivengine2/c_bobmodel.h"
+#endif
 
 #if defined USES_ECON_ITEMS
 #include "econ_item.h"
@@ -564,6 +567,9 @@ private:
 	
 	float			m_flMaxspeed;
 
+#ifdef ARSENIO
+	C_BobModel* m_pBobViewModel;
+#endif
 	int				m_iBonusProgress;
 	int				m_iBonusChallenge;
 
