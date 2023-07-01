@@ -1182,6 +1182,20 @@ public:
 	virtual float	GetDamage() { return 0; }
 	virtual void	SetDamage(float flDamage) {}
 
+#ifdef ARSENIO_M
+	// Some entities want to use interactions regardless of whether they're a CBaseCombatCharacter.
+	// Valve ran into this issue with frag grenades when they started deriving from CBaseAnimating instead of CBaseCombatCharacter,
+	// preventing them from using the barnacle interactions for rigged grenade timing so it's guaranteed to blow up in the barnacle's face.
+	// We're used to unaltered behavior now, so we're not restoring that as default, but making this a "base entity" thing is supposed to help in situtions like those.
+	// 
+	// Also, keep in mind pretty much all existing DispatchInteraction() calls are only performed on CBaseCombatCharacters.
+	// You'll need to change their code manually if you want other, non-character entities to use the interaction.
+	bool				DispatchInteraction(int interactionType, void* data, CBaseCombatCharacter* sourceEnt);
+
+	// Do not call HandleInteraction directly, use DispatchInteraction
+	virtual bool		HandleInteraction(int interactionType, void* data, CBaseCombatCharacter* sourceEnt) { return false; }
+#endif
+
 	virtual Vector	EyePosition( void );			// position of eyes
 	virtual const QAngle &EyeAngles( void );		// Direction of eyes in world space
 	virtual const QAngle &LocalEyeAngles( void );	// Direction of eyes

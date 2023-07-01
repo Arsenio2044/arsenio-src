@@ -72,6 +72,10 @@ typedef enum
 
 	AE_RAGDOLL,
 
+#ifdef ARSENIO
+	AE_KICKATTACK, // For Arsenio kicks
+#endif
+
 	AE_CL_ENABLE_BODYGROUP,
 	AE_CL_DISABLE_BODYGROUP,
 	AE_CL_BODYGROUP_SET_VALUE,

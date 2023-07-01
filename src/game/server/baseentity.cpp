@@ -4394,6 +4394,35 @@ void CBaseEntity::NotifySystemEvent( CBaseEntity *pNotify, notify_system_event_t
 {
 }
 
+#ifdef ARSENIO_M
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+bool CBaseEntity::DispatchInteraction(int interactionType, void* data, CBaseCombatCharacter* sourceEnt)
+{
+	if (interactionType <= 0)
+		return false;
+
+	if (m_ScriptScope.IsInitialized() && g_Hook_HandleInteraction.CanRunInScope(m_ScriptScope))
+	{
+		//HSCRIPT hData = g_pScriptVM->RegisterInstance( data );
+
+		// interaction, data, sourceEnt
+		ScriptVariant_t functionReturn;
+		ScriptVariant_t args[] = { interactionType/*, ScriptVariant_t( hData )*/, ScriptVariant_t(ToHScript(sourceEnt)) };
+		if (g_Hook_HandleInteraction.Call(m_ScriptScope, &functionReturn, args) && (functionReturn.m_type == FIELD_BOOLEAN))
+		{
+			// Return the interaction here
+			//g_pScriptVM->RemoveInstance( hData );
+			return functionReturn.m_bool;
+		}
+
+		//g_pScriptVM->RemoveInstance( hData );
+	}
+
+	return HandleInteraction(interactionType, data, sourceEnt);
+}
+#endif
 
 //-----------------------------------------------------------------------------
 // Purpose: Holds an entity's previous abs origin and angles at the time of

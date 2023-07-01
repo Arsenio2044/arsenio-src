@@ -35,6 +35,9 @@ enum HL2PlayerPhysFlag_e
 class IPhysicsPlayerController;
 class CLogicPlayerProxy;
 
+
+
+
 struct commandgoal_t
 {
 	Vector		m_vecGoalLocation;
@@ -142,6 +145,10 @@ public:
 	float SuitPower_GetCurrentPercentage( void ) { return m_HL2Local.m_flSuitPower; }
 	
 	void SetFlashlightEnabled( bool bState );
+
+#ifdef ARSENIO
+	virtual void SetLegModel(string_t iszModel);
+#endif
 
 	// Apply a battery
 	bool ApplyBattery( float powerMultiplier = 1.0 );
@@ -334,6 +341,17 @@ protected:
 	virtual void		ItemPostFrame();
 	virtual void		PlayUseDenySound();
 
+#ifdef ARSENIO
+	virtual void		HandleKickAttack();
+	virtual void		TraceKick(trace_t& tr, const Vector& vecAim);
+	virtual void		TraceKickAttack(CBaseEntity* pKickedEntity = NULL);
+
+	void  HandleKickAnimation(void);
+	void  StartKickAnimation(void);
+
+	virtual void HandleAnimEvent(animevent_t* pEvent);
+#endif
+
 private:
 	bool				CommanderExecuteOne( CAI_BaseNPC *pNpc, const commandgoal_t &goal, CAI_BaseNPC **Allies, int numAllies );
 
@@ -367,6 +385,7 @@ private:
 protected:	// Jeep: Portal_Player needs access to this variable to overload PlayerUse for picking up objects through portals
 	bool				m_bPlayUseDenySound;		// Signaled by PlayerUse, but can be unset by HL2 ladder code...
 
+
 private:
 
 	CAI_Squad *			m_pPlayerAISquad;
@@ -386,6 +405,15 @@ private:
 
 	float				m_flNextFlashlightCheckTime;
 	float				m_flFlashlightPowerDrainScale;
+
+#ifdef ARSENIO
+
+
+	float				m_flNextKickAttack;
+	bool				m_bKickWeaponLowered;
+
+	string_t		    m_LegModelName;
+#endif
 
 	// Aiming heuristics code
 	float				m_flIdleTime;		//Amount of time we've been motionless
@@ -433,3 +461,23 @@ void CHL2_Player::DisableCappedPhysicsDamage()
 
 
 #endif	//HL2_PLAYER_H
+
+#ifdef ARSENIO
+//-----------------------------------------------------------------------------
+// Purpose: Kick data for interaction.
+//
+//-----------------------------------------------------------------------------
+struct KickInfo_t
+{
+	KickInfo_t(trace_t* _tr, CTakeDamageInfo* _dmgInfo)
+	{
+		tr = _tr;
+		dmgInfo = _dmgInfo;
+		success = true;
+	}
+
+	trace_t* tr;
+	CTakeDamageInfo* dmgInfo;
+	bool success; // Can be set by interactions to determine if a kick was "successful" (whether it should be counted by kick trackers)
+};
+#endif

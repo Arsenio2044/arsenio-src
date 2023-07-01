@@ -73,6 +73,11 @@ extern int  g_interactionHitByPlayerThrownPhysObj;
 // Alerts vital allies when the player punts a large object (car)
 extern int	g_interactionPlayerPuntedHeavyObject;
 
+#ifdef ARSENIO
+extern int	g_interactionArsenioKick;
+extern int	g_interactionArsenioKickWarn;
+#endif
+
 // Zombie
 // Melee attack will land in one second or so.
 extern int	g_interactionZombieMeleeWarning;

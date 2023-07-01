@@ -48,6 +48,8 @@
 #include "tier0/icommandline.h"
 #include "gamemovement.h"
 #include "SoundEmitterSystem/isoundemittersystembase.h"
+#include "npcevent.h"
+
 
 
 
@@ -90,7 +92,13 @@ ConVar hl2_normspeed( "hl2_normspeed", "110" );
 ConVar hl2_sprintspeed( "hl2_sprintspeed", "320" );
 ConVar hl2_incapspeed( "hl2_incapspeed", "150" );
 #ifdef ARSENIO
-ConVar arsenio_screenshake("arsenio_screenshake", "1");
+ConVar arsenio_screenshake("arsenio_screenshake", "0");
+ConVar arsenio_player_kick_attack_enabled("arsenio_player_kick_attack_enabled", "1", FCVAR_REPLICATED);
+ConVar arsenio_player_kick_default_modelname("arsenio_player_kick_default_modelname", "models/weapons/ez2/v_kick.mdl", FCVAR_REPLICATED, "Default filename of model to use for kick animation - can be overridden in map");
+ConVar arsenio_plr_dmg_kick("arsenio_plr_dmg_kick", "5", FCVAR_REPLICATED);
+ConVar arsenio_player_stomp_tiny_hull("arsenio_player_stomp_tiny_hull", "0", FCVAR_REPLICATED, "Should a kick attack be dispatched to NPCs with tiny hulls when the player stands on top of them?");
+
+
 #endif
 
 ConVar hl2_darkness_flashlight_factor ( "hl2_darkness_flashlight_factor", "1" );
@@ -225,6 +233,11 @@ public:
 	void InputEnableCappedPhysicsDamage( inputdata_t &inputdata );
 	void InputDisableCappedPhysicsDamage( inputdata_t &inputdata );
 	void InputSetLocatorTargetEntity( inputdata_t &inputdata );
+
+#ifdef ARSENIO
+	void InputSetLegModel(inputdata_t& inputdata);
+#endif
+
 #ifdef PORTAL
 	void InputSuppressCrosshair( inputdata_t &inputdata );
 #endif // PORTAL2
@@ -342,6 +355,12 @@ BEGIN_DATADESC( CHL2_Player )
 	DEFINE_FIELD( m_fIsWalking, FIELD_BOOLEAN ),
 	DEFINE_FIELD( m_fIsIncaped, FIELD_BOOLEAN ),
 
+#ifdef ARSENIO
+	DEFINE_FIELD(m_flNextKickAttack, FIELD_TIME),
+	DEFINE_FIELD(m_bKickWeaponLowered, FIELD_BOOLEAN),
+	DEFINE_FIELD(m_LegModelName, FIELD_STRING),
+#endif
+
 	/*
 	// These are initialized every time the player calls Activate()
 	DEFINE_FIELD( m_bIsAutoSprinting, FIELD_BOOLEAN ),
@@ -441,6 +460,14 @@ IMPLEMENT_SERVERCLASS_ST(CHL2_Player, DT_HL2_Player)
 	SendPropBool( SENDINFO(m_fIsSprinting) ),
 END_SEND_TABLE()
 
+#ifdef ARSENIO
+//-----------------------------------------------------------------------------
+// Interactions
+//-----------------------------------------------------------------------------
+int g_interactionArsenioKick = 0;
+int g_interactionArsenioKickWarn = 0;
+#endif
+
 
 void CHL2_Player::Precache( void )
 {
@@ -468,6 +495,28 @@ void CHL2_Player::Precache( void )
 #ifdef ARSENIO
 	PrecacheModel("models/barney.mdl");
 	PrecacheModel("models/weapons/arms/v_arms_gambler_new.mdl");
+
+	PrecacheScriptSound("Player.KickSwing");
+	PrecacheScriptSound("Player.KickHit");
+	PrecacheScriptSound("Player.KickMiss");
+
+	if (m_LegModelName == NULL_STRING)
+	{
+		m_LegModelName = AllocPooledString(arsenio_player_kick_default_modelname.GetString());
+	}
+
+	PrecacheModel(STRING(m_LegModelName));
+
+	// Interactions
+	if (g_interactionArsenioKick == 0)
+	{
+		g_interactionArsenioKick = CBaseCombatCharacter::GetInteractionID();
+	}
+
+	if (g_interactionArsenioKickWarn == 0)
+	{
+		g_interactionArsenioKickWarn = CBaseCombatCharacter::GetInteractionID();
+	}
 
 #endif
 
@@ -1147,6 +1196,17 @@ void CHL2_Player::PostThink( void )
 	{
 		 HandleAdmireGlovesAnimation();
 	}
+
+#ifdef ARSENIO
+	if (arsenio_player_stomp_tiny_hull.GetBool() && GetGroundEntity() && GetGroundEntity()->MyCombatCharacterPointer() && GetGroundEntity()->MyCombatCharacterPointer()->GetHullType() == HULL_TINY)
+	{
+		TraceKickAttack(GetGroundEntity());
+		SetGroundEntity(NULL);
+	}
+
+	HandleKickAnimation();
+
+#endif
 }
 
 void CHL2_Player::StartAdmireGlovesAnimation( void )
@@ -4098,9 +4158,256 @@ void CHL2_Player::PlayUseDenySound()
 	m_bPlayUseDenySound = true;
 }
 
+#ifdef ARSENIO
+void CHL2_Player::HandleKickAttack()
+{
+	if (!arsenio_player_kick_attack_enabled.GetBool() && !IsInAVehicle())
+		return;
+
+	// Door kick!
+	if (gpGlobals->curtime >= m_flNextAttack && gpGlobals->curtime >= m_flNextKickAttack && !IsInAVehicle() && m_nButtons & IN_ATTACK4)
+	{
+		// Viewpunch
+		QAngle punchAng;
+		punchAng.x = random->RandomFloat(2.0f, 3.0f);
+		punchAng.y = random->RandomFloat(-3.0f, -2.0f);
+		punchAng.z = 0.0f;
+		ViewPunch(punchAng);
+
+		// Prevent all attacks for 1 second
+		m_flNextKickAttack = gpGlobals->curtime + 1.0f;
+		CBaseCombatWeapon* pWeapon = GetActiveWeapon();
+		if (pWeapon)
+		{
+			pWeapon->m_flNextPrimaryAttack = MAX(GetActiveWeapon()->m_flNextPrimaryAttack.Get(), m_flNextKickAttack);
+			pWeapon->m_flNextSecondaryAttack = MAX(GetActiveWeapon()->m_flNextSecondaryAttack.Get(), m_flNextKickAttack);
+
+			CBaseHLCombatWeapon* pHLWeapon = dynamic_cast<CBaseHLCombatWeapon*>(pWeapon);
+
+			// Lower the weapon if possible
+			if (pHLWeapon)
+			{
+				if (pHLWeapon->CanLower() && !pHLWeapon->WeaponShouldBeLowered())
+				{
+					pHLWeapon->Lower();
+					m_bKickWeaponLowered = true;
+				}
+			}
+		}
+
+		EmitSound("Player.KickSwing");
+
+		StartKickAnimation();
+
+		// Tell any NPC in front of me that I'm kicking
+		Vector vecAim = BaseClass::GetAutoaimVector(AUTOAIM_SCALE_DEFAULT);
+
+		trace_t tr;
+		TraceKick(tr, vecAim);
+
+		if (tr.m_pEnt)
+		{
+			//tr.m_pEnt->DispatchInteraction(g_interactionArsenioKickWarn, NULL, this);
+		}
+	}
+	else if (m_bKickWeaponLowered && gpGlobals->curtime <= m_flNextKickAttack)
+	{
+		CBaseHLCombatWeapon* pHLWeapon = dynamic_cast<CBaseHLCombatWeapon*>(GetActiveWeapon());
+
+		// Lower the weapon if possible
+		if (pHLWeapon && pHLWeapon->m_flNextPrimaryAttack <= gpGlobals->curtime)
+		{
+			pHLWeapon->Ready();
+			m_bKickWeaponLowered = false;
+		}
+	}
+}
+
+// Should these be separate from g_bludgeonMins and g_bludgeonMaxs in basebludgeonweapon?
+#define KICK_HULL_DIM		16
+static const Vector g_kickMins(-KICK_HULL_DIM, -KICK_HULL_DIM, -KICK_HULL_DIM);
+static const Vector g_kickMaxs(KICK_HULL_DIM, KICK_HULL_DIM, KICK_HULL_DIM);
+
+void CHL2_Player::TraceKick(trace_t& tr, const Vector& vecAim)
+{
+	Vector vecSrc = GetFlags() & FL_DUCKING ? EyePosition() : EyePosition() - Vector(0, 0, 32);
+	Vector vecEnd = EyePosition() + (vecAim * 80);
+
+	UTIL_TraceLine(vecSrc, vecEnd, MASK_SHOT_HULL, this, COLLISION_GROUP_NONE, &tr);
+
+	// If the ray trace didn't hit anything, use a hull trace based on bludgeon weapons
+	if (tr.fraction == 1.0)
+	{
+		float bludgeonHullRadius = 1.732f * KICK_HULL_DIM;  // hull is +/- 16, so use cuberoot of 2 to determine how big the hull is from center to the corner point
+																// Back off by hull "radius"
+		vecEnd -= vecAim * bludgeonHullRadius;
+
+		UTIL_TraceHull(vecSrc, vecEnd, g_kickMins, g_kickMaxs, MASK_SHOT_HULL, this, COLLISION_GROUP_NONE, &tr);
+		if (tr.fraction < 1.0 && tr.m_pEnt)
+		{
+			Vector vecToTarget = tr.m_pEnt->GetAbsOrigin() - vecSrc;
+			VectorNormalize(vecToTarget);
+
+			float dot = vecToTarget.Dot(vecAim);
+
+			// YWB:  Make sure they are sort of facing the guy at least...
+			if (dot < 0.70721f)
+			{
+				// Force amiss
+				tr.fraction = 1.0f;
+			}
+		}
+	}
+}
+
+void CHL2_Player::TraceKickAttack(CBaseEntity* pKickedEntity)
+{
+
+	CBasePlayer* pPlayer = dynamic_cast<CBasePlayer*>(pPlayer);
+
+	Vector vecAim = BaseClass::GetAutoaimVector(AUTOAIM_SCALE_DEFAULT);
+
+	trace_t tr;
+	TraceKick(tr, vecAim);
+
+	if (pKickedEntity == NULL)
+	{
+		pKickedEntity = tr.m_pEnt;
+	}
+
+	if (pKickedEntity != NULL && pKickedEntity->CanBeHitByMeleeAttack(this))
+	{
+		float dmg = arsenio_plr_dmg_kick.GetFloat();
+		int dmgType = DMG_CLUB;
+
+
+
+
+		CTakeDamageInfo dmgInfo(this, this, dmg, dmgType);
+		dmgInfo.SetDamagePosition(tr.endpos);
+		VectorNormalize(vecAim);// not a unit vec yet
+		// hit like a 5kg object flying 100 ft/s
+		dmgInfo.SetDamageForce(dmg * 256 * 12 * vecAim);
+
+		// Try to dispatch an interaction
+		KickInfo_t kickInfo(&tr, &dmgInfo);
+
+		if (kickInfo.success)
+		{
+			// Fire achievement event
+			IGameEvent* event = gameeventmanager->CreateEvent("entity_kicked");
+			if (event)
+			{
+				event->SetInt("entindex_kicked", pKickedEntity ? pKickedEntity->entindex() : 0);
+				event->SetInt("entindex_attacker", this->entindex());
+				event->SetInt("entindex_inflictor", this->entindex());
+				event->SetInt("damagebits", dmgInfo.GetDamageType());
+				gameeventmanager->FireEvent(event);
+			}
+
+			//// Add a context counting how many times this entity has been kicked
+			//if (pKickedEntity)
+			//{
+			//	int iIndex = pKickedEntity->FindContextByName("kicked");
+			//	int iNumKicks = 1;
+			//	if (iIndex != -1)
+			//	{
+			//		// Increment for each kick
+			//		iNumKicks += atoi(pKickedEntity->GetContextValue(iIndex));
+			//	}
+
+			//	pKickedEntity->AddContext("kicked", CNumStr(iNumKicks));
+			//}
+		}
+
+		// Insert an AI sound so nearby enemies can hear the impact
+		//int soundVolume = HL2GameRules()->IsBeastInStealthMode() ? 4096 : 384;
+		//CSoundEnt::InsertSound(SOUND_BULLET_IMPACT, tr.endpos, soundVolume, 0.2f, this);
+		pPlayer->ViewPunch(QAngle(-8, random->RandomFloat(-2, 2), 0));
+
+		EmitSound("Player.KickHit");
+	}
+	else
+	{
+		EmitSound("Player.KickMiss");
+	}
+}
+
+void CHL2_Player::StartKickAnimation(void)
+{
+	MDLCACHE_CRITICAL_SECTION();
+	CBaseViewModel* vm = GetViewModel(2);
+	if (vm == NULL)
+	{
+		CreateViewModel(2);
+		vm = GetViewModel(2);
+	}
+
+	if (vm)
+	{
+		vm->SetWeaponModel(STRING(m_LegModelName), NULL);
+
+		int	idealSequence = vm->SelectWeightedSequence(ACT_VM_PRIMARYATTACK);
+
+		vm->SetAbsOrigin(GetAbsOrigin());
+		vm->SetOwner(this);
+		vm->SetOwnerEntity(this);
+		vm->FollowEntity(this, false);
+		
+
+
+
+
+
+
+		if (idealSequence >= 0)
+		{
+			vm->SendViewModelMatchingSequence(idealSequence);
+			vm->SetPlaybackRate(1.0f);
+		}
+	}
+}
+
+void CHL2_Player::HandleKickAnimation(void)
+{
+	CBaseViewModel* pVM = GetViewModel(2);
+
+	if (pVM)
+	{
+		pVM->m_flPlaybackRate = 1.0f;
+		pVM->StudioFrameAdvance();
+		pVM->DispatchAnimEvents(this);
+		if (pVM->IsSequenceFinished())
+		{
+			pVM->SetPlaybackRate(0.0f);
+
+			// Destroy the kick viewmodel. 
+			// This should prevent the kick animation from firing off after level transitions.
+			pVM->SUB_Remove();
+		}
+	}
+}
+
+
+
+void CHL2_Player::HandleAnimEvent(animevent_t* pEvent)
+{
+	if (pEvent->event == AE_KICKATTACK)
+	{
+		TraceKickAttack();
+	}
+
+	BaseClass::HandleAnimEvent(pEvent);
+}
+
+#endif
 
 void CHL2_Player::ItemPostFrame()
 {
+#ifdef ARSENIO
+	HandleKickAttack();
+#endif
+
 	BaseClass::ItemPostFrame();
 
 	if ( m_bPlayUseDenySound )
@@ -4277,6 +4584,8 @@ void CHL2_Player::FirePlayerProxyOutput( const char *pszOutputName, variant_t va
 	GetPlayerProxy()->FireNamedOutput( pszOutputName, variant, pActivator, pCaller );
 }
 
+
+
 LINK_ENTITY_TO_CLASS( logic_playerproxy, CLogicPlayerProxy);
 
 BEGIN_DATADESC( CLogicPlayerProxy )
@@ -4296,11 +4605,17 @@ BEGIN_DATADESC( CLogicPlayerProxy )
 	DEFINE_INPUTFUNC( FIELD_VOID,	"EnableCappedPhysicsDamage", InputEnableCappedPhysicsDamage ),
 	DEFINE_INPUTFUNC( FIELD_VOID,	"DisableCappedPhysicsDamage", InputDisableCappedPhysicsDamage ),
 	DEFINE_INPUTFUNC( FIELD_STRING,	"SetLocatorTargetEntity", InputSetLocatorTargetEntity ),
+#ifdef ARSENIO
+	DEFINE_INPUTFUNC(FIELD_STRING, "SetLegModel", InputSetLegModel),
+#endif
+
 #ifdef PORTAL
 	DEFINE_INPUTFUNC( FIELD_VOID,	"SuppressCrosshair", InputSuppressCrosshair ),
 #endif // PORTAL
 	DEFINE_FIELD( m_hPlayer, FIELD_EHANDLE ),
 END_DATADESC()
+
+
 
 void CLogicPlayerProxy::Activate( void )
 {
@@ -4413,6 +4728,12 @@ void CLogicPlayerProxy::InputDisableCappedPhysicsDamage( inputdata_t &inputdata 
 	CHL2_Player *pPlayer = dynamic_cast<CHL2_Player*>(m_hPlayer.Get());
 	pPlayer->DisableCappedPhysicsDamage();
 }
+#ifdef ARSENIO
+void CHL2_Player::SetLegModel(string_t iszModel)
+{
+	m_LegModelName = iszModel;
+}
+#endif
 
 void CLogicPlayerProxy::InputSetLocatorTargetEntity( inputdata_t &inputdata )
 {
@@ -4441,3 +4762,19 @@ void CLogicPlayerProxy::InputSuppressCrosshair( inputdata_t &inputdata )
 	pPlayer->SuppressCrosshair( true );
 }
 #endif // PORTAL
+
+#ifdef ARSENIO
+void CLogicPlayerProxy::InputSetLegModel(inputdata_t& inputdata)
+{
+	if (!m_hPlayer)
+		return;
+
+	string_t iszModel = inputdata.value.StringID();
+
+	if (iszModel != NULL_STRING)
+		PrecacheModel(STRING(iszModel));
+
+	CHL2_Player* pPlayer = dynamic_cast<CHL2_Player*>(m_hPlayer.Get());
+	pPlayer->SetLegModel(iszModel);
+}
+#endif
