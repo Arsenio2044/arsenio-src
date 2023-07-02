@@ -81,6 +81,10 @@ ConVar arsenio_sway_wiggle_rate("arsenio_sway_wiggle_rate", "1.0");
 ConVar arsenio_sway_tilt("arsenio_sway_tilt", "280.0");
 ConVar arsenio_sway_offset("arsenio_sway_offset", "5.0");
 ConVar arsenio_sway_jump_velocity_division("arsenio_sway_jump_velocity_division", "24.0");
+ConVar arsenio_vm_crouch_rotatespeed("arsenio_vm_crouch_rotatespeed", "0.4");
+ConVar arsenio_vm_crouch_angle("arsenio_vm_crouch_angle", "-6");
+ConVar arsenio_vm_crouch_offset("arsenio_vm_crouch_offset", "-1");
+
 
 
 
@@ -556,7 +560,29 @@ void CBaseViewModel::CalcViewModelLag(Vector& origin, QAngle& angles, QAngle& or
 
 #endif
 
+
+
 #if defined ( CLIENT_DLL )
+
+
+//deals with additional offsets from crouching and jumping and the like
+void CBaseViewModel::CalcViewModelBasePose(Vector& origin, QAngle& angles, CBasePlayer* owner)
+{
+	Vector forward, right, up;
+	AngleVectors(owner->EyeAngles(), &forward, &right, &up);
+	//crouching: we are ducked or ducking, but we arent ducked AND ducking (which happens when standing up), and we are on the ground not crouch jumping
+	if ((owner->GetFlags() & FL_DUCKING || owner->m_Local.m_bDucking) && !(owner->GetFlags() & FL_DUCKING && owner->m_Local.m_bDucking) && owner->GetFlags() & FL_ONGROUND) {
+		m_flDucking += gpGlobals->frametime / arsenio_vm_crouch_rotatespeed.GetFloat();
+	}
+	else {
+		m_flDucking -= gpGlobals->frametime / arsenio_vm_crouch_rotatespeed.GetFloat();
+	}
+	m_flDucking = Clamp(m_flDucking, 0.0f, 1.0f);
+	float flDuckingEased = (m_flDucking < 0.5 ? 4 * m_flDucking * m_flDucking * m_flDucking : 1 - powf(-2 * m_flDucking + 2, 3) / 2); //easeInOutCubic
+	angles += QAngle(0.0f, 0.0f, arsenio_vm_crouch_angle.GetFloat()) * flDuckingEased;
+	origin += right * arsenio_vm_crouch_offset.GetFloat() * flDuckingEased;
+}
+
 
 void CBaseViewModel::CalcViewModelCollision(Vector& origin, QAngle& angles, CBasePlayer* owner)
 {
@@ -598,6 +624,8 @@ void CBaseViewModel::CalcViewModelView(CBasePlayer *owner, const Vector& eyePosi
 
 		CalcViewModelCollision(vmorigin, vmangles, owner);
 		//CalcViewmodelBob();
+		CalcViewModelBasePose(vmorigin, vmangles, owner);
+
 
 
 #if defined( CLIENT_DLL )
@@ -835,3 +863,4 @@ bool CBaseViewModel::GetAttachmentVelocity( int number, Vector &originVel, Quate
 }
 
 #endif
+
