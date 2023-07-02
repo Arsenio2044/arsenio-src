@@ -4263,7 +4263,7 @@ void CHL2_Player::TraceKick(trace_t& tr, const Vector& vecAim)
 void CHL2_Player::TraceKickAttack(CBaseEntity* pKickedEntity)
 {
 
-	CBasePlayer* pPlayer = dynamic_cast<CBasePlayer*>(pPlayer);
+
 
 	Vector vecAim = BaseClass::GetAutoaimVector(AUTOAIM_SCALE_DEFAULT);
 
@@ -4323,7 +4323,7 @@ void CHL2_Player::TraceKickAttack(CBaseEntity* pKickedEntity)
 		// Insert an AI sound so nearby enemies can hear the impact
 		//int soundVolume = HL2GameRules()->IsBeastInStealthMode() ? 4096 : 384;
 		//CSoundEnt::InsertSound(SOUND_BULLET_IMPACT, tr.endpos, soundVolume, 0.2f, this);
-		pPlayer->ViewPunch(QAngle(-8, random->RandomFloat(-2, 2), 0));
+		ViewPunch(QAngle(-8, random->RandomFloat(-2, 2), 0));
 
 		EmitSound("Player.KickHit");
 	}
