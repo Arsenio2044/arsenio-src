@@ -113,6 +113,8 @@ void CNPC_BloodSeeker::Precache()
 
 	UTIL_PrecacheOther("npc_handgrenade");
 
+	PrecacheScriptSound("Game.Spotted");
+
 
 	PrecacheScriptSound("BloodSeeker.Shot");
 	PrecacheScriptSound("BloodSeeker.Beamsound");
@@ -408,6 +410,7 @@ int CNPC_BloodSeeker::SelectSchedule(void)
 		if (HasCondition(COND_SEE_ENEMY) && HasCondition(COND_ENEMY_FACING_ME))
 		{
 			//Msg("exposed - spotted\n");
+			EmitSound("Game.Spotted");
 			m_iFrustration++;
 			return SCHED_BLOODSEEKER_EXPOSED;
 		}
