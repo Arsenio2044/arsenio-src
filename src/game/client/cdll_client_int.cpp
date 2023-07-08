@@ -175,7 +175,7 @@ extern vgui::IInputInternal* g_InputInternal;
 #include "sixense/in_sixense.h"
 #endif
 
-#include "../gamepadui/igamepadui.h"
+#include "../gameui/igamepadui.h"
 
 
 #include "..\GameUI\iGameUI2.h"
@@ -1310,7 +1310,7 @@ void CHLClient::PostInit()
 	CCursorClipManagement::Init();
 
 	
-		CSysModule* pGamepadUIModule = g_pFullFileSystem->LoadModule("gamepadui", "GAMEBIN", false);
+		CSysModule* pGamepadUIModule = g_pFullFileSystem->LoadModule("gameuiutil.dll", "GAMEBIN", false);
 		if (pGamepadUIModule != nullptr)
 		{
 			GamepadUI_Log("Loaded gamepadui module.\n");

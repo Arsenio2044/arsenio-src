@@ -26,7 +26,7 @@ $Group "game"
 	"gameui"
 	"responserules"
 	"game_shader_dx9"
-	"gamepadui"
+	"gameuiutil"
 	"rendersystem"
 }
 
