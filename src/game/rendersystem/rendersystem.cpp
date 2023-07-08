@@ -15,6 +15,9 @@
 static CRenderSystem g_RenderSystem;
 EXPOSE_SINGLE_INTERFACE_GLOBALVAR(CRenderSystem, IRenderSystem, RENDERSYSTEM_INTERFACE_VERSION, g_RenderSystem);
 
+// Load the rendersystem DLL
+
+
 bool CRenderSystem::Connect(CreateInterfaceFn factory)
 {
 	if (!BaseClass::Connect(factory))

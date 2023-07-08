@@ -5241,6 +5241,7 @@ void CBasePlayer::Precache(void)
 	PrecacheScriptSound("Player.Wade");
 	PrecacheScriptSound("Player.AmbientUnderWater");
 	PrecacheScriptSound("Player.AirJump");
+	PrecacheScriptSound("Weapon_Generic.Movement");
 	m_hssPowerSlideSound = PrecacheScriptSound("Player.PowerSlide");
 	m_hssWallRunSound = PrecacheScriptSound("Player.WallRun");
 	PrecacheScriptSound("Mech.BulletImpact");

@@ -184,6 +184,8 @@ float CBasePlayer::GetPlayerMaxSpeed()
 	return fMaxSpeed;
 }
 
+
+
 //-----------------------------------------------------------------------------
 // Purpose: Called every usercmd by the player PreThink
 //-----------------------------------------------------------------------------
@@ -783,6 +785,8 @@ void CBasePlayer::PlayStepSound( Vector &vecOrigin, surfacedata_t *psurface, flo
 
 	EmitSound( filter, entindex(), ep );
 
+	EmitSound(filter, entindex(), "Weapon_Generic.Movement");
+
 	// Kyle says: ugggh. This function may as well be called "PerformPileOfDesperateGameSpecificFootstepHacks".
 	OnEmitFootstepSound( params, vecOrigin, fvol );
 }
@@ -885,6 +889,8 @@ void CBasePlayer::StopWallRunSound( void )
 {
 	StopSound( "Player.WallRun", m_hssWallRunSound );
 }
+
+
 
 void CBasePlayer::UpdateButtonState( int nUserCmdButtonMask )
 {

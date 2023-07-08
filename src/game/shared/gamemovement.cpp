@@ -1212,6 +1212,9 @@ void CGameMovement::ReduceTimers( void )
 	REDUCE_TIMER( (player->m_Local.m_flWallRunTime), (frame_msec) )
 }
 
+
+
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 // Input  : *pMove - 
