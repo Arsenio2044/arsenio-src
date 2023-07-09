@@ -98,6 +98,8 @@ ConVar arsenio_player_kick_default_modelname("arsenio_player_kick_default_modeln
 ConVar arsenio_plr_dmg_kick("arsenio_plr_dmg_kick", "5", FCVAR_REPLICATED);
 ConVar arsenio_player_stomp_tiny_hull("arsenio_player_stomp_tiny_hull", "0", FCVAR_REPLICATED, "Should a kick attack be dispatched to NPCs with tiny hulls when the player stands on top of them?");
 
+ConVar arsenio_flipoff_enabled("arsenio_flipoff_enabled", "1", FCVAR_REPLICATED);
+ConVar arsenio_player_flipoff_default_modelname("arsenio_player_flipoff_default_modelname", "models/weapons/flipoff/flip.mdl", FCVAR_REPLICATED, "Default filename of model to use for kick animation - can be overridden in map");
 
 #endif
 
@@ -359,6 +361,11 @@ BEGIN_DATADESC( CHL2_Player )
 	DEFINE_FIELD(m_flNextKickAttack, FIELD_TIME),
 	DEFINE_FIELD(m_bKickWeaponLowered, FIELD_BOOLEAN),
 	DEFINE_FIELD(m_LegModelName, FIELD_STRING),
+
+
+	DEFINE_FIELD(m_flNextFlipoff, FIELD_TIME),
+	DEFINE_FIELD(m_bFlipoffWeaponLowered, FIELD_BOOLEAN),
+	DEFINE_FIELD(m_FlipoffModelName, FIELD_STRING),
 #endif
 
 	/*
@@ -500,12 +507,21 @@ void CHL2_Player::Precache( void )
 	PrecacheScriptSound("Player.KickHit");
 	PrecacheScriptSound("Player.KickMiss");
 
+	PrecacheScriptSound("Player.FuckYou");
+
 	if (m_LegModelName == NULL_STRING)
 	{
 		m_LegModelName = AllocPooledString(arsenio_player_kick_default_modelname.GetString());
 	}
 
-	PrecacheModel(STRING(m_LegModelName));
+	PrecacheModel(STRING(m_FlipoffModelName));
+
+	if (m_FlipoffModelName == NULL_STRING)
+	{
+		m_FlipoffModelName = AllocPooledString(arsenio_player_flipoff_default_modelname.GetString());
+	}
+
+	PrecacheModel(STRING(m_FlipoffModelName));
 
 	// Interactions
 	if (g_interactionArsenioKick == 0)
@@ -4260,6 +4276,8 @@ void CHL2_Player::TraceKick(trace_t& tr, const Vector& vecAim)
 	}
 }
 
+
+
 void CHL2_Player::TraceKickAttack(CBaseEntity* pKickedEntity)
 {
 
@@ -4368,7 +4386,164 @@ void CHL2_Player::StartKickAnimation(void)
 	}
 }
 
+//-----------------------------------------------------------------------------
+// Purpose: Arsenio will flip the middle finger and say "FUCK YOU". 
+// Based on the previous code for the kick.
+//-----------------------------------------------------------------------------
+void CHL2_Player::HandleFlipoff()
+{
+	if (!arsenio_flipoff_enabled.GetBool() && !IsInAVehicle())
+		return;
+
+	// Door kick!
+	if (gpGlobals->curtime >= m_flNextAttack && gpGlobals->curtime >= m_flNextKickAttack && !IsInAVehicle() && m_nButtons & IN_FLIPOFF)
+	{
+
+
+		// Prevent all attacks for 4 seconds
+		m_flNextFlipoff = gpGlobals->curtime + 4.0f;
+		CBaseCombatWeapon* pWeapon = GetActiveWeapon();
+		if (pWeapon)
+		{
+			pWeapon->m_flNextPrimaryAttack = MAX(GetActiveWeapon()->m_flNextPrimaryAttack.Get(), m_flNextFlipoff);
+			pWeapon->m_flNextSecondaryAttack = MAX(GetActiveWeapon()->m_flNextSecondaryAttack.Get(), m_flNextFlipoff);
+
+			CBaseHLCombatWeapon* pHLWeapon = dynamic_cast<CBaseHLCombatWeapon*>(pWeapon);
+
+			// Lower the weapon if possible
+			if (pHLWeapon)
+			{
+				if (pHLWeapon->CanLower() && !pHLWeapon->WeaponShouldBeLowered())
+				{
+					pHLWeapon->Lower();
+					m_bFlipoffWeaponLowered = true;
+				}
+			}
+		}
+
+		EmitSound("Player.FuckYou");
+
+		StartFlipoffAnimation();
+
+		// Tell any NPC in front of me that I'm Fliping them off. (TO BE FINISHED)
+		Vector vecAim = BaseClass::GetAutoaimVector(AUTOAIM_SCALE_DEFAULT);
+
+		trace_t tr;
+		TraceKick(tr, vecAim);
+
+		if (tr.m_pEnt)
+		{
+			//tr.m_pEnt->DispatchInteraction(g_interactionArsenioKickWarn, NULL, this);
+		}
+	}
+	else if (m_bFlipoffWeaponLowered && gpGlobals->curtime <= m_flNextFlipoff)
+	{
+		CBaseHLCombatWeapon* pHLWeapon = dynamic_cast<CBaseHLCombatWeapon*>(GetActiveWeapon());
+
+		// Lower the weapon if possible
+		if (pHLWeapon && pHLWeapon->m_flNextPrimaryAttack <= gpGlobals->curtime)
+		{
+			pHLWeapon->Ready();
+			m_bFlipoffWeaponLowered = false;
+		}
+	}
+}
+
+#ifdef SOON
+// Should these be separate from g_bludgeonMins and g_bludgeonMaxs in basebludgeonweapon?
+#define KICK_HULL_DIM		16
+static const Vector g_kickMins(-KICK_HULL_DIM, -KICK_HULL_DIM, -KICK_HULL_DIM);
+static const Vector g_kickMaxs(KICK_HULL_DIM, KICK_HULL_DIM, KICK_HULL_DIM);
+
+void CHL2_Player::TraceFlipoff(trace_t& tr, const Vector& vecAim)
+{
+	Vector vecSrc = GetFlags() & FL_DUCKING ? EyePosition() : EyePosition() - Vector(0, 0, 32);
+	Vector vecEnd = EyePosition() + (vecAim * 80);
+
+	UTIL_TraceLine(vecSrc, vecEnd, MASK_SHOT_HULL, this, COLLISION_GROUP_NONE, &tr);
+
+	// If the ray trace didn't hit anything, use a hull trace based on bludgeon weapons
+	if (tr.fraction == 1.0)
+	{
+		float bludgeonHullRadius = 1.732f * KICK_HULL_DIM;  // hull is +/- 16, so use cuberoot of 2 to determine how big the hull is from center to the corner point
+																// Back off by hull "radius"
+		vecEnd -= vecAim * bludgeonHullRadius;
+
+		UTIL_TraceHull(vecSrc, vecEnd, g_kickMins, g_kickMaxs, MASK_SHOT_HULL, this, COLLISION_GROUP_NONE, &tr);
+		if (tr.fraction < 1.0 && tr.m_pEnt)
+		{
+			Vector vecToTarget = tr.m_pEnt->GetAbsOrigin() - vecSrc;
+			VectorNormalize(vecToTarget);
+
+			float dot = vecToTarget.Dot(vecAim);
+
+			// YWB:  Make sure they are sort of facing the guy at least...
+			if (dot < 0.70721f)
+			{
+				// Force amiss
+				tr.fraction = 1.0f;
+			}
+		}
+	}
+}
+#endif
+
+void CHL2_Player::StartFlipoffAnimation(void)
+{
+	MDLCACHE_CRITICAL_SECTION();
+	CBaseViewModel* vm = GetViewModel(2);
+	if (vm == NULL)
+	{
+		CreateViewModel(2);
+		vm = GetViewModel(2);
+	}
+
+	if (vm)
+	{
+		vm->SetWeaponModel(STRING(m_FlipoffModelName), NULL);
+
+		int	idealSequence = vm->SelectWeightedSequence(ACT_RANGE_ATTACK1);
+
+		vm->SetAbsOrigin(GetAbsOrigin());
+		vm->SetOwner(this);
+		vm->SetOwnerEntity(this);
+		vm->FollowEntity(this, false);
+
+
+
+
+
+
+
+		if (idealSequence >= 0)
+		{
+			vm->SendViewModelMatchingSequence(idealSequence);
+			vm->SetPlaybackRate(1.0f);
+		}
+	}
+}
+
 void CHL2_Player::HandleKickAnimation(void)
+{
+	CBaseViewModel* pVM = GetViewModel(2);
+
+	if (pVM)
+	{
+		pVM->m_flPlaybackRate = 1.0f;
+		pVM->StudioFrameAdvance();
+		pVM->DispatchAnimEvents(this);
+		if (pVM->IsSequenceFinished())
+		{
+			pVM->SetPlaybackRate(0.0f);
+
+			// Destroy the kick viewmodel. 
+			// This should prevent the kick animation from firing off after level transitions.
+			pVM->SUB_Remove();
+		}
+	}
+}
+
+void CHL2_Player::HandleFlipoffAnimation(void)
 {
 	CBaseViewModel* pVM = GetViewModel(2);
 
@@ -4406,6 +4581,7 @@ void CHL2_Player::ItemPostFrame()
 {
 #ifdef ARSENIO
 	HandleKickAttack();
+	HandleFlipoff();
 #endif
 
 	BaseClass::ItemPostFrame();

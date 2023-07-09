@@ -343,11 +343,15 @@ protected:
 
 #ifdef ARSENIO
 	virtual void		HandleKickAttack();
+	virtual void		HandleFlipoff();
 	virtual void		TraceKick(trace_t& tr, const Vector& vecAim);
 	virtual void		TraceKickAttack(CBaseEntity* pKickedEntity = NULL);
 
 	void  HandleKickAnimation(void);
 	void  StartKickAnimation(void);
+
+	void  HandleFlipoffAnimation(void);
+	void  StartFlipoffAnimation(void);
 
 	virtual void HandleAnimEvent(animevent_t* pEvent);
 #endif
@@ -413,6 +417,11 @@ private:
 	bool				m_bKickWeaponLowered;
 
 	string_t		    m_LegModelName;
+
+	float				m_flNextFlipoff;
+	bool				m_bFlipoffWeaponLowered;
+
+	string_t		    m_FlipoffModelName;
 #endif
 
 	// Aiming heuristics code
