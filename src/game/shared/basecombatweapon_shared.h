@@ -412,22 +412,6 @@ public:
 	virtual void			Activate( void );
 
 	virtual bool ShouldUseLargeViewModelVROverride() { return false; }
-
-	Vector					GetIronsightPositionOffset(void) const;
-	QAngle					GetIronsightAngleOffset(void) const;
-	float					GetIronsightFOVOffset(void) const;
-
-
-
-	virtual bool				HasIronsights(void) { return true; } //default yes; override and return false for weapons with no ironsights (like weapon_crowbar)
-	bool					IsIronsighted(void);
-	void					ToggleIronsights(void);
-	void					EnableIronsights(void);
-	void					DisableIronsights(void);
-	void					SetIronsightTime(void);
-#ifdef CLIENT_DLL
-	void					RecvProxy_ToggleSights(const CRecvProxyData* pData, void* pStruct, void* pOut);
-#endif
 public:
 // Server Only Methods
 #if !defined( CLIENT_DLL )
@@ -579,7 +563,6 @@ private:
 	typedef CHandle< CBaseCombatCharacter > CBaseCombatCharacterHandle;
 	CNetworkVar( CBaseCombatCharacterHandle, m_hOwner );				// Player carrying this weapon
 
-
 protected:
 #if defined ( TF_CLIENT_DLL ) || defined ( TF_DLL )
 	// Regulate crit frequency to reduce client-side seed hacking
@@ -619,9 +602,6 @@ public:
 	CNetworkVar( int, m_iWorldModelIndex );
 	// Sounds
 	float					m_flNextEmptySoundTime;				// delay on empty sound playing
-
-	CNetworkVar(bool, m_bIsIronsighted);
-	CNetworkVar(float, m_flIronsightedTime);
 
 	Activity				GetIdealActivity( void ) { return m_IdealActivity; }
 	int						GetIdealSequence( void ) { return m_nIdealSequence; }

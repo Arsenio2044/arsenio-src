@@ -69,8 +69,6 @@
 extern ConVar weapon_showproficiency;
 extern ConVar autoaim_max_dist;
 
-
-
 // Do not touch with without seeing me, please! (sjb)
 // For consistency's sake, enemy gunfire is traced against a scaled down
 // version of the player's hull, not the hitboxes for the player's model

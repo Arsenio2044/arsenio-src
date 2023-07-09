@@ -106,10 +106,6 @@ public:
 	bool					bHasFirstDrawAnim;						// Does this weapon have a first draw animation the first time it's picked up?
 	char					szMuzzleFlashTexture[MAX_WEAPON_STRING];
 
-	Vector					vecIronsightPosOffset;
-	QAngle					angIronsightAngOffset;
-	float					flIronsightFOVOffset;
-
 	float					roundsPerMinute;
 
 	int						iWeaponLength;

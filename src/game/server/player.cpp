@@ -6951,15 +6951,6 @@ bool CBasePlayer::ClientCommand(const CCommand& args)
 			}
 			return true;
 		}
-		else if (stricmp(cmd, "toggle_ironsight") == 0)
-		{
-			CBaseCombatWeapon* pWeapon = GetActiveWeapon();
-			if (pWeapon != NULL)
-			pWeapon->ToggleIronsights();
-
-			return true;
-		}
-
 
 
 	return false;
