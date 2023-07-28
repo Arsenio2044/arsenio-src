@@ -11,6 +11,10 @@
 #include "SoundEmitterSystem/isoundemittersystembase.h"
 #include "engine/IEngineSound.h"
 
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
+
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -380,118 +384,68 @@ static ConVar	v_ipitch_level("v_ipitch_level", "0.3"/*, FCVAR_UNREGISTERED*/);
 
 //-----------------------------------------------------------------------------
 // Purpose: 
-// Output : float
+// Output: float
 //-----------------------------------------------------------------------------
 float CBaseHLCombatWeapon::CalcViewmodelBob(void)
 {
-
-
-		static	float bobtime;
-		static	float lastbobtime;
-		float	cycle;
-
-		CBasePlayer* player = ToBasePlayer(GetOwner());
-		//Assert( player );
-
-		//NOTENOTE: For now, let this cycle continue when in the air, because it snaps badly without it
-
-		if ((!gpGlobals->frametime) || (player == NULL))
-		{
-			//NOTENOTE: We don't use this return value in our case (need to restructure the calculation function setup!)
-			return 0.0f;// just use old value
-		}
-
-		//Find the speed of the player
-		float speed = player->GetLocalVelocity().Length2D();
-
-
-
-		//FIXME: This maximum speed value must come from the server.
-		//		 MaxSpeed() is not sufficient for dealing with sprinting - jdw
-
-		speed = clamp(speed, -320, 320);
-
-		float bob_offset = RemapVal(speed, 0, 320, 0.0f, 1.0f);
-
-		float time_delta = (gpGlobals->curtime - lastbobtime);
-
-		bobtime += time_delta * bob_offset;
-		lastbobtime = gpGlobals->curtime;
-
-		//Calculate the vertical bob
-		cycle = bobtime - (int)(bobtime / HL2_BOB_CYCLE_MAX) * HL2_BOB_CYCLE_MAX;
-		cycle /= HL2_BOB_CYCLE_MAX;
-
-		if (cycle < HL2_BOB_UP)
-		{
-			cycle = M_PI * cycle / HL2_BOB_UP;
-		}
-		else
-		{
-			cycle = M_PI + M_PI * (cycle - HL2_BOB_UP) / (1.0 - HL2_BOB_UP);
-		}
-
-
-
-
-		g_verticalBob = speed * 0.0015f;
-		g_verticalBob = g_verticalBob * 0.3 + g_verticalBob * 0.7 * sin(cycle);
-
-
-
-		// Calculate the vertical bob kick
-		float speed_delta_z = player->GetLocalVelocity().z - m_flPrevPlayerVelZ;
-
-		// The bigger the accel upwards, the more the kick downwards
-		if (speed_delta_z > 30)
-		{
-			m_bTgtBobKickZ = true;
-		}
-		if (m_bTgtBobKickZ)
-		{
-			m_flBobKickZ -= 25 * time_delta; // 40 units/sec
-			if (g_verticalBob + m_flBobKickZ < -2.5)
-			{
-				// reached the lowest point
-				m_bTgtBobKickZ = false;
-			}
-		}
-		else if (m_flBobKickZ < 0) {
-			// decay the bob kick...
-			m_flBobKickZ += 13 * time_delta;
-		}
-		else {
-			m_flBobKickZ = 0;
-		}
-
-		g_verticalBob = clamp(g_verticalBob + m_flBobKickZ, -8.0f, 5.0f);
-
-		m_flPrevPlayerVelZ = player->GetLocalVelocity().z;
-
-
-		//Calculate the lateral bob
-		cycle = bobtime - (int)(bobtime / HL2_BOB_CYCLE_MAX * 2) * HL2_BOB_CYCLE_MAX * 2;
-		cycle /= HL2_BOB_CYCLE_MAX * 2;
-
-		if (cycle < HL2_BOB_UP)
-		{
-			cycle = M_PI * cycle / HL2_BOB_UP;
-		}
-		else
-		{
-			cycle = M_PI + M_PI * (cycle - HL2_BOB_UP) / (1.0 - HL2_BOB_UP);
-		}
-
-		g_lateralBob = speed * 0.015f;
-		g_lateralBob = g_lateralBob * 0.3 + g_lateralBob * 0.7 * sin(cycle);
-		g_lateralBob = clamp(g_lateralBob, -7.0f, 4.0f);
-
-		//NOTENOTE: We don't use this return value in our case (need to restructure the calculation function setup!)
+	CBasePlayer* pPlayer = ToBasePlayer(GetOwner());
+	if (!pPlayer)
 		return 0.0f;
 
-	
-}
+	static float bobtime;
+	static float lastbobtime;
+	float cycle;
 
+	// Find the speed of the player
+	float speed = pPlayer->GetLocalVelocity().Length2D();
+
+	// NOTENOTE: For now, let this cycle continue when in the air, because it snaps badly without it
+	if ((!gpGlobals->frametime) || (speed == 0) || !pPlayer->GetGroundEntity())
+	{
+		// Just use the old value if not moving or on the ground
+		return g_verticalBob;
+	}
+
+	float flRunningSpeed = MAX(1, pPlayer->GetSequenceGroundSpeed(pPlayer->GetSequence()));
+	float flDeltaTime = (gpGlobals->curtime - lastbobtime) * flRunningSpeed;
+	bobtime += flDeltaTime;
+
+	// Calculate the vertical bob
+	cycle = bobtime - (int)(bobtime / HL2_BOB_CYCLE_MAX) * HL2_BOB_CYCLE_MAX;
+	cycle /= HL2_BOB_CYCLE_MAX;
+
+	if (cycle < HL2_BOB_UP)
+	{
+		cycle = M_PI * cycle / HL2_BOB_UP;
+	}
+	else
+	{
+		cycle = M_PI + M_PI * (cycle - HL2_BOB_UP) / (1.0 - HL2_BOB_UP);
+	}
+
+	g_verticalBob = speed * 0.005f;
+	g_verticalBob = g_verticalBob * 0.3 + g_verticalBob * 0.7 * sin(cycle);
+
+	// Calculate the lateral bob
+	cycle = bobtime - (int)(bobtime / HL2_BOB_CYCLE_MAX * 2) * HL2_BOB_CYCLE_MAX * 2;
+	cycle /= HL2_BOB_CYCLE_MAX * 2;
+
+	if (cycle < HL2_BOB_UP)
+	{
+		cycle = M_PI * cycle / HL2_BOB_UP;
+	}
+	else
+	{
+		cycle = M_PI + M_PI * (cycle - HL2_BOB_UP) / (1.0 - HL2_BOB_UP);
+	}
+
+	g_lateralBob = speed * 0.01f;
+	g_lateralBob = g_lateralBob * 0.3 + g_lateralBob * 0.7 * sin(cycle);
+
+	lastbobtime = gpGlobals->curtime;
+
+	return g_verticalBob;
+}
 //-----------------------------------------------------------------------------
 // Purpose: 
 // Input  : &origin - 

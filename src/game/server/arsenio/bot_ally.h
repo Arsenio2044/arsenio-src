@@ -34,6 +34,10 @@ public:
 	void		OnChangeActivity( Activity eNewActivity );
 	void		Event_Killed( const CTakeDamageInfo &info );
 	void		OnListened();
+	void		Hop(void);
+	bool		IsJumpLegal(const Vector& startPos, const Vector& apex, const Vector& endPos) const;
+	virtual void            PlayAirjumpSound( void );
+
 
 
 	void		ClearAttackConditions( void );
@@ -44,6 +48,8 @@ public:
 	bool		IsHeavyDamage( const CTakeDamageInfo &info );
 
 	virtual	bool		AllowedToIgnite( void ) { return true; }
+
+	mutable float	m_flJumpDist;
 
 private:
 	bool		ShouldHitPlayer( const Vector &targetDir, float targetDist );

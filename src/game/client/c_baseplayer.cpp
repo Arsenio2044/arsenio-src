@@ -1235,6 +1235,20 @@ void C_BasePlayer::TeamChange( int iNewTeam )
 	// Base class does nothing
 }
 
+#ifdef ARSENIO
+// Set the view punch angles
+void C_BasePlayer::SetViewPunchAngles(const QAngle& angles)
+{
+	m_viewPunch = angles;
+}
+
+// Get the view punch angles
+const QAngle& C_BasePlayer::ViewPunch() const
+{
+	return m_viewPunch;
+}
+#endif
+
 
 //-----------------------------------------------------------------------------
 // Purpose: Creates, destroys, and updates the flashlight effect as needed.

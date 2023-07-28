@@ -101,6 +101,14 @@ public:
 
 	virtual void	MakeTracer( const Vector &vecTracerSrc, const trace_t &tr, int iTracerType );
 
+#ifdef ARSENIO
+	// Set the view punch angles (overrides the existing view punch)
+	void SetViewPunchAngles(const QAngle& angles);
+
+	// Get the view punch angles
+	const QAngle& ViewPunch() const;
+#endif
+
 	virtual void	GetToolRecordingState( KeyValues *msg );
 
 	virtual float GetPlayerMaxSpeed();
@@ -565,6 +573,10 @@ private:
 	EHANDLE			m_hOldVehicle;
 	EHANDLE			m_hUseEntity;
 	
+#ifdef ARSENIO
+	QAngle m_viewPunch; // Stores the view punch angles
+#endif
+
 	float			m_flMaxspeed;
 
 #ifdef ARSENIO

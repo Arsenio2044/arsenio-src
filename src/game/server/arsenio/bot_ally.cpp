@@ -24,6 +24,8 @@
 #include "hl2_gamerules.h"
 #include "gameweaponmanager.h"
 #include "vehicle_base.h"
+#include "movevars_shared.h"
+
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -45,6 +47,7 @@ ConVar	bot_allypawn_health( "bot_allypawn_health", "1" );
 
 ConVar  add_deez_prob( "add_yourmom_prob", "0", 0,
 	"Every bot_ally soldier has this chance to spawn a hunter" );
+float flGravity = sv_gravity.GetFloat();
 
 LINK_ENTITY_TO_CLASS( bot_ally, CBotAlly );
 
@@ -80,6 +83,7 @@ void CBotAlly::Spawn( void )
 	CapabilitiesAdd( bits_CAP_MOVE_SHOOT );
 	CapabilitiesAdd( bits_CAP_DOORS_GROUP );
 	CapabilitiesAdd(bits_CAP_FRIENDLY_DMG_IMMUNE);
+	CapabilitiesAdd(bits_CAP_MOVE_JUMP | bits_CAP_MOVE_CLIMB);
 
 	BaseClass::Spawn();
 
@@ -146,6 +150,21 @@ void CBotAlly::Spawn( void )
 
 }
 
+bool CBotAlly::IsJumpLegal(const Vector& startPos, const Vector& apex, const Vector& endPos) const
+{
+	const float MAX_JUMP_RISE = 400.0f;
+	const float MAX_JUMP_DISTANCE = 800.0f;
+	const float MAX_JUMP_DROP = 2048.0f;
+
+	if (BaseClass::IsJumpLegal(startPos, apex, endPos, MAX_JUMP_RISE, MAX_JUMP_DROP, MAX_JUMP_DISTANCE))
+	{
+		// Hang onto the jump distance. The AI is going to want it.
+		m_flJumpDist = (startPos - endPos).Length();
+
+		return true;
+	}
+	return false;
+}
 
 //-----------------------------------------------------------------------------
 // Purpose:
@@ -175,6 +194,7 @@ void CBotAlly::Precache()
 	UTIL_PrecacheOther( "item_healthvial" );
 	UTIL_PrecacheOther( "weapon_frag" );
 	UTIL_PrecacheOther( "item_ammo_ar2_altfire" );
+	PrecacheScriptSound("Player.AirJump");
 
 	//if (add_yourmom_prob.GetFloat() > 0)
 	//{
@@ -494,3 +514,35 @@ BEGIN_DATADESC( CBotAlly )
 
 END_DATADESC()
 #endif
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CBotAlly::Hop(void)
+{
+	float flGravity = sv_gravity.GetFloat();
+
+	// throw the squid up into the air on this frame.
+	if (GetFlags() & FL_ONGROUND)
+	{
+		SetGroundEntity(NULL);
+	}
+
+	PlayAirjumpSound();
+
+	// jump into air for 0.8 (24/30) seconds
+	Vector vecVel = GetAbsVelocity();
+	vecVel.z += (0.625 * flGravity) * 0.5;
+	SetAbsVelocity(vecVel);
+}
+
+//-----------------------------------------------------------------------------
+// Purpose: Play airjump sound (copy of PlayStepSound but simpler)
+// Input  : location - 
+//			fvol - 
+//-----------------------------------------------------------------------------
+void CBotAlly::PlayAirjumpSound( void )
+{
+
+
+	EmitSound( "Player.AirJump" );
+}
