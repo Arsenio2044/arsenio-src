@@ -1237,6 +1237,8 @@ void CHL2_Player::PostThink( void )
 #endif
 }
 
+
+
 void CHL2_Player::StartAdmireGlovesAnimation( void )
 {
 	MDLCACHE_CRITICAL_SECTION();
@@ -1461,6 +1463,8 @@ void CHL2_Player::Spawn(void)
 	}
 
 	GetViewModel(1)->SetModel("models/weapons/arms/v_arms_gambler_new.mdl");
+
+	CreateSounds();
 
 #endif
 	//
