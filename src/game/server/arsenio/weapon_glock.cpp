@@ -62,10 +62,10 @@ public:
 
 	virtual bool Reload( void );
 
-	const float GLOCK_ACCURACY_SHOT_PENALTY_TIME = 0.2f;
-	const float GLOCK_ACCURACY_MAXIMUM_PENALTY_TIME = 1.5f;
-	const Vector VECTOR_CONE_PERFECT_ACCURACY = Vector(0.0f, 0.0f, 0.0f);
-	const Vector VECTOR_CONE_MAX_INACCURACY = Vector(0.06f, 0.06f, 0.0f);
+	const float CWeaponGlock::GLOCK_ACCURACY_SHOT_PENALTY_TIME = 0.2f;
+	const float CWeaponGlock::GLOCK_ACCURACY_MAXIMUM_PENALTY_TIME = 1.5f;
+	const Vector CWeaponGlock::VECTOR_CONE_PERFECT_ACCURACY = Vector(0.0f, 0.0f, 0.0f);
+	const Vector CWeaponGlock::VECTOR_CONE_MAX_INACCURACY = Vector(0.06f, 0.06f, 0.0f);
 
 	virtual const Vector& GetBulletSpread( void )
 	{
