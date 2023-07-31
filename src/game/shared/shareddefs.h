@@ -312,7 +312,9 @@ enum CastVote
 #define ITEM_FLAG_NOITEMPICKUP		(1<<7)	// Don't draw weapon pickup when this weapon is picked up by the player
 // NOTE: KEEP g_ItemFlags IN WEAPON_PARSE.CPP UPDATED WITH THESE
 
-
+#ifdef ARSENIO
+#define MIN_FLING_SPEED 300
+#endif
 // Humans only have left and right hands, though we might have aliens with more
 //  than two, sigh
 #define MAX_VIEWMODELS			10

@@ -116,6 +116,25 @@ public:
 
 	void				DrawDebugGeometryOverlays(void);
 
+#ifdef ARSENIO
+	void UpdateWooshSounds(void);
+	virtual void CreateSounds(void);
+#endif
+
+#ifdef ARSENIOTODO
+	// Function called when the Hack input is held down
+	void OnHackInput();
+
+	// Function called when the player selects a hacking option
+	void OnHackingOptionSelected(const char* option);
+
+	// Function to execute the selected hacking option on the targeted entity
+	void ExecuteHackingOption(CBaseEntity* targetEntity, const char* option);
+
+	// Function to show the hacking UI overlay
+	void ShowHackingUIOverlay(const char* hackingOptions);
+
+#endif
 	virtual Vector		EyeDirection2D( void );
 	virtual Vector		EyeDirection3D( void );
 
@@ -417,6 +436,9 @@ private:
 	bool				m_bKickWeaponLowered;
 
 	string_t		    m_LegModelName;
+
+	CSoundPatch*		m_pWooshSound;
+
 
 	float				m_flNextFlipoff;
 	bool				m_bFlipoffWeaponLowered;

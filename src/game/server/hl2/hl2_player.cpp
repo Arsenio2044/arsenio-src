@@ -50,6 +50,9 @@
 #include "SoundEmitterSystem/isoundemittersystembase.h"
 #include "npcevent.h"
 
+#ifdef ARSENIOTODO
+#include "..\client\arsenio\HackingUIOverlay.cpp"
+#endif
 
 
 
@@ -419,6 +422,9 @@ BEGIN_DATADESC( CHL2_Player )
 
 	DEFINE_SOUNDPATCH( m_sndLeeches ),
 	DEFINE_SOUNDPATCH( m_sndWaterSplashes ),
+#ifdef ARSENIO
+	DEFINE_SOUNDPATCH(m_pWooshSound),
+#endif
 
 	DEFINE_FIELD( m_flArmorReductionTime, FIELD_TIME ),
 	DEFINE_FIELD( m_iArmorReductionFrom, FIELD_INTEGER ),
@@ -502,6 +508,8 @@ void CHL2_Player::Precache( void )
 #ifdef ARSENIO
 	PrecacheModel("models/barney.mdl");
 	PrecacheModel("models/weapons/arms/v_arms_gambler_new.mdl");
+
+	PrecacheScriptSound("Player.Woosh");
 
 	PrecacheScriptSound("Player.KickSwing");
 	PrecacheScriptSound("Player.KickHit");
@@ -1212,6 +1220,10 @@ void CHL2_Player::PostThink( void )
 	{
 		 HandleAdmireGlovesAnimation();
 	}
+
+#ifdef ARSENIO
+	UpdateWooshSounds();
+#endif
 
 #ifdef ARSENIO
 	if (arsenio_player_stomp_tiny_hull.GetBool() && GetGroundEntity() && GetGroundEntity()->MyCombatCharacterPointer() && GetGroundEntity()->MyCombatCharacterPointer()->GetHullType() == HULL_TINY)
@@ -2125,6 +2137,30 @@ void CHL2_Player::CommanderUpdate()
 			CommanderExecute( CC_FOLLOW );
 	}
 }
+
+void CHL2_Player::UpdateWooshSounds(void)
+{
+	if (m_pWooshSound)
+	{
+		CSoundEnvelopeController& controller = CSoundEnvelopeController::GetController();
+
+		float fWooshVolume = GetAbsVelocity().Length() - MIN_FLING_SPEED;
+
+		if (fWooshVolume < 0.0f)
+		{
+			controller.SoundChangeVolume(m_pWooshSound, 0.0f, 0.1f);
+			return;
+		}
+
+		fWooshVolume /= 2000.0f;
+		if (fWooshVolume > 1.0f)
+			fWooshVolume = 1.0f;
+
+		controller.SoundChangeVolume(m_pWooshSound, fWooshVolume, 0.1f);
+		//		controller.SoundChangePitch( m_pWooshSound, fWooshVolume + 0.5f, 0.1f );
+	}
+}
+
 
 //-----------------------------------------------------------------------------
 // Purpose: 
@@ -4136,6 +4172,52 @@ void CHL2_Player::DrawDebugGeometryOverlays(void)
 	}
 }
 
+#ifdef ARSENIOTODO
+
+// Function called when the Hack input is held down
+void CHL2_Player::OnHackInput()
+{
+	// Get the hacking options from a text file or any other source
+	const char* hackingOptions = "option1:PlayAnimation idleanim\\noption2:TriggerResponse hello_response\\n";
+
+	// Show the UI overlay with hacking options
+	ShowHackingUIOverlay(hackingOptions);
+}
+
+
+
+// Function called when the player selects a hacking option
+void CHL2_Player::OnHackingOptionSelected(const char* option)
+{
+	// Use a trace to find the NPC or object the player is looking at
+	trace_t traceResult;
+	CBaseEntity* pEntity = const_cast<CBaseEntity*>(EntityFromEntityHandle(m_hLookAtEnt));
+	UTIL_TraceLine(EyePosition(), EyePosition() + EyeDirection3D() * MAX_TRACE_LENGTH, MASK_SHOT, this, COLLISION_GROUP_NONE, &traceResult);
+
+	if (traceResult.fraction < 1.0f && traceResult.m_pEnt)
+	{
+		// Check if the entity is an NPC or an object that can be hacked
+		CBaseEntity* targetEntity = traceResult.m_pEnt;
+
+		// Now, parse the option and execute the command on the targeted entity
+		ExecuteHackingOption(targetEntity, option);
+	}
+}
+
+// Function to execute the selected hacking option on the targeted entity
+void CHL2_Player::ExecuteHackingOption(CBaseEntity* targetEntity, const char* option)
+{
+	// ... Implementation for ExecuteHackingOption remains the same ...
+}
+
+// Function to show the hacking UI overlay
+void CHL2_Player::ShowHackingUIOverlay(const char* hackingOptions)
+{
+	// Create and show the hacking UI overlay
+	CHackingUIOverlay* hackingOverlay = new CHackingUIOverlay(GetHud(), "HackingOverlay");
+	hackingOverlay->ShowHackingOptions(hackingOptions);
+}
+#endif
 //-----------------------------------------------------------------------------
 // Purpose: Helper to remove from ladder
 //-----------------------------------------------------------------------------
@@ -4634,6 +4716,19 @@ void CHL2_Player::StopWaterDeathSounds( void )
 	}
 }
 
+void CHL2_Player::CreateSounds()
+{
+	if (!m_pWooshSound)
+	{
+		CSoundEnvelopeController& controller = CSoundEnvelopeController::GetController();
+
+		CPASAttenuationFilter filter(this);
+
+		m_pWooshSound = controller.SoundCreate(filter, entindex(), "Player.Woosh");
+		controller.Play(m_pWooshSound, 0, 100);
+	}
+}
+
 //-----------------------------------------------------------------------------
 // 
 //-----------------------------------------------------------------------------
@@ -4678,6 +4773,16 @@ void CHL2_Player::StopLoopingSounds( void )
 		 (CSoundEnvelopeController::GetController()).SoundDestroy( m_sndWaterSplashes );
 		 m_sndWaterSplashes = NULL;
 	}
+
+#ifdef ARSENIO
+	if (m_pWooshSound)
+	{
+		CSoundEnvelopeController& controller = CSoundEnvelopeController::GetController();
+
+		controller.SoundDestroy(m_pWooshSound);
+		m_pWooshSound = NULL;
+	}
+#endif
 
 	BaseClass::StopLoopingSounds();
 }
