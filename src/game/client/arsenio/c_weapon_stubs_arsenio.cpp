@@ -52,6 +52,7 @@ STUB_WEAPON_CLASS(weapon_mp99k, WeaponMP99K, C_HLMachineGun); // Mp5K for modern
 STUB_WEAPON_CLASS(weapon_jshot, WeaponJSHOT, C_HLSelectFireMachineGun); // Just another rifle lmao
 STUB_WEAPON_CLASS(weapon_striker, WeaponStriker, C_BaseHLCombatWeapon); // Cooolio
 STUB_WEAPON_CLASS(weapon_unarmed, WeaponUnarmed, C_BaseHLBludgeonWeapon); // Mobility Mode
+STUB_WEAPON_CLASS(weapon_phaseshifter, WeaponPhaseShifter, C_BaseHLCombatWeapon);
 #ifdef LATER
 #endif
 
