@@ -60,6 +60,9 @@ public:
 	int		CapabilitiesGet( void ) { return bits_CAP_WEAPON_RANGE_ATTACK1; }
 	Activity	GetPrimaryAttackActivity( void );
 
+	Vector CWeaponGlock::m_vDefaultAccuracy = VECTOR_CONE_MAX_INACCURACY;
+
+
 	virtual bool Reload( void );
 
 	const float CWeaponGlock::GLOCK_ACCURACY_SHOT_PENALTY_TIME = 0.2f;
@@ -67,14 +70,16 @@ public:
 	const Vector CWeaponGlock::VECTOR_CONE_PERFECT_ACCURACY = Vector(0.0f, 0.0f, 0.0f);
 	const Vector CWeaponGlock::VECTOR_CONE_MAX_INACCURACY = Vector(0.06f, 0.06f, 0.0f);
 
-	virtual const Vector& GetBulletSpread( void )
+	const Vector& CWeaponGlock::GetBulletSpread(void)
 	{
 		CBasePlayer* pOwner = ToBasePlayer(GetOwner());
 		if (!pOwner)
-			return VECTOR_CONE_MAX_INACCURACY;
+			return m_vDefaultAccuracy;
 
 		if (m_nNumShotsFired == 0)
 			return VECTOR_CONE_PERFECT_ACCURACY; // First shot is perfectly accurate
+
+
 
 		// Calculate the time since the last shot was fired
 		float timeSinceLastShot = gpGlobals->curtime - m_flLastAttackTime;
@@ -90,10 +95,8 @@ public:
 		float penaltyLerp = RemapValClamped(continuousFireTime, 0.0f, GLOCK_ACCURACY_MAXIMUM_PENALTY_TIME, 0.0f, 1.0f);
 
 		// Lerp between perfect accuracy and maximum inaccuracy based on the penalty lerp factor
-		Vector cone;
-		VectorLerp(VECTOR_CONE_PERFECT_ACCURACY, VECTOR_CONE_MAX_INACCURACY, penaltyLerp, cone);
-
-		return cone;
+		VectorLerp(VECTOR_CONE_PERFECT_ACCURACY, VECTOR_CONE_MAX_INACCURACY, penaltyLerp, m_vDefaultAccuracy);
+		return m_vDefaultAccuracy;
 	}
 	
 	virtual int	GetMinBurst() 
