@@ -15,9 +15,9 @@
 //=========================================================
 //	>> CNPC_SynthE
 //=========================================================
-class CNPC_UScout : public CNPC_Combine
+class CNPC_RUSAMarine : public CNPC_Combine
 {
-	DECLARE_CLASS(CNPC_UScout, CNPC_Combine );
+	DECLARE_CLASS(CNPC_RUSAMarine, CNPC_Combine );
 #if HL2_EPISODIC
 	DECLARE_DATADESC();
 #endif

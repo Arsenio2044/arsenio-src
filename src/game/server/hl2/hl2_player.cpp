@@ -104,6 +104,7 @@ ConVar arsenio_player_stomp_tiny_hull("arsenio_player_stomp_tiny_hull", "0", FCV
 ConVar arsenio_flipoff_enabled("arsenio_flipoff_enabled", "1", FCVAR_REPLICATED);
 ConVar arsenio_player_flipoff_default_modelname("arsenio_player_flipoff_default_modelname", "models/weapons/flipoff/flip.mdl", FCVAR_REPLICATED, "Default filename of model to use for kick animation - can be overridden in map");
 
+ConVar ar_wooshsound_enabled("ar_wooshsound_enabled", "1", FCVAR_REPLICATED, "Portal 2 woosh sound.");
 #endif
 
 ConVar hl2_darkness_flashlight_factor ( "hl2_darkness_flashlight_factor", "1" );
@@ -1222,7 +1223,10 @@ void CHL2_Player::PostThink( void )
 	}
 
 #ifdef ARSENIO
-	UpdateWooshSounds();
+	if (ar_wooshsound_enabled.GetInt() == 1)
+	{
+		UpdateWooshSounds();
+	}
 #endif
 
 #ifdef ARSENIO
@@ -2144,24 +2148,28 @@ void CHL2_Player::CommanderUpdate()
 
 void CHL2_Player::UpdateWooshSounds(void)
 {
-	if (m_pWooshSound)
+
+	if (ar_wooshsound_enabled.GetInt() == 1)
 	{
-		CSoundEnvelopeController& controller = CSoundEnvelopeController::GetController();
-
-		float fWooshVolume = GetAbsVelocity().Length() - MIN_FLING_SPEED;
-
-		if (fWooshVolume < 0.0f)
+		if (m_pWooshSound)
 		{
-			controller.SoundChangeVolume(m_pWooshSound, 0.0f, 0.1f);
-			return;
+			CSoundEnvelopeController& controller = CSoundEnvelopeController::GetController();
+
+			float fWooshVolume = GetAbsVelocity().Length() - MIN_FLING_SPEED;
+
+			if (fWooshVolume < 0.0f)
+			{
+				controller.SoundChangeVolume(m_pWooshSound, 0.0f, 0.1f);
+				return;
+			}
+
+			fWooshVolume /= 2000.0f;
+			if (fWooshVolume > 1.0f)
+				fWooshVolume = 1.0f;
+
+			controller.SoundChangeVolume(m_pWooshSound, fWooshVolume, 0.1f);
+			//		controller.SoundChangePitch( m_pWooshSound, fWooshVolume + 0.5f, 0.1f );
 		}
-
-		fWooshVolume /= 2000.0f;
-		if (fWooshVolume > 1.0f)
-			fWooshVolume = 1.0f;
-
-		controller.SoundChangeVolume(m_pWooshSound, fWooshVolume, 0.1f);
-		//		controller.SoundChangePitch( m_pWooshSound, fWooshVolume + 0.5f, 0.1f );
 	}
 }
 
@@ -4722,14 +4730,17 @@ void CHL2_Player::StopWaterDeathSounds( void )
 
 void CHL2_Player::CreateSounds()
 {
-	if (!m_pWooshSound)
+	if (ar_wooshsound_enabled.GetInt() == 1)
 	{
-		CSoundEnvelopeController& controller = CSoundEnvelopeController::GetController();
+		if (!m_pWooshSound)
+		{
+			CSoundEnvelopeController& controller = CSoundEnvelopeController::GetController();
 
-		CPASAttenuationFilter filter(this);
+			CPASAttenuationFilter filter(this);
 
-		m_pWooshSound = controller.SoundCreate(filter, entindex(), "Player.Woosh");
-		controller.Play(m_pWooshSound, 0, 100);
+			m_pWooshSound = controller.SoundCreate(filter, entindex(), "Player.Woosh");
+			controller.Play(m_pWooshSound, 0, 100);
+		}
 	}
 }
 

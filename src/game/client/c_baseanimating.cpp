@@ -2956,7 +2956,7 @@ C_BaseAnimating* C_BaseAnimating::FindFollowedEntity()
 
 	if ( !follow->GetModel() )
 	{
-		Warning( "mod_studio: MOVETYPE_FOLLOW with no model.\n" );
+		//Warning( "mod_studio: MOVETYPE_FOLLOW with no model.\n" );
 		return NULL;
 	}
 

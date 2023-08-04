@@ -48,7 +48,7 @@ STUB_WEAPON_CLASS(weapon_smg1, WeaponSMG1, C_HLSelectFireMachineGun);
 STUB_WEAPON_CLASS(weapon_KLO99, WeaponKLO99, C_HLMachineGun); // High power LMG
 STUB_WEAPON_CLASS(weapon_ar3, WeaponAR3, C_HLMachineGun);
 STUB_WEAPON_CLASS(weapon_knd12, WeaponKND12, C_BaseHLCombatWeapon);
-STUB_WEAPON_CLASS(weapon_mp99k, WeaponMP99K, C_HLMachineGun); // Mp5K for modern world.
+STUB_WEAPON_CLASS(weapon_mp5k, WeaponMP5K, C_HLMachineGun); // Mp5K for modern world.
 STUB_WEAPON_CLASS(weapon_jshot, WeaponJSHOT, C_HLSelectFireMachineGun); // Just another rifle lmao
 STUB_WEAPON_CLASS(weapon_striker, WeaponStriker, C_BaseHLCombatWeapon); // Cooolio
 STUB_WEAPON_CLASS(weapon_unarmed, WeaponUnarmed, C_BaseHLBludgeonWeapon); // Mobility Mode

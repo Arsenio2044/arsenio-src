@@ -1,13 +1,13 @@
 //========= Copyright Glitch Software, All rights reserved. ============//
 // 
-//Purpose: Scouting Soldier for Usova Corporation.
+//Purpose: Marine of the Reformed United States Of America (RUSA).
 //
 //=============================================================================//
 
 #include "cbase.h"
 #include "ai_hull.h"
 #include "ai_motor.h"
-#include "npc_usova_scout.h"
+#include "npc_rusa_marine.h"
 #include "bitstring.h"
 #include "engine/IEngineSound.h"
 #include "soundent.h"
@@ -32,25 +32,25 @@
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-ConVar	sk_usova_scout_health( "sk_usova_scout_health","100");
-ConVar	sk_usova_scout_kick( "sk_usova_scout_kick","35");
+ConVar	sk_rusa_marine_health( "sk_rusa_marine_health","100");
+ConVar	sk_rusa_marine_kick( "sk_rusa_marine_kick","35");
 
-ConVar sk_usovas_guard_health( "sk_usovas_guard_health", "0");
-ConVar sk_usovas_guard_kick( "sk_usovas_guard_kick", "0");
+ConVar sk_rusa_marine_guard_health( "sk_rusa_marine_guard_health", "0");
+ConVar sk_rusa_marine_guard_kick( "sk_rusa_marine_guard_kick", "0");
  
-// Whether or not the usovas guard should spawn health on death
-ConVar usovas_guard_spawn_health( "usovas_guard_spawn_health", "1" );
+// Whether or not the rusa_marine guard should spawn health on death
+ConVar rusa_marine_guard_spawn_health( "rusa_marine_guard_spawn_health", "1" );
 
 extern ConVar sk_plr_dmg_buckshot;	
 extern ConVar sk_plr_num_shotgun_pellets;
 
-//Whether or not the usovas should spawn health on death
-ConVar	usova_scoutpawn_health( "usova_scoutpawn_health", "1" );
+//Whether or not the rusa_marine should spawn health on death
+ConVar	rusa_marinepawn_health( "rusa_marinepawn_health", "1" );
 
 ConVar  add_usova_prob( "add_usova_prob", "1", 0,
-	"Every usovas soldier has this chance to spawn a hunter" );
+	"Every rusa_marine soldier has this chance to spawn a hunter" );
 
-LINK_ENTITY_TO_CLASS( npc_usova_scout, CNPC_UScout );
+LINK_ENTITY_TO_CLASS( npc_rusa_marine, CNPC_RUSAMarine );
 
 
 #define AE_SOLDIER_BLOCK_PHYSICS		20 // trying to block an incoming physics object
@@ -61,7 +61,7 @@ extern Activity ACT_WALK_MARCH;
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
-void CNPC_UScout::Spawn( void )
+void CNPC_RUSAMarine::Spawn( void )
 {
 	Precache();
 	SetModel( STRING( GetModelName() ) );
@@ -69,15 +69,15 @@ void CNPC_UScout::Spawn( void )
 	if( IsElite() )
 	{
 		// Stronger, tougher.
-		SetHealth( sk_usovas_guard_health.GetFloat() );
-		SetMaxHealth( sk_usovas_guard_health.GetFloat() );
-		SetKickDamage( sk_usovas_guard_kick.GetFloat() );
+		SetHealth( sk_rusa_marine_guard_health.GetFloat() );
+		SetMaxHealth( sk_rusa_marine_guard_health.GetFloat() );
+		SetKickDamage( sk_rusa_marine_guard_kick.GetFloat() );
 	}
 	else
 	{
-		SetHealth( sk_usova_scout_health.GetFloat() );
-		SetMaxHealth( sk_usova_scout_health.GetFloat() );
-		SetKickDamage( sk_usova_scout_kick.GetFloat() );
+		SetHealth( sk_rusa_marine_health.GetFloat() );
+		SetMaxHealth( sk_rusa_marine_health.GetFloat() );
+		SetKickDamage( sk_rusa_marine_kick.GetFloat() );
 	}
 
 	CapabilitiesAdd( bits_CAP_ANIMATEDFACE );
@@ -122,7 +122,7 @@ void CNPC_UScout::Spawn( void )
 			if (!pHunter)
 				return;
 
-			pHunter->Precache(); // should already be precached from the usovas soldier's precache
+			pHunter->Precache(); // should already be precached from the rusa_marine soldier's precache
 
 			Vector vecHunterOrigin;
 			int attempts = 5;
@@ -149,10 +149,10 @@ void CNPC_UScout::Spawn( void )
 
 }
 
-Class_T	CNPC_UScout::Classify()
+Class_T	CNPC_RUSAMarine::Classify()
 {
 
-	return CLASS_USOVA;
+	return CLASS_RUSA;
 }
 
 //-----------------------------------------------------------------------------
@@ -160,11 +160,11 @@ Class_T	CNPC_UScout::Classify()
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-void CNPC_UScout::Precache()
+void CNPC_RUSAMarine::Precache()
 {
 	const char *pModelName = STRING( GetModelName() );
 
-	if( !Q_stricmp( pModelName, "models/usova_scouts.mdl" ) )
+	if( !Q_stricmp( pModelName, "models/rusa_marines.mdl" ) )
 	{
 		m_fIsElite = true;
 	}
@@ -175,7 +175,7 @@ void CNPC_UScout::Precache()
 
 	if( !GetModelName() )
 	{
-		SetModelName( MAKE_STRING( "models/elite_usovas/combine_soldier_prisonguard.mdl" ) );
+		SetModelName( MAKE_STRING( "models/elite_rusa_marine/combine_soldier_prisonguard.mdl" ) );
 	}
 
 	PrecacheModel( STRING( GetModelName() ) );
@@ -193,7 +193,7 @@ void CNPC_UScout::Precache()
 }
 
 
-void CNPC_UScout::DeathSound( const CTakeDamageInfo &info )
+void CNPC_RUSAMarine::DeathSound( const CTakeDamageInfo &info )
 {
 	// NOTE: The response system deals with this at the moment
 	if ( GetFlags() & FL_DISSOLVING )
@@ -210,7 +210,7 @@ void CNPC_UScout::DeathSound( const CTakeDamageInfo &info )
 //			that determines whether a grenade can be thrown, so prevent the 
 //			base class from clearing it out. (sjb)
 //-----------------------------------------------------------------------------
-void CNPC_UScout::ClearAttackConditions( )
+void CNPC_RUSAMarine::ClearAttackConditions( )
 {
 	bool fCanRangeAttack2 = HasCondition( COND_CAN_RANGE_ATTACK2 );
 
@@ -225,7 +225,7 @@ void CNPC_UScout::ClearAttackConditions( )
 	}
 }
 
-void CNPC_UScout::PrescheduleThink( void )
+void CNPC_RUSAMarine::PrescheduleThink( void )
 {
 	/*//FIXME: This doesn't need to be in here, it's all debug info
 	if( HasCondition( COND_HEAR_PHYSICS_DANGER ) )
@@ -253,7 +253,7 @@ void CNPC_UScout::PrescheduleThink( void )
 // Purpose: Allows for modification of the interrupt mask for the current schedule.
 //			In the most cases the base implementation should be called first.
 //-----------------------------------------------------------------------------
-void CNPC_UScout::BuildScheduleTestBits( void )
+void CNPC_RUSAMarine::BuildScheduleTestBits( void )
 {
 	//Interrupt any schedule with physics danger (as long as I'm not moving or already trying to block)
 	if ( m_flGroundSpeed == 0.0 && !IsCurSchedule( SCHED_FLINCH_PHYSICS ) )
@@ -269,14 +269,14 @@ void CNPC_UScout::BuildScheduleTestBits( void )
 // Input  :
 // Output :
 //-----------------------------------------------------------------------------
-int CNPC_UScout::SelectSchedule ( void )
+int CNPC_RUSAMarine::SelectSchedule ( void )
 {
 	return BaseClass::SelectSchedule();
 }
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-float CNPC_UScout::GetHitgroupDamageMultiplier( int iHitGroup, const CTakeDamageInfo &info )
+float CNPC_RUSAMarine::GetHitgroupDamageMultiplier( int iHitGroup, const CTakeDamageInfo &info )
 {
 	switch( iHitGroup )
 	{
@@ -293,7 +293,7 @@ float CNPC_UScout::GetHitgroupDamageMultiplier( int iHitGroup, const CTakeDamage
 
 //-----------------------------------------------------------------------------
 //-----------------------------------------------------------------------------
-void CNPC_UScout::HandleAnimEvent( animevent_t *pEvent )
+void CNPC_RUSAMarine::HandleAnimEvent( animevent_t *pEvent )
 {
 	switch( pEvent->event )
 	{
@@ -308,7 +308,7 @@ void CNPC_UScout::HandleAnimEvent( animevent_t *pEvent )
 	}
 }
 
-void CNPC_UScout::OnChangeActivity( Activity eNewActivity )
+void CNPC_RUSAMarine::OnChangeActivity( Activity eNewActivity )
 {
 	// Any new sequence stops us blocking.
 	m_fIsBlocking = false;
@@ -325,7 +325,7 @@ void CNPC_UScout::OnChangeActivity( Activity eNewActivity )
 #endif
 }
 
-void CNPC_UScout::OnListened()
+void CNPC_RUSAMarine::OnListened()
 {
 	BaseClass::OnListened();
 
@@ -351,10 +351,10 @@ void CNPC_UScout::OnListened()
 // Input  : &info - 
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-void CNPC_UScout::Event_Killed( const CTakeDamageInfo &info )
+void CNPC_RUSAMarine::Event_Killed( const CTakeDamageInfo &info )
 {
 	// Don't bother if we've been told not to, or the player has a megaphyscannon
-	if ( usova_scoutpawn_health.GetBool() == false || PlayerHasMegaPhysCannon() )
+	if ( rusa_marinepawn_health.GetBool() == false || PlayerHasMegaPhysCannon() )
 	{
 		BaseClass::Event_Killed( info );
 		return;
@@ -440,7 +440,7 @@ void CNPC_UScout::Event_Killed( const CTakeDamageInfo &info )
 // Input  : &info - 
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CNPC_UScout::IsLightDamage( const CTakeDamageInfo &info )
+bool CNPC_RUSAMarine::IsLightDamage( const CTakeDamageInfo &info )
 {
 	return BaseClass::IsLightDamage( info );
 }
@@ -450,7 +450,7 @@ bool CNPC_UScout::IsLightDamage( const CTakeDamageInfo &info )
 // Input  : &info - 
 // Output : Returns true on success, false on failure.
 //-----------------------------------------------------------------------------
-bool CNPC_UScout::IsHeavyDamage( const CTakeDamageInfo &info )
+bool CNPC_RUSAMarine::IsHeavyDamage( const CTakeDamageInfo &info )
 {
 	// Combine considers AR2 fire to be heavy damage
 	if ( info.GetAmmoType() == GetAmmoDef()->Index("AR2") )
@@ -481,7 +481,7 @@ bool CNPC_UScout::IsHeavyDamage( const CTakeDamageInfo &info )
 //-----------------------------------------------------------------------------
 // Purpose: Translate base class activities into combot activites
 //-----------------------------------------------------------------------------
-Activity CNPC_UScout::NPC_TranslateActivity( Activity eNewActivity )
+Activity CNPC_RUSAMarine::NPC_TranslateActivity( Activity eNewActivity )
 {
 	// If the special ep2_outland_05 "use march" flag is set, use the more casual marching anim.
 	if ( m_iUseMarch && eNewActivity == ACT_WALK )
@@ -496,7 +496,7 @@ Activity CNPC_UScout::NPC_TranslateActivity( Activity eNewActivity )
 //---------------------------------------------------------
 // Save/Restore
 //---------------------------------------------------------
-BEGIN_DATADESC( CNPC_UScout )
+BEGIN_DATADESC( CNPC_RUSAMarine )
 
 	DEFINE_KEYFIELD( m_iUseMarch, FIELD_INTEGER, "usemarch" ),
 
