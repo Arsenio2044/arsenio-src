@@ -1225,7 +1225,7 @@ int CHLClient::Init(CreateInterfaceFn appSystemFactory, CreateInterfaceFn physic
 		memset(&discordPresence, 0, sizeof(discordPresence));
 
 		discordPresence.state = "In the Menu";
-		discordPresence.details = "June ALPHA";
+		discordPresence.details = "August ALPHA";
 		discordPresence.startTimestamp = startTimestamp;
 		discordPresence.largeImageKey = "deez";
 		Discord_UpdatePresence(&discordPresence);

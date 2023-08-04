@@ -28,7 +28,7 @@ void CWeaponPhaseShifter::PrimaryAttack()
 
 	if (m_flNextPrimaryAttack > gpGlobals->curtime)
 		return;
-
+	
 	// Play weapon sound, muzzle flash, and other visual effects
 
 	Vector vecShootOrigin, vecShootDir;

@@ -12,10 +12,10 @@
 #endif
 
 #ifdef ARSENIO
-#define GAME_NAME           "ARSENIO 3044"
-#define GAME_VERSION_MAJOR  1
-#define GAME_VERSION_MINOR  5
-#define GAME_VERSION_PATCH  0
+#define GAME_NAME           "ARSENIO 2044"
+#define GAME_VERSION_MAJOR  0
+#define GAME_VERSION_MINOR  0
+#define GAME_VERSION_PATCH  2
 #endif
 
 
