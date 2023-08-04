@@ -10,7 +10,7 @@ END_DATADESC()
 
 CWeaponPhaseShifter::CWeaponPhaseShifter()
 {
-	m_flPhaseOutDuration = 2.0f; // Set the default phase-out duration (in seconds)
+	m_flPhaseOutDuration = 15.0f; // Set the default phase-out duration (in seconds)
 	m_flProjectileSpeed = 5000.0f; // Set the default projectile speed (adjust as needed)
 }
 
