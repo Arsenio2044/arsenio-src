@@ -57,14 +57,16 @@ STUB_WEAPON_CLASS(weapon_phaseshifter, WeaponPhaseShifter, C_BaseHLCombatWeapon)
 #endif
 
 // Coming soon
-#ifdef BALLS
-STUB_WEAPON_CLASS(weapon_BJ69, WeaponBJ69, C_HLSelectFireMachineGun); // nicknamed sex gun.
+#ifdef SOON
 STUB_WEAPON_CLASS(weapon_overlordgun, WeaponOverlord, C_BaseHLCombatWeapon); // Used for final boss.
-STUB_WEAPON_CLASS(weapon_Kaliber, WeaponKaliber, C_BaseHLCombatWeapon); // Sniper rifle used by SHADOW.
 
 
 #endif
 
+#ifdef UNUSED
+//STUB_WEAPON_CLASS(weapon_Kaliber, WeaponKaliber, C_BaseHLCombatWeapon); // Sniper rifle used by SHADOW.
+//STUB_WEAPON_CLASS(weapon_BJ69, WeaponBJ69, C_HLSelectFireMachineGun); // nicknamed sex gun.
+#endif
 
 
 
