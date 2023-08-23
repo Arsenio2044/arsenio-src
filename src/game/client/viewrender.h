@@ -384,6 +384,7 @@ public:
 	// Sets up the view model position relative to the local player
 	void			MoveViewModels( );
 
+	// Why does this exist?
 	// Gets the abs origin + angles of the view models
 	void			GetViewModelPosition( int nIndex, Vector *pPos, QAngle *pAngle );
 

@@ -1,24 +1,22 @@
-![83b04db1-3257-4f83-8637-c4e56976a6fa](https://user-images.githubusercontent.com/65312637/216708942-57f56910-1268-436c-a3d2-bfa3ed67cf8d.gif)
+
+![arse2044](https://github.com/IVEngine-Initiative/arsenio-src/assets/65312637/d036db10-e92a-42a8-9157-a3eedea8f513)
 
 
-> Arsenio is a total conversion mod for Half-Life 2: Episode Two that takes place in the far dark future.
+
+> Arsenio 2044 takes place in a world decimated by 4 decades of warfare, corruption, instability, and loss. The Black Mesa incident caused portal storms across the world which teleported millions of creatures from other worlds. Militaries were overwhelmed and the 2000’s consisted of economic collapse, mass casualties due to aliens and warfare. Megacorporations took control of whatever was left of nations. In the 2010’s the world grew a little more stable, the internet and AIs grew, and corporations like Usova and Glitch-Corp grew even bigger. You play as Arsenio, a man who is escaping an unknown situation (vague). The game starts with Arsenio on a train to Midinus, one of the last megacities in the US (Now known as the RUSA). Midinus is known for it's high crime rates but also has unique sci fi architecture mixed with older looking architecture("old" in this sense means anything before the 2020s). During the games story, arsenio encounters many different enemies and characters.
 # Features
+- A new gameplay experience with new weapon, enemies, and mechanics.
+- New shaders & Lighting engine.
+- Many fixes to the Source Engine.
+- Many more.
 
-- Multiple different factions of enemies and allies.
-- Parkour system (Credit to Mobility mod)
-- Too many weapons (trust me)
-- Completely redesigned combat system.
-- Runs in IVEngine 2 (No not VScript. IVEngine 2 is an overhaul of the source engine)
-- Many more features are unannounced or still in development.
 
-More will be documented on the wiki.
-
- ![coollogo_com-6941226](https://user-images.githubusercontent.com/65312637/212814265-81a8dd88-0a6d-4939-8a03-990cec8670a8.png)
 
 > Suggestions and requirments to build the SDK:
-- It is suggested to use Visual Studio 2022 to edit and compile the SDK.
+- It is suggested to use Visual Studio 2019 to edit and compile the SDK.
 - You need to have a build of Arsenio for the DLLS to work.
 
 
-Fifth Amendment No person shall be held to answer for a capital, or otherwise infamous crime, unless on a presentment or indictment of a Grand Jury, except in cases arising in the land or naval forces, or in the Militia, when in actual service in time of War or public danger; nor shall any person be subject for the same offence to be twice put in jeopardy of life or limb; nor shall be compelled in any criminal case to be a witness against himself, nor be deprived of life, liberty, or property, without due process of law; nor shall private property be taken for public use, without just compensation.
+
+
 

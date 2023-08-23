@@ -63,6 +63,9 @@ $Project "Server - Arsenio"
 			$File	"arsenio\npc_LeOS.cpp"
 			$File	"$SRCDIR\game\shared\arsenio\arsenio_game_log.cpp"
 			$File	"arsenio\logic_skill.cpp"
+			$File	"arsenio\closecaption_entity.cpp"
+			$File	"env_instructor_hint.cpp"
+			$File	"$SRCDIR\game\shared\arsenio\hands_shared.cpp"
 
 			$Folder	"Weapons"
 			{
@@ -72,6 +75,7 @@ $Project "Server - Arsenio"
 			$File	"cyberspace\weapon_addamm557.h"
 			$File	"arsenio\weapon_glock.cpp"
 			$File	"arsenio\weapon_klo99.cpp"
+			$File	"arsenio\weapon_jshot.cpp"
 			$File	"arsenio\weapon_knd12.cpp"
 			$File	"arsenio\weapon_mp99k.cpp"
 			$File	"arsenio\weapon_pro836.cpp"
@@ -85,9 +89,12 @@ $Project "Server - Arsenio"
 			$File	"arsenio\weapon_k189.cpp"
 			$File	"arsenio\weapon_ar3.cpp"
 			$File	"arsenio\weapon_ar3.h"
+		//	$File	"arsenio\logic_fear.cpp"
+	//		$File	"arsenio\weapon_flipoff.h"
+			$File	"arsenio\weapon_striker.cpp"
 			$File	"weapon_frag.h"	
 			$File	"hl1\hl1_npc_controller.cpp"
-			$File	"env_instructor_hint.cpp"
+
 
                         }
 
@@ -119,6 +126,8 @@ $Project "Server - Arsenio"
 			$File	"arsenio\npc_hellscraper.cpp"
 			$File	"arsenio\npc_turret_rebel.cpp"
 			$File	"arsenio\npc_turret_rebel.h"
+			$File	"arsenio\npc_rusa_marine.h"
+			$File	"arsenio\npc_rusa_marine.cpp"
                         }
 
 		}

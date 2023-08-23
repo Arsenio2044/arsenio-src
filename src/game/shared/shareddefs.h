@@ -12,10 +12,10 @@
 #endif
 
 #ifdef ARSENIO
-#define GAME_NAME           "ARSENIO 3044"
-#define GAME_VERSION_MAJOR  1
-#define GAME_VERSION_MINOR  5
-#define GAME_VERSION_PATCH  0
+#define GAME_NAME           "ARSENIO 2044"
+#define GAME_VERSION_MAJOR  0
+#define GAME_VERSION_MINOR  0
+#define GAME_VERSION_PATCH  2
 #endif
 
 
@@ -143,6 +143,25 @@ public:
 #define HUD_PRINTCONSOLE	2
 #define HUD_PRINTTALK		3
 #define HUD_PRINTCENTER		4
+
+// Gamemode for Arsenio 2044
+enum GameMode_t
+{
+	GAMEMODE_UNKNOWN = 0, // Unrecognized map
+	GAMEMODE_MOB = 1,
+	GAMEMODE_KILLZONE = 2,
+
+
+	// NOTE NOTE: IF YOU UPDATE THIS, UPDATE MOMENTUM.FGD's "GameTypes" BASECLASS!
+	GAMEMODE_COUNT // Should be last
+};
+
+const char* const g_szGameModes[] = {
+	"#MOM_GameType_Unknown",
+	"#MOM_GameType_Mob",
+	"#MOM_GameType_Killzone",
+};
+
 
 // Vote creation or processing failure codes
 typedef enum
@@ -293,10 +312,12 @@ enum CastVote
 #define ITEM_FLAG_NOITEMPICKUP		(1<<7)	// Don't draw weapon pickup when this weapon is picked up by the player
 // NOTE: KEEP g_ItemFlags IN WEAPON_PARSE.CPP UPDATED WITH THESE
 
-
+#ifdef ARSENIO
+#define MIN_FLING_SPEED 300
+#endif
 // Humans only have left and right hands, though we might have aliens with more
 //  than two, sigh
-#define MAX_VIEWMODELS			2
+#define MAX_VIEWMODELS			10
 
 #define MAX_BEAM_ENTS			10
 

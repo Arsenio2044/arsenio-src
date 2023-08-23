@@ -4,8 +4,9 @@
 //	Project Script
 //-----------------------------------------------------------------------------
 
-$Macro OUTBINNAME	"GameUI"
+$Macro OUTBINNAME	"gameui"
 $Macro OUTBINDIR	"$SRCDIR\..\game\$GAMENAME\bin"
+$Macro GAMENAME		"mod_arsenio"
 $Macro SRCDIR		".."
 
 $Include "$SRCDIR\vpc_scripts\source_dll_base.vpc"
@@ -52,7 +53,7 @@ $Configuration
 	}
 }
 
-$Project "GameUI"
+$Project "gameui"
 {
 	$Folder	"Base Files"
 	{

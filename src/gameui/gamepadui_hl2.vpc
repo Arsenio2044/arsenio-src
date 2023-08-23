@@ -1,0 +1,32 @@
+//-----------------------------------------------------------------------------
+//	GAMEUIUTIL_HL2.VPC
+//
+//	Project Script
+//-----------------------------------------------------------------------------
+
+$Macro SRCDIR		".."
+$Macro GAMENAME 	"mod_arsenio" // Stock SDK2013, Modders should replace this line with their mod folder name if needed.
+$Macro OUTBINNAME	"gameuiutil"
+
+$Include "$SRCDIR\gameui\gamepadui_base.vpc"
+
+$Configuration
+{
+	$Compiler
+	{
+		$PreprocessorDefinitions			"$BASE;GAMEPADUI_GAME_HL2"
+	}
+}
+
+$Project "gameuiutil (Arsenio)"
+{
+	$Folder "Header Files"
+    {
+		// $File "gamepadui_loading.h"
+	}
+
+	$Folder "Source Files"
+    {
+		// $File "gamepadui_loading.cpp"
+	}
+}

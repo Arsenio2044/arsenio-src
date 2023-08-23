@@ -1633,7 +1633,9 @@ void CBaseEntity::FireBullets( const FireBulletsInfo_t &info )
 			return;
 #endif
 
+
 		int rumbleEffect = pPlayer->GetActiveWeapon()->GetRumbleEffect();
+
 
 		if( rumbleEffect != RUMBLE_INVALID )
 		{

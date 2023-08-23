@@ -87,6 +87,8 @@ void CNPC_BloodSeeker::Spawn()
 	SetRenderColor(255, 255, 255, 20);
 	m_nRenderMode = kRenderTransTexture;
 
+
+
 	if (m_iHealth > 30)
 	{
 		CPASAttenuationFilter filter(this);
@@ -110,6 +112,8 @@ void CNPC_BloodSeeker::Precache()
 	PrecacheModel("models/arsenio/npc/bloodseeker.mdl");
 
 	UTIL_PrecacheOther("npc_handgrenade");
+
+	PrecacheScriptSound("Game.Spotted");
 
 
 	PrecacheScriptSound("BloodSeeker.Shot");
@@ -332,6 +336,9 @@ int CNPC_BloodSeeker::SelectSchedule(void)
 	{
 		if (HasCondition(COND_HEAR_DANGER) || HasCondition(COND_HEAR_COMBAT))
 		{
+
+
+
 			if (HasCondition(COND_HEAR_DANGER))
 				return SCHED_TAKE_COVER_FROM_BEST_SOUND;
 
@@ -403,6 +410,7 @@ int CNPC_BloodSeeker::SelectSchedule(void)
 		if (HasCondition(COND_SEE_ENEMY) && HasCondition(COND_ENEMY_FACING_ME))
 		{
 			//Msg("exposed - spotted\n");
+			EmitSound("Game.Spotted");
 			m_iFrustration++;
 			return SCHED_BLOODSEEKER_EXPOSED;
 		}
@@ -419,6 +427,9 @@ int CNPC_BloodSeeker::SelectSchedule(void)
 		{
 			//Msg( "face - combat\n");
 			return SCHED_COMBAT_FACE;
+
+
+
 		}
 
 		// new enemy

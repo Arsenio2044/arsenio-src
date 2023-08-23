@@ -586,6 +586,8 @@ void CAI_BaseNPC::Event_Killed( const CTakeDamageInfo &info )
 
 	Wake( false );
 	
+
+	// ADRIAN SHEAPARD HOLY FUCK HES A DEVELOPER
 	//Adrian: Select a death pose to extrapolate the ragdoll's velocity.
 	SelectDeathPose( info );
 
@@ -607,6 +609,21 @@ void CAI_BaseNPC::Event_Killed( const CTakeDamageInfo &info )
 	{
 		m_bImportanRagdoll = RagdollManager_SaveImportant( this );
 	}
+
+#ifdef ARSENIO
+	// Kill SFX
+	if (info.GetAttacker()->IsPlayer())
+	{
+		EmitSound("Weapon_Generic.BulletHitKillFeedback");
+		// Kill screen overlay
+
+		color32 blue = { 0,0,128,128 };
+		UTIL_ScreenFade(this, blue, 1.0f, 0.1f, FFADE_IN | FFADE_PURGE);
+	}
+
+
+
+#endif
 	
 	// Make sure this condition is fired too (OnTakeDamage breaks out before this happens on death)
 	SetCondition( COND_LIGHT_DAMAGE );
@@ -728,6 +745,14 @@ int CAI_BaseNPC::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 	{
 		PainSound( info );// "Ouch!"
 	}
+
+#ifdef ARSENIO
+	// Damage  SFX
+	if (info.GetAttacker()->IsPlayer())
+	{
+		EmitSound("Weapon_Generic.BulletHitImpactFeedback");
+	}
+#endif
 
 	// See if we're running a dynamic interaction that should break when I am damaged.
 	if ( IsActiveDynamicInteraction() )
@@ -10946,8 +10971,12 @@ void CAI_BaseNPC::Precache( void )
 	PrecacheScriptSound( "AI_BaseNPC.BodyDrop_Heavy" );
 	PrecacheScriptSound( "AI_BaseNPC.BodyDrop_Light" );
 	PrecacheScriptSound( "AI_BaseNPC.SentenceStop" );
+	PrecacheScriptSound( "Weapon_Generic.BulletHitKillFeedback" );
+	PrecacheScriptSound( "Weapon_Generic.BulletHitImpactFeedback" );
 
 	BaseClass::Precache();
+
+	// fuck you glitchy
 }
 
 

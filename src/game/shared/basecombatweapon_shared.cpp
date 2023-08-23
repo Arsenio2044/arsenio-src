@@ -20,6 +20,7 @@
 
 
 
+
 // NVNT start extra includes
 #include "haptics/haptic_utils.h"
 #ifdef CLIENT_DLL
@@ -51,6 +52,7 @@
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
+
 
 // The minimum time a hud hint for a weapon should be on screen. If we switch away before
 // this, then teh hud hint counter will be deremented so the hint will be shown again, as
@@ -935,6 +937,17 @@ bool CBaseCombatWeapon::ShouldDisplayReloadHUDHint()
 
 	if( pOwner != NULL && pOwner->IsPlayer() && UsesClipsForAmmo1() && m_iClip1 < (GetMaxClip1() / 2) )
 	{
+
+#ifdef ARSENIO_DLL 
+		IGameEvent* pEvent = gameeventmanager->CreateEvent("instructor_reload");
+
+		if (pEvent)
+		{
+			pEvent->SetInt("userid", GetUserID());
+			gameeventmanager->FireEvent(pEvent);
+		}
+#endif
+
 		// I'm owned by a player, I use clips, I have less then half a clip loaded. Now, does the player have more ammo?
 		if ( pOwner )
 		{
@@ -949,8 +962,12 @@ bool CBaseCombatWeapon::ShouldDisplayReloadHUDHint()
 //-----------------------------------------------------------------------------
 void CBaseCombatWeapon::DisplayReloadHudHint()
 {
+
+
 #if !defined( CLIENT_DLL )
-	UTIL_HudHintText( GetOwner(), "valve_hint_reload" );
+	//UTIL_HudHintText( GetOwner(), "valve_hint_reload" );
+
+
 	m_iReloadHudHintCount++;
 	m_bReloadHudHintDisplayed = true;
 	m_flHudHintMinDisplayTime = gpGlobals->curtime + MIN_HUDHINT_DISPLAY_TIME;
@@ -1002,7 +1019,9 @@ void CBaseCombatWeapon::Equip( CBaseCombatCharacter *pOwner )
 	SetOwner( pOwner );
 	SetOwnerEntity( pOwner );
 
-	Warning(" Arsenio has picked up a weapon");
+#ifdef ARSENIO
+	Warning(" Arsenio has picked up a weapon  \n");
+#endif
 
 	// Break any constraint I might have to the world.
 	RemoveEffects( EF_ITEM_BLINK );
@@ -1375,10 +1394,28 @@ bool CBaseCombatWeapon::IsWeaponVisible( void )
 //-----------------------------------------------------------------------------
 bool CBaseCombatWeapon::ReloadOrSwitchWeapons( void )
 {
+
+#ifndef ARSENIO
 	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
 	Assert( pOwner );
-
+#endif
 	m_bFireOnEmpty = false;
+
+#ifdef ARSENIO_DLL 
+	if (m_iClip1 < (GetMaxClip1() / 2))
+	{
+		IGameEvent* pEvent = gameeventmanager->CreateEvent("instructor_reload");
+
+		if (pEvent)
+		{
+			pEvent->SetInt("userid", GetUserID());
+			gameeventmanager->FireEvent(pEvent);
+		}
+	}
+
+#endif
+
+#ifndef ARSENIO
 //#ifdef GAME_DLL
 //	IGameEvent* pEvent = gameeventmanager->CreateEvent("instructor_reload");
 //	if (pEvent)
@@ -1412,6 +1449,7 @@ bool CBaseCombatWeapon::ReloadOrSwitchWeapons( void )
 				return true;
 		}
 	}
+#endif
 
 	return false;
 }
@@ -1609,7 +1647,7 @@ Activity CBaseCombatWeapon::GetDrawActivity( void )
 	if (m_bFirstDraw && GetWpnData().bHasFirstDrawAnim)
 	{
 		m_bFirstDraw = false;
-		return ACT_VM_FIRSTDRAW;
+		return ACT_VM_INSPECT;
 	}
 	else
 	{
@@ -2217,6 +2255,16 @@ bool CBaseCombatWeapon::DefaultReload( int iClipSize1, int iClipSize2, int iActi
 	if (!pOwner)
 		return false;
 
+#ifdef ARSENIO_DLL
+	IGameEvent* pEvent = gameeventmanager->CreateEvent("use_reload");
+
+	if (pEvent)
+	{
+		pEvent->SetInt("userid", GetUserID());
+		gameeventmanager->FireEvent(pEvent);
+	}
+#endif
+
 	// If I don't have any spare ammo, I can't reload
 	if ( pOwner->GetAmmoCount(m_iPrimaryAmmoType) <= 0 )
 		return false;
@@ -2295,7 +2343,9 @@ bool CBaseCombatWeapon::ReloadsSingly( void ) const
 //-----------------------------------------------------------------------------
 bool CBaseCombatWeapon::Reload( void )
 {
+
 	return DefaultReload( GetMaxClip1(), GetMaxClip2(), ACT_VM_RELOAD );
+
 }
 
 //=========================================================
@@ -2560,7 +2610,11 @@ void CBaseCombatWeapon::PrimaryAttack( void )
 	info.m_vecSpread = GetActiveWeapon()->GetBulletSpread();
 #endif // CLIENT_DLL
 
+
 	pPlayer->FireBullets( info );
+
+
+
 
 
 

@@ -1070,8 +1070,12 @@ void CHudCloseCaption::Paint( void )
  
 	Color bgColor = GetBgColor();
    	bgColor[3] = m_flBackgroundAlpha;
+#ifdef ARSENIO
+	vgui::surface()->DrawSetColor(bgColor);
+	vgui::surface()->DrawFilledRect(rcText.left, max(rcText.top, 0), rcText.left + rcText.right - rcText.left, max(rcText.top, 0) + rcText.bottom - max(rcText.top, 0));
+#else
 	DrawBox( rcText.left, MAX(rcText.top,0), rcText.right - rcText.left, rcText.bottom - MAX(rcText.top,0), bgColor, m_flCurrentAlpha );
-
+#endif
 	if ( !visibleitems.Count() )
 	{
 		return;

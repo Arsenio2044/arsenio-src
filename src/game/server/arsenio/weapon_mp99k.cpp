@@ -41,20 +41,20 @@ class CWeaponMP99K : public CHLMachineGun
 {
 	DECLARE_DATADESC();
 public:
-	DECLARE_CLASS( CWeaponMP99K, CHLMachineGun );
+	DECLARE_CLASS(CWeaponMP99K, CHLMachineGun);
 
 	CWeaponMP99K();
 
 	DECLARE_SERVERCLASS();
-	
-	void	AddViewKick( void );
+
+	void	AddViewKick(void);
 
 	virtual const Vector& GetBulletSpread(void)
 	{
 		static const Vector cone = VECTOR_CONE_12DEGREES; // GLITCHY: Temp value????
 		return cone;
 	}
-	
+
 	void	ItemPostFrame(void);
 
 	//float	GetBurstCycleRate(void) { return arsenio_mp99k_burst_cycle_rate.GetFloat(); };
@@ -62,17 +62,18 @@ public:
 	int		GetMaxBurst() { return 3; }
 	int		GetBurstSize(void) { return 3; };
 
-	bool	Reload( void );
+	bool	Reload(void);
 
-	float	GetFireRate(void) { return 0.100f; }
-	int		CapabilitiesGet( void ) { return bits_CAP_WEAPON_RANGE_ATTACK1; }
-	Activity	GetPrimaryAttackActivity( void );
+	float	GetFireRate(void) { return 1.0f / 15.0f; }
 
-	const WeaponProficiencyInfo_t *GetProficiencyValues();
+	int		CapabilitiesGet(void) { return bits_CAP_WEAPON_RANGE_ATTACK1; }
+	Activity	GetPrimaryAttackActivity(void);
 
-	void FireNPCPrimaryAttack( CBaseCombatCharacter *pOperator, Vector &vecShootOrigin, Vector &vecShootDir );
-	void Operator_ForceNPCFire( CBaseCombatCharacter  *pOperator, bool bSecondary );
-	void Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator );
+	const WeaponProficiencyInfo_t* GetProficiencyValues();
+
+	void FireNPCPrimaryAttack(CBaseCombatCharacter* pOperator, Vector& vecShootOrigin, Vector& vecShootDir);
+	void Operator_ForceNPCFire(CBaseCombatCharacter* pOperator, bool bSecondary);
+	void Operator_HandleAnimEvent(animevent_t* pEvent, CBaseCombatCharacter* pOperator);
 
 	DECLARE_ACTTABLE();
 
@@ -84,15 +85,16 @@ protected:
 IMPLEMENT_SERVERCLASS_ST(CWeaponMP99K, DT_WeaponMP99K)
 END_SEND_TABLE()
 
-LINK_ENTITY_TO_CLASS( weapon_mp99k, CWeaponMP99K );
+LINK_ENTITY_TO_CLASS(weapon_mp99k, CWeaponMP99K);
 PRECACHE_WEAPON_REGISTER(weapon_mp99k);
 
-BEGIN_DATADESC( CWeaponMP99K )
+BEGIN_DATADESC(CWeaponMP99K)
 
-	DEFINE_FIELD(m_flSpreadComponent, FIELD_FLOAT ),
-	DEFINE_FIELD(m_flLastPrimaryAttack, FIELD_TIME ),
+DEFINE_FIELD(m_flSpreadComponent, FIELD_FLOAT),
+DEFINE_FIELD(m_flLastPrimaryAttack, FIELD_TIME),
 
 END_DATADESC()
+
 
 acttable_t	CWeaponMP99K::m_acttable[] = 
 {
@@ -149,9 +151,9 @@ acttable_t	CWeaponMP99K::m_acttable[] =
 IMPLEMENT_ACTTABLE(CWeaponMP99K);
 
 //=========================================================
-CWeaponMP99K::CWeaponMP99K( )
+CWeaponMP99K::CWeaponMP99K()
 {
-	m_fMinRange1 = 0;// No minimum range. 
+	m_fMinRange1 = 0;
 	m_fMaxRange1 = 1400;
 
 	m_bAltFiresUnderwater = false;
@@ -275,7 +277,7 @@ void CWeaponMP99K::AddViewKick( void )
 
 	DoMachineGunKick( pPlayer, EASY_DAMPEN, MAX_VERTICAL_KICK, m_fFireDuration, SLIDE_LIMIT );
 
-	UTIL_ScreenShake(GetAbsOrigin(), 1.0, 150.0, 0.25, 750, SHAKE_START);
+	//UTIL_ScreenShake(GetAbsOrigin(), 1.0, 150.0, 0.25, 750, SHAKE_START);
 }
 
 //-----------------------------------------------------------------------------

@@ -142,9 +142,11 @@ static	kbutton_t	in_zoom;
 static  kbutton_t   in_grenade1;
 static  kbutton_t   in_grenade2;
 static	kbutton_t	in_attack3;
+static	kbutton_t	in_flipoff;
 #ifdef ARSENIO
 static	kbutton_t	in_oicwswitch1;
 static	kbutton_t	in_oicwswitch2;
+static	kbutton_t	in_attack4;
 #endif
 kbutton_t	in_ducktoggle;
 kbutton_t   in_speedtoggle;
@@ -506,9 +508,13 @@ void IN_Grenade2Down( const CCommand &args ) { KeyDown( &in_grenade2, args[1] );
 void IN_XboxStub( const CCommand &args ) { /*do nothing*/ }
 void IN_Attack3Down( const CCommand &args ) { KeyDown(&in_attack3, args[1] );}
 void IN_Attack3Up( const CCommand &args ) { KeyUp(&in_attack3, args[1] );}
+void IN_FlipOffDown(const CCommand& args) { KeyDown(&in_flipoff, args[1]); }
+void IN_FlipOffUp(const CCommand& args) { KeyUp(&in_flipoff, args[1]); }
 #ifdef ARSENIO
 void IN_OicwSwitchUp(const CCommand& args) { KeyUp(&in_oicwswitch1, args[1]); }
 void IN_OicwSwitchDown(const CCommand& args) { KeyDown(&in_oicwswitch2, args[1]); }
+void IN_Attack4Down(const CCommand& args) { KeyDown(&in_attack4, args[1]); }
+void IN_Attack4Up(const CCommand& args) { KeyUp(&in_attack4, args[1]); }
 #endif
 
 void IN_DuckToggle( const CCommand &args ) 
@@ -568,6 +574,8 @@ void IN_AttackUp( const CCommand &args )
 	KeyUp( &in_attack, args[1] );
 	in_cancel = 0;
 }
+
+
 
 // Special handling
 void IN_Cancel( const CCommand &args )
@@ -1524,9 +1532,11 @@ int CInput::GetButtonBits( int bResetState )
 	CalcButtonBits( bits, IN_GRENADE1, s_ClearInputState, &in_grenade1, bResetState );
 	CalcButtonBits( bits, IN_GRENADE2, s_ClearInputState, &in_grenade2, bResetState );
 	CalcButtonBits( bits, IN_ATTACK3, s_ClearInputState, &in_attack3, bResetState );
+	CalcButtonBits( bits, IN_FLIPOFF, s_ClearInputState, &in_flipoff, bResetState );
 #ifdef ARSENIO
 	CalcButtonBits( bits, IN_OICWSWITCH1, s_ClearInputState, &in_oicwswitch1, bResetState );
 	CalcButtonBits( bits, IN_OICWSWITCH2, s_ClearInputState, &in_oicwswitch2, bResetState );
+	CalcButtonBits(bits, IN_ATTACK4, s_ClearInputState, &in_attack4, bResetState);
 
 #endif
 
@@ -1692,10 +1702,14 @@ static ConCommand endgrenade2( "-grenade2", IN_Grenade2Up );
 static ConCommand startgrenade2( "+grenade2", IN_Grenade2Down );
 static ConCommand startattack3("+attack3", IN_Attack3Down);
 static ConCommand endattack3("-attack3", IN_Attack3Up);
+static ConCommand startflipoff("+flipoff", IN_FlipOffDown);
+static ConCommand endflipoff("-flipoff", IN_FlipOffUp);
 
 #ifdef ARSENIO
 static ConCommand oicwswitch1("+oicwswitch", IN_OicwSwitchUp);
 static ConCommand oicwswitch2("-oicwswitch", IN_OicwSwitchDown);
+static ConCommand startattack4("+attack4", IN_Attack4Down);
+static ConCommand endattack4("-attack4", IN_Attack4Up);
 #endif
 
 

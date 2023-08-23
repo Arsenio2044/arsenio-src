@@ -154,6 +154,8 @@ public:
 	virtual void			AddViewModelBob( CBasePlayer *owner, Vector& eyePosition, QAngle& eyeAngles );
 	virtual void			CalcViewModelLag( Vector& origin, QAngle& angles, QAngle& original_angles );
 	//virtual	float			CalcViewmodelBob(void);
+	virtual void CalcViewModelBasePose(Vector& origin, QAngle& eyeAngles, CBasePlayer* pOwner);
+
 
 
 	virtual void			CalcViewModelCollision(Vector& origin, QAngle& eyeAngles, CBasePlayer* pOwner);
@@ -187,6 +189,10 @@ public:
 	virtual bool			IsViewModel() const;
 	
 	CBaseCombatWeapon		*GetWeapon() const { return m_hWeapon.Get(); }
+
+	// additional offset timers
+	float m_flDucking = 0.0f;
+
 
 #ifdef CLIENT_DLL
 	virtual bool			ShouldResetSequenceOnNewModel( void ) { return false; }

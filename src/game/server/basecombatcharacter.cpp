@@ -2499,6 +2499,22 @@ int CBaseCombatCharacter::OnTakeDamage_Alive( const CTakeDamageInfo &info )
 		m_iHealth -= flIntegerDamage;
 	}
 
+#ifdef ARSENIO
+	// Handle the viewmodel blood splatter overlay effect here:
+	if ((info.GetDamageType() & (DMG_BULLET | DMG_SLASH | DMG_BLAST | DMG_CLUB | DMG_BUCKSHOT)))
+	{
+		CBasePlayer* pPlayer = UTIL_GetLocalPlayer();
+		if (pPlayer == this)
+			pPlayer->m_bShouldDrawBloodOverlay = true;
+
+		pPlayer = ToBasePlayer(info.GetAttacker());
+		if (pPlayer && (this->BloodColor() != BLOOD_COLOR_RED))
+		{
+			if (pPlayer->GetAbsOrigin().DistTo(this->GetAbsOrigin()) < 200.0f)
+				pPlayer->m_bShouldDrawBloodOverlay = true;
+		}
+	}
+#endif
 	return 1;
 }
 

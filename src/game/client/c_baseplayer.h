@@ -26,6 +26,9 @@
 #include "igameevents.h"
 #include "GameEventListener.h"
 #include "player_mobility_defs.h"
+#ifdef ARSENIO
+#include "ivengine2/c_bobmodel.h"
+#endif
 
 #if defined USES_ECON_ITEMS
 #include "econ_item.h"
@@ -98,6 +101,14 @@ public:
 
 	virtual void	MakeTracer( const Vector &vecTracerSrc, const trace_t &tr, int iTracerType );
 
+#ifdef ARSENIO
+	// Set the view punch angles (overrides the existing view punch)
+	void SetViewPunchAngles(const QAngle& angles);
+
+	// Get the view punch angles
+	const QAngle& ViewPunch() const;
+#endif
+
 	virtual void	GetToolRecordingState( KeyValues *msg );
 
 	virtual float GetPlayerMaxSpeed();
@@ -111,6 +122,10 @@ public:
 	const char			*GetTracerType( void );
 #ifdef ARSENIO_CLIENT
 	void				AddViewBob(Vector& eyeOrigin, QAngle& eyeAngles, bool calculate = false);
+#endif
+
+#ifdef ARSENIO
+	bool m_bShouldDrawBloodOverlay;
 #endif
 
 	// View model prediction setup
@@ -213,8 +228,12 @@ public:
 	float						MaxSpeed() const		{ return m_flMaxspeed; }
 
 	// Should this object cast shadows?
-	virtual ShadowType_t		ShadowCastType() { return SHADOWS_NONE; }
+	#ifdef ARSENIO
+	virtual ShadowType_t ShadowCastType() { return SHADOWS_RENDER_TO_TEXTURE_DYNAMIC; }
+	#else
 
+	virtual ShadowType_t		ShadowCastType() { return SHADOWS_NONE; }
+#endif
 	virtual bool				ShouldReceiveProjectedTextures( int flags )
 	{
 		return false;
@@ -554,8 +573,15 @@ private:
 	EHANDLE			m_hOldVehicle;
 	EHANDLE			m_hUseEntity;
 	
+#ifdef ARSENIO
+	QAngle m_viewPunch; // Stores the view punch angles
+#endif
+
 	float			m_flMaxspeed;
 
+#ifdef ARSENIO
+	C_BobModel* m_pBobViewModel;
+#endif
 	int				m_iBonusProgress;
 	int				m_iBonusChallenge;
 

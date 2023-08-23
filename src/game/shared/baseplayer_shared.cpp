@@ -53,7 +53,7 @@
 	
 #endif
 
-#ifdef ARSENIO
+#ifdef ARSENIO_M
 	
 	ConVar cl_viewpunch_power("cl_viewpunch_power", "0.4", 0, "", true, 0.0f, true, 1.0f);
 
@@ -183,6 +183,8 @@ float CBasePlayer::GetPlayerMaxSpeed()
 
 	return fMaxSpeed;
 }
+
+
 
 //-----------------------------------------------------------------------------
 // Purpose: Called every usercmd by the player PreThink
@@ -783,6 +785,8 @@ void CBasePlayer::PlayStepSound( Vector &vecOrigin, surfacedata_t *psurface, flo
 
 	EmitSound( filter, entindex(), ep );
 
+	EmitSound(filter, entindex(), "Weapon_Generic.Movement");
+
 	// Kyle says: ugggh. This function may as well be called "PerformPileOfDesperateGameSpecificFootstepHacks".
 	OnEmitFootstepSound( params, vecOrigin, fvol );
 }
@@ -885,6 +889,8 @@ void CBasePlayer::StopWallRunSound( void )
 {
 	StopSound( "Player.WallRun", m_hssWallRunSound );
 }
+
+
 
 void CBasePlayer::UpdateButtonState( int nUserCmdButtonMask )
 {
@@ -1844,7 +1850,7 @@ void CBasePlayer::CalcViewModelView(const Vector& eyeOrigin, const QAngle& eyeAn
 
 }
 //#endif
-#ifdef ARSENIO
+#ifdef ARSENIO_M
 void CBasePlayer::AddViewBob(Vector& eyeOrigin, QAngle& eyeAngles, bool calculate)
 {
 	static float bobtime, lastbobtime;
@@ -1930,7 +1936,7 @@ void CBasePlayer::CalcPlayerView( Vector& eyeOrigin, QAngle& eyeAngles, float& f
 	m_flObserverChaseDistance = 0.0;
 #endif
 
-#ifdef ARSENIO_CLIENT
+#ifdef ARSENIO_CLIENT_M
 
 	AddViewBob(eyeOrigin, eyeAngles, true);
 

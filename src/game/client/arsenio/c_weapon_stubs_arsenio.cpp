@@ -1,6 +1,6 @@
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
-// Purpose:  Weapon stubs file for ARSENIO.
+// Purpose:  Weapon stubs file for ARSENIO 2044.
 //
 //=============================================================================//
 
@@ -48,19 +48,25 @@ STUB_WEAPON_CLASS(weapon_smg1, WeaponSMG1, C_HLSelectFireMachineGun);
 STUB_WEAPON_CLASS(weapon_KLO99, WeaponKLO99, C_HLMachineGun); // High power LMG
 STUB_WEAPON_CLASS(weapon_ar3, WeaponAR3, C_HLMachineGun);
 STUB_WEAPON_CLASS(weapon_knd12, WeaponKND12, C_BaseHLCombatWeapon);
-STUB_WEAPON_CLASS(weapon_mp99k, WeaponMP99K, C_HLMachineGun); // Mp5K for modern world.
+STUB_WEAPON_CLASS(weapon_mp5k, WeaponMP5K, C_HLMachineGun); // Mp5K for modern world.
+STUB_WEAPON_CLASS(weapon_jshot, WeaponJSHOT, C_HLSelectFireMachineGun); // Just another rifle lmao
+STUB_WEAPON_CLASS(weapon_striker, WeaponStriker, C_BaseHLCombatWeapon); // Cooolio
+STUB_WEAPON_CLASS(weapon_unarmed, WeaponUnarmed, C_BaseHLBludgeonWeapon); // Mobility Mode
+STUB_WEAPON_CLASS(weapon_phaseshifter, WeaponPhaseShifter, C_BaseHLCombatWeapon);
 #ifdef LATER
 #endif
 
 // Coming soon
-#ifdef BALLS
-STUB_WEAPON_CLASS(weapon_BJ69, WeaponBJ69, C_HLSelectFireMachineGun); // nicknamed sex gun.
+#ifdef SOON
 STUB_WEAPON_CLASS(weapon_overlordgun, WeaponOverlord, C_BaseHLCombatWeapon); // Used for final boss.
-STUB_WEAPON_CLASS(weapon_Kaliber, WeaponKaliber, C_BaseHLCombatWeapon); // Sniper rifle used by SHADOW.
 
 
 #endif
 
+#ifdef UNUSED
+//STUB_WEAPON_CLASS(weapon_Kaliber, WeaponKaliber, C_BaseHLCombatWeapon); // Sniper rifle used by SHADOW.
+//STUB_WEAPON_CLASS(weapon_BJ69, WeaponBJ69, C_HLSelectFireMachineGun); // nicknamed sex gun.
+#endif
 
 
 

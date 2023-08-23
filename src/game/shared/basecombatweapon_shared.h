@@ -18,9 +18,9 @@
 #include "baseviewmodel_shared.h"
 #include "weapon_proficiency.h"
 #include "utlmap.h"
-//#ifdef GAME_DLL
-//#include "player.h"
-//#endif
+#ifdef GAME_DLL
+#include "player.h"
+#endif
 
 #if defined( CLIENT_DLL )
 #define CBaseCombatWeapon C_BaseCombatWeapon
@@ -45,7 +45,7 @@ class CUserCmd;
 
 // How many times to display altfire hud hints (per weapon)
 #define WEAPON_ALTFIRE_HUD_HINT_COUNT	1
-#define WEAPON_RELOAD_HUD_HINT_COUNT	1
+#define WEAPON_RELOAD_HUD_HINT_COUNT	100000
 
 //Start with a constraint in place (don't drop to floor)
 #define	SF_WEAPON_START_CONSTRAINED	(1<<0)	
@@ -208,7 +208,9 @@ public:
 	virtual bool			ShouldDisplayReloadHUDHint();
 	virtual void			DisplayReloadHudHint();
 	virtual void			RescindReloadHudHint();
-
+#ifdef ARSENIO_DLL
+	int						GetUserID() { return engine->GetPlayerUserId(edict()); }
+#endif
 	// Weapon client handling
 	virtual void			SetViewModelIndex( int index = 0 );
 	virtual bool			SendWeaponAnim( int iActivity );

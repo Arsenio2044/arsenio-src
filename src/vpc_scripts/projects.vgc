@@ -17,6 +17,7 @@ $Project "client"
 {
 	"game\client\client_dr.vpc"		[($WIN32||$X360||$POSIX) && $DR]
 	"game\client\client_arsenio.vpc"		[($WIN32||$X360||$POSIX) && $ARSENIO]
+	"game\client\client_optux2.vpc"		[($WIN32||$X360||$POSIX) && $OPTUX2]
 }
 
 $Project "fgdlib"
@@ -28,6 +29,7 @@ $Project "game_shader_dx9"
 {
 	"materialsystem\stdshaders\game_shader_dx9_hl2.vpc" [$HL2]
 	"materialsystem\stdshaders\game_shader_dx9_episodic.vpc"  [$ARSENIO]
+	"materialsystem\stdshaders\game_shader_dx9_episodic.vpc"  [$OPTUX2]
 }
 
 $Project "glview"
@@ -44,6 +46,7 @@ $Project "server"
 {
 	"game\server\server_dr.vpc"	[($WIN32||$X360||$POSIX) && $DR]
 	"game\server\server_arsenio.vpc"	[($WIN32||$X360||$POSIX) && $ARSENIO]
+	"game\server\server_optux2.vpc"	[($WIN32||$X360||$POSIX) && $OPTUX2]
 }
 
 $Project "responserules"
@@ -142,8 +145,13 @@ $Project "gameui"
 
 }
 
-$Project "gamepadui"
+$Project "gameuiutil"
 {
-	"gamepadui\gamepadui_hl2.vpc"		[($WIN32||$X360||$POSIX)]
+	"gameui\gamepadui_hl2.vpc"		[($WIN32||$X360||$POSIX)]
 
+}
+
+$Project "rendersystem"
+{
+	"game\rendersystem\rendersystem.vpc"		[($WIN32||$X360||$POSIX)]
 }

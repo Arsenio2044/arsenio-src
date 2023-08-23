@@ -192,13 +192,14 @@ ConVar	sk_player_leg("sk_player_leg", "1");
 
 // Health Regen
 #if OPTUX3_DLL
-ConVar sv_regeneration("sv_regeneration", "1", FCVAR_REPLICATED);
-ConVar sv_regeneration_wait_time("sv_regeneration_wait_time", "7.0", FCVAR_REPLICATED);
-ConVar sv_regeneration_rate("sv_regeneration_rate", "1.5", FCVAR_REPLICATED);
+ConVar arsenio_leos_regen("arsenio_leos_regen", "1", FCVAR_REPLICATED);
+ConVar arsenio_leos_regen_wait_time("arsenio_leos_regen_wait_time", "7.0", FCVAR_REPLICATED);
+ConVar arsenio_leos_regen_rate("arsenio_leos_regen_rate", "1.5", FCVAR_REPLICATED);
 #else
-ConVar sv_regeneration("sv_regeneration", "1", FCVAR_REPLICATED);
-ConVar sv_regeneration_wait_time("sv_regeneration_wait_time", "20.0", FCVAR_REPLICATED);
-ConVar sv_regeneration_rate("sv_regeneration_rate", "10", FCVAR_REPLICATED);
+ConVar arsenio_leos_regen("arsenio_leos_regen", "1", FCVAR_REPLICATED);
+ConVar arsenio_leos_regen_wait_time("arsenio_leos_regen_wait_time", "7.0", FCVAR_REPLICATED);
+ConVar arsenio_leos_regen_rate("arsenio_leos_regen_rate", "10", FCVAR_REPLICATED);
+ConVar arsenio_leos_cancer("arsenio_leos_cancer", "0", FCVAR_REPLICATED);
 #endif
 
 
@@ -291,6 +292,8 @@ DEFINE_FIELD(m_iFOVStart, FIELD_INTEGER),
 DEFINE_FIELD(m_flFOVTime, FIELD_TIME),
 DEFINE_FIELD(m_iDefaultFOV, FIELD_INTEGER),
 DEFINE_FIELD(m_flVehicleViewFOV, FIELD_FLOAT),
+DEFINE_FIELD(m_bShouldDrawBloodOverlay, FIELD_BOOLEAN),
+
 
 //DEFINE_FIELD( m_fOnTarget, FIELD_BOOLEAN ), // Don't need to restore
 DEFINE_FIELD(m_iObserverMode, FIELD_INTEGER),
@@ -508,6 +511,30 @@ void CBasePlayer::CreateViewModel(int index /*=0*/)
 	}
 }
 
+#ifdef ARSENIO
+//-----------------------------------------------------------------------------
+// Purpose: 
+//-----------------------------------------------------------------------------
+void CBasePlayer::CreateHandModel(int index, int iOtherVm)
+{
+	Assert(index >= 0 && index < MAX_VIEWMODELS&& iOtherVm >= 0 && iOtherVm < MAX_VIEWMODELS);
+
+	if (GetViewModel(index))
+		return;
+
+	CBaseViewModel* vm = (CBaseViewModel*)CreateEntityByName("hand_viewmodel");
+	if (vm)
+	{
+		vm->SetAbsOrigin(GetAbsOrigin());
+		vm->SetOwner(this);
+		vm->SetIndex(index);
+		DispatchSpawn(vm);
+		vm->FollowEntity(GetViewModel(iOtherVm), true);
+		m_hViewModel.Set(index, vm);
+	}
+}
+#endif
+
 //-----------------------------------------------------------------------------
 // Purpose: 
 //-----------------------------------------------------------------------------
@@ -580,6 +607,10 @@ CBasePlayer::CBasePlayer()
 	m_fRegenRemander = 0; // Health regen
 	Weapon_SetLast(NULL);
 	m_bitsDamageType = 0;
+
+	#ifdef ARSENIO
+	m_bShouldDrawBloodOverlay = false;
+	#endif
 
 	m_bForceOrigin = false;
 	m_hVehicle = NULL;
@@ -2312,6 +2343,7 @@ bool CBasePlayer::StartObserverMode(int mode)
 	if (gpGlobals->eLoadType != MapLoad_Background)
 	{
 		ShowViewPortPanel("specgui", ModeWantsSpectatorGUI(mode));
+
 	}
 
 	// Setup flags
@@ -4584,6 +4616,13 @@ void CBasePlayer::PostThink()
 		Msg("Player's smoothed velocity had become invalid.\n");
 		m_vecSmoothedVelocity.Init();
 	}
+
+	if (gpGlobals->eLoadType != MapLoad_Background)
+	{
+#ifdef ARSENIO
+		debugoverlay->AddScreenTextOverlay(0.02f, 0.60f, 0.0f, 0, 255, 255, 255, CFmtStr("Arsenio AUGUST ALPHA."));
+#endif
+	}
 	if (!g_fGameOver && !m_iPlayerLocked)
 	{
 		if (IsAlive())
@@ -4646,21 +4685,27 @@ void CBasePlayer::PostThink()
 
 			}
 			// Regenerate heath
-			if  (IsExoEquipped() && IsAlive() && GetHealth() < GetMaxHealth() && !(GetHealth() < 30) && (sv_regeneration.GetInt() == 1)) // dick
+			if  (IsExoEquipped() && IsAlive() && GetHealth() < GetMaxHealth() && !(GetHealth() < 30) && (arsenio_leos_regen.GetInt() == 1)) // dick
 			{
 				// Color to overlay on the screen while the player is taking damage
 				color32 hurtScreenOverlay = { 80, 0, 0, 64 };
 
-				if (gpGlobals->curtime > m_flLastDamageTime + sv_regeneration_wait_time.GetFloat())
+				if (gpGlobals->curtime > m_flLastDamageTime + arsenio_leos_regen_wait_time.GetFloat())
 				{
 					//Regenerate based on rate, and scale it by the frametime
-					m_fRegenRemander += sv_regeneration_rate.GetFloat() * gpGlobals->frametime;
+					m_fRegenRemander += arsenio_leos_regen_rate.GetFloat() * gpGlobals->frametime;
 #ifdef ARSENIO
 					// TUX: This should work, i'm not sure.
-					if (IsLeOSActive())
+					if (IsLeOSActive() && (arsenio_leos_cancer.GetInt() == 1))
 					{
 						CPASAttenuationFilter filter(this);
 						filter.UsePredictionRules();
+						EmitSound("LeOS.Regen");
+					}
+
+					if (IsLeOSActive() && (arsenio_leos_cancer.GetInt() == 0))
+					{
+
 						EmitSound("LeOS.Regen");
 					}
 #endif
@@ -5109,6 +5154,10 @@ void CBasePlayer::Spawn(void)
 
 	CreateViewModel();
 
+	#ifdef ARSENIO
+	CreateHandModel();
+	#endif
+
 	SetCollisionGroup(COLLISION_GROUP_PLAYER);
 
 	// if the player is locked, make sure he stays locked
@@ -5192,6 +5241,7 @@ void CBasePlayer::Precache(void)
 	PrecacheScriptSound("Player.Wade");
 	PrecacheScriptSound("Player.AmbientUnderWater");
 	PrecacheScriptSound("Player.AirJump");
+	PrecacheScriptSound("Weapon_Generic.Movement");
 	m_hssPowerSlideSound = PrecacheScriptSound("Player.PowerSlide");
 	m_hssWallRunSound = PrecacheScriptSound("Player.WallRun");
 	PrecacheScriptSound("Mech.BulletImpact");
@@ -5578,6 +5628,8 @@ void CBasePlayer::ChuckGrenade(void)
 	if (IsObserver())
 		return;
 
+
+
 	float flDur; // for sounds
 	CBaseCombatWeapon* pWeap = GetFragWeap(this);
 	if (!zHasFrags(this))
@@ -5634,6 +5686,45 @@ void CBasePlayer::CheckMelee(void)
 	// we're done
 	if (!(m_afButtonReleased & IN_ATTACK3) ||
 		(m_afButtonPressed & IN_ATTACK3))
+	{
+		return;
+	}
+
+	// If we get here it means they released the button
+	if (pClub)
+	{
+		pClub->SetQuickMelee(QMELEE_DONE);
+		// Responsibility for the attack is delegated to the weapon
+
+		// Set player melee state so they know to do a fast weapon deploy
+		m_nMeleeState = MELEE_DONE;
+	}
+
+}
+
+void CBasePlayer::CheckFlipoff(void)
+{
+	if (IsObserver())
+		return;
+	CBaseCombatWeapon* pFlipoff = Weapon_OwnsThisType("weapon_flipoff");
+	CBaseHLBludgeonWeapon* pClub = dynamic_cast<CBaseHLBludgeonWeapon*>(pFlipoff);
+	if (m_afButtonPressed & IN_FLIPOFF && (pClub))
+	{
+		// If they're holding anything with the gravity gun, drop it first
+		CBaseCombatWeapon* current = GetActiveWeapon();
+		if (current && FClassnameIs(current, "weapon_physcannon"))
+		{
+			PhysCannonForceDrop(current, NULL);
+		}
+
+		Weapon_Switch(pClub);
+		pClub->SetQuickMelee(QMELEE_DOING);
+	}
+
+	// If they pressed or are holding down the button, 
+	// we're done
+	if (!(m_afButtonReleased & IN_FLIPOFF) ||
+		(m_afButtonPressed & IN_FLIPOFF))
 	{
 		return;
 	}
@@ -6377,7 +6468,7 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		if (!giPrecacheGrunt)
 		{
 			giPrecacheGrunt = 1;
-			Msg("You must now restart to use Grunt-o-matic.\n");
+			Msg("You must now restart to use Grunt-o-matic.\n"); // TUX: That's fucking funny
 		}
 		else
 		{
@@ -6424,9 +6515,9 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		GiveNamedItem("weapon_crowbar");
 		GiveNamedItem("weapon_glock");
 		GiveNamedItem("weapon_shotgun");
-		//GiveNamedItem("weapon_mp5k");
-		GiveNamedItem("weapon_mp99k");
-		GiveNamedItem("weapon_rpg");
+		GiveNamedItem("weapon_mp5k");
+		//GiveNamedItem("weapon_mp99k");
+		//GiveNamedItem("weapon_rpg"); 
 		GiveNamedItem("weapon_357");
 		GiveNamedItem("weapon_crossbow");
 		GiveNamedItem("weapon_pro836");
@@ -6436,6 +6527,8 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		GiveNamedItem("weapon_ar3");
 		GiveNamedItem("weapon_mobileturret");
 		GiveNamedItem("weapon_knd12");
+		GiveNamedItem("weapon_jshot");
+		GiveNamedItem("weapon_striker");
 #endif
 //  EXPANSION PACK (1?) WEAPONS
 #ifdef  DR
@@ -6957,6 +7050,12 @@ bool CBasePlayer::BumpWeapon(CBaseCombatWeapon* pWeapon)
 
 				if ((m_afButtonLast & IN_ATTACK3) ||
 					(m_afButtonPressed & IN_ATTACK3))
+				{
+					//Msg( "Not Switching weapon, %d, %d\n", m_afButtonLast, m_afButtonPressed );
+				}
+
+				else if ((m_afButtonLast & IN_FLIPOFF) ||
+					(m_afButtonPressed & IN_FLIPOFF))
 				{
 					//Msg( "Not Switching weapon, %d, %d\n", m_afButtonLast, m_afButtonPressed );
 				}
@@ -7665,6 +7764,10 @@ void CBasePlayer::Weapon_Equip(CBaseCombatWeapon* pWeapon)
 	if ((m_afButtonLast & IN_ATTACK3) ||
 		(m_afButtonPressed & IN_ATTACK3)) {
 	}
+	// should we switch to this item?
+	else if ((m_afButtonLast & IN_FLIPOFF) ||
+		(m_afButtonPressed & IN_FLIPOFF)) {
+	}
 	else if (bShouldSwitch)
 	{
 		Weapon_Switch(pWeapon);
@@ -8321,6 +8424,9 @@ SendPropInt(SENDINFO(m_iDefaultFOV), 8, SPROP_UNSIGNED),
 SendPropEHandle(SENDINFO(m_hZoomOwner)),
 SendPropArray(SendPropEHandle(SENDINFO_ARRAY(m_hViewModel)), m_hViewModel),
 SendPropString(SENDINFO(m_szLastPlaceName)),
+#ifdef ARSENIO
+SendPropBool(SENDINFO(m_bShouldDrawBloodOverlay)),
+#endif
 
 #if defined USES_ECON_ITEMS
 SendPropUtlVector(SENDINFO_UTLVECTOR(m_hMyWearables), MAX_WEARABLES_SENT_FROM_SERVER, SendPropEHandle(NULL, 0)),

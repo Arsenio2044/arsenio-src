@@ -44,7 +44,12 @@ $Project "Client - Arsenio"
 			$File	"arsenio\c_weapon_stubs_arsenio.cpp"
 			$File	"arsenio\menu_background.cpp"
 			$File	"arsenio\menu_background.h"
+			$File	"arsenio\CursorClip.cpp"
+			$File	"arsenio\bloodproxy.cpp"
+			$File	"arsenio\CursorClip.h"
+			$File	"arsenio\FilmGrainProxy.cpp"
 			$File	"$SRCDIR\game\shared\arsenio\arsenio_game_log.cpp"
+			$File	"$SRCDIR\game\shared\arsenio\hands_shared.cpp"
 
 		}
 

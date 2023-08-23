@@ -1,460 +1,257 @@
 //========= Copyright Glitch Software, All rights reserved. ============//
 //
-// Purpose: Arsenio can flip off his enemies.
+// Purpose: Flip off your enemies!
+//
 //=============================================================================//
 
 #include "cbase.h"
-#include "npcevent.h"
 #include "basehlcombatweapon.h"
-#include "basecombatcharacter.h"
-#include "ai_basenpc.h"
 #include "player.h"
 #include "gamerules.h"
+#include "ammodef.h"
+#include "mathlib/mathlib.h"
 #include "in_buttons.h"
 #include "soundent.h"
-#include "game.h"
+#include "basebludgeonweapon.h"
 #include "vstdlib/random.h"
-#include "gamestats.h"
-#include "particle_parse.h"
-#include "effect_dispatch_data.h"
-#include "te_effect_dispatch.h"
+#include "npcevent.h"
+#include "ai_basenpc.h"
+#include "weapon_flipoff.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
 
-#define	FLIPOFF_FASTEST_REFIRE_TIME		0.1f
-#define	FLIPOFF_FASTEST_DRY_REFIRE_TIME	0.2f
+ConVar    sk_plr_dmg_flipoff		( "sk_plr_dmg_flipoff","0");
+ConVar    sk_npc_dmg_flipoff		( "sk_npc_dmg_flipoff","0");
+ConVar    quick_flipoff_delay         ( "quick_flipoff_delay", "0.2", FCVAR_REPLICATED, "Time between swings when using quick melee" );
 
-#define	FLIPOFF_ACCURACY_SHOT_PENALTY_TIME		0.2f	// Applied amount of time each shot adds to the time we must recover from
-#define	FLIPOFF_ACCURACY_MAXIMUM_PENALTY_TIME	1.5f	// Maximum penalty to deal out
+static ConVar slash_attack_dmg( "slash_attack_dmg", "20" );
+static ConVar surge_attack_dmg( "surge_attack_dmg", "25" );
+
+#define SPEED_DMG_BONUS_THRESHOLD 275.0f;
 
 //-----------------------------------------------------------------------------
-// CWeaponFlipOff
+// CWeaponFlipoff
 //-----------------------------------------------------------------------------
 
-class CWeaponFlipOff : public CBaseHLCombatWeapon
-{
-	DECLARE_DATADESC();
-
-public:
-	DECLARE_CLASS( CWeaponFlipOff, CBaseHLCombatWeapon );
-
-	CWeaponFlipOff(void);
-
-	DECLARE_SERVERCLASS();
-
-	void	Precache( void );
-	void	ItemPostFrame( void );
-	void	ItemPreFrame( void );
-	void	ItemBusyFrame( void );
-	void	PrimaryAttack( void );
-	void	DrawHitmarker( void );
-	void	AddViewKick( void );
-	void	DryFire( void );
-	void	Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator );
-	void	FireNPCPrimaryAttack( CBaseCombatCharacter *pOperator, Vector &vecShootOrigin, Vector &vecShootDir );
-	void	Operator_ForceNPCFire( CBaseCombatCharacter  *pOperator, bool bSecondary );
-
-	void	UpdatePenaltyTime( void );
-
-	int		CapabilitiesGet( void ) { return bits_CAP_WEAPON_RANGE_ATTACK1; }
-	Activity	GetPrimaryAttackActivity( void );
-
-	virtual bool Reload( void );
-
-	virtual const Vector& GetBulletSpread( void )
-	{		
-		// Handle NPCs first
-		static Vector npcCone = VECTOR_CONE_5DEGREES;
-		if ( GetOwner() && GetOwner()->IsNPC() )
-			return npcCone;
-			
-		static Vector cone;
-
-		float ramp = RemapValClamped(	m_flAccuracyPenalty, 
-										0.0f, 
-										FLIPOFF_ACCURACY_MAXIMUM_PENALTY_TIME, 
-										0.0f, 
-										1.0f ); 
-
-		// We lerp from very accurate to inaccurate over time
-		VectorLerp( VECTOR_CONE_1DEGREES, VECTOR_CONE_6DEGREES, ramp, cone );
-
-		return cone;
-	}
-	
-	virtual int	GetMinBurst() 
-	{ 
-		return 1; 
-	}
-
-	virtual int	GetMaxBurst() 
-	{ 
-		return 3; 
-	}
-
-	virtual float GetFireRate( void ) 
-	{
-		return 0.5f; 
-	}
-
-	DECLARE_ACTTABLE();
-
-private:
-	float	m_flSoonestPrimaryAttack;
-	float	m_flLastAttackTime;
-	float	m_flAccuracyPenalty;
-	int		m_nNumShotsFired;
-};
-
-
-IMPLEMENT_SERVERCLASS_ST(CWeaponFlipOff, DT_WeaponFlipOff)
+IMPLEMENT_SERVERCLASS_ST(CWeaponFlipoff, DT_WeaponFlipoff)
 END_SEND_TABLE()
 
-LINK_ENTITY_TO_CLASS( weapon_flipoff, CWeaponFlipOff );
+#ifndef HL2MP
+LINK_ENTITY_TO_CLASS( weapon_flipoff, CWeaponFlipoff );
 PRECACHE_WEAPON_REGISTER( weapon_flipoff );
+#endif
 
-BEGIN_DATADESC( CWeaponFlipOff )
-
-	DEFINE_FIELD( m_flSoonestPrimaryAttack, FIELD_TIME ),
-	DEFINE_FIELD( m_flLastAttackTime,		FIELD_TIME ),
-	DEFINE_FIELD( m_flAccuracyPenalty,		FIELD_FLOAT ), //NOTENOTE: This is NOT tracking game time
-	DEFINE_FIELD( m_nNumShotsFired,			FIELD_INTEGER ),
-
-END_DATADESC()
-
-acttable_t	CWeaponFlipOff::m_acttable[] = 
+acttable_t CWeaponFlipoff::m_acttable[] = 
 {
-	{ ACT_IDLE,						ACT_IDLE_PISTOL,				true },
-	{ ACT_IDLE_ANGRY,				ACT_IDLE_ANGRY_PISTOL,			true },
-	{ ACT_RANGE_ATTACK1,			ACT_RANGE_ATTACK_PISTOL,		true },
-	{ ACT_RELOAD,					ACT_RELOAD_PISTOL,				true },
-	{ ACT_WALK_AIM,					ACT_WALK_AIM_PISTOL,			true },
-	{ ACT_RUN_AIM,					ACT_RUN_AIM_PISTOL,				true },
-	{ ACT_GESTURE_RANGE_ATTACK1,	ACT_GESTURE_RANGE_ATTACK_PISTOL,true },
-	{ ACT_RELOAD_LOW,				ACT_RELOAD_PISTOL_LOW,			false },
-	{ ACT_RANGE_ATTACK1_LOW,		ACT_RANGE_ATTACK_PISTOL_LOW,	false },
-	{ ACT_COVER_LOW,				ACT_COVER_PISTOL_LOW,			false },
-	{ ACT_RANGE_AIM_LOW,			ACT_RANGE_AIM_PISTOL_LOW,		false },
-	{ ACT_GESTURE_RELOAD,			ACT_GESTURE_RELOAD_PISTOL,		false },
-	{ ACT_WALK,						ACT_WALK_PISTOL,				false },
-	{ ACT_RUN,						ACT_RUN_PISTOL,					false },
+	{ ACT_MELEE_ATTACK1,	ACT_MELEE_ATTACK_SWING, true },
+	{ ACT_IDLE,				ACT_IDLE_ANGRY_MELEE,	false },
+	{ ACT_IDLE_ANGRY,		ACT_IDLE_ANGRY_MELEE,	false },
 };
 
-
-IMPLEMENT_ACTTABLE( CWeaponFlipOff );
+IMPLEMENT_ACTTABLE(CWeaponFlipoff);
 
 //-----------------------------------------------------------------------------
-// Purpose: Constructor
+// Constructor
 //-----------------------------------------------------------------------------
-CWeaponFlipOff::CWeaponFlipOff( void )
+CWeaponFlipoff::CWeaponFlipoff( void )
 {
-	m_flSoonestPrimaryAttack = gpGlobals->curtime;
-	m_flAccuracyPenalty = 0.0f;
-
-	m_fMinRange1		= 24;
-	m_fMaxRange1		= 1500;
-	m_fMinRange2		= 24;
-	m_fMaxRange2		= 200;
-
-	m_bFiresUnderwater	= true;
 }
 
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-void CWeaponFlipOff::Precache( void )
+float CWeaponFlipoff::GetRange( void )
 {
-	PrecacheParticleSystem( "muzzle_smoke" );
-	PrecacheParticleSystem( "weapon_flipoff_muzzleflash" );
-	PrecacheParticleSystem( "hl2mmod_muzzleflash_npc_pistol" );
-
-	BaseClass::Precache();
-}
-
-//-----------------------------------------------------------------------------
-// Purpose:
-// Input  :
-// Output :
-//-----------------------------------------------------------------------------
-void CWeaponFlipOff::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator )
-{
-	switch( pEvent->event )
+	float bonus_range = 0;
+	if ((GetOwner() != NULL) && (GetOwner()->IsPlayer()))
 	{
-		case EVENT_WEAPON_PISTOL_FIRE:
-		{
-			Vector vecShootOrigin, vecShootDir;
-			vecShootOrigin = pOperator->Weapon_ShootPosition();
+		CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
+		float playerVel;
+		if (!pPlayer->GetSmoothedVelocity().IsValid())
+			return CROWBAR_RANGE;
 
-			CAI_BaseNPC *npc = pOperator->MyNPCPointer();
-			ASSERT( npc != NULL );
+		playerVel = (float)(pPlayer->GetSmoothedVelocity().Length());
 
-			vecShootDir = npc->GetActualShootTrajectory( vecShootOrigin );
-
-			FireNPCPrimaryAttack( pOperator, vecShootOrigin, vecShootDir );
-		}
-		break;
-		default:
-			BaseClass::Operator_HandleAnimEvent( pEvent, pOperator );
-			break;
+		// Add some bonus range for player's speed:
+		bonus_range = (clamp( playerVel - 240.0, 0.0, 260.0 ) / 8);
 	}
-}
-
-void CWeaponFlipOff::FireNPCPrimaryAttack( CBaseCombatCharacter *pOperator, Vector &vecShootOrigin, Vector &vecShootDir )
-{
-	CSoundEnt::InsertSound( SOUND_COMBAT|SOUND_CONTEXT_GUNFIRE, pOperator->GetAbsOrigin(), SOUNDENT_VOLUME_PISTOL, 0.2, pOperator, SOUNDENT_CHANNEL_WEAPON, pOperator->GetEnemy() );
-
-	WeaponSound( SINGLE_NPC );
-	pOperator->FireBullets( 1, vecShootOrigin, vecShootDir, VECTOR_CONE_PRECALCULATED, MAX_TRACE_LENGTH, m_iPrimaryAmmoType, 2 );
-	//pOperator->DoMuzzleFlash();
-	m_iClip1 = m_iClip1 - 1;
-
-	Vector vecShootOrigin2;  //The origin of the shot 
-	QAngle	angShootDir2;    //The angle of the shot
-
-	//We need to figure out where to place the particle effect, so look up where the muzzle is
-	GetAttachment( LookupAttachment( "muzzle" ), vecShootOrigin2, angShootDir2 );
-
-	//pOperator->DoMuzzleFlash();
-	DispatchParticleEffect( "hl2mmod_muzzleflash_npc_pistol", vecShootOrigin2, angShootDir2);
-	m_iClip1 = m_iClip1 - 1;
-
-	// LMAO WHY
+	return CROWBAR_RANGE + bonus_range;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose: Some things need this. (e.g. the new Force(X)Fire inputs or blindfire actbusy)
+// Purpose: Get the damage amount for the animation we're doing
+// Input  : hitActivity - currently played activity
+// Output : Damage amount
 //-----------------------------------------------------------------------------
-void CWeaponFlipOff::Operator_ForceNPCFire( CBaseCombatCharacter *pOperator, bool bSecondary )
+float CWeaponFlipoff::GetDamageForActivity( Activity hitActivity )
 {
-	// Ensure we have enough rounds in the clip
-	m_iClip1++;
+	float baseDmg = sk_plr_dmg_flipoff.GetFloat();
 
-	Vector vecShootOrigin, vecShootDir;
-	QAngle	angShootDir;
-	GetAttachment( LookupAttachment( "muzzle" ), vecShootOrigin, angShootDir );
-	AngleVectors( angShootDir, &vecShootDir );
-	FireNPCPrimaryAttack( pOperator, vecShootOrigin, vecShootDir );
+	if ((GetOwner() != NULL) && (GetOwner()->IsPlayer()))
+	{
+
+		CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
+
+		if (pPlayer->m_nMeleeState == MELEE_SLASH )
+		{
+			baseDmg = slash_attack_dmg.GetFloat();
+		}
+		else if (pPlayer->m_nMeleeState == MELEE_SURGE_HIT)
+		{
+			baseDmg = surge_attack_dmg.GetFloat();
+		}
+
+		if (!pPlayer->GetSmoothedVelocity().IsValid())
+			return baseDmg;
+
+		float playerVel = (float)(pPlayer->GetSmoothedVelocity().Length());
+		/* Add some bonus damage for player's speed:
+		0 for <= 275,  excess 0
+		10 for 355,    excess 80
+		20 for 435,    excess 160
+		30 for >= 515  excess 240	*/
+		int bonus = (int)(clamp( playerVel - 240.0, 0.0, 240.0 ) / 8);
+
+		return baseDmg + bonus;
+	}
+	return baseDmg;
+}
+
+float CWeaponFlipoff::GetFireRate()
+{
+	return (m_nQuick > 0) ? quick_flipoff_delay.GetFloat() : CROWBAR_REFIRE;
 }
 
 //-----------------------------------------------------------------------------
-// Purpose:
+// Purpose: Add in a view kick for this weapon
 //-----------------------------------------------------------------------------
-void CWeaponFlipOff::DryFire( void )
+void CWeaponFlipoff::AddViewKick( void )
 {
-	WeaponSound( EMPTY );
-	SendWeaponAnim( ACT_VM_DRYFIRE );
+	CBasePlayer *pPlayer  = ToBasePlayer( GetOwner() );
 	
-	m_flSoonestPrimaryAttack	= gpGlobals->curtime + FLIPOFF_FASTEST_DRY_REFIRE_TIME;
-	m_flNextPrimaryAttack		= gpGlobals->curtime + SequenceDuration();
-}
-
-void CWeaponFlipOff::DrawHitmarker( void )
-{
-	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
-
 	if ( pPlayer == NULL )
 		return;
 
-#ifndef CLIENT_DLL
-	CSingleUserRecipientFilter filter( pPlayer );
-	UserMessageBegin( filter, "ShowHitmarker" );
-	WRITE_BYTE( 1 );
-	MessageEnd();
-#endif
+	QAngle punchAng;
+
+	punchAng.x = random->RandomFloat( 1.0f, 2.0f );
+	punchAng.y = random->RandomFloat( -2.0f, -1.0f );
+	punchAng.z = 0.0f;
+	
+	pPlayer->ViewPunch( punchAng ); 
 }
 
+
 //-----------------------------------------------------------------------------
-// Purpose:
+// Attempt to lead the target (needed because citizens can't hit manhacks with the crowbar!)
 //-----------------------------------------------------------------------------
-void CWeaponFlipOff::PrimaryAttack( void )
+ConVar sk_flipoff_lead_time( "sk_flipoff_lead_time", "0.9" );
+
+int CWeaponFlipoff::WeaponMeleeAttack1Condition( float flDot, float flDist )
 {
-	if ( ( gpGlobals->curtime - m_flLastAttackTime ) > 0.5f )
+	// Attempt to lead the target (needed because citizens can't hit manhacks with the crowbar!)
+	CAI_BaseNPC *pNPC	= GetOwner()->MyNPCPointer();
+	CBaseEntity *pEnemy = pNPC->GetEnemy();
+	if (!pEnemy)
+		return COND_NONE;
+
+	Vector vecVelocity;
+	vecVelocity = pEnemy->GetSmoothedVelocity( );
+
+	// Project where the enemy will be in a little while
+	float dt = sk_flipoff_lead_time.GetFloat();
+	dt += random->RandomFloat( -0.3f, 0.2f );
+	if ( dt < 0.0f )
+		dt = 0.0f;
+
+	Vector vecExtrapolatedPos;
+	VectorMA( pEnemy->WorldSpaceCenter(), dt, vecVelocity, vecExtrapolatedPos );
+
+	Vector vecDelta;
+	VectorSubtract( vecExtrapolatedPos, pNPC->WorldSpaceCenter(), vecDelta );
+
+	if ( fabs( vecDelta.z ) > 70 )
 	{
-		m_nNumShotsFired = 0;
+		return COND_TOO_FAR_TO_ATTACK;
+	}
+
+	Vector vecForward = pNPC->BodyDirection2D( );
+	vecDelta.z = 0.0f;
+	float flExtrapolatedDist = Vector2DNormalize( vecDelta.AsVector2D() );
+	if ((flDist > 64) && (flExtrapolatedDist > 64))
+	{
+		return COND_TOO_FAR_TO_ATTACK;
+	}
+
+	float flExtrapolatedDot = DotProduct2D( vecDelta.AsVector2D(), vecForward.AsVector2D() );
+	if ((flDot < 0.7) && (flExtrapolatedDot < 0.7))
+	{
+		return COND_NOT_FACING_ATTACK;
+	}
+
+	return COND_CAN_MELEE_ATTACK1;
+}
+
+
+//-----------------------------------------------------------------------------
+// Animation event handlers
+//-----------------------------------------------------------------------------
+void CWeaponFlipoff::HandleAnimEventMeleeHit( animevent_t *pEvent, CBaseCombatCharacter *pOperator )
+{
+	// Trace up or down based on where the enemy is...
+	// But only if we're basically facing that direction
+	Vector vecDirection;
+	AngleVectors( GetAbsAngles(), &vecDirection );
+
+	CBaseEntity *pEnemy = pOperator->MyNPCPointer() ? pOperator->MyNPCPointer()->GetEnemy() : NULL;
+	if ( pEnemy )
+	{
+		Vector vecDelta;
+		VectorSubtract( pEnemy->WorldSpaceCenter(), pOperator->Weapon_ShootPosition(), vecDelta );
+		VectorNormalize( vecDelta );
+		
+		Vector2D vecDelta2D = vecDelta.AsVector2D();
+		Vector2DNormalize( vecDelta2D );
+		if ( DotProduct2D( vecDelta2D, vecDirection.AsVector2D() ) > 0.8f )
+		{
+			vecDirection = vecDelta;
+		}
+	}
+
+	Vector vecEnd;
+	VectorMA( pOperator->Weapon_ShootPosition(), 50, vecDirection, vecEnd );
+	CBaseEntity *pHurt = pOperator->CheckTraceHullAttack( pOperator->Weapon_ShootPosition(), vecEnd, 
+		Vector(-16,-16,-16), Vector(36,36,36), sk_npc_dmg_flipoff.GetFloat(), DMG_CLUB, 0.75 );
+	
+	// did I hit someone?
+	if ( pHurt )
+	{
+		// play sound
+		WeaponSound( MELEE_HIT );
+
+		// Fake a trace impact, so the effects work out like a player's crowbaw
+		trace_t traceHit;
+		UTIL_TraceLine( pOperator->Weapon_ShootPosition(), pHurt->GetAbsOrigin(), MASK_SHOT_HULL, pOperator, COLLISION_GROUP_NONE, &traceHit );
+		ImpactEffect( traceHit );
 	}
 	else
 	{
-		m_nNumShotsFired++;
+		WeaponSound( MELEE_MISS );
 	}
+}
 
-	m_flLastAttackTime = gpGlobals->curtime;
-	m_flSoonestPrimaryAttack = gpGlobals->curtime + FLIPOFF_FASTEST_REFIRE_TIME;
-	CSoundEnt::InsertSound( SOUND_COMBAT, GetAbsOrigin(), SOUNDENT_VOLUME_PISTOL, 0.2, GetOwner() );
 
-	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
-
-	if( pOwner )
+//-----------------------------------------------------------------------------
+// Animation event
+//-----------------------------------------------------------------------------
+void CWeaponFlipoff::Operator_HandleAnimEvent( animevent_t *pEvent, CBaseCombatCharacter *pOperator )
+{
+	switch( pEvent->event )
 	{
-		// Each time the player fires the pistol, reset the view punch. This prevents
-		// the aim from 'drifting off' when the player fires very quickly. This may
-		// not be the ideal way to achieve this, but it's cheap and it works, which is
-		// great for a feature we're evaluating. (sjb)
-		pOwner->ViewPunchReset();
+	case EVENT_WEAPON_MELEE_HIT:
+		HandleAnimEventMeleeHit( pEvent, pOperator );
+		break;
+
+	default:
+		BaseClass::Operator_HandleAnimEvent( pEvent, pOperator );
+		break;
 	}
-
-	BaseClass::PrimaryAttack();
-
-	// Draw effect
-	DispatchParticleEffect( "weapon_flipoff_muzzleflash", PATTACH_POINT_FOLLOW, pOwner->GetViewModel(), "muzzle", true);
-
-	// Add an accuracy penalty which can move past our maximum penalty time if we're really spastic
-	m_flAccuracyPenalty += FLIPOFF_ACCURACY_SHOT_PENALTY_TIME;
-
-	m_iPrimaryAttacks++;
-	gamestats->Event_WeaponFired( pOwner, true, GetClassname() );
-
-	CBasePlayer *pPlayer = ToBasePlayer( GetOwner() );
-	if ( !pPlayer )
-		return;
-
-	// Set up the vectors and traceline
-	trace_t tr;
-	Vector vecStart, vecStop, vecDir;
-
-	// Get the angles
-	AngleVectors( pPlayer->EyeAngles(), &vecDir );
-
-	// Get the vectors
-	vecStart = pPlayer->Weapon_ShootPosition();
-	vecStop = vecStart + vecDir * MAX_TRACE_LENGTH;
-
-	// Do the TraceLine
-	UTIL_TraceLine( vecStart, vecStop, MASK_ALL, pPlayer, COLLISION_GROUP_NONE, &tr );
-
-	// Check to see if we hit an NPC
-	if (tr.m_pEnt)
-	{
-		if (tr.m_pEnt->IsNPC())
-		{
-#ifndef CLIENT_DLL
-			// Light Kill: Draw ONLY if we hit an enemy NPC
-			if (pPlayer->GetDefaultRelationshipDisposition(tr.m_pEnt->Classify()) != D_HT)
-			{
-				//DevMsg( "Neutral NPC!\n" );
-			}
-			else
-			{
-				DrawHitmarker();
-			}
-#endif
-		}
-	}
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-void CWeaponFlipOff::UpdatePenaltyTime( void )
-{
-	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
-
-	if ( pOwner == NULL )
-		return;
-
-	// Check our penalty time decay
-	if ( ( ( pOwner->m_nButtons & IN_ATTACK ) == false ) && ( m_flSoonestPrimaryAttack < gpGlobals->curtime ) )
-	{
-		m_flAccuracyPenalty -= gpGlobals->frametime;
-		m_flAccuracyPenalty = clamp( m_flAccuracyPenalty, 0.0f, FLIPOFF_ACCURACY_MAXIMUM_PENALTY_TIME );
-	}
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-void CWeaponFlipOff::ItemPreFrame( void )
-{
-	UpdatePenaltyTime();
-
-	BaseClass::ItemPreFrame();
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-void CWeaponFlipOff::ItemBusyFrame( void )
-{
-	UpdatePenaltyTime();
-
-	BaseClass::ItemBusyFrame();
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: Allows firing as fast as button is pressed
-//-----------------------------------------------------------------------------
-void CWeaponFlipOff::ItemPostFrame( void )
-{
-	BaseClass::ItemPostFrame();
-
-	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
-
-	if ( pOwner == NULL )
-		return;
-
-	//Allow a refire as fast as the player can click
-	if (!(m_bInReload))
-	{
-		if ( ( ( pOwner->m_nButtons & IN_ATTACK ) == false ) && ( m_flSoonestPrimaryAttack < gpGlobals->curtime ) )
-		{
-			m_flNextPrimaryAttack = gpGlobals->curtime - 0.1f;
-		}
-		else if ( ( pOwner->m_nButtons & IN_ATTACK ) && ( m_flNextPrimaryAttack < gpGlobals->curtime ) && ( m_iClip1 <= 0 ) )
-		{
-			DryFire();
-		}
-	}
-	// This new code going to add dynamic smoke out from the muzzle when ammo = 0 
-	if (!( pOwner->GetWaterLevel() == 3 ))
-	{
-		if ( m_iClip1 <= 0 )
-		{
-			if ( m_bInReload )
-			{
-				DispatchParticleEffect( "muzzle_smoke", PATTACH_POINT_FOLLOW, pOwner->GetViewModel(), "muzzle", true);
-			}
-		}
-	}
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-// Output : int
-//-----------------------------------------------------------------------------
-Activity CWeaponFlipOff::GetPrimaryAttackActivity( void )
-{
-	return ACT_VM_PRIMARYATTACK;
-}
-
-//-----------------------------------------------------------------------------
-//-----------------------------------------------------------------------------
-bool CWeaponFlipOff::Reload( void )
-{
-	bool fRet = DefaultReload( GetMaxClip1(), GetMaxClip2(), ACT_VM_RELOAD );
-	if ( fRet )
-	{
-		WeaponSound( RELOAD );
-		m_flAccuracyPenalty = 0.0f;
-	}
-	return fRet;
-}
-
-//-----------------------------------------------------------------------------
-// Purpose: 
-//-----------------------------------------------------------------------------
-void CWeaponFlipOff::AddViewKick(void)
-{
-	CBasePlayer* pPlayer = ToBasePlayer(GetOwner());
-
-	if (pPlayer == NULL)
-		return;
-
-	QAngle	viewPunch;
-
-	viewPunch.x = random->RandomFloat(0.25f, 0.5f);
-	viewPunch.y = random->RandomFloat(-.6f, .6f);
-	viewPunch.z = 0.0f;
-
-	//Add it to the view punch
-	pPlayer->ViewPunch(QAngle(random->RandomFloat(-6.0f, -3.0f), random->RandomFloat(-2.0f, 2.0f), 0.0f));
 }

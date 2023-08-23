@@ -25,8 +25,8 @@
 #define	GLOCK_FASTEST_REFIRE_TIME		0.1f
 #define	GLOCK_FASTEST_DRY_REFIRE_TIME	0.2f
 
-#define	GLOCK_ACCURACY_SHOT_PENALTY_TIME		0.2f	// Applied amount of time each shot adds to the time we must recover from
-#define	GLOCK_ACCURACY_MAXIMUM_PENALTY_TIME	1.5f	// Maximum penalty to deal out
+//#define	GLOCK_ACCURACY_SHOT_PENALTY_TIME		0.2f	// Applied amount of time each shot adds to the time we must recover from
+//#define	GLOCK_ACCURACY_MAXIMUM_PENALTY_TIME	1.5f	// Maximum penalty to deal out
 
 //-----------------------------------------------------------------------------
 // CWeaponGlock
@@ -60,27 +60,43 @@ public:
 	int		CapabilitiesGet( void ) { return bits_CAP_WEAPON_RANGE_ATTACK1; }
 	Activity	GetPrimaryAttackActivity( void );
 
+	Vector CWeaponGlock::m_vDefaultAccuracy = VECTOR_CONE_MAX_INACCURACY;
+
+
 	virtual bool Reload( void );
 
-	virtual const Vector& GetBulletSpread( void )
-	{		
-		// Handle NPCs first
-		static Vector npcCone = VECTOR_CONE_5DEGREES;
-		if ( GetOwner() && GetOwner()->IsNPC() )
-			return npcCone;
-			
-		static Vector cone;
+	const float CWeaponGlock::GLOCK_ACCURACY_SHOT_PENALTY_TIME = 0.2f;
+	const float CWeaponGlock::GLOCK_ACCURACY_MAXIMUM_PENALTY_TIME = 1.5f;
+	const Vector CWeaponGlock::VECTOR_CONE_PERFECT_ACCURACY = Vector(0.0f, 0.0f, 0.0f);
+	const Vector CWeaponGlock::VECTOR_CONE_MAX_INACCURACY = Vector(0.06f, 0.06f, 0.0f);
 
-		float ramp = RemapValClamped(	m_flAccuracyPenalty, 
-										0.0f, 
-										GLOCK_ACCURACY_MAXIMUM_PENALTY_TIME, 
-										0.0f, 
-										1.0f ); 
+	const Vector& CWeaponGlock::GetBulletSpread(void)
+	{
+		CBasePlayer* pOwner = ToBasePlayer(GetOwner());
+		if (!pOwner)
+			return m_vDefaultAccuracy;
 
-		// We lerp from very accurate to inaccurate over time
-		VectorLerp( VECTOR_CONE_1DEGREES, VECTOR_CONE_6DEGREES, ramp, cone );
+		if (m_nNumShotsFired == 0)
+			return VECTOR_CONE_PERFECT_ACCURACY; // First shot is perfectly accurate
 
-		return cone;
+
+
+		// Calculate the time since the last shot was fired
+		float timeSinceLastShot = gpGlobals->curtime - m_flLastAttackTime;
+
+		// Calculate the time we have been firing continuously
+		float continuousFireTime = gpGlobals->curtime - m_flSoonestPrimaryAttack;
+
+		// Calculate the penalty time based on the time since last shot and the maximum penalty time
+		float penaltyTime = GLOCK_ACCURACY_SHOT_PENALTY_TIME * (timeSinceLastShot / GLOCK_FASTEST_REFIRE_TIME);
+		penaltyTime = clamp(penaltyTime, 0.0f, GLOCK_ACCURACY_MAXIMUM_PENALTY_TIME);
+
+		// Calculate the penalty lerp factor based on the time firing continuously
+		float penaltyLerp = RemapValClamped(continuousFireTime, 0.0f, GLOCK_ACCURACY_MAXIMUM_PENALTY_TIME, 0.0f, 1.0f);
+
+		// Lerp between perfect accuracy and maximum inaccuracy based on the penalty lerp factor
+		VectorLerp(VECTOR_CONE_PERFECT_ACCURACY, VECTOR_CONE_MAX_INACCURACY, penaltyLerp, m_vDefaultAccuracy);
+		return m_vDefaultAccuracy;
 	}
 	
 	virtual int	GetMinBurst() 

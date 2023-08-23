@@ -28,10 +28,10 @@ int32 __cdecl ButtonsPositionTop(Button_MainMenu* const* s1, Button_MainMenu* co
 	return ((*s1)->GetPriority() < (*s2)->GetPriority());
 }
 
-MainMenu::MainMenu(vgui::Panel* Parent) : BaseClass(nullptr, "MainMenu")
+MainMenu::MainMenu(vgui::Panel* parent) : BaseClass(parent, "MainMenu")
 {
-	vgui::HScheme Scheme = vgui::scheme()->LoadSchemeFromFile("resource/ui/GameUI/GameUI_Layout.res", "SchemeMainMenu");
-	SetScheme(Scheme);
+	vgui::HScheme scheme = vgui::scheme()->LoadSchemeFromFile("resource/ui/GameUI/GameUI_Layout.res", "SchemeMainMenu");
+	SetScheme(scheme);
 
 	SetProportional(false);
 	SetPaintBorderEnabled(false);
@@ -115,23 +115,18 @@ bool MainMenu::IsVisible()
 
 void MainMenu::DrawMainMenu()
 {
-	if (ActiveButtons.IsEmpty() == true)
+	if (ActiveButtons.IsEmpty())
 		return;
 
-	for (int8 i = 0; i < ActiveButtons.Count(); i++)
+	int buttonSpace = 5; // Adjust this value to set the space between buttons
+	int buttonOffsetY = 30; // Adjust this value to set the Y offset of the buttons
+
+	int nextButtonY = GetTall() - buttonOffsetY;
+	for (int i = ActiveButtons.Count() - 1; i >= 0; i--)
 	{
-		int8 NextButton = i + 1;
-		
-		if (NextButton < ActiveButtons.Count())
-		{
-			int32 NextButtonPositionX, NextButtonPositionY;
-			ActiveButtons[NextButton]->GetPos(NextButtonPositionX, NextButtonPositionY);
-			ActiveButtons[i]->SetPos(ButtonsOffsetX, NextButtonPositionY - (ActiveButtons[i]->GetTall() + ButtonsSpace));
-		}
-		else
-		{
-			ActiveButtons[i]->SetPos(ButtonsOffsetX, GetTall() - (ButtonsOffsetY + ActiveButtons[i]->GetTall()));
-		}
+		Button_MainMenu* button = ActiveButtons[i];
+		button->SetPos(ButtonsOffsetX, nextButtonY - button->GetTall());
+		nextButtonY -= (button->GetTall() + buttonSpace);
 	}
 }
 
@@ -191,10 +186,15 @@ void MainMenu::Paint()
 	BaseClass::Paint();
 
 	// TODO: Add script settings
-	vgui::surface()->DrawSetColor(Color(0, 0, 0, 255));
-	vgui::surface()->DrawFilledRectFade(0, 0, GetWide(), GetTall(), 255, 0, true);
 
+	// Draw the background (assuming black background with transparency)
+	vgui::surface()->DrawSetColor(Color(0, 0, 0, 200));
+	vgui::surface()->DrawFilledRect(0, 0, GetWide(), GetTall());
+
+	// Draw the main menu buttons
 	DrawMainMenu();
+
+	// Draw the logo
 	DrawLogo();
 }
 

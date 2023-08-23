@@ -14,7 +14,9 @@
 #include "hl2_playerlocaldata.h"
 #include "simtimer.h"
 #include "soundenvelope.h"
-
+#ifdef ARSENIO
+#include "iclientrenderable.h"
+#endif
 class CAI_Squad;
 class CPropCombineBall;
 
@@ -32,6 +34,9 @@ enum HL2PlayerPhysFlag_e
 
 class IPhysicsPlayerController;
 class CLogicPlayerProxy;
+
+
+
 
 struct commandgoal_t
 {
@@ -111,6 +116,25 @@ public:
 
 	void				DrawDebugGeometryOverlays(void);
 
+#ifdef ARSENIO
+	void UpdateWooshSounds(void);
+	virtual void CreateSounds(void);
+#endif
+
+#ifdef ARSENIOTODO
+	// Function called when the Hack input is held down
+	void OnHackInput();
+
+	// Function called when the player selects a hacking option
+	void OnHackingOptionSelected(const char* option);
+
+	// Function to execute the selected hacking option on the targeted entity
+	void ExecuteHackingOption(CBaseEntity* targetEntity, const char* option);
+
+	// Function to show the hacking UI overlay
+	void ShowHackingUIOverlay(const char* hackingOptions);
+
+#endif
 	virtual Vector		EyeDirection2D( void );
 	virtual Vector		EyeDirection3D( void );
 
@@ -141,6 +165,10 @@ public:
 	
 	void SetFlashlightEnabled( bool bState );
 
+#ifdef ARSENIO
+	virtual void SetLegModel(string_t iszModel);
+#endif
+
 	// Apply a battery
 	bool ApplyBattery( float powerMultiplier = 1.0 );
 
@@ -167,6 +195,12 @@ public:
 	// Sprint Device
 	virtual void DeriveMaxSpeed( void );
 	void StartAutoSprint( void );
+	#ifdef ARSENIO
+	void StartBreathingNormal(void);
+	void StopBreathingNormal(void);
+	void StartBreathingHeavy(void);
+	void StopBreathingHeavy(void);
+	#endif
 	void StartSprinting( void );
 	void StopSprinting( void );
 	void StartIncaping( void );
@@ -183,6 +217,12 @@ public:
 	void StopZooming( void );
 	bool IsZooming( void );
 	void CheckSuitZoom( void );
+
+#ifdef ARSENIO
+
+	// Player anims PLS WORK!
+	void SetAnimation(PLAYER_ANIM playerAnim);
+#endif
 
 	// Walking
 	void StartWalking( void );
@@ -280,6 +320,11 @@ public:
 	virtual void RemoveSuit( void );
 	void  HandleAdmireGlovesAnimation( void );
 	void  StartAdmireGlovesAnimation( void );
+
+	// Should this object cast shadows?
+#ifdef ARSENIO
+	virtual ShadowType_t ShadowCastType() { return SHADOWS_RENDER_TO_TEXTURE_DYNAMIC; }
+#endif
 	
 	void  HandleSpeedChanges( void );
 
@@ -315,6 +360,21 @@ protected:
 	virtual void		ItemPostFrame();
 	virtual void		PlayUseDenySound();
 
+#ifdef ARSENIO
+	virtual void		HandleKickAttack();
+	virtual void		HandleFlipoff();
+	virtual void		TraceKick(trace_t& tr, const Vector& vecAim);
+	virtual void		TraceKickAttack(CBaseEntity* pKickedEntity = NULL);
+
+	void  HandleKickAnimation(void);
+	void  StartKickAnimation(void);
+
+	void  HandleFlipoffAnimation(void);
+	void  StartFlipoffAnimation(void);
+
+	virtual void HandleAnimEvent(animevent_t* pEvent);
+#endif
+
 private:
 	bool				CommanderExecuteOne( CAI_BaseNPC *pNpc, const commandgoal_t &goal, CAI_BaseNPC **Allies, int numAllies );
 
@@ -337,12 +397,17 @@ private:
 	float				m_fAutoSprintMinTime;	// Minimum time to maintain autosprint regardless of player speed. 
 
 	CNetworkVar( bool, m_fIsSprinting );
+#ifdef ARSENIO
+	CNetworkVar( bool, m_fIsBreathingNormally );
+	CNetworkVar( bool, m_fIsBreathingHeavily );
+#endif
 	CNetworkVarForDerived( bool, m_fIsWalking );
 	CNetworkVarForDerived( bool, m_fIsIncaped );
 
 
 protected:	// Jeep: Portal_Player needs access to this variable to overload PlayerUse for picking up objects through portals
 	bool				m_bPlayUseDenySound;		// Signaled by PlayerUse, but can be unset by HL2 ladder code...
+
 
 private:
 
@@ -363,6 +428,23 @@ private:
 
 	float				m_flNextFlashlightCheckTime;
 	float				m_flFlashlightPowerDrainScale;
+
+#ifdef ARSENIO
+
+
+	float				m_flNextKickAttack;
+	bool				m_bKickWeaponLowered;
+
+	string_t		    m_LegModelName;
+
+	CSoundPatch*		m_pWooshSound;
+
+
+	float				m_flNextFlipoff;
+	bool				m_bFlipoffWeaponLowered;
+
+	string_t		    m_FlipoffModelName;
+#endif
 
 	// Aiming heuristics code
 	float				m_flIdleTime;		//Amount of time we've been motionless
@@ -410,3 +492,23 @@ void CHL2_Player::DisableCappedPhysicsDamage()
 
 
 #endif	//HL2_PLAYER_H
+
+#ifdef ARSENIO
+//-----------------------------------------------------------------------------
+// Purpose: Kick data for interaction.
+//
+//-----------------------------------------------------------------------------
+struct KickInfo_t
+{
+	KickInfo_t(trace_t* _tr, CTakeDamageInfo* _dmgInfo)
+	{
+		tr = _tr;
+		dmgInfo = _dmgInfo;
+		success = true;
+	}
+
+	trace_t* tr;
+	CTakeDamageInfo* dmgInfo;
+	bool success; // Can be set by interactions to determine if a kick was "successful" (whether it should be counted by kick trackers)
+};
+#endif

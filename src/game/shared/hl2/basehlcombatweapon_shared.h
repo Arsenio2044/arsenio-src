@@ -38,6 +38,10 @@ public:
 	bool	CanLower();
 	bool	CanWalkBob();
 	bool 	CanSprint();
+#ifdef GAME_DLL
+	virtual QAngle		GetRecoil();
+#endif
+
 
 
 	virtual bool	Ready(void);

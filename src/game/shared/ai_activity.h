@@ -260,6 +260,8 @@ typedef enum
 	ACT_VM_SPRINT,				// For sprinting animations
 	ACT_VM_WALK,				// Walking animation
 	ACT_VM_FIRSTDRAW,			// First draw animation
+	ACT_VM_INSPECT,			    // Inspect animation
+	ACT_VM_MELEE,				// Melee
 
 	ACT_VM_ATTACH_SILENCER,
 	ACT_VM_DETACH_SILENCER,

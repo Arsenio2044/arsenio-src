@@ -39,6 +39,9 @@
 #include "vgui/ISurface.h"
 #include "voice_status.h"
 #include "fx.h"
+#ifdef ARSENIO
+#include "ivengine2/c_bobmodel.h"
+#endif
 #include "dt_utlvector_recv.h"
 #include "cam_thirdperson.h"
 #if defined( REPLAY_ENABLED )
@@ -298,6 +301,10 @@ END_RECV_TABLE()
 
 		RecvPropString( RECVINFO(m_szLastPlaceName) ),
 
+#ifdef ARSENIO
+		RecvPropBool(RECVINFO(m_bShouldDrawBloodOverlay)),
+#endif
+
 #if defined USES_ECON_ITEMS
 		RecvPropUtlVector( RECVINFO_UTLVECTOR( m_hMyWearables ), MAX_WEARABLES_SENT_FROM_SERVER,	RecvPropEHandle(NULL, 0, 0) ),
 #endif
@@ -431,6 +438,10 @@ C_BasePlayer::C_BasePlayer() : m_iv_vecViewOffset( "C_BasePlayer::m_iv_vecViewOf
 	m_vecPredictionError.Init();
 	m_flPredictionErrorTime = 0;
 
+#ifdef ARSENIO
+	m_pBobViewModel = NULL;
+#endif
+
 	m_surfaceProps = 0;
 	m_pSurfaceData = NULL;
 	m_surfaceFriction = 1.0f;
@@ -443,6 +454,10 @@ C_BasePlayer::C_BasePlayer() : m_iv_vecViewOffset( "C_BasePlayer::m_iv_vecViewOf
 	m_nForceVisionFilterFlags = 0;
 
 	ListenForGameEvent( "base_player_teleported" );
+
+#ifdef ARSENIO
+	m_bShouldDrawBloodOverlay = false;
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -457,6 +472,11 @@ C_BasePlayer::~C_BasePlayer()
 	}
 
 	delete m_pFlashlight;
+
+#ifdef ARSENIO
+	if (m_pBobViewModel)
+		m_pBobViewModel->Release();
+#endif
 }
 
 
@@ -1215,6 +1235,20 @@ void C_BasePlayer::TeamChange( int iNewTeam )
 	// Base class does nothing
 }
 
+#ifdef ARSENIO
+// Set the view punch angles
+void C_BasePlayer::SetViewPunchAngles(const QAngle& angles)
+{
+	m_viewPunch = angles;
+}
+
+// Get the view punch angles
+const QAngle& C_BasePlayer::ViewPunch() const
+{
+	return m_viewPunch;
+}
+#endif
+
 
 //-----------------------------------------------------------------------------
 // Purpose: Creates, destroys, and updates the flashlight effect as needed.
@@ -1385,6 +1419,69 @@ void C_BasePlayer::CreateWaterEffects( void )
 //-----------------------------------------------------------------------------
 void C_BasePlayer::OverrideView( CViewSetup *pSetup )
 {
+#ifdef ARSENIO
+	if (!this)
+		return;
+
+	if (!GetActiveWeapon())
+		return;
+
+	// shake derived from viewmodel
+	CBaseViewModel* pViewModel = (CBaseViewModel*)GetViewModel();
+
+	if (pViewModel != NULL
+		&& pViewModel->GetModelPtr() != NULL
+		&& pViewModel->GetWeapon() != NULL
+		)
+	{
+		if (m_pBobViewModel == NULL)
+		{
+			const char* pszName = modelinfo->GetModelName(pViewModel->GetModel());
+
+			if (pszName && *pszName)
+			{
+				m_pBobViewModel = new C_BobModel();
+
+				m_pBobViewModel->InitializeAsClientEntity(pszName, RENDER_GROUP_OTHER);
+			}
+		}
+
+		if (m_pBobViewModel->GetModelIndex() != pViewModel->GetModelIndex())
+		{
+			const char* pszName = modelinfo->GetModelName(pViewModel->GetModel());
+
+			if (pszName && *pszName)
+			{
+				m_pBobViewModel->SetModel(pszName);
+
+				m_pBobViewModel->SetAttachmentInfo(pViewModel->GetWeapon()->GetWpnData());
+			}
+		}
+
+		if (m_pBobViewModel->IsDirty())
+		{
+			m_pBobViewModel->UpdateDefaultTransforms();
+			m_pBobViewModel->SetDirty(false);
+		}
+
+		//extern void FormatViewModelAttachment( Vector &vOrigin, bool bInverse );
+
+		if (!m_pBobViewModel->IsInvalid())
+		{
+			m_pBobViewModel->SetSequence(pViewModel->GetSequence());
+			m_pBobViewModel->SetCycle(pViewModel->GetCycle());
+
+			QAngle ang;
+			Vector pos;
+			m_pBobViewModel->GetDeltaTransforms(ang, pos);
+		}
+	}
+
+
+
+
+
+#endif
 }
 
 bool C_BasePlayer::ShouldInterpolate()

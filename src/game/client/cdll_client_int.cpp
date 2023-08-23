@@ -133,6 +133,10 @@
 #include "haptics/haptic_utils.h"
 #include "haptics/haptic_msgs.h"
 
+#ifdef ARSENIO
+#include "Arsenio/CursorClip.h"
+#endif
+
 #if defined( TF_CLIENT_DLL )
 #include "abuse_report.h"
 #endif
@@ -171,11 +175,14 @@ extern vgui::IInputInternal* g_InputInternal;
 #include "sixense/in_sixense.h"
 #endif
 
-#include "../gamepadui/igamepadui.h"
+#include "../gameui/igamepadui.h"
 
 
 #include "..\GameUI\iGameUI2.h"
 
+#include "..\RenderSystem\irendersystem.h"
+
+#include "..\RenderSystem\rendersystem.h"
 
 // memdbgon must be the last include file in a .cpp file!!!
 #include "tier0/memdbgon.h"
@@ -225,6 +232,7 @@ IReplaySystem* g_pReplay = NULL;
 
 
 IGameUI2* GameUI2 = nullptr;
+IRenderSystem* RenderSystem = nullptr;
 IGamepadUI* g_pGamepadUI = nullptr;
 
 
@@ -348,6 +356,8 @@ static ConVar s_cl_class("cl_class", "default", FCVAR_USERINFO | FCVAR_ARCHIVE, 
 // Discord RPC
 
 ConVar arsenio_rpc("arsenio_rpc", "1");
+
+ConVar arsenio_mobmode("arsenio_mobmode", "0");
 
 #ifdef AR
 static ConVar cl_discord_appid("cl_discord_appid", "949352645989113906", FCVAR_DEVELOPMENTONLY | FCVAR_CHEAT);
@@ -1214,8 +1224,8 @@ int CHLClient::Init(CreateInterfaceFn appSystemFactory, CreateInterfaceFn physic
 		DiscordRichPresence discordPresence;
 		memset(&discordPresence, 0, sizeof(discordPresence));
 
-		discordPresence.state = "In-Game";
-		discordPresence.details = "Main Menu";
+		discordPresence.state = "In the Menu";
+		discordPresence.details = "August ALPHA";
 		discordPresence.startTimestamp = startTimestamp;
 		discordPresence.largeImageKey = "deez";
 		Discord_UpdatePresence(&discordPresence);
@@ -1297,9 +1307,10 @@ void CHLClient::PostInit()
 	}
 #endif
 
+	CCursorClipManagement::Init();
 
 	
-		CSysModule* pGamepadUIModule = g_pFullFileSystem->LoadModule("gamepadui", "GAMEBIN", false);
+		CSysModule* pGamepadUIModule = g_pFullFileSystem->LoadModule("gameuiutil.dll", "GAMEBIN", false);
 		if (pGamepadUIModule != nullptr)
 		{
 			GamepadUI_Log("Loaded gamepadui module.\n");
@@ -1382,6 +1393,52 @@ void CHLClient::PostInit()
 
 	}
 
+	if (CommandLine()->FindParm("-norendersystem") == 0)
+	{
+		char RenderSystemPath[2048];
+		Q_snprintf(RenderSystemPath, sizeof(RenderSystemPath), "%s\\bin\\GameUI.dll", engine->GetGameDirectory());
+
+		CSysModule* RenderSystemModule = Sys_LoadModule(RenderSystemPath);
+		if (RenderSystemModule != nullptr)
+		{
+			ConColorMsg(Color(0, 148, 255, 255), "Loaded GameUI.dll\n");
+			CreateInterfaceFn RenderSystemFactory = Sys_GetFactory(RenderSystemModule);
+			if (RenderSystemFactory)
+			{
+				RenderSystem = (IRenderSystem*)RenderSystemFactory(RENDERSYSTEM_INTERFACE_VERSION, NULL);
+				if (RenderSystem != nullptr)
+				{
+					ConColorMsg(Color(0, 148, 255, 255), "GameUI: Started with runtime: 995B12\n");
+
+					factorylist_t Factories;
+					FactoryList_Retrieve(Factories);
+					RenderSystem->Connect(Factories.appSystemFactory);
+					RenderSystem->Init();
+				}
+				else
+				{
+					ConColorMsg(Color(0, 148, 255, 255), "Unable to pull RenderSystem interface.\n");
+					Warning("GameUI: Unable to pull RenderSystem interface ");
+
+				}
+			}
+			else
+			{
+				ConColorMsg(Color(0, 148, 255, 255), "Unable to get RenderSystem factory.\n");
+				Warning("RenderSystem: No factory! ");
+
+			}
+		}
+		else
+
+
+		{
+			ConColorMsg(Color(0, 148, 255, 255), "Unable to load RenderSystem.dll from:\n%s\n", RenderSystemPath);
+			Warning("Couldn't load Library RenderSystem.dll ");
+		}
+
+	}
+
 #ifdef ARSENIO
 	SwapDisconnectCommand();
 #endif
@@ -1437,6 +1494,12 @@ void CHLClient::Shutdown(void)
 	{
 		GameUI2->OnShutdown();
 		GameUI2->Shutdown();
+	}
+
+	if (RenderSystem != nullptr)
+	{
+		//RenderSystem->OnShutdown();
+		RenderSystem->Shutdown();
 	}
 
 	if (g_pGamepadUI != nullptr)
@@ -1548,6 +1611,9 @@ void CHLClient::HudUpdate(bool bActive)
 
 	if (GameUI2 != nullptr)
 		GameUI2->OnUpdate();
+
+	if (RenderSystem != nullptr)
+		//RenderSystem->OnUpdate();
 
 	if (g_pGamepadUI != nullptr)
 		g_pGamepadUI->OnUpdate(frametime);
@@ -1894,7 +1960,14 @@ void CHLClient::LevelInitPreEntity(char const* pMapName)
 		memset(&discordPresence, 0, sizeof(discordPresence));
 
 		char buffer[256];
-		discordPresence.state = "In-Game";
+		if (arsenio_mobmode.GetInt() == 1)
+		{
+			discordPresence.state = "Mobility Mode";
+		}
+		else
+		{
+			discordPresence.state = "In-Game";
+		}
 		sprintf(buffer, "Map: %s", pMapName);
 		discordPresence.details = buffer;
 		discordPresence.largeImageKey = "deez";
@@ -1919,6 +1992,9 @@ void CHLClient::LevelInitPreEntity(char const* pMapName)
 	if (GameUI2 != nullptr)
 		GameUI2->OnLevelInitializePreEntity();
 
+	if (RenderSystem != nullptr)
+		ConColorMsg(Color(255, 148, 0, 255), "Rendersystem: Loading\n");
+
 	if (g_pGamepadUI != nullptr)
 		g_pGamepadUI->OnLevelInitializePreEntity();
 
@@ -1940,6 +2016,9 @@ void CHLClient::LevelInitPostEntity()
 
 	if (GameUI2 != nullptr)
 		GameUI2->OnLevelInitializePostEntity();
+
+	if (RenderSystem != nullptr)
+		ConColorMsg(Color(255, 148, 0, 255), "Rendersystem: Loading\n");
 
 	if (g_pGamepadUI != nullptr)
 		g_pGamepadUI->OnLevelInitializePostEntity();
@@ -2015,6 +2094,9 @@ void CHLClient::LevelShutdown(void)
 
 	if (GameUI2 != nullptr)
 		GameUI2->OnLevelShutdown();
+
+	if (RenderSystem != nullptr)
+		//RenderSystem->OnLevelShutdown();
 
 	if (g_pGamepadUI != nullptr)
 		g_pGamepadUI->OnLevelShutdown();
@@ -2547,6 +2629,8 @@ void OnRenderEnd()
 {
 	// Disallow access to bones (access is enabled in CViewRender::SetUpView).
 	C_BaseAnimating::PopBoneAccess("CViewRender::SetUpView->OnRenderEnd");
+
+	g_pCursorClipManager->Think();
 
 	UpdatePVSNotifiers();
 

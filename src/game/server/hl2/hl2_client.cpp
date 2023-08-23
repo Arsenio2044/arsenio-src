@@ -137,6 +137,24 @@ void respawn( CBaseEntity *pEdict, bool fCopyCorpse )
 		// respawn player
 		pEdict->Spawn();
 	}
+#ifdef ARSENIO
+
+	else if (g_pGameRules->AllowSPRespawn())
+	{
+		// In SP respawns, only create corpse if drawing externally
+		CBasePlayer* pPlayer = (CBasePlayer*)pEdict;
+#ifndef ARSENIO
+		if (fCopyCorpse && pPlayer->m_bDrawPlayerModelExternally)
+		{
+			// make a copy of the dead body for appearances sake
+			pPlayer->CreateCorpse();
+		}
+#endif
+		// respawn player
+		pPlayer->Spawn();
+	}
+#endif
+
 	else
 	{       // restart the entire server
 		engine->ServerCommand("reload\n");

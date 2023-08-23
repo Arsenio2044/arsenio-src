@@ -26,7 +26,7 @@
 	ConVar showanimstate_log( "sv_showanimstate_log", "0", FCVAR_CHEAT | FCVAR_DEVELOPMENTONLY, "1 to output sv_showanimstate to Msg(). 2 to store in AnimStateServer.log. 3 for both." );
 #endif
 
-
+	//yeah 
 // Below this many degrees, slow down turning rate linearly
 #define FADE_TURN_DEGREES	45.0f
 

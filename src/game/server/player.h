@@ -267,6 +267,9 @@ public:
 	static CBasePlayer		*CreatePlayer( const char *className, edict_t *ed );
 
 	virtual void			CreateViewModel( int viewmodelindex = 0 );
+#ifdef ARSENIO
+	virtual void	        CreateHandModel(int viewmodelindex = 1, int iOtherVm = 0);
+#endif
 	CBaseViewModel			*GetViewModel( int viewmodelindex = 0, bool bObserverOK = true );
 	void					HideViewModels( void );
 	void					DestroyViewModels( void );
@@ -464,8 +467,13 @@ public:
 	virtual void            PlayWallRunSound( Vector &vecOrigin );
 	virtual void            StopWallRunSound( void );
 
+#ifdef ARSENIO
+	CNetworkVar(bool, m_bShouldDrawBloodOverlay); // Have we been hit or have blood splatted on us?
+#endif
+
 	virtual void            ChuckGrenade( void ); // for throwing a grenade now no matter what gun we're holding
 	virtual void            CheckMelee( void ); // for quick melee attacks
+	virtual void            CheckFlipoff(void); // lmao
 
 	virtual const char	   *GetOverrideStepSound( const char *pszBaseStepSoundName ) { return pszBaseStepSoundName; }
 	virtual void			GetStepSoundVelocities( float *velwalk, float *velrun );
