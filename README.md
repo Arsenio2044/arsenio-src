@@ -1,5 +1,6 @@
 
-![arsedr](https://github.com/Arsenio2044/arsenio-src/assets/65312637/3f136f9e-a12d-40a7-b20c-9dc66c890af3)
+
+![Untitled_video_-_Made_with_Clipchamp_8](https://github.com/Arsenio2044/arsenio-src/assets/65312637/cb0a82ce-6afa-425c-a5c5-b16c0a0736ec)
 
 
 > Arsenio 2044: Data Redacted is an expansion pack to Arsenio 2044, dealing with the aftermath of the ending.
