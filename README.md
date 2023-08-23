@@ -4,10 +4,10 @@
 
 > Arsenio 2044: Data Redacted is an expansion pack to Arsenio 2044, dealing with the aftermath of the ending.
 # Features
-- A new gameplay experience with new weapon, enemies, and mechanics.
-- New shaders & Lighting engine.
-- Many fixes to the Source Engine.
-- Many more.
+
+- Data Redacted brings new NPCS and Weapons to Arsenio 2044.
+- New mechanics.
+
 
 
 
