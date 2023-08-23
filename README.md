@@ -14,8 +14,3 @@
 > Suggestions and requirments to build the SDK:
 - It is suggested to use Visual Studio 2019 to edit and compile the SDK.
 - You need to have a build of Arsenio for the DLLS to work.
-
-
-
-
-Fuck you glitchy im immortal
