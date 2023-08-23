@@ -7,7 +7,7 @@
 # Features
 
 - Data Redacted brings new NPCS and Weapons to Arsenio 2044.
-- New mechanics.
+- New mechanics like the Zero Exosuit and a more powerful Phase SHifter.
 - Experience the conclusion of Arsenio's storyline.
 - Some fixes and improvements to existing mechanics.
 
