@@ -8,10 +8,7 @@
 
 
 # Features
-- A new gameplay experience with new weapon, enemies, and mechanics.
-- New shaders & Lighting engine.
-- Many fixes to the Source Engine.
-- Many more.
+- Stealth focused gameplay
 
 
 
