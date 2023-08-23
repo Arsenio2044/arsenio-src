@@ -1,5 +1,5 @@
 //-----------------------------------------------------------------------------
-//	CLIENT_DR.VPC
+//	CLIENT_ARSENIO.VPC
 //
 //	Project Script
 //-----------------------------------------------------------------------------
@@ -15,7 +15,7 @@ $Configuration
 	$Compiler
 	{
 		$AdditionalIncludeDirectories	".\hl2;.\hl2\elements;$SRCDIR\game\shared\hl2;$SRCDIR\game\shared\episodic;..\..\public;$BASE"
-		$PreprocessorDefinitions		"$BASE;HL2_CLIENT_DLL;HL2_EPISODIC;IVENGINE2;ARSENIO_CLIENT;SKYDOME;DR;ARSENIO;DR_CLIENT"
+		$PreprocessorDefinitions		"$BASE;HL2_CLIENT_DLL;HL2_EPISODIC;ARSENIO;IVENGINE2;ARSENIO_CLIENT;AR;SKYDOME;DR;DR_CLIENT"
 		$PreprocessorDefinitions		"$BASE;NEW_RESPONSE_SYSTEM"		[$NEW_RESPONSE_SYSTEM]
 
 	}
@@ -29,7 +29,11 @@ $Project "Client - Data Redacted"
 		$File	"c_team_objectiveresource.cpp"
 		$File	"c_team_objectiveresource.h"
 		
-		$Folder	"DR DLL"
+		$Folder	"AR DLL"
+		{
+		}
+		
+		$Folder	"AR DLL"
 		{
 			$File	"c_vehicle_airboat.h"			
 			$File	"c_weapon_egar.h"
@@ -41,10 +45,15 @@ $Project "Client - Data Redacted"
 			$File	"$SRCDIR\game\shared\player_mobility_defs.h"
 			$File	"$SRCDIR\game\shared\IVEngine2\gamemovement_duck.cpp"
 			$File	"$SRCDIR\game\shared\arsenio\gamemovement_mobility.cpp"
-			$File	"dr\c_weapon_stubs_dr.cpp"
+			$File	"arsenio\c_weapon_stubs_arsenio.cpp"
 			$File	"arsenio\menu_background.cpp"
 			$File	"arsenio\menu_background.h"
+			$File	"arsenio\CursorClip.cpp"
+			$File	"arsenio\bloodproxy.cpp"
+			$File	"arsenio\CursorClip.h"
+			$File	"arsenio\FilmGrainProxy.cpp"
 			$File	"$SRCDIR\game\shared\arsenio\arsenio_game_log.cpp"
+			$File	"$SRCDIR\game\shared\arsenio\hands_shared.cpp"
 
 		}
 
