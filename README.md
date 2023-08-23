@@ -11,7 +11,12 @@
 - Experience the conclusion of Arsenio's storyline.
 - Some fixes and improvements to existing mechanics.
 
+# INFO
+
+- DO NOT TRY TO PORT THIS OVER TO THE BASE ENGINE
+- DR IS IN AN EARLY PHASE
+  
 
 > Suggestions and requirments to build the SDK:
 - It is suggested to use Visual Studio 2019 to edit and compile the SDK.
-- You need to have a build of Arsenio for the DLLS to work.
+- You need to have a build of Arsenio/DR for the DLLS to work.
