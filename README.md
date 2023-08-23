@@ -9,8 +9,7 @@
 - Data Redacted brings new NPCS and Weapons to Arsenio 2044.
 - New mechanics.
 - Experience the end of Arsenio's storyline.
-
-
+- Some fixes and improvements to existing mechanics.
 
 
 > Suggestions and requirments to build the SDK:
