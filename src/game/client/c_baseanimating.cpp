@@ -82,7 +82,9 @@ const float RAGDOLL_FADE_OUT_DELAY = 3.0f;
 #ifdef DEBUG
 static ConVar dbganimmodel( "dbganimmodel", "" );
 #endif
-
+#ifdef ARSENIO
+ConVar arsenio_leos_cancer("arsenio_ragdoll_fade", "1", FCVAR_REPLICATED, "Fade ragdolls.");
+#endif
 mstudioevent_t *GetEventIndexForSequence( mstudioseqdesc_t &seqdesc );
 
 C_EntityDissolve *DissolveEffect( C_BaseEntity *pTarget, float flTime );
@@ -291,8 +293,10 @@ C_ClientRagdoll::C_ClientRagdoll( bool bRestoring )
 	m_bFadingOut = false;
 	m_bImportant = false;
 	m_bNoModelParticles = false;
-	m_flFadeOutDelay = gpGlobals->curtime + RAGDOLL_FADE_OUT_DELAY;
-
+	if ( arsenio_ragdoll_fade.GetInt() == 1)
+	{
+		m_flFadeOutDelay = gpGlobals->curtime + RAGDOLL_FADE_OUT_DELAY;
+	}
 
 	SetClassname("client_ragdoll");
 
@@ -579,8 +583,11 @@ void C_ClientRagdoll::ClientThink( void )
 
 	HandleAnimatedFriction();
 
+	if ( arsenio_ragdoll_fade.GetInt() == 1)
+	{
 	if (gpGlobals->curtime >= m_flFadeOutDelay)
 		SUB_Remove();
+	}
 
 	FadeOut();
 }
