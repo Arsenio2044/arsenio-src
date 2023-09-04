@@ -38,35 +38,21 @@ STUB_WEAPON_CLASS(weapon_crossbow, WeaponCrossbow, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_slam, Weapon_SLAM, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_crowbar, WeaponCrowbar, C_BaseHLBludgeonWeapon);
 STUB_WEAPON_CLASS(weapon_hopwire, WeaponHopwire, C_BaseHLCombatWeapon);
-STUB_WEAPON_CLASS(weapon_pro836, WeaponPRO836, C_HLSelectFireMachineGun);
 STUB_WEAPON_CLASS(weapon_gauss, WeaponGaussGun, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_addamm557, WeaponAdamm557, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_mobileturret, WeaponMobileTurret, C_BaseHLBludgeonWeapon);
 STUB_WEAPON_CLASS(weapon_glock, WeaponGlock, C_BaseHLCombatWeapon);
-STUB_WEAPON_CLASS(weapon_k189, WeaponK189, C_HLMachineGun );
 STUB_WEAPON_CLASS(weapon_smg1, WeaponSMG1, C_HLSelectFireMachineGun);
-STUB_WEAPON_CLASS(weapon_KLO99, WeaponKLO99, C_HLMachineGun); // High power LMG
 STUB_WEAPON_CLASS(weapon_ar3, WeaponAR3, C_HLMachineGun);
-STUB_WEAPON_CLASS(weapon_knd12, WeaponKND12, C_BaseHLCombatWeapon);
 STUB_WEAPON_CLASS(weapon_mp5k, WeaponMP5K, C_HLMachineGun); // Mp5K for modern world.
-STUB_WEAPON_CLASS(weapon_jshot, WeaponJSHOT, C_HLSelectFireMachineGun); // Just another rifle lmao
+STUB_WEAPON_CLASS(weapon_phaseshifter, WeaponPhaseShifter, C_BaseHLBludgeonWeapon); // Mobility Mode
 STUB_WEAPON_CLASS(weapon_striker, WeaponStriker, C_BaseHLCombatWeapon); // Cooolio
 STUB_WEAPON_CLASS(weapon_unarmed, WeaponUnarmed, C_BaseHLBludgeonWeapon); // Mobility Mode
-STUB_WEAPON_CLASS(weapon_phaseshifter, WeaponPhaseShifter, C_BaseHLCombatWeapon);
-#ifdef LATER
-#endif
-
-// Coming soon
-#ifdef SOON
-STUB_WEAPON_CLASS(weapon_overlordgun, WeaponOverlord, C_BaseHLCombatWeapon); // Used for final boss.
 
 
-#endif
 
-#ifdef UNUSED
-//STUB_WEAPON_CLASS(weapon_Kaliber, WeaponKaliber, C_BaseHLCombatWeapon); // Sniper rifle used by SHADOW.
-//STUB_WEAPON_CLASS(weapon_BJ69, WeaponBJ69, C_HLSelectFireMachineGun); // nicknamed sex gun.
-#endif
+
+
 
 
 
