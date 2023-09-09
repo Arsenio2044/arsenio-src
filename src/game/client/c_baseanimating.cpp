@@ -83,7 +83,7 @@ const float RAGDOLL_FADE_OUT_DELAY = 3.0f;
 static ConVar dbganimmodel( "dbganimmodel", "" );
 #endif
 #ifdef ARSENIO
-ConVar arsenio_leos_cancer("arsenio_ragdoll_fade", "1", FCVAR_REPLICATED, "Fade ragdolls.");
+ConVar arsenio_ragdoll_fade("arsenio_ragdoll_fade", "1", FCVAR_REPLICATED, "Fade ragdolls.");
 #endif
 mstudioevent_t *GetEventIndexForSequence( mstudioseqdesc_t &seqdesc );
 
