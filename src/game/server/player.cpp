@@ -6516,14 +6516,18 @@ void CBasePlayer::CheatImpulseCommands(int iImpulse)
 		GiveNamedItem("weapon_glock");
 		GiveNamedItem("weapon_shotgun");
 		GiveNamedItem("weapon_mp5k");
-		GiveNamedItem("weapon_ar3");
+		//GiveNamedItem("weapon_mp99k");
 		//GiveNamedItem("weapon_rpg"); 
 		GiveNamedItem("weapon_357");
 		GiveNamedItem("weapon_crossbow");
+		GiveNamedItem("weapon_pro836");
 		GiveNamedItem("weapon_gauss");
-		//GiveNamedItem("weapon_addamm557");
+		GiveNamedItem("weapon_addamm557");
 		GiveNamedItem("weapon_egar");
+		GiveNamedItem("weapon_ar3");
 		GiveNamedItem("weapon_mobileturret");
+		GiveNamedItem("weapon_knd12");
+		GiveNamedItem("weapon_jshot");
 		GiveNamedItem("weapon_striker");
 #endif
 //  EXPANSION PACK (1?) WEAPONS
