@@ -322,7 +322,7 @@ void CWeaponStriker::PrimaryAttack( void )
 
 	pPlayer->ViewPunch(QAngle(-8, random->RandomFloat(-2, 2), 0));
 
-	FireActualBullet(info, 12000, GetTracerType());
+	//FireActualBullet(info, 12000, GetTracerType());
 
 
 	// Draw effect

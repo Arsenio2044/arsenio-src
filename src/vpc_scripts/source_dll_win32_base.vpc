@@ -139,6 +139,7 @@ $Project
 		$Lib	"$LIBPUBLIC\tier1"
 		$Implib	"$LIBPUBLIC\vstdlib"
 		$Lib 	"$LIBPUBLIC\discord-rpc"
+		$Lib 	"$LIBPUBLIC\dxguid"
 	}
 }
 

@@ -579,9 +579,7 @@ private:
 
 	float			m_flMaxspeed;
 
-#ifdef ARSENIO
-	C_BobModel* m_pBobViewModel;
-#endif
+
 	int				m_iBonusProgress;
 	int				m_iBonusChallenge;
 

@@ -535,6 +535,7 @@ private:
 EXPOSE_SINGLE_INTERFACE(CClientDLLSharedAppSystems, IClientDLLSharedAppSystems, CLIENT_DLL_SHARED_APPSYSTEMS);
 
 
+
 //-----------------------------------------------------------------------------
 // Helper interface for voice.
 //-----------------------------------------------------------------------------
@@ -575,6 +576,9 @@ bool BoneSetupCompare(const CBoneSetupEnt& a, const CBoneSetupEnt& b)
 {
 	return a.m_Index < b.m_Index;
 }
+
+
+
 
 CUtlRBTree<CBoneSetupEnt> g_BoneSetupEnts(BoneSetupCompare);
 
@@ -1341,7 +1345,6 @@ void CHLClient::PostInit()
 		{
 			GamepadUI_Log("Unable to load gamepadui module\n");
 		}
-	
 
 
 

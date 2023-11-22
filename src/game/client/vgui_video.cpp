@@ -33,7 +33,7 @@ VideoPanel::VideoPanel( unsigned int nXPos, unsigned int nYPos, unsigned int nHe
 
 	m_bBlackBackground = true;
 
-	SetKeyBoardInputEnabled( true );
+	SetKeyBoardInputEnabled( false );
 	SetMouseInputEnabled( false );
 
 	SetProportional( false );
@@ -163,14 +163,17 @@ void VideoPanel::DoModal( void )
 //-----------------------------------------------------------------------------
 void VideoPanel::OnKeyCodeTyped( vgui::KeyCode code )
 {
+#ifndef ARSENIO
 	if ( code == KEY_ESCAPE	)
 	{
 		OnClose();
 	}
+
 	else
 	{
 		BaseClass::OnKeyCodeTyped( code );
 	}
+#endif
 }
 
 //-----------------------------------------------------------------------------
@@ -178,6 +181,8 @@ void VideoPanel::OnKeyCodeTyped( vgui::KeyCode code )
 //-----------------------------------------------------------------------------
 void VideoPanel::OnKeyCodePressed( vgui::KeyCode code )
 {
+
+#ifndef ARSENIO
 	// These keys cause the panel to shutdown
 	if ( code == KEY_ESCAPE || 
 		 code == KEY_BACKQUOTE || 
@@ -196,6 +201,7 @@ void VideoPanel::OnKeyCodePressed( vgui::KeyCode code )
 	{
 		BaseClass::OnKeyCodePressed( code );
 	}
+#endif
 }
 
 //-----------------------------------------------------------------------------
