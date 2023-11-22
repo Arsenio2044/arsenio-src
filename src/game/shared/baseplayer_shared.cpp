@@ -785,7 +785,8 @@ void CBasePlayer::PlayStepSound( Vector &vecOrigin, surfacedata_t *psurface, flo
 
 	EmitSound( filter, entindex(), ep );
 
-	EmitSound(filter, entindex(), "Weapon_Generic.Movement");
+	// TUX: idk why I ever added this, stupid decision.
+	//EmitSound(filter, entindex(), "Weapon_Generic.Movement");
 
 	// Kyle says: ugggh. This function may as well be called "PerformPileOfDesperateGameSpecificFootstepHacks".
 	OnEmitFootstepSound( params, vecOrigin, fvol );
