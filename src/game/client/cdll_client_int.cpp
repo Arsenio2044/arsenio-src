@@ -48,6 +48,7 @@
 #include "engine/IEngineTrace.h"
 #include "engine/ivmodelinfo.h"
 #include "physics.h"
+#include "../gamepadui/igamepadui.h"
 #include "usermessages.h"
 #include "gamestringpool.h"
 #include "c_user_message_register.h"
@@ -175,10 +176,7 @@ extern vgui::IInputInternal* g_InputInternal;
 #include "sixense/in_sixense.h"
 #endif
 
-#include "../gameui/igamepadui.h"
 
-
-#include "..\GameUI\iGameUI2.h"
 
 #include "..\RenderSystem\irendersystem.h"
 
@@ -231,7 +229,7 @@ IReplaySystem* g_pReplay = NULL;
 #endif
 
 
-IGameUI2* GameUI2 = nullptr;
+
 IRenderSystem* RenderSystem = nullptr;
 IGamepadUI* g_pGamepadUI = nullptr;
 
@@ -1314,7 +1312,7 @@ void CHLClient::PostInit()
 	CCursorClipManagement::Init();
 
 	
-		CSysModule* pGamepadUIModule = g_pFullFileSystem->LoadModule("gameuiutil.dll", "GAMEBIN", false);
+		CSysModule* pGamepadUIModule = g_pFullFileSystem->LoadModule("gamepadui", "GAMEBIN", false);
 		if (pGamepadUIModule != nullptr)
 		{
 			GamepadUI_Log("Loaded gamepadui module.\n");
@@ -1334,67 +1332,26 @@ void CHLClient::PostInit()
 				else
 				{
 					GamepadUI_Log("Unable to pull IGamepadUI interface.\n");
+					Error("Couldn't load Library gamepadui.dll ");
 				}
 			}
 			else
 			{
 				GamepadUI_Log("Unable to get gamepadui factory.\n");
+				Error("Couldn't load Library gamepadui.dll ");
 			}
 		}
 		else
 		{
 			GamepadUI_Log("Unable to load gamepadui module\n");
+			Error("Couldn't load Library gamepadui.dll ");
 		}
 
 
 
 
 
-	if (CommandLine()->FindParm("-nogameui") == 0)
-	{
-		char GameUI2Path[2048];
-		Q_snprintf(GameUI2Path, sizeof(GameUI2Path), "%s\\bin\\GameUI.dll", engine->GetGameDirectory());
 
-		CSysModule* GameUI2Module = Sys_LoadModule(GameUI2Path);
-		if (GameUI2Module != nullptr)
-		{
-			ConColorMsg(Color(0, 148, 255, 255), "Loaded GameUI.dll\n");
-			CreateInterfaceFn GameUI2Factory = Sys_GetFactory(GameUI2Module);
-			if (GameUI2Factory)
-			{
-				GameUI2 = (IGameUI2*)GameUI2Factory(GAMEUI2_DLL_INTERFACE_VERSION, NULL);
-				if (GameUI2 != nullptr)
-				{
-					ConColorMsg(Color(0, 148, 255, 255), "GameUI: Started with runtime: 995B12\n");
-
-					factorylist_t Factories;
-					FactoryList_Retrieve(Factories);
-					GameUI2->Initialize(Factories.appSystemFactory);
-					GameUI2->OnInitialize();
-				}
-				else
-				{
-					ConColorMsg(Color(0, 148, 255, 255), "Unable to pull IGameUI interface.\n");
-					Error("GameUI: Unable to pull IGameUI interface ");
-
-				}
-			}
-			else
-			{
-				ConColorMsg(Color(0, 148, 255, 255), "Unable to get GameUI factory.\n");
-				Error("GameUI: No factory! ");
-
-			}
-		}
-		else
-
-
-		{
-			ConColorMsg(Color(0, 148, 255, 255), "Unable to load GameUI.dll from:\n%s\n", GameUI2Path);
-			Error("Couldn't load Library GameUI.dll ");
-		}
-
-	}
 
 	if (CommandLine()->FindParm("-norendersystem") == 0)
 	{
@@ -1493,11 +1450,7 @@ void CHLClient::Shutdown(void)
 	IGameSystem::ShutdownAllSystems();
 
 
-	if (GameUI2 != nullptr)
-	{
-		GameUI2->OnShutdown();
-		GameUI2->Shutdown();
-	}
+
 
 	if (RenderSystem != nullptr)
 	{
@@ -1612,8 +1565,7 @@ void CHLClient::HudUpdate(bool bActive)
 #endif
 
 
-	if (GameUI2 != nullptr)
-		GameUI2->OnUpdate();
+
 
 	if (RenderSystem != nullptr)
 		//RenderSystem->OnUpdate();
@@ -1992,8 +1944,6 @@ void CHLClient::LevelInitPreEntity(char const* pMapName)
 #endif
 
 
-	if (GameUI2 != nullptr)
-		GameUI2->OnLevelInitializePreEntity();
 
 	if (RenderSystem != nullptr)
 		ConColorMsg(Color(255, 148, 0, 255), "Rendersystem: Loading\n");
@@ -2017,8 +1967,7 @@ void CHLClient::LevelInitPostEntity()
 	internalCenterPrint->Clear();
 
 
-	if (GameUI2 != nullptr)
-		GameUI2->OnLevelInitializePostEntity();
+
 
 	if (RenderSystem != nullptr)
 		ConColorMsg(Color(255, 148, 0, 255), "Rendersystem: Loading\n");
@@ -2095,8 +2044,7 @@ void CHLClient::LevelShutdown(void)
 	StopAllRumbleEffects();
 
 
-	if (GameUI2 != nullptr)
-		GameUI2->OnLevelShutdown();
+
 
 	if (RenderSystem != nullptr)
 		//RenderSystem->OnLevelShutdown();

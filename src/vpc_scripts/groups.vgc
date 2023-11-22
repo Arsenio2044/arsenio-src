@@ -12,7 +12,7 @@ $Group "gamedlls"
 {
 	"client"
 	"server"
-	"gameui"
+	"gamepadui"
 	"rendersystem"
 }
 
@@ -23,10 +23,9 @@ $Group "game"
 	"server"
 	"tier1"
 	"vgui_controls"
-	"gameui"
 	"responserules"
 	"game_shader_dx9"
-	"gameuiutil"
+	"gamepadui"
 	"rendersystem"
 }
 

@@ -139,15 +139,9 @@ $Project "vvis_launcher"
 	"utils\vvis_launcher\vvis_launcher.vpc" [$WIN32]
 }
 
-$Project "gameui"
+$Project "gamepadui"
 {
-	"GameUI\gameui2_base.vpc"		[($WIN32||$X360||$POSIX)]
-
-}
-
-$Project "gameuiutil"
-{
-	"gameui\gamepadui_hl2.vpc"		[($WIN32||$X360||$POSIX)]
+	"game\gamepadui\gamepadui_hl2.vpc"		[($WIN32||$X360||$POSIX)]
 
 }
 
