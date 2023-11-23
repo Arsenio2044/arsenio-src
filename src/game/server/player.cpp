@@ -4620,7 +4620,7 @@ void CBasePlayer::PostThink()
 	if (gpGlobals->eLoadType != MapLoad_Background)
 	{
 #ifdef ARSENIO
-		debugoverlay->AddScreenTextOverlay(0.02f, 0.60f, 0.0f, 0, 255, 255, 255, CFmtStr("Arsenio NOVEMBER ALPHA."));
+		debugoverlay->AddScreenTextOverlay(0.02f, 0.60f, 0.0f, 0, 255, 255, 255, CFmtStr("ARSENIO 2044 NOVEMBER ALPHA."));
 #endif
 	}
 	if (!g_fGameOver && !m_iPlayerLocked)
