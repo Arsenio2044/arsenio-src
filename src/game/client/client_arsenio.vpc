@@ -55,10 +55,6 @@ $Project "Client - Arsenio"
 
 		$Folder	"IVEngine2"
 		{
-			$File	"IVEngine2\hud_radar_panel.cpp"			
-			$File	"IVEngine2\hud_radar_panel.h"
-			$File	"IVEngine2\VGUI\hsmapoverview.cpp"			
-			$File	"IVEngine2\VGUI\hsmapoverview.h"
 			$File	"c_baselesson.cpp"
 			$File	"c_baselesson.h"
 			$File	"c_gameinstructor.cpp"

@@ -48,6 +48,7 @@ public:
 	void	ItemPreFrame( void );
 	void	ItemBusyFrame( void );
 	void	PrimaryAttack( void );
+	void	SecondaryAttack(void);
 //	void	DrawHitmarker( void ); // ADAHAHA
 	void	AddViewKick( void );
 	void	DryFire( void );
@@ -396,42 +397,77 @@ void CWeaponGlock::ItemBusyFrame( void )
 	BaseClass::ItemBusyFrame();
 }
 
-//-----------------------------------------------------------------------------
-// Purpose: Allows firing as fast as button is pressed
-//-----------------------------------------------------------------------------
-void CWeaponGlock::ItemPostFrame( void )
+void CWeaponGlock::ItemPostFrame(void)
 {
 	BaseClass::ItemPostFrame();
 
-	CBasePlayer *pOwner = ToBasePlayer( GetOwner() );
+	CBasePlayer* pOwner = ToBasePlayer(GetOwner());
 
-	if ( pOwner == NULL )
+	if (pOwner == NULL)
 		return;
 
-	//Allow a refire as fast as the player can click
+	// Allow a refire as fast as the player can click
 	if (!(m_bInReload))
 	{
-		if ( ( ( pOwner->m_nButtons & IN_ATTACK ) == false ) && ( m_flSoonestPrimaryAttack < gpGlobals->curtime ) )
+		// Check for secondary fire
+		bool bSecondaryAttack = ((pOwner->m_nButtons & IN_ATTACK2) != 0);
+
+		if (bSecondaryAttack && (m_flNextPrimaryAttack < gpGlobals->curtime))
 		{
-			m_flNextPrimaryAttack = gpGlobals->curtime - 0.1f;
+			SecondaryAttack();
 		}
-		else if ( ( pOwner->m_nButtons & IN_ATTACK ) && ( m_flNextPrimaryAttack < gpGlobals->curtime ) && ( m_iClip1 <= 0 ) )
+		else if ((pOwner->m_nButtons & IN_ATTACK) && (m_flNextPrimaryAttack < gpGlobals->curtime) && (m_iClip1 <= 0))
 		{
 			DryFire();
 		}
 	}
-	// This new code going to add dynamic smoke out from the muzzle when ammo = 0 
-	if (!( pOwner->GetWaterLevel() == 3 ))
+
+	// This new code going to add dynamic smoke out from the muzzle when ammo = 0
+	if (!(pOwner->GetWaterLevel() == 3))
 	{
-		if ( m_iClip1 <= 0 )
+		if (m_iClip1 <= 0)
 		{
-			if ( m_bInReload )
+			if (m_bInReload)
 			{
-				DispatchParticleEffect( "muzzle_smoke", PATTACH_POINT_FOLLOW, pOwner->GetViewModel(), "muzzle", true);
+				DispatchParticleEffect("muzzle_smoke", PATTACH_POINT_FOLLOW, pOwner->GetViewModel(), "muzzle", true);
 			}
 		}
 	}
 }
+
+void CWeaponGlock::SecondaryAttack(void)
+{
+	//// Check if we can fire
+	//if (!CanAttack())
+	//	return;
+
+	// Set next secondary attack time (1 second delay)
+	m_flNextPrimaryAttack = m_flNextSecondaryAttack = gpGlobals->curtime + 0.2f;
+
+	// Fire the weapon
+	PrimaryAttack();
+
+	// Apply accuracy penalty for rapid fire
+	m_flAccuracyPenalty += GLOCK_ACCURACY_SHOT_PENALTY_TIME * 0.5f; // Adjust as needed
+
+	// Play weapon sound for secondary fire (rapid fire)
+	WeaponSound(SINGLE_NPC);
+
+	// Add view kick for secondary fire
+	AddViewKick();
+
+	// Increment the number of shots fired
+	m_nNumShotsFired++;
+
+	// Update game stats
+	CBasePlayer* pPlayer = ToBasePlayer(GetOwner());
+	if (pPlayer)
+	{
+		gamestats->Event_WeaponFired(pPlayer, true, GetClassname());
+	}
+}
+
+
 
 //-----------------------------------------------------------------------------
 // Purpose: 
